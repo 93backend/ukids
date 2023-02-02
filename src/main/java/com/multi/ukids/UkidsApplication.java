@@ -14,6 +14,7 @@ public class UkidsApplication {
 		System.out.println("test test");
 		System.out.println("hello");
 		System.out.println("git test");
+		System.out.println("gti commit test");
 	}
 
 }
