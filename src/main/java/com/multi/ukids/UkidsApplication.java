@@ -9,6 +9,7 @@ public class UkidsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(UkidsApplication.class, args);
 		System.out.println("hello");
+		System.out.println("Git Test!");
 	}
 
 }
