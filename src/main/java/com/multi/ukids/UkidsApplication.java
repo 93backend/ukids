@@ -13,6 +13,7 @@ public class UkidsApplication {
 		System.out.println("규완");
 		System.out.println("test test");
 		System.out.println("hello");
+		System.out.println("git test");
 	}
 
 }
