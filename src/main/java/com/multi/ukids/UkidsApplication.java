@@ -10,6 +10,7 @@ public class UkidsApplication {
 		SpringApplication.run(UkidsApplication.class, args);
 		System.out.println("hello");
 		System.out.println("Git Test!");
+		System.out.println("규완");
 	}
 
 }
