@@ -1,0 +1,25 @@
+#footercolor{
+  background-color: #fdfbf7;
+}
+#cate{
+  color: black;
+}
+#cate2{
+  font-weight: 800;
+}
+#sub{
+  background-color: #fc6c93; 
+  border: #fc6c93;
+  font-weight: 400;
+}
+#sub:hover{
+  background-color: #ff3b6f; 
+  border: #ff3b6f;
+}
+#footerunder{
+  background-color: #fc6c93; 
+}
+
+#cate:hover{
+  color: #fc6c93 !important; 
+}

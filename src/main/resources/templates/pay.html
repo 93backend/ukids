@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>UKIDS</title>
+    <!-- SEO Meta Tags
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio"> -->
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="css/theme.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+    <!--해당 페이지 css-->
+    <link rel="stylesheet" href="css/pay.css">
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <!-- 폰트 -->
+    <style>
+    @font-face {
+      font-family: 'NanumSquareRound';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    *{
+      font-family: 'NanumSquareRound';
+    }
+    </style>
+
+  </head>
+
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+
+    <!-- 로그인 모달 관련  -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
+            </ul>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body tab-content py-4">
+            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- 헤더!!!!!! -->
+      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+
+          <!-- Brand -->
+          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
+            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
+          </a>
+
+          <!-- Toolbar -->
+          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+
+            <!-- 로그인 전!!!!!!!! -->
+
+            <a href="#signin-modal" data-bs-toggle="modal">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-locked"></i>
+                <span>로그인</span>
+              </button>
+            </a>
+            <a href="join.html">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-user me-2"></i>
+                <span class="jointext">회원가입</span>
+              </button>
+            </a>
+
+            <!-- 로그인 후!!!!!!!!!!!! -->
+
+            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
+            </a>
+            
+            <a class="navbar-tool ms-3" href="index.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
+              </div>
+            </a> -->
+
+            <a class="navbar-tool ms-3" href="mypage3.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="navbar-tool-icon ci-cart"></i>
+              </div>
+            </a>
+            
+          </div>
+
+          <!-- 메뉴 -->
+          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
+            <hr class="d-lg-none my-3">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
+                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
+
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
+                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+
+
+
+      <!-- 결제 시작!!!!!!!!!-->
+      <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="paymain">
+        <div class="container position-relative zindex-5 mb-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item text-nowrap"><a href="mypage-7.html">장바구니</a></li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page" style="color: #ee0842;">결제</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 text-light mb-0 fw-bold" style="margin-top: 110px; margin-left: 30px;">대여 / 결제</h1>
+          </div>
+        </div>
+      </section>
+
+      <div class="container mb-5 pb-3">
+        <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+          <form id="orderForm" method="post" onSubmit="return checkForm()">
+            <div class="row">
+              <!-- Content-->
+              <section class="col-lg-7 pt-2 pt-lg-4 pb-4 mb-3">
+                <div class="pt-2 px-4 pe-lg-0 ps-xl-5">
+                  
+                  <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3">
+                    <div class="py-1 px-3 fw-bold fs-4">주문자 정보</div>
+                  </div>
+                  <!-- 정보-->
+                  <div class="d-block d-sm-flex align-items-center py-4 ">
+                    <div class="text-center text-sm-start">
+                      <!-- <form method="post" action="" name="rent_order"> -->
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="mb-3">
+                              <label class="form-label px-2 fw-bold fs-5" for="name">이름</label>
+                            <input class="form-control payname" type="text" id="name"placeholder="이름을 입력해주세요." required>
+                          </div>
+                        </div>  
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5 d-block" for="checkout-email">이메일</label>
+                            <div class="d-flex">
+                              <input class="form-control payemail" type="text" name="str_email01" id="email1" placeholder="이메일" required> <span class="at">@</span>
+                              <input class="form-control payemail" type="text" name="str_email02" id="email2" placeholder="이메일 주소" required>
+                              <select class="form-select payemail" name="selectEmail" id="email3">
+                                <option value="1" selected>직접입력</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5" for="phone">연락처</label>
+                            <div class="d-flex">
+                              <input class="form-control payphone" type="tel" id="phone1" required>
+                              <span class="hyphen">-</span> 
+                              <input class="form-control payphone" type="tel" id="phone2" required>
+                              <span class="hyphen">-</span> 
+                              <input class="form-control payphone" type="tel" id="phone3" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      
+                      <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3 deliInfo">
+                        <div class="py-1 px-3 fw-bold fs-4">배송 정보</div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-7">
+                          <div class=" px-3 mt-4 d-flex">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="copy" name="onlyone" onclick="Copy();">
+                              <label class="form-check-label fs-6" for="copy">주문자 정보와 동일</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="newInfo" name="onlyone" onclick="newIn();" >
+                              <label class="form-check-label fs-6" for="newInfo">새로운 배송지</label>
+                            </div>
+                          </div>
+                        </div>  
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5 mt-4" for="copyName" >이름</label>
+                            <input class="form-control payname" type="text" id="copyName" placeholder="이름을 입력해주세요." required>
+                          </div>
+                        </div>  
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5" for="checkout-phone">연락처</label>
+                            <div class="d-flex">
+                              <input class="form-control payphone" type="tel" id="copyphone1" required>
+                              <span class="hyphen">-</span> 
+                              <input class="form-control payphone" type="tel" id="copyphone2" required>
+                              <span class="hyphen">-</span> 
+                              <input class="form-control payphone" type="tel" id="copyphone3" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-10">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5 d-block" for="checkout-address">주소</label>
+                            <input class="form-control" type="text" id="ka_postcode" style="width: 200px; display: inline;" type="text" id="sample6_postcode" placeholder="우편번호" readonly required>
+                            <input class="findzip" type="button" onclick="postcode()" value="우편번호 찾기"><br>
+                            <input class="form-control payadd" type="text" id="ka_address" placeholder="기본 주소지" readonly required><br>
+                            <input class="form-control payadd2" type="text" id="ka_detailAddress" placeholder="상세 주소를 입력해주세요." required>
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="mb-3">
+                            <label class="form-label px-2 fw-bold fs-5 mt-4" for="checkout-fn">배송 요청사항</label>
+                            <select class="form-select payadd" id="validationCustom03">
+                              <option value="">배송메모를 선택해주세요.</option>
+                              <option value="1">요청사항을 직접 입력합니다.</option>
+                              <option value="2">배송전 미리 연락 바랍니다.</option>
+                              <option value="3">부재시 경비실에 맡겨주세요.</option>
+                              <option value="4">부재시 전화주시거나 문자 남겨주세요.</option>
+                            </select>
+                            <input class="form-control memo" type="text" style="display:none;">
+                          </div>
+                        </div>  
+                      </div>
+
+                     
+                      <div class="d-flex flex-wrap justify-content-between align-items-center border-bottom pb-3 deliInfo">
+                        <div class="py-1 px-3 fw-bold fs-4">결제 정보</div>
+                      </div>
+
+                      <h5 class="px-3 mt-4 mb-3 fw-bold">결제 수단</h5>
+
+                      <div class="select">
+                        <input type="radio" id="kakaobtn" name="paycard" value="kakao"checked><label class="btn btn-secondary btn-shadow chkbox kakao" for="kakaobtn">카카오 페이</label></input>                    
+                        <input type="radio" id="cardbtn" name="paycard" value="card"><label class="btn btn-secondary btn-shadow chkbox cardbtn" for="cardbtn">카 드</label></input>
+                      </div>
+
+                      <div class="kakaopay">
+                        <ul class="payli">
+                          <li>카카오페이는 카카오톡에서 카드를 등록, 간단하게 비밀번호만으로 결제할 수 있는 빠르고 편리한 모바일 결제 서비스입니다.</li>
+                          <li>지원 카드 : 모든 카드 등록/결제 가능</li>
+                        </ul>
+                      </div>
+
+                      <h5 class="px-3 mt-4 fw-bold">주문자 동의</h5>
+
+                      <div class="row">
+                        <div class="col-sm-8">
+                          <div class="mb-3 mx-3">
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="selectAll" name="terms" >
+                              <label class="form-check-label" for="selectAll" style="font-weight: 600;">결제대행서비스 약관에 모두 동의합니다.</label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="ex-check-1" name="terms" required>
+                              <label class="form-check-label" for="ex-check-1">[필수] 대여 이용약관 동의 <a class="termscon" href="#">내용보기</a></label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="ex-check-2" name="terms" required>
+                              <label class="form-check-label" for="ex-check-2">[필수] 개인정보 처리방침 동의 <a class="termscon" href="#">내용보기</a></label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" id="ex-check-3" name="terms" >
+                              <label class="form-check-label" for="ex-check-3">전자금융거래 기본약관 <a class="termscon" href="#">내용보기</a></label>
+                            </div>
+                          </div>
+                        </div>  
+                      </div>                  
+                    </div>
+                  </div>
+                
+                </div>
+              </section>
+
+
+              <!-- Sidebar-->
+              <aside class="col-lg-5 ps-xl-5">
+                <hr class="d-lg-none">
+                <div class="p-4 h-100 ms-auto border-start">
+                  <div class="px-lg-2">
+                    <div class="text-center py-3 border-bottom">
+                        <div class=" px-3 fw-bold fs-4">대여 상품</div>
+                    </div>
+                    
+                    <!-- Product-->
+                    <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><img class="rounded-3" src="img/ukids/toy1.JPG" style="width: 130px; height: 150px; margin-right: 10px;" alt="Product">
+                      <div class="text-center text-sm-start">
+                        <h3 class="h6 product-title mb-2 fw-bold"><a href="toy-detail.html">페어리루비즈아트 18000 비즈놀이 비즈공예 유아장난감</a></h3>
+                        <div class="d-inline-block"><small>대여기간</small><br> 
+                          2023-01-01 ~ 2023-01-02<br>
+                          (1일)</div>
+                        <div class="form-inline pt-2 fw-bold" style="color: #fc6c93;">
+                          1600원
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Product-->
+                    <div class="d-block d-sm-flex align-items-center py-4 border-bottom"><img class="rounded-3" src="img/ukids/toy2.JPG" style="width: 130px; height: 150px; margin-right: 10px;" alt="Product">
+                      <div class="text-center text-sm-start">
+                        <h3 class="h6 product-title mb-2 fw-bold"><a href="toy-detail.html">종이날씨판</a></h3>
+                        <div class="d-inline-block"><small>대여기간</small><br> 
+                          2023-01-01 ~ 2023-01-02<br>
+                          (1일)</div>
+                        <div class="form-inline pt-2 fw-bold" style="color: #fc6c93;">
+                          200원
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="py-4 border-bottom fw-bold">
+                      <span>총 대여금액</span><span class="pr">1800원(2개)</span><br>
+                      <span>배송비</span><span class="pr">1000원</span>
+                    </div>
+
+                    <div class="py-4 fw-bold">
+                      <span>총 결제금액</span><span class="total">2800원</span>
+                    </div>
+                    <button class="btn btn-primary btn-shadow d-block w-100 mt-4 pay" type="submit" id="payment-button">결제하기</button>
+
+                  </div>
+                </div>
+              </aside>            
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
+    </main>
+
+    <!-- 푸터!!!!!!!!!!-->
+    <!-- Footer-->
+    <footer class="footer pt-5" id="footercolor" >
+      <div class="px-lg-3 pt-2 pb-4" id="footercolor">
+        <div class="mx-auto px-3" style="max-width: 80rem;">
+          <div class="row">
+            <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
+              <div class="mt-n1"><a class="d-inline-block align-middle" href="index.html"><img class="d-block mb-4" src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-4">
+              <div class="widget widget-links widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
+                <ul class="widget-list">
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-4">
+              <div class="widget widget-links widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
+                <ul class="widget-list">
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
+                </ul>
+              </div>
+              <div class="widget widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-8">
+              <div class="widget pb-2 mb-4">
+                <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
+                <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                  <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                    <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="이메일을 입력해주세요." required>
+                    <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
+                  </div>
+                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+                  </div>
+                  <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
+                  <div class="subscription-status"></div>
+                </form>
+              </div>
+              <div class="widget pb-2 mb-4">
+                <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
+                <div class="d-flex flex-wrap">
+                  <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
+                  <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="px-lg-3 py-3" id="footerunder">
+        <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
+          <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
+          <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
+        </div>
+      </div>
+    </footer>
+    
+    
+    <!-- Toolbar for handheld devices (Default)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+    <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+    <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+    <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
+    
+    <!-- Main theme script-->
+    <script src="js/theme.min.js"></script>
+    <script src="js/pay.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    </body>
+    </html>

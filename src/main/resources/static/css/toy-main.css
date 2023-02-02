@@ -1,0 +1,40 @@
+.geul{
+    background-color: #fc6c922f;
+    color: #fc6c93;
+}
+
+.geul2{
+    color: chartreuse;
+}
+#tc{
+    color: #fc6c93;
+}
+
+.teul{
+    width: 350px;
+    height: 60px;
+}
+
+
+.form-check-input:checked {
+    border-color: #FC6C93;
+    background-color: #FC6C93;
+}
+
+.page {
+    position: relative;
+    z-index: 5;
+    cursor: default;
+  }
+  .page .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FC6C93;
+    border-color: transparent
+  }
+  .page>.page-link {
+    box-shadow: 0 .5rem 1.125rem -0.425rem rgba(252, 108, 147, .9)
+  }
+  .heyjude{
+    height: 300px;
+}

@@ -1,0 +1,40 @@
+.pink {
+    background-color: #FC6C93;
+}
+.text-pink {
+    color: #FC6C93;
+}
+.btn-pink {
+    color: #FFF;
+    background-color: #FC6C93;
+}
+.btn-pink:hover {
+    color: #FFF;
+    background-color: #FF3B6F;
+}
+.welfare-card {
+    height: 120px;
+}
+.welfare-name {
+    height: 45px;
+}
+.welfare-address {
+    width: 360px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.page {
+    position: relative;
+    z-index: 5;
+    cursor: default;
+}
+.page .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FC6C93;
+    border-color: transparent
+}
+.page>.page-link {
+    box-shadow: 0 .5rem 1.125rem -0.425rem rgba(252, 108, 147, .9)
+}

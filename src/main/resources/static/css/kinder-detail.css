@@ -1,0 +1,393 @@
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+#background_div{
+  background-color: #f8dae2;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+
+#establish{
+  border: 2px solid gray;
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 3px;
+}
+
+#info_list, #info_list2{
+  font-size: 18px;
+  color: black;
+}
+
+li h5 {
+  color: rgb(148, 144, 144);
+  display: inline-block; 
+  margin-top: 20px; 
+  margin-left: 20px;
+}
+
+.info_content{
+  font-weight:800;
+  font-size: 18px;
+  display: inline-block;
+  width: 240px;
+  text-align: right;
+  /* background-color: #323ea8; */
+}
+
+.info_content2 {
+  /* background-color: #323ea8; */
+  font-weight: 800;
+  display: inline-block;
+  font-size: 18px;
+  text-align: right;
+}
+
+#home_icon{
+  color: gray;
+  font-size: 20px;
+  margin-top: 6px;
+}
+
+
+#service_icon > li{
+  float: left;
+}
+
+.service1, .service2, .service3, .service4, .service5 {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #323ea8;
+  border-radius: 100%;
+  font-size: 13px;
+  margin-right: 7px;
+  margin-left: 5px;
+}
+
+.service6 {
+  width: 50px;
+  height: 50px;
+  border: 2px solid gray;
+  border-radius: 100%;
+  font-size: 13px;
+  margin-right: 7px;
+  margin-left: 5px;
+}
+
+#service_icon img{
+  width: 30px; height: 30px; margin-left: 9px; margin-top: 8px;
+}
+
+#service_icon span{
+  font-size: 13px;
+  font-weight: 900;
+}
+
+#row_1 {
+  width: 280px;
+  height: 45px;
+  margin-top: 10px;
+  margin-left: 5px;
+  border-radius: 5%;
+}
+
+#modalLink {
+  /* background-color: #323ea8; */
+  padding: 0px;
+}
+
+#chatButton {
+  border: 1.5px solid #fc6c93;
+  opacity: 85%;
+  margin: 0px;
+  width: 100%;
+}
+
+#row_1 span {
+  color: #fc6c93;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#row_2{
+  width: 280px;
+  height: 45px;
+  margin-left: 5px;
+}
+
+#row_2 button{
+  background-color: #fc6c93;
+  border: 1.5px solid white;
+}
+
+#row_2 span {
+  font-size: 20px;
+}
+
+#row_3 {
+  width: 280px;
+}
+
+#wishButton {
+  width: 130px;
+  float: left;
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+#compareButton {
+  width: 130px;
+  font-size: 18px;
+}
+
+#row_4 {
+  width: 280px;
+  height: 280px;
+  border: 0.5px grey;
+  border-radius: 2%;
+  opacity: 95%;
+}
+
+.siren_box{
+  text-align: center;
+  margin-top: 10px;
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+#reportCnt {
+  color: #f5104d;
+  font-size: 14px;
+}
+
+/* 그래프 시작 부 */
+.container2 {
+  height: 1750px;
+  /* background-color: grey; */
+}
+
+#graph1_box{
+  width: 100%;
+  /* background-color: #fc6c93; */
+}
+
+#box1, #box2, #box3, #box4, #box5{
+  /* background-color: #f5104d; */
+  /* border: 1px solid gray; */
+}
+
+.chart-div {
+  margin-top: 40px;
+  margin-left: 35px;
+  /* background: #000; */
+  text-align: left;
+}
+
+#legend-div ul {
+  list-style: none;
+  margin-top: 25px;
+}
+
+li span {
+  border-radius:100%;
+}
+
+#legend-div li{
+  font-size: 20px;
+}
+
+
+.chart-div2 {
+  margin-top: 40px;
+  margin-left: 35px;
+  /* background: #000; */
+  text-align: left;
+}
+
+#legend-div2 ul {
+  list-style: none;
+  margin-top: 25px;
+}
+
+#legend-div2 li{
+  font-size: 20px;
+}
+
+.chart-div3 {
+  margin-top: 70px;
+  margin-left: 140px;
+  width: 110px;
+  /* background: #000; */
+  text-align: left;
+}
+
+#legend-div3 ul {
+  list-style: none;
+  margin-top: 25px;
+  /* background-color: #323ea8; */
+  position: absolute;
+  left: 1220px;
+}
+
+#legend-div3 li{
+  font-size: 20px;
+}
+
+.explain-box {
+  list-style: none;
+  /* background-color: #f5104d; */
+  display: inline-block;
+  margin-top: 110px;
+  text-align: left;
+  font-size: 14px;
+  padding-left: 0px;
+}
+
+.chart-div4 ul {
+  list-style: none;
+  /* background-color: #323ea8; */
+}
+
+#legend-div4 ul{
+  margin-left: 150px;
+  /* background-color: #323ea8; */
+  line-height: 40px;
+  height: 300px;
+  font-size: 16px;
+}
+
+
+#lenend-div4 li {
+  text-align: right;
+}
+
+.chart-div5 ul {
+  list-style: none;
+}
+
+#legend-div5 ul {
+  margin-left: 150px;
+  line-height: 40px;
+  height: 300px;
+  font-size: 15px;
+  /* background-color: #323ea8; */
+}
+
+#safety_list, #safety_list2 img {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+#safety_box ul {
+  list-style: none;
+}
+
+#review-box1{
+  border: 2px solid #fc6c93;
+  background-color: #f8dae2;
+}
+.reviewlist{
+  display: none;
+}
+
+.trashbtn{
+  opacity: 0;
+}
+
+.reviewlist:hover .trashbtn{
+  opacity: 1;
+}
+
+
+#seeMore{
+  border-color: #fc6c93;
+}
+
+#seeMore :hover{
+  background-color: #ffffff;
+}
+
+#reviewButton{
+  border: none;
+  background-color: #fc6c93;
+}
+
+.chatModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1500px;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+
+/* 모달 관련 */
+#msgArea {
+  /* background-color: #f5104d; */
+  font-size: 16px;
+  border: none;
+}
+
+#msgArea:focus {
+  outline: none;
+}
+
+#chatMsg {
+  position: absolute;
+  left: 20px;
+  width: 350px;
+  height: 45px;
+  line-height: 45px;
+  float: left;
+  font-size: 14px;
+  background-color: #fae7ed;
+  border: none;
+  color: black;
+  font-weight: bold;
+  
+}
+
+#sendBtn {
+  background-color: #fc6c93;
+  margin-left: 5px;
+  width: 80px;
+  height: 45px;
+  text-align: center;
+  border: 1px solid #fc6c93;
+}
+
+#sendBtn:hover {
+  background-color: #f5104d;
+}
+
+#enrollBtn {
+  background-color: #fc6c93;
+  border: none;
+  font-size: 18px;
+}
+
+#enrollBtn:hover {
+  background-color: #f5104d;
+}
+
+.ci-heart-filled {
+  color: #f5104d;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+#paymain{
+  height: 300px;
+  background-image: url("../img/ukids/paymain.jpg");
+  background-size: cover;
+}
+
+.payname{
+  width: 400px;
+}
+
+
+.payemail{ 
+  width:182px;
+  margin-right:10px;
+  
+}
+.at{
+  margin-right:10px;
+  margin-top: 7px;
+}
+
+.payphone{
+  width: 115px;
+  margin-right:10px;
+}
+.hyphen{
+  margin-right:10px;
+  margin-top: 10px;
+}
+
+.deliInfo{
+  width: 657px;
+}
+
+.payli{
+  margin-top: 20px;
+  list-style: '- ';
+  line-height: 25px;
+  font-size: 0.9rem;
+  padding-left: 13px;
+}
+.payadd{
+  width: 500px;
+  margin-top: 10px;
+}
+.payadd2{
+  width: 500px;
+  margin-top: -14px;
+}
+.memo{
+  width: 500px;
+  margin-top: 10px;
+}
+
+.findzip{
+  background-color: rgb(255, 255, 255);
+  border: none;
+  color: #fc6c93;
+}
+
+#sample6_detailAddress{
+  margin-top: -12px;
+}
+.pr{
+  float: right; 
+  margin-right: 10px;
+}
+
+.total{
+  font-size: 1.3rem;
+  color: #fc6c93; 
+  float: right; 
+  margin-right: 10px;
+}
+
+.pay{
+  font-size: large; 
+  background-color: #fc6c93; 
+  border-color: #fc6c93;
+}
+
+.pay:hover{
+  height: 49px;
+  background-color: #ff3b6f;
+  border: #ff3b6f;
+}
+
+.termscon{
+  border-bottom:  1px solid black;
+  color: #fc6c93;
+}
+.select input[type=radio]{
+  display: none;
+}
+
+.select input[type=radio]:checked+label{
+  background-color: #ffffff;
+  border: 1px solid #fc6c93;
+  color: #fc6c93 !important;
+}
+.cardbtn{
+  width: 119px;
+}
+
+/*체크박스 색 변경*/
+.form-check-input:checked {
+    border-color: #FC6C93;
+    background-color: #FC6C93;
+}

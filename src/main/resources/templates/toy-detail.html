@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>UKIDS</title>
+    <!-- SEO Meta Tags
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio"> -->
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="css/theme.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+    <!--해당 페이지 css-->
+    <link rel="stylesheet" href="css/toy-detail.css">
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+
+    <!-- 폰트 -->
+    <style>
+    @font-face {
+      font-family: 'NanumSquareRound';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    *{
+      font-family: 'NanumSquareRound';
+    }
+    </style>
+
+  </head>
+
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+
+    <!-- 로그인 모달 관련  -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
+            </ul>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body tab-content py-4">
+            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main class="page-wrapper">
+
+      <!-- 헤더!!!!!! -->
+      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+
+          <!-- Brand -->
+          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
+            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
+          </a>
+
+          <!-- Toolbar -->
+          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+
+            <!-- 로그인 전!!!!!!!! -->
+
+            <a href="#signin-modal" data-bs-toggle="modal">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-locked"></i>
+                <span>로그인</span>
+              </button>
+            </a>
+            <a href="join.html">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-user me-2"></i>
+                <span class="jointext">회원가입</span>
+              </button>
+            </a>
+
+            <!-- 로그인 후!!!!!!!!!!!! -->
+
+            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
+            </a>
+            
+            <a class="navbar-tool ms-3" href="index.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
+              </div>
+            </a> -->
+
+            <a class="navbar-tool ms-3" href="mypage3.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="navbar-tool-icon ci-cart"></i>
+              </div>
+            </a>
+            
+          </div>
+
+          <!-- 메뉴 -->
+          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
+            <hr class="d-lg-none my-3">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
+                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
+
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
+                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+
+
+
+
+      <!-- 장난감 상세 시작  -->
+
+      <!-- Page Title-->
+      <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="mainImg">
+        <div class="container position-relative zindex-5 mb-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item text-nowrap"><a href="toy-main.html">장난감목록</a></li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page" style="color: #fd0d4d;">장난감 상세보기</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start" >
+            <h1 class="h3 text-light mb-0 fw-bold" style="margin-top: 110px; margin-left: 30px;">코코몽 생일케이크 장난감 완구 놀이 선물</h1>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Gallery + details-->
+        <div class="bg-light shadow-lg rounded-3 px-4 py-3 mb-5">
+          <div class="px-lg-3">
+            <div class="row">
+              <!-- Product gallery-->
+              <div class="col-lg-7 pe-lg-0 pt-lg-3 mb-4">
+                <div class="product-gallery">
+                  <div class="product-gallery-preview order-sm-2">
+                    <div class="product-gallery-preview-item active" id="first"><img class="image-zoom" src="img/ukids/toy3.JPG" data-zoom="img/ukids/toy3.JPG" alt="Product image">
+                      <div class="image-zoom-pane"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Product details-->
+              <div class="col-lg-5 pt-4 pt-lg-0">
+                <div class="product-details ms-auto pb-3">
+                  <form method="">
+                    <div> 
+                      <ul class="toy-details">
+                        <li>상품명</li>
+                        <li>대여료</li>
+                        <li>배송안내</li>
+                        <li>배송지역</li>
+                        <li>배송비</li>
+                        <li>수량</li>
+                      </ul>
+                    
+                      <ul class="toy-details2">
+                        <li class="listcont">코코몽 생일케이크 장난감 완구 놀이 선물</li>
+                        <li class="listcont">1000원<span style="font-size: small;"> / 1일당</span></li>
+                        <li class="listcont">자체배송</li>
+                        <li class="listcont">전국</li>
+                        <li class="listcont">1000원</li>
+                        <li class="listcont">1개<span style="font-size: small;"> / 1인당</span></li>
+                      </ul>
+                    </div>
+                    <p class="rentdate">대여기간</p>
+                    <!-- Date range -->
+                    
+                    <div class="mb-3" style="max-width: 30rem; margin-left: 35px; margin-right: 20px;">
+                      <div class="input-group"><span class="input-group-text"><i class="ci-calendar"></i></span>
+                        <input class="form-control date-picker" type="text" placeholder="대여시작일" id="start-date" onchange="changePickr()">
+                        <input class="form-control date-picker" type="text" placeholder="대여반납일" id="end-date" onclick="clickPickr()">
+                      </div>
+                    </div>  
+                    <div class="rentbtn">
+                      <div class="n-add-cart-layer" style="width: 380px; height: 40px;">
+                          <div class="add_cart"><div style="display: inline;">장바구니에 상품이 담겼습니다.</div><a href="mypage-7.html" class="cart">&nbsp;장바구니로 가기</a></div>
+                      </div>
+                      <button type="submit" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93"><i class="ci-cart"></i>&nbsp;장바구니</button>
+                      <button type="submit" class="btn btn-primary rounded-pill" id="rentbtn2">₩ 대여하기</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product description section 1-->
+        <div class="toy2">
+          <h3 class="toyDe">상세 정보 보기</h3><img class="toyimg" src="img/ukids/2x2.png">
+        </div>
+        <div class="row align-items-center detailinfo more">            
+            <div class="row align-items-center content">
+              <img src="http://morningstars.cafe24.com/d/G79/248.jpg">  
+            </div>           
+              <button type="button" class="btn btn-primary toydetailbtn" id="toybtn">상품정보 더 보기 ∨ </button>
+              <button type="button" class="btn btn-primary toydetailclose hide"  id="toybtn2">상품정보 간략히 &nbsp∧</button>
+        </div>
+      
+      
+        <!-- Reviews-->
+        <div class="border-top border-bottom my-lg-3 py-5">
+          <div class="container pt-md-2" id="reviews">
+            <div class="row pt-4">
+              <!-- Reviews list-->
+              <div class="col-md-7">
+                <div class="d-flex justify-content-end pb-4">
+                  <div>
+                    <h3 class="toyDe2">리뷰(7)</h3><img class="toyimg2" src="img/ukids/2.PNG">
+                  </div>
+                </div>
+                <!-- Review-->
+                  <div class="reviewlist">
+                    <div class="product-review pb-4 mb-4 border-bottom reviewlist" style="margin-left: 2%;">
+                      <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center me-4 pe-2">
+                          <div>
+                            <h6 class="fs-sm mb-0">유키즈1</h6><span class="fs-ms text-muted">2023-01-01</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
+                        <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn">
+                          <i class="ci-trash"></i>
+                        </span>
+                      </div>
+                      <p class="fs-md mb-2" style="width: 600px;">아이가 너무 좋아하네요!<br> 대여하는거라 걱정했는데 깨끗하고 좋아요~</p>
+                    </div>
+                  </div>
+
+                  <!-- Review-->
+                  <div class="reviewlist">
+                    <div class="product-review pb-4 mb-4 border-bottom reviewlist" style="margin-left: 2%;">
+                      <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center me-4 pe-2">
+                          <div>
+                            <h6 class="fs-sm mb-0">유키즈2</h6><span class="fs-ms text-muted">2023-01-01</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
+                        <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn">
+                          <i class="ci-trash"></i>
+                        </span>
+                      </div>
+                      <p class="fs-md mb-2" style="width: 600px;">아이가 너무 좋아하네요!<br> 대여하는거라 걱정했는데 깨끗하고 좋아요~</p>
+                    </div>
+                  </div>
+                  <!-- Review-->
+                  <div class="reviewlist">
+                    <div class="product-review pb-4 mb-4 border-bottom reviewlist" style="margin-left: 2%;">
+                      <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center me-4 pe-2">
+                          <div>
+                            <h6 class="fs-sm mb-0">유키즈3</h6><span class="fs-ms text-muted">2023-01-01</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
+                        <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn">
+                          <i class="ci-trash"></i>
+                        </span>
+                      </div>
+                      <p class="fs-md mb-2" style="width: 600px;">아이가 너무 좋아하네요!<br> 대여하는거라 걱정했는데 깨끗하고 좋아요~</p>
+                    </div>
+                  </div>
+                  <!-- Review-->
+                  <div class="reviewlist">
+                    <div class="product-review pb-4 mb-4 border-bottom reviewlist" style="margin-left: 2%;">
+                      <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center me-4 pe-2">
+                          <div>
+                            <h6 class="fs-sm mb-0">유키즈4</h6><span class="fs-ms text-muted">2023-01-01</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
+                        <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn">
+                          <i class="ci-trash"></i>
+                        </span>
+                      </div>
+                      <p class="fs-md mb-2" style="width: 600px;">아이가 너무 좋아하네요!<br> 대여하는거라 걱정했는데 깨끗하고 좋아요~</p>
+                    </div>
+                  </div>
+                
+                  <div class="text-center">
+                    <button class="btn btn-outline-accent" type="button" id="seeMore"><i class="ci-reload me-2" style="color: #fc6c93;"></i><span style="color: #fc6c93;">댓글 더 보기</span></button>
+                  </div>
+
+              </div>
+          
+              <!-- Leave review form-->
+              <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0"  >
+                <div class="bg py-grid-gutter px-grid-gutter rounded-3" id="reviewbox">
+                  <h3 class="h4 pb-2" style="font-weight: 700;">리뷰쓰기</h3>
+                  <form class="needs-validation" method="post" novalidate>
+                    <div class="mb-3">
+                      <textarea class="form-control reWrite" rows="17" required id="review-text" placeholder="댓글을 작성해주세요." data-bind-characters-target="#charactersRemaining" maxlength="1000"></textarea>
+                      <small class="form-text text-muted" style="float: right;">
+                        <span class="textLength" id="charactersRemaining">1000</span>
+                        자 이내 입력하세요
+                      </small>
+                    </div>
+
+                    <button class="btn btn-primary btn-shadow d-block w-100 mt-5" type="submit" id="reviewbtn">등 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;록</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Product carousel (Style with)-->
+        <div class="container py-5 my-md-3">
+          <div class="toy2">
+            <h3 class="h3 pb-4 mx-3 toyDe">비슷한 장난감</h3><img class="toyimg" src="img/ukids/2x2.png">
+          </div>
+          <div class="tns-carousel tns-controls-static tns-controls-outside">
+            <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
+              <!-- Product-->
+              <div>
+                <div class="card product-card card-static">
+                  <a class="card-img-top d-block overflow-hidden" href="toy-detail.html"><img src="img/ukids/toy1.JPG" alt="Product"></a>
+                  <div class="card-body similar py-2">
+                    <h3 class="product-title fs-sm toyname"><a href="toy-detail.html">페어리루비즈아트18000 비즈놀이 비즈공예 유아장난감</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="rentpri">대여료<p class="price">1000원</p></span></div>
+                      <div style="color: rgb(132, 219, 0);">대여가능</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Product-->
+              <div>
+                <div class="card product-card card-static">
+                  <a class="card-img-top d-block overflow-hidden" href="toy-detail.html"><img src="img/ukids/toy2.JPG" alt="Product"></a>
+                  <div class="card-body similar py-2">
+                    <h3 class="product-title fs-sm toyname"><a href="toy-detail.html">종이 날씨판</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="rentpri">대여료<p class="price">200원</p></span></div>
+                      <div style="color: rgb(132, 219, 0);">대여가능</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Product-->
+              <div>
+                <div class="card product-card card-static">
+                  <a class="card-img-top d-block overflow-hidden" href="toy-detail.html"><img src="img/ukids/toy3.JPG" alt="Product"></a>
+                  <div class="card-body similar py-2">
+                    <h3 class="product-title fs-sm toyname"><a href="toy-detail.html">코코몽 생일케이크 장난감 완구 놀이선물</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="rentpri">대여료<p class="price">1000원</p></span></div>
+                      <div style="color: rgb(235, 72, 72);">대여중</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Product-->
+              <div>
+                <div class="card product-card card-static">
+                  <a class="card-img-top d-block overflow-hidden" href="toy-detail.html"><img src="img/ukids/toy4.JPG" alt="Product"></a>
+                  <div class="card-body similar py-2">
+                    <h3 class="product-title fs-sm toyname"><a href="toy-detail.html">뽀로로 보이북 탈것 놀이 데이의 변신 자동차</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="rentpri">대여료<p class="price">1000원</p></span></div>
+                      <div style="color: rgb(132, 219, 0);">대여가능</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Product-->
+              <div>
+                <div class="card product-card card-static">
+                  <a class="card-img-top d-block overflow-hidden" href="toy-detail.html"><img src="img/ukids/toy1.JPG" alt="Product"></a>
+                  <div class="card-body similar py-2">
+                    <h3 class="product-title fs-sm toyname"><a href="toy-detail.html">페어리루비즈아트18000 비즈놀이 비즈공예 유아장난감</a></h3>
+                    <div class="d-flex justify-content-between">
+                      <div class="product-price"><span class="rentpri">대여료<p class="price">1000원</p></span></div>
+                      <div style="color: rgb(132, 219, 0);">대여가능</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+
+<!-- 푸터!!!!!!!!!!-->
+<!-- Footer-->
+<footer class="footer pt-5" id="footercolor" >
+  <div class="px-lg-3 pt-2 pb-4" id="footercolor">
+    <div class="mx-auto px-3" style="max-width: 80rem;">
+      <div class="row">
+        <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
+          <div class="mt-n1"><a class="d-inline-block align-middle" href="index.html"><img class="d-block mb-4" src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-4">
+          <div class="widget widget-links widget-light pb-2 mb-4">
+            <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
+            <ul class="widget-list">
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-sm-4">
+          <div class="widget widget-links widget-light pb-2 mb-4">
+            <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
+            <ul class="widget-list">
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
+              <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
+            </ul>
+          </div>
+          <div class="widget widget-light pb-2 mb-4">
+            <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
+          </div>
+        </div>
+        <div class="col-xl-4 col-sm-8">
+          <div class="widget pb-2 mb-4">
+            <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
+            <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+              <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="이메일을 입력해주세요." required>
+                <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
+              </div>
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+              </div>
+              <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
+              <div class="subscription-status"></div>
+            </form>
+          </div>
+          <div class="widget pb-2 mb-4">
+            <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
+            <div class="d-flex flex-wrap">
+              <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
+              <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-lg-3 py-3" id="footerunder">
+    <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
+      <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
+      <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Toolbar for handheld devices (Default)-->
+<div class="handheld-toolbar">
+  <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
+</div>
+<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+<!-- Vendor scrits: js libraries and plugins-->
+<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/simplebar/dist/simplebar.min.js"></script>
+<script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+<script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+<script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+<script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
+
+<!-- Main theme script-->
+<script src="js/theme.min.js"></script>
+<script src="js/toy-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+#mainImg{
+  height: 300px;
+  background-image: url("../img/ukids/toyDetailMain.jpg");
+  background-size: cover;
+}
+
+.toy-details{
+  float: left;
+  list-style: none;
+  font-size: larger;
+  margin-top: 20px;
+  line-height: 75px;
+  font-weight: 600;
+}
+
+.toy-details2{
+  width: 300px;
+  float: right;
+  list-style: none;
+  font-size: larger;
+  margin-top: 43px;
+  color: rgb(46, 24, 145);
+  font-weight: 700;
+}
+
+.listcont{
+  height: 75px;
+}
+
+.rentdate{
+  margin-left: 8%; 
+  font-weight: 600;
+  font-size: larger;
+}
+
+.rentbtn{
+  margin-left: 9%;
+}
+
+.add_cart{
+  display: none;
+  width: 380px; 
+  height: 30px;
+}
+.cart{
+  color: #fc6c93;
+}
+
+#cartbtn{
+  width: 170px;
+  border-color: #fc6c93;
+}
+
+#cartbtn:hover{
+  background-color: #fc6c93;
+}
+
+#rentbtn2{
+  width: 170px;
+  background-color: #fc6c93;
+  margin-left: 15px;
+}
+
+#rentbtn2:hover{
+  background-color: #ff3b6f;
+}
+
+.reviewlist{
+  display: none;
+}
+
+.trashbtn{
+  opacity: 0;
+}
+
+.reviewlist:hover .trashbtn{
+  opacity: 1;
+}
+
+.more{
+  position: relative;
+  height: 1100px;
+  overflow: hidden;
+}
+
+.content{
+  position: relative;
+  margin-left: 2px;
+}
+
+.hide{
+  display: none;
+}
+
+.toydetailbtn{
+  width: 165px;
+  background-color: #fc6c93;
+  border-color: #fc6c93;
+  margin-top: 80%;
+  margin-left: 44%;
+  position: absolute;
+}
+
+.toydetailbtn:hover{
+  background-color: #ff3b6f;
+  border-color: #ff3b6f;
+}
+
+.toydetailclose{
+  width: 165px;
+  background-color: #fc6c93;
+  border-color: #fc6c93;
+  margin-left: 44%;
+  margin-top: -5%;
+  position: relative;
+}
+
+.toydetailclose:hover{
+  background-color: #ff3b6f;
+  border-color: #ff3b6f;
+}
+
+.toy2{
+  margin-bottom: 50px;
+}
+
+.toyDe{
+  display: inline;
+  margin-left: 3%;
+  font-weight: 700;
+
+}
+
+.toyimg{
+  float: right;
+  width: 1000px;
+  height: 40px;
+}
+
+.toyDe2{
+  display: inline;
+  font-weight: 700;
+  padding-right: 30px;
+}
+
+.toyimg2{
+  float: right;
+  width: 560px;
+  height: 40px;
+}
+
+#seeMore{
+  border-color: #fc6c93;
+}
+
+#seeMore:hover{
+  background-color: #ffffff;
+}
+
+#reviewbtn{
+  background-color: #fc6c93;
+  border: #fc6c93;
+}
+#reviewbtn:hover{
+  background-color: #ff3b6f;
+  border: #ff3b6f;
+}
+
+#reviewbox{
+  background-color: #ffeff4;
+  border: 1px solid #fc6c93;
+}
+
+.price{
+  color: black;
+  font-weight: 700;
+}
+
+.rentpri{
+  color: rgb(172, 170, 170);
+  font-weight: 400;
+}
+
+.similar{
+  padding: 0;
+  margin: 0 2%;
+}
+
+.toyname{
+  height: 37px;
+  font-weight: 600;
+}
+
+.toyname>a:hover{
+  color: #fc6c93;
+}
+
+.flatpickr-next-month{
+  margin-top: 12px;
+}
+.flatpickr-prev-month{
+  margin-top: 12px;
+}

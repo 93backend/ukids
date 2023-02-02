@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>UKIDS</title>
+    <!-- SEO Meta Tags
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio"> -->
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
+    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="css/theme.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/kinder-nursery.css">
+    <link rel="stylesheet" href="css/playground.css">
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    
+    <!-- Kakao Map API Key -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ea2906121c01a1fdb00c5f47f35899a9&libraries=services"></script>
+    
+    <!--해당 페이지 css-->
+
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+    <!-- 폰트 -->
+    <style>
+      @font-face {
+        font-family: 'NanumSquareRound';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+  
+      *{
+        font-family: 'NanumSquareRound';
+      }
+      </style>
+  </head>
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    
+    <!-- 로그인 모달 관련  -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-secondary">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
+              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
+            </ul>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body tab-content py-4">
+            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-email">아이디</label>
+                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">비밀번호</label>
+                <div class="password-toggle">
+                  <input class="form-control" type="password" id="si-password" required>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3 d-flex flex-wrap justify-content-between">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="si-remember">
+                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
+                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+              </div>
+              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
+              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main class="page-wrapper">
+      <!-- Navbar Marketplace-->
+      <!-- Remove "navbar-sticky" class to make navigation bar scrollable with the page.-->
+      <!-- 헤더!!!!!! -->
+      <!-- 헤더!!!!!! -->
+      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+          <!-- Brand -->
+          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
+            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
+          </a>
+
+          <!-- Toolbar -->
+          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+
+            <!-- 로그인 전!!!!!!!! -->
+
+            <a href="#signin-modal" data-bs-toggle="modal">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-locked"></i>
+                <span>로그인</span>
+              </button>
+            </a>
+            <a href="join.html">
+              <button type="button" class="btn btn-primary rounded-pill" id="sign">
+                <i class="ci-user me-2"></i>
+                <span class="jointext">회원가입</span>
+              </button>
+            </a>
+
+            <!-- 로그인 후!!!!!!!!!!!! -->
+
+            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
+              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
+            </a>
+            
+            <a class="navbar-tool ms-3" href="index.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
+              </div>
+            </a> -->
+
+            <a class="navbar-tool ms-3" href="mypage3.html">
+              <div class="navbar-tool-icon-box bg-secondary">
+                <i class="navbar-tool-icon ci-cart"></i>
+              </div>
+            </a>
+            
+          </div>
+
+          <!-- 메뉴 -->
+          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
+            <hr class="d-lg-none my-3">
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
+                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
+                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
+
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
+              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
+                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <!-- Hero section-->
+      <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" id="pgimg"><span class="position-absolute top-0 start-0 w-100 h-100" style="opacity: .65;"></span>
+      
+        <div class="container position-relative zindex-5 mb-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item text-nowrap text-white">아동 관련 시설</li>
+                <li class="breadcrumb-item text-nowrap text-pink" aria-current="page">놀이시설</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <div class="row justify-content-center pt-4 pb-4">
+          <div class="col-lg-8">
+            <h1 class="nori" style="color: #ffffff;"><b>놀이시설</b></h1>
+          </div>
+        </div>
+
+      </section>
+      <!-- Featured products (Carousel)-->
+      <section class="container position-relative pt-3 pt-lg-0 pb-5 mt-lg-n5" style="z-index: 10; width: 1065px;">
+        <div class="card px-lg-2 border-0 shadow-lg">
+          <div class="card-body px-4 pt-4" style="height: 560px;">
+            <div class="input-group input-group-lg flex-nowrap"  id="ddiivvee">
+              <div class="widget widget-filter pb-4" id="ddiivvee2">
+                <div style="width: 1000px; ">
+                  <div class="col-lg-61 col-md-81">
+                    <form>
+
+                      <div class="input-group input-group-lg flex-nowrap"">
+                        <select class="form-select" id="sel">
+                          <option>전체</option>
+                          <option>유원시설</option>
+                          <option>키즈카페</option>
+                          <option>놀이터_실내</option>
+                          <option>놀이터_실외</option>
+                        </select>&nbsp;
+                        <select class="form-select" id="city" onchange="cityChange()" style="border-radius: 10px; width: 60px;">
+                          <option>전체</option>
+                          <option value="서울">서울특별시</option>
+                          <option value="부산">부산광역시</option>
+                          <option value="대구">대구광역시</option>
+                          <option value="인천">인천광역시</option>
+                          <option value="광주">광주광역시</option>
+                          <option value="대전">대전광역시</option>
+                          <option value="울산">울산광역시</option>
+                          <option value="세종특별">세종특별자치시</option>
+                          <option value="경기도">경기도</option>
+                          <option value="강원도">강원도</option>
+                          <option value="충청북도">충청북도</option>
+                          <option value="충청남도">충청남도</option>
+                          <option value="전라북도">전라북도</option>
+                          <option value="전라남도">전라남도</option>
+                          <option value="경상북도">경상북도</option>
+                          <option value="경상남도">경상남도</option>
+                          <option value="제주">제주특별자치도</option>
+                        </select>&nbsp;
+                        <select class="form-select" id="town" style="border-radius: 10px; width: 60px;">
+                          <option>전체</option>
+                        </select>&nbsp;
+                        <i class="position-absolute top-50 translate-middle-y text-muted fs-base ms-3"><img src="img/search(1).svg" class="imgg3"></i>
+                        <input class="form-control" type="text" placeholder="놀이시설을 검색하세요." id="serch2">&nbsp;&nbsp;
+                        <button class="btn btn-primary btn-lg fs-base" type="submit" id="bt2">검색하기</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <section id="school-list" class="mb-lg-5">
+                  <div class="container px-0" id="map">
+                    <div class="row g-0" id="mapp">
+                      <!-- 지도 -->
+                      <div class="col-lg-8 iframe-full-height-wrap" id="kkaaoo1">
+                        <div id="kakao-map" style="width: 650px; height:433px; "></div>
+                      </div>
+              
+                      <!-- 목록 -->
+                      <div class="col-lg-4 px-0 px-xl-0 py-0 border" style="height: 434px; width: 310px;">
+                        <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                          <h3 class="product-title fs-base m-1">검색목록<span class="ms-2" style="color: #e9525a;">10</span></h3>
+                        </div>
+                        <div class="border-top pt-0 mt-0"></div>
+                        <div class="overflow-auto" style="height: 389px;"></div>
+                      </div> 
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+            <!-- Carousel-->
+            <div class="tns-carousel pt-4">
+              <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;gutter&quot;: 15, &quot;controls&quot;: false, &quot;nav&quot;: true, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3}, &quot;992&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 30}}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer-->
+    <footer class="footer pt-5" id="footercolor" >
+      <div class="px-lg-3 pt-2 pb-4" id="footercolor">
+        <div class="mx-auto px-3" style="max-width: 80rem;">
+          <div class="row">
+            <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
+              <div class="mt-n1"><a class="d-inline-block align-middle" href="#"><img class="d-block mb-4" src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-4">
+              <div class="widget widget-links widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
+                <ul class="widget-list">
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-4 col-sm-4">
+              <div class="widget widget-links widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
+                <ul class="widget-list">
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
+                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
+                </ul>
+              </div>
+              <div class="widget widget-light pb-2 mb-4">
+                <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
+              </div>
+            </div>
+            <div class="col-xl-4 col-sm-8">
+              <div class="widget pb-2 mb-4">
+                <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
+                <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                  <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                    <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email" required>
+                    <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
+                  </div>
+                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+                  </div>
+                  <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
+                  <div class="subscription-status"></div>
+                </form>
+              </div>
+              <div class="widget pb-2 mb-4">
+                <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
+                <div class="d-flex flex-wrap">
+                  <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
+                  <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="px-lg-3 py-3" id="footerunder">
+        <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
+          <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
+          <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
+        </div>
+      </div>
+    </footer>
+    <!-- Toolbar for handheld devices (Default)-->
+    <!-- Toolbar for handheld devices (Shop)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#shop-sidebar"><span class="handheld-toolbar-icon"><i class="ci-filter-alt"></i></span><span class="handheld-toolbar-label">Filters</span></a><a class="d-table-cell handheld-toolbar-item" href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+    <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="vendor/nouislider/dist/nouislider.min.js"></script>
+    <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+    <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+    <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
+    <script src="vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
+    <!-- Main theme script-->
+    <script src="js/theme.min.js"></script>
+    <script src="js/index-kakaomap.js"></script>
+    <script src="js/address.js"></script>
+  </body>
+</html>

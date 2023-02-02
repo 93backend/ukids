@@ -1,0 +1,52 @@
+.pink {
+    background-color: #FC6C93;
+}
+.text-pink {
+    color: #FC6C93;
+}
+.btn-pink {
+    color: #FFF;
+    background-color: #FC6C93;
+}
+.btn-pink:hover {
+    color: #FFF;
+    background-color: #FF3B6F;
+}
+.btn-pink:focus {
+    color: #FFF;
+    background-color: #FF3B6F;
+}
+#filter-btn {
+    width: 160px;
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+#age0:checked, #age6:checked{
+    background-color: #FC6C93;
+}
+.book-card {
+    max-width: 540px;
+}
+.book-img {
+    width: 160px;
+    height: 215px;
+}
+.book-info-title {
+    color: #FC6C93;
+    width: 80px;
+    flex-shrink: 0;
+}
+.page {
+position: relative;
+z-index: 5;
+cursor: default;
+}
+.page .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FC6C93;
+    border-color: transparent
+}
+.page>.page-link {
+    box-shadow: 0 .5rem 1.125rem -0.425rem rgba(252, 108, 147, .9)
+}

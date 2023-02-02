@@ -1,0 +1,188 @@
+:root {
+    --clr-pink-1: #FC6C93;
+    --clr-pink-2: #FF87A4;
+    --clr-pink-3: #FFA0B6;
+    --clr-pink-4: #FFB9C7;
+    --clr-pink-5: #FFD0DA;
+    --clr-pink-6: #FFE8EC;
+    --clr-gray-1: #504F4F;
+    --clr-gray-2: #737272;
+    --clr-gray-3: #B2B2B2;
+    --clr-gray-4: #F0F0F0;
+}
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    font-family: 'NanumSquareRound';
+}
+ol, ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* 페이지 제목 */
+#page-title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 300px;
+    background-position: center;
+    background-size: cover;
+    box-shadow: inset 0 0 0 2000px rgba(115, 114, 114, 0.5);   
+}
+#page-title h1::before {
+    content: '';
+    display: block;
+    width: 175px;
+    margin: 0 auto 0.75rem;
+    border-bottom: 7.5px solid var(--clr-pink-1);
+}
+
+
+/* 페이지 탭 */
+#page-tab {
+    display: flex;
+    justify-content: center;
+}
+#page-tab ul {
+    display: flex;
+    gap: 2rem;
+    background-color: var(--clr-pink-6);
+}
+#page-tab .btn-primary {
+    padding: 0.75rem 3rem;
+    color: #fff !important;
+    border: 2px solid var(--clr-pink-1) ;
+    background-color: var(--clr-pink-1);
+}
+#page-tab .btn-outline-primary {
+    padding: 0.75rem 3rem;
+    color: var(--clr-pink-1) !important;
+    border: 2px solid var(--clr-pink-1) ;
+    background-color: #fff;
+}
+#page-tab .btn-primary:hover,
+#page-tab .btn-outline-primary:hover {
+    color: #fff !important;
+    border-color: #fc3066;
+    background-color: #fc3066;
+}
+
+
+/* 비교 테이블 */
+.navbar-sticky.navbar-stuck {
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+}
+.navbar-sticky.navbar-stuck tr td {
+    width: 251.84px;
+    /* border: none; */
+}
+
+thead td img {
+    width: 225px;
+    height: 175px;
+    object-fit: cover;
+}
+thead td h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+}
+
+.compare-table .btn-primary {
+    color: #fff !important;
+    border-color: var(--clr-pink-1);
+    background-color: var(--clr-pink-1);
+}
+.compare-table .btn-primary:hover {
+    border-color: #fc3066;
+    background-color: #fc3066;
+}
+
+.table>:not(:first-child) {
+    border-top: 2px solid var(--clr-pink-1);
+}
+.bg-secondary {
+    background-color: var(--clr-pink-6) !important;
+}
+.bg-secondary th {
+    font-weight: 700;
+}
+
+.compare-table tbody {
+    display: none;
+}
+.compare-table tbody.selected-category {
+    display: table-row-group;
+}
+
+
+/* ========== 카카오맵 CSS ========== */
+.marker-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 250px;
+    height: 100px;
+    padding: 0.25rem 0.75rem;
+}
+
+.info-type {
+    font-size: 0.8125rem;
+    color: #5172df;
+}
+
+.marker-box div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* margin-bottom: 0.25rem; */
+}
+
+.info-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #504F4F;
+    margin: 0.125rem 0 0.25rem;
+}
+
+/* .marker-box .tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 12px;
+    color: #fff;
+    background-color: #5172df;
+} */
+
+.info-addr {
+    font-size: 0.9375rem;
+    color: #7D879C;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.info-addr i {
+    margin-right: 0.25rem;
+}

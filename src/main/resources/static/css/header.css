@@ -1,0 +1,95 @@
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*{
+  font-family: 'NanumSquareRound';
+}
+
+#sign{
+  width: 125px;
+  margin-left: 10px;
+  background-color: #fc6c93;
+  border: #fc6c93;
+}
+#sign:hover{
+  background-color: #ff3b6f;
+  border: #ff3b6f;
+}
+
+#nav1{
+  color: rgb(236, 32, 32);
+  font-weight: bold;
+}
+
+#nav2{
+  color: rgb(248, 132, 0);
+  font-weight: bold;
+}
+
+#nav3{
+  color: rgb(255, 218, 7);
+  font-weight: bold;
+}
+
+#nav4{
+  color: rgb(55, 179, 86);
+  font-weight: bold;
+}
+
+#nav5{
+  color: rgb(7, 65, 190);
+  font-weight: bold;
+}
+
+#nav6{
+  color: rgb(110, 32, 236);
+  font-weight: bold;
+}
+
+.jointext{
+  margin-left: -5px;
+}
+
+.mypg{
+  font-weight: 700; 
+  margin-bottom: 0px
+}
+
+.hmenu:hover{
+  color:#fc6c93 !important;
+}
+
+.btn-login {
+  color: rgb(255, 255, 255);
+  background-color: #FC6C93;
+  border-color: #FC6C93;
+  box-shadow: unset;
+}
+.login {
+  color: #FC6C93;
+}
+.cgw16 {
+  float: left;
+}
+.cgw17 {
+  width: 47% !important;
+}
+.cgw18 {
+  height: 45px;
+}
+.cgw10 {
+  float: right;
+}
+.logincolor:hover{
+  color: #fc6c93;
+}
+.nav-tabs .logincolor.active{
+  color: #fc6c93;
+}
+.nav-tabs .logincolor.active::before{
+  background-color: #fc6c93;
+}

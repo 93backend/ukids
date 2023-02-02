@@ -1,0 +1,43 @@
+.pink {
+    background-color: #FC6C93;
+}
+
+.text-pink {
+    color: #FC6C93;
+}
+
+.btn-pink {
+    color: #FFF;
+    background-color: #FC6C93;
+}
+
+.btn-pink:hover {
+    color: #FFF;
+    background-color: #FF3B6F;
+}
+
+#claim-main-title {
+    width: 300px;
+    font-size: 3rem;
+    border-bottom: #FF87A4 solid 5px;
+}
+
+#character {
+    margin-top: -300px;
+    z-index: 10;
+}
+
+#character>img {
+    margin-left: 900px;
+    width: 360px;
+    height: 360px;
+}
+
+#claim-write-title {
+    border-left: #FF87A4 solid 10px;
+}
+
+.claim-input:focus {
+    border: 0px;
+    box-shadow: none;
+}

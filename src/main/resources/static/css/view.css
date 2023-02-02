@@ -1,0 +1,120 @@
+
+.hei {
+    height: 500px;
+}
+
+
+
+.reviewlist {
+    display: none;
+}
+
+.trashbtn {
+    opacity: 0;
+}
+
+.reviewlist:hover .trashbtn {
+    opacity: 1;
+}
+
+.box2 {
+    width: 900px;
+    height: 35px;
+    margin-left: 50px;
+}
+
+
+.line2{
+    color: #fc6c93;
+}
+.box3{
+    width: 900px;
+    margin-left: 50px;
+    
+}
+.box4{
+    height: 1000px;
+}
+.mamamoo{
+    margin-left: 850px;
+    
+}
+
+
+.bbtn2 {
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #4b566b;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+    border-radius: 0.3125rem;
+    transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .2s ease-in-out;
+    width: 80px;
+}
+
+.bbtn2:hover {
+    background-color: #FC6C93;
+    color: white;
+}
+.btn-outline-ppink {
+    color: #FC6C93;
+    border-color: #FC6C93;
+}
+.bbtn3 {
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.1;
+    color: #4b566b;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+    border-radius: 0.3125rem;
+    transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .2s ease-in-out;
+    width: 70px;
+}
+
+.bbtn3:hover {
+    background-color: #FC6C93;
+    color: white;
+}
+.btn-outline-ppink {
+    color: #FC6C93;
+    border-color: #FC6C93;
+}
+
+.ta{
+    color: #FC6C93;
+}
+
+.geul{
+    background-color: #fc6c922f;
+    color: #fc6c93;
+}
+
+#tc{
+    color: #fc6c93;
+}
+.heijude{
+    height: 300px;
+}
+#tc{
+    color: #fc6c93;
+}

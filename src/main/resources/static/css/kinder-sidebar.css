@@ -1,0 +1,66 @@
+  #category1 {
+    background-color: pink; 
+    border-radius: 10px; 
+    box-shadow: 2px 2px 2px 2px gainsboro; 
+    width: 280px;
+    height: 1076px;
+  }
+  #builder {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px; 
+    padding-top: 20px;
+  }
+  #district {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px;
+  }
+  #hakgup {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px; 
+    padding-right: 10px;
+  }
+  #teacher {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px; 
+    padding-right: 30px;
+  }
+  #service {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px;
+    margin-bottom: -30px; 
+  }
+  #security {
+    background-color: white; 
+    margin-left: -30px; 
+    padding-left: 20px; 
+    margin-right: -30px; 
+    margin-bottom: -30px;
+  }
+  #hover {
+    background-color: pink; 
+    margin-top: 20px; 
+    flex: 0 0 auto; 
+    padding-left: 17%; 
+    padding-top : 5%; 
+    padding-bottom: 5%; 
+    width: 280px; 
+    height: auto; 
+    font-size: 15px; 
+    border-radius: 10px; 
+    box-shadow: 2px 2px 2px 2px gainsboro;
+  }
+  .filter-btn {
+    color: #FC6C93;
+    border: 0px;
+    background-color: pink; 
+  }

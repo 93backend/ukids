@@ -1,0 +1,85 @@
+.pink {
+    background-color: #FC6C93;
+}
+
+.text-pink {
+    color: #FC6C93;
+}
+
+#claim-main-title {
+    width: 300px;
+    font-size: 3rem;
+    border-bottom: #FF87A4 solid 5px;
+}
+
+#character {
+    margin-top: -300px;
+    z-index: 10;
+}
+
+#character>img {
+    margin-left: 900px;
+    width: 360px;
+    height: 360px;
+}
+.notice {
+    background-color: #F0F0F0;
+    border-radius: .5rem
+}
+
+.notice>img {
+    width: 40px;
+    height: 40px;
+    margin: 20px;
+}
+
+.notice>span {
+    color: black;
+    height: auto;
+    line-height: 80px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#claim-table>thead>tr>th {
+    color: black;
+    font-weight: bold;
+    background-color: #FFE8EC;
+    border-top: #FF87A4 solid 2px;
+    border-bottom: #FF87A4 solid 2px;
+}
+
+#claim-table>tbody>tr:last-child>th,
+#claim-table>tbody>tr:last-child>td {
+    border-bottom: #FF87A4 solid 2px;
+}
+
+#claim-table>tbody>tr {
+    cursor:pointer;
+}
+
+#claim-table>tbody>tr:hover {
+    background-color: #F3F5F9;
+}
+
+#claim-table th,
+#claim-table td {
+    text-align: center;
+}
+
+.page {
+    position: relative;
+    z-index: 5;
+    cursor: default;
+}
+
+.page .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #FC6C93;
+    border-color: transparent;
+}
+
+.page>.page-link {
+    box-shadow: 0 .5rem 1.125rem -0.425rem rgba(252, 108, 147, .9);
+}
