@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.ukids.board.model.mapper.BoardMapper">
+
+	<resultMap type="Board" id="boardListResultMap">
+		<id property="boardNo" 				column="boardNo"/>
+		<result property="memberNo" 		column="memberNo"/>
+		<result property="title" 			column="title"/>
+		<result property="content" 			column="content"/>
+		<result property="good" 			column="good"/>
+		<result property="type" 			column="type"/>
+		<result property="originalFileName" column="originalFileName"/>
+		<result property="renamedFileName" 	column="renamedFileName"/>
+		<result property="readcount" 		column="readcount"/>
+		<result property="status" 			column="STATUS"/>
+		<result property="createDate" 		column="createDate"/>
+		<result property="modifyDate" 		column="modifyDate"/>
+	</resultMap>
+
+	<resultMap type="B_REPLY" id="boardReplyResultMap">
+		<id 	property="replyNo"		column="bReplyNo"/>
+		<result property="boardNo" 		column="boardNo"/>
+		<result property="memberNo" 	column="memberNo"/>
+		<result property="content" 		column="content"/>
+		<result property="status" 		column="STATUS"/>
+		<result property="createDate" 	column="createDate"/>
+		<result property="modifyDate" 	column="modifyDate"/>
+	</resultMap>
+	
+	<resultMap type="Good" id="boardGoodResult">
+	<id property=""/>
+	</resultMap>
+	
+	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
+		<collection property="replies" javaType="arrayList" columnPrefix="R_" resultMap="boardReplyResultMap"/>
+	</resultMap>
+	
+	<!--  전체 게시글 수 조회(자유게시판) -->
+	<select id="selectCommunityCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M ON B.memberNo = M.memberNo
+		WHERE B.STATUS = 'Y'
+		AND B.type = '자유게시판'
+		<if test="title != null">
+			AND B.title LIKE '${title}'
+		</if>	
+	</select>
+	
+	<!-- 전체 게시글 수 조회(공지사항)  -->
+		<select id="selectNoticeCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M ON B.memberNo = M.memberNo
+		WHERE B.STATUS = 'Y'
+		AND B.type = '공지사항'
+		<if test="title != null">
+			AND B.title LIKE '${title}'
+		</if>	
+	</select>
+	
+	
+	<!-- 게시판 전체 리스트 조회 -->
+	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="map">
+		SELECT B.boardNo, B.memberNo, B.title, B.content, B.good, B.type, B.originalFileName, 
+			   B.renamedFileName, B.readcount, B.STATUS, B.createDate, B.modifyDate
+		FROM BOARD B
+		LEFT OUTER JOIN MEMBER M1 ON B.memberNo = M1.memberNo
+		LEFT OUTER JOIN REPLY R ON R.boardNo = B.boardNo
+		LEFT OUTER JOIN MEMBER M2 ON R.memberNo = M2.memberNo
+		WHERE B.STATUS = 'Y'
+		<if test="title != null">
+			AND B.title LIKE '%${title}%'
+		</if>
+			
+	</select>
+	
+	
+
+	
+	
+	
+
+</mapper>
