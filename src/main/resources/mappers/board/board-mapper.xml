@@ -30,7 +30,9 @@
 	</resultMap>
 	
 	<resultMap type="Good" id="boardGoodResult">
-	<id property=""/>
+	<id property="goodNo" 		column="goodNo"/>
+	<result property="boardNo" 	column="boardNo"/>
+	<result property="memberNo" column="memberNo"/>
 	</resultMap>
 	
 	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
