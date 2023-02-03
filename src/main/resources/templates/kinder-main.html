@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>UKIDS</title>
+    <title>UKIDS | 유치원</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -10,25 +10,25 @@
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="mask-icon" color="#fe6a6a" th:href="@{/safari-pinned-tab.svg}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/drift-zoom/dist/drift-basic.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/lightgallery.js/dist/css/lightgallery.min.css}"/>
     
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="css/theme.min.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/kinder-nursery.css">
-    <link rel="stylesheet" href="css/kinder-sidebar.css">
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/kinder-nursery.css}">
+    <link rel="stylesheet" th:href="@{/css/kinder-sidebar.css}">
     <!--해당 페이지 css-->
 
     <!--jquery-->
@@ -45,171 +45,37 @@
     }
     </style>
   </head>
+  
   <!-- Body-->
   <body class="handheld-toolbar-enabled">
     <!-- 로그인 모달 관련  -->
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true">
-                  <i class="ci-user me-2 mt-n1"></i>일반회원 로그인
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false">
-                  <i class="ci-book me-2 mt-n1"></i>선생님 로그인
-                </a>
-              </li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div th:fragment="modal" th:replace="~{common :: modal}"></div>
+    
     <main class="page-wrapper" style="height: 2260px;">
       <!-- 헤더!!!!!! -->
-      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-          <!-- Brand -->
-          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
-            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
-          </a>
-          <!-- Toolbar -->
-          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-            <!-- 로그인 전!!!!!!!! -->
-            <a href="#signin-modal" data-bs-toggle="modal">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-locked"></i>
-                <span>로그인</span>
-              </button>
-            </a>
-            <a href="join.html">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-user me-2"></i>
-                <span class="jointext">회원가입</span>
-              </button>
-            </a>
-            <!-- 로그인 후!!!!!!!!!!!! -->
-            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
-            </a>
-            <a class="navbar-tool ms-3" href="index.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
-              </div>
-            </a> -->
-            <a class="navbar-tool ms-3" href="mypage3.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="navbar-tool-icon ci-cart"></i>
-              </div>
-            </a>
-          </div>
-          <!-- 메뉴 -->
-          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-            <hr class="d-lg-none my-3">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
-                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
-                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <header th:fragment="header" th:replace="~{common :: header}"></header>
+      
       <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="headerimg1">
         <span class="position-absolute top-0 start-0 w-100 h-100" style="opacity: .65;"></span>
         <div class="container position-relative zindex-5 mb-3">
           <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
                 <li class="breadcrumb-item text-nowrap text-pink" aria-current="page">유치원</li>
               </ol>
             </nav>
           </div>
         </div>
-        <form class="form777">
+        <form th:action="@{/kinder-main}" method="GET">
           <div class="row justify-content-center pt-4 pb-4">
             <div class="col-lg-8">
               <h1 class="text-light"><b>유치원</b></h1>
               <div class="input-group input-group-lg flex-nowrap">
                 <i class="position-absolute top-50 translate-middle-y text-muted fs-base ms-3">
-                  <img src="./img/search(1).svg" class="icon"></i>
-                <input class="form-control" type="text" placeholder="유치원을 검색하세요." id="serch">&nbsp;&nbsp;
-                <button class="btn btn-primary btn-lg fs-base" type="button" id="buton">검색하기</button>
+                  <img th:src="@{/img/search(1).svg}" class="icon"></i>
+                <input class="form-control" name="search" type="text" placeholder="유치원을 검색하세요." id="serch" th:value="${param.search}">&nbsp;&nbsp;
+                <button class="btn btn-primary btn-lg fs-base" type="submit" id="buton">검색하기</button>
               </div>
             </div>
           </div>
@@ -218,12 +84,12 @@
       <div class="container pb-5 mb-2 mb-md-4 cgw1">
         <div class="row">
           <!-- Sidebar-->
-          <form class="form888">
+          <form class="form888" th:action="@{/kinder-main}" method="GET">
             <aside class="col-lg-41 pt-31" id="aaside">
               <!-- Sidebar-->
               <!-- <div class="offcanvas offcanvas-collapse1 bg-white w-100 rounded-3 shadow-lg py-1" style="margin-top: 30px;"> -->
                 <div>
-                  <img class="img" src="img/가랜드1.svg" style="margin-bottom:-13px">
+                  <img class="img" th:src="@{/img/가랜드1.svg}" style="margin-bottom:-13px">
                 </div>
                 <div class="offcanvas-body py-grid-gutter px-lg-grid-gutter" id="category1">
                   <div class="ccategory">
@@ -232,45 +98,63 @@
                   <div class="widget widget-filter pb-4" id="builder">
                     <h3 class="widget-title1"><b>설립유형</b></h3>
                     <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="size-xs">
-                          <label class="form-check-label widget-filter-item-text" for="size-xs">국공립</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="size-s">
-                          <label class="form-check-label widget-filter-item-text" for="size-s">사립</label>
-                        </div>
-                      </li>
+                        <th:block th:if="${param.build == null}">
+		                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+		                        <div class="form-check">
+		                        
+		                          <input class="form-check-input" name="build" type="checkbox" id="build1" value="공립">
+		                          <label class="form-check-label widget-filter-item-text" for="build1">국공립</label>
+		                        </div>
+		                      </li>
+		                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+		                        <div class="form-check">
+		                          <input class="form-check-input" name="build" type="checkbox" id="build2" value="사립">
+		                          <label class="form-check-label widget-filter-item-text" for="build2">사립</label>
+		                        </div>
+		                      </li>
+                        </th:block>
+                        <th:block th:if="${param.build != null}">
+		                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+		                        <div class="form-check">
+		                        
+		                          <input class="form-check-input" name="build" type="checkbox" id="build1" value="공립" th:checked="${#strings.contains(param.build,'공립')} ? 'checked' : null ">
+		                          <label class="form-check-label widget-filter-item-text" for="build1">국공립</label>
+		                        </div>
+		                      </li>
+		                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+		                        <div class="form-check">
+		                          <input class="form-check-input" name="build" type="checkbox" id="build2" value="사립" th:checked="${#strings.contains(param.build,'사립')} ? 'checked' : null ">
+		                          <label class="form-check-label widget-filter-item-text" for="build2">사립</label>
+		                        </div>
+		                      </li>
+                        </th:block>
                     </ul>
                   </div>
                   <div class="widget widget-filter pb-4" id="district">
                     <h3 class="widget-title1"><b>지역</b></h3>
                     <div class="form-inline">
-                      <select class="form-select" id="city" onchange="cityChange()" style="border-radius: 10px; width: 120px; display: inline;">
-                        <option>전체</option>
-                        <option value="서울">서울</option>
-                        <option value="부산">부산</option>
-                        <option value="대구">대구</option>
-                        <option value="인천">인천</option>
-                        <option value="광주">광주</option>
-                        <option value="대전">대전</option>
-                        <option value="울산">울산</option>
-                        <option value="세종특별">세종</option>
-                        <option value="경기도">경기도</option>
-                        <option value="강원도">강원도</option>
-                        <option value="충청북도">충청북도</option>
-                        <option value="충청남도">충청남도</option>
-                        <option value="전라북도">전라북도</option>
-                        <option value="전라남도">전라남도</option>
-                        <option value="경상북도">경상북도</option>
-                        <option value="경상남도">경상남도</option>
-                        <option value="제주">제주도</option>
+                      <select class="form-select" name="city" id="city" onchange="cityChange()" style="border-radius: 10px; width: 120px; display: inline;">
+                        <option value=" " th:selected="${param.city} == ' '">전체</option>
+                        <option value="서울" th:selected="${param.city} == '서울'">서울</option>
+                        <option value="부산" th:selected="${param.city} == '부산'">부산</option>
+                        <option value="대구" th:selected="${param.city} == '대구'">대구</option>
+                        <option value="인천" th:selected="${param.city} == '인천'">인천</option>
+                        <option value="광주" th:selected="${param.city} == '광주'">광주</option>
+                        <option value="대전" th:selected="${param.city} == '대전'">대전</option>
+                        <option value="울산" th:selected="${param.city} == '울산'">울산</option>
+                        <option value="세종특별" th:selected="${param.city} == '세종특별'">세종</option>
+                        <option value="경기도" th:selected="${param.city} == '경기도'">경기도</option>
+                        <option value="강원도" th:selected="${param.city} == '강원도'">강원도</option>
+                        <option value="충청북도" th:selected="${param.city} == '충청북도'">충청북도</option>
+                        <option value="충청남도" th:selected="${param.city} == '충청남도'">충청남도</option>
+                        <option value="전라북도" th:selected="${param.city} == '전라북도'">전라북도</option>
+                        <option value="전라남도" th:selected="${param.city} == '전라남도'">전라남도</option>
+                        <option value="경상북도" th:selected="${param.city} == '경상북도'">경상북도</option>
+                        <option value="경상남도" th:selected="${param.city} == '경상남도'">경상남도</option>
+                        <option value="제주" th:selected="${param.city} == '제주'">제주도</option>
                       </select>&nbsp;
-                      <select class="form-select" id="town" style="border-radius: 10px; width: 110px; display: inline;">
-                        <option>전체</option>
+                      <select class="form-select" name="town" id="town" style="border-radius: 10px; width: 110px; display: inline;">
+                        <option value=" ">전체</option>
                       </select>&nbsp;
                     </div>
                   </div>
@@ -278,141 +162,271 @@
                   <div class="widget widget-filter pb-4" id="hakgup">
                     <h3 class="widget-title1"><b>학급현황</b></h3>
                     <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="class1">
-                          <label class="form-check-label widget-filter-item-text" for="class1">특수학급</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="class2">
-                          <label class="form-check-label widget-filter-item-text" for="class2">혼합학급</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="class3">
-                          <label class="form-check-label widget-filter-item-text" for="class3">만3세 학급</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="class4">
-                          <label class="form-check-label widget-filter-item-text" for="class4">만4세 학급</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="class5">
-                          <label class="form-check-label widget-filter-item-text" for="class5">만5세 학급</label>
-                        </div>
-                      </li>
+	                    <th:block th:if="${param.classroom == null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class1" value="class1">
+	                          <label class="form-check-label widget-filter-item-text" for="class1">특수학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class2" value="class2">
+	                          <label class="form-check-label widget-filter-item-text" for="class2">혼합학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class3" value="class3">
+	                          <label class="form-check-label widget-filter-item-text" for="class3">만3세 학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class4" value="class4">
+	                          <label class="form-check-label widget-filter-item-text" for="class4">만4세 학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class5" value="class5">
+	                          <label class="form-check-label widget-filter-item-text" for="class5">만5세 학급</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
+	                    <th:block th:if="${param.classroom != null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class1" value="class1" th:checked="${#strings.contains(param.classroom,'class1')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="class1">특수학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class2" value="class2" th:checked="${#strings.contains(param.classroom,'class2')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="class2">혼합학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class3" value="class3" th:checked="${#strings.contains(param.classroom,'class3')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="class3">만3세 학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class4" value="class4" th:checked="${#strings.contains(param.classroom,'class4')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="class4">만4세 학급</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="classroom" type="checkbox" id="class5" value="class5" th:checked="${#strings.contains(param.classroom,'class5')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="class5">만5세 학급</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
                     </ul>
                   </div>
                   <div class="widget widget-filter pb-4" id="teacher">
                     <h3 class="widget-title1"><b>교사현황</b></h3>
                     <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="teacher1">
-                          <label class="form-check-label widget-filter-item-text" for="teacher1">특수교사</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="teacher2">
-                          <label class="form-check-label widget-filter-item-text" for="teacher2">보건교사</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="teacher3">
-                          <label class="form-check-label widget-filter-item-text" for="teacher3">영양교사</label>
-                        </div>
-                      </li>
+	                    <th:block th:if="${param.teacher == null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher1" value="special">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher1">특수교사</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher2" value="health">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher2">보건교사</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher3" value="nutrition">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher3">영양교사</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
+	                    <th:block th:if="${param.teacher != null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher1" value="special" th:checked="${#strings.contains(param.teacher,'special')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher1">특수교사</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher2" value="health" th:checked="${#strings.contains(param.teacher,'health')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher2">보건교사</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="teacher" type="checkbox" id="teacher3" value="nutrition" th:checked="${#strings.contains(param.teacher,'nutrition')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="teacher3">영양교사</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
                     </ul>
                   </div>
                   <div class="widget widget-filter pb-4" id="service">
                     <h3 class="widget-title1"><b>제공서비스</b></h3>
                     <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="bus">
-                          <label class="form-check-label widget-filter-item-text" for="bus">통학 차량</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="afterschool">
-                          <label class="form-check-label widget-filter-item-text" for="afterschool">방과후 교실</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="food">
-                          <label class="form-check-label widget-filter-item-text" for="food">급식</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="play">
-                          <label class="form-check-label widget-filter-item-text" for="play">체육장</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="cctv">
-                          <label class="form-check-label widget-filter-item-text" for="cctv">CCTV</label>
-                        </div>
-                      </li>
+	                    <th:block th:if="${param.service == null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="bus" value="bus">
+	                          <label class="form-check-label widget-filter-item-text" for="bus">통학 차량</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="afterschool" value="afterschool">
+	                          <label class="form-check-label widget-filter-item-text" for="afterschool">방과후 교실</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="food" value="food">
+	                          <label class="form-check-label widget-filter-item-text" for="food">급식</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="play" value="play">
+	                          <label class="form-check-label widget-filter-item-text" for="play">체육장</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="cctv" value="cctv">
+	                          <label class="form-check-label widget-filter-item-text" for="cctv">CCTV</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
+	                    <th:block th:if="${param.service != null}">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="bus" value="bus" th:checked="${#strings.contains(param.service,'bus')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="bus">통학 차량</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="afterschool" value="afterschool" th:checked="${#strings.contains(param.service,'afterschool')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="afterschool">방과후 교실</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="food" value="food" th:checked="${#strings.contains(param.service,'food')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="food">급식</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="play" value="play" th:checked="${#strings.contains(param.service,'play')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="play">체육장</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="service" type="checkbox" id="cctv" value="cctv" th:checked="${#strings.contains(param.service,'cctv')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="cctv">CCTV</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
                     </ul>
                   </div>
                   <div class="widget widget-filter pb-4 mt-4" id="security">
                     <h3 class="widget-title1"><b>위생관리 및 안전점검 현황</b></h3>
-                    <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 11rem;" data-simplebar data-simplebar-auto-hide="false">
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security1">
-                          <label class="form-check-label widget-filter-item-text" for="security1">정기소독 관리 대상 시설</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security2">
-                          <label class="form-check-label widget-filter-item-text" for="security2">소방안전점검 여부</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security3">
-                          <label class="form-check-label widget-filter-item-text" for="security3">소방대피훈련 시행 시설</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security4">
-                          <label class="form-check-label widget-filter-item-text" for="security4">놀이시설안전검사 대상 시설</label>
-                        </div>
-                      </li>
-                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security5">
-                          <label class="form-check-label widget-filter-item-text" for="security5">가스점검 완료 시설</label>
-                        </div>
-                      </li>
-                       <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="security6">
-                          <label class="form-check-label widget-filter-item-text" for="security6">전기설비점검 완료 시설</label>
-                        </div>
-                      </li>
+                    <ul class="widget-list widget-filter-list list-unstyled pt-1" style="max-height: 12rem;" data-simplebar data-simplebar-auto-hide="false">
+	                    <th:block th:if="${param.facility} == null">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility1" value="disinfect">
+	                          <label class="form-check-label widget-filter-item-text" for="facility1">정기소독 관리 대상 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility2" value="firesafe">
+	                          <label class="form-check-label widget-filter-item-text" for="facility2">소방안전점검 여부</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility3" value="firetrain">
+	                          <label class="form-check-label widget-filter-item-text" for="facility3">소방대피훈련 시행 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility4" value="playsafe">
+	                          <label class="form-check-label widget-filter-item-text" for="facility4">놀이시설안전검사 대상 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility5" value="gas">
+	                          <label class="form-check-label widget-filter-item-text" for="facility5">가스점검 완료 시설</label>
+	                        </div>
+	                      </li>
+	                       <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility6" value="elect">
+	                          <label class="form-check-label widget-filter-item-text" for="facility6">전기설비점검 완료 시설</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
+	                    <th:block th:if="${param.facility} != null">
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility1" value="disinfect" th:checked="${#strings.contains(param.facility,'disinfect')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility1">정기소독 관리 대상 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility2" value="firesafe" th:checked="${#strings.contains(param.facility,'firesafe')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility2">소방안전점검 여부</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility3" value="firetrain" th:checked="${#strings.contains(param.facility,'firetrain')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility3">소방대피훈련 시행 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility4" value="playsafe" th:checked="${#strings.contains(param.facility,'playsafe')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility4">놀이시설안전검사 대상 시설</label>
+	                        </div>
+	                      </li>
+	                      <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility5" value="gas" th:checked="${#strings.contains(param.facility,'gas')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility5">가스점검 완료 시설</label>
+	                        </div>
+	                      </li>
+	                       <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+	                        <div class="form-check">
+	                          <input class="form-check-input" name="facility" type="checkbox" id="facility6" value="elect" th:checked="${#strings.contains(param.facility,'elect')} ? 'checked' : null ">
+	                          <label class="form-check-label widget-filter-item-text" for="facility6">전기설비점검 완료 시설</label>
+	                        </div>
+	                      </li>
+	                    </th:block>
                     </ul>
                   </div>
                 </div>
               <!-- </div> -->
               <div id="hover">
-                <button class="filter-btn">
+                <button class="filter-btn" type="submit">
                   <i class="ci-search fw-bold me-2"></i><b>선택한 조건으로 검색</b>
                 </button>
               </div>
@@ -422,384 +436,117 @@
           <section class="col-lg-8 pt-3" style="margin-left: 90px;">
             <!-- Products grid-->
             <div class="headtext">
-              <b class="bold">검색 목록 1,193건</b>
+              <b class="bold">검색 목록 [[${count}]]건</b>
               <a href="compare-kinder.html" class="compare">
                 <div class="compareIcon"><img src="img/back(1).svg"></div>&nbsp;&nbsp;<b>선택목록 비교하기</b>
               </a>
             </div>
             <div class="ddive">
-              <div class="box777">
-                  <div class="photo777" style="background-image: url(img/유치원/kinder1.JPG);">
-                    <button class="button7" id="buttonClick1" value="false" onclick="onClickCompare('buttonClick1')">
-                      <i class="ci-bookmark"></i>
-                      <b>&nbsp;비교&nbsp;</b>
-                    </button>
-                    <button class="btn-wishlist1 btn-sm" id="heartClick1" value="false" onclick="onClickHeart('heartClick1')" style="position: relative; left: 150px;">
-                      <img src="img/suit-heart.svg" class="iimage">
-                    </button>
-                  </div>
-                  <div class="container777">
-                    <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                    <div class="container888">
-                      <h3 class="product-title fs-sm" style="margin-top: 10px;" >
-                        <a href="kinder-detail.html"><b>(재)천주교수원교구유지재단데레사유치원</b></a>
-                      </h3>
-                    </div>
-                    <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 중구 청계천로 400 롯데캐슬베네치아아파트 103동7층관리동 (황학동)</div>
-                  </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder2.JPG);">
-                  <button class="button7" id="buttonClick2" value="false" onclick="onClickCompare('buttonClick2')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick2" value="false" onclick="onClickHeart('heartClick2')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder3.JPG);">
-                  <button class="button7" id="buttonClick3" value="false" onclick="onClickCompare('buttonClick3')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick3" value="false" onclick="onClickHeart('heartClick3')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder4.JPG);">
-                  <button class="button7" id="buttonClick4" value="false" onclick="onClickCompare('buttonClick4')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick4" value="false" onclick="onClickHeart('heartClick4')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder5.JPG);">
-                  <button class="button7" id="buttonClick5" value="false" onclick="onClickCompare('buttonClick5')">
-                    <i class="ci-bookmark"></i><b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick5" value="false" onclick="onClickHeart('heartClick5')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder6.JPG);">
-                  <button class="button7" id="buttonClick6" value="false" onclick="onClickCompare('buttonClick6')">
-                    <i class="ci-bookmark"></i><b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick6" value="false" onclick="onClickHeart('heartClick6')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder30.JPG);">
-                  <button class="button7" id="buttonClick7" value="false" onclick="onClickCompare('buttonClick7')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick7" value="false" onclick="onClickHeart('heartClick7')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder8.JPG);">
-                  <button class="button7" id="buttonClick8" value="false" onclick="onClickCompare('buttonClick8')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick8" value="false" onclick="onClickHeart('heartClick8')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder9.JPG);">
-                  <button class="button7" id="buttonClick9" value="false" onclick="onClickCompare('buttonClick9')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick9" value="false" onclick="onClickHeart('heartClick9')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder10.JPG);">
-                  <button class="button7" id="buttonClick10" value="false" onclick="onClickCompare('buttonClick10')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick10" value="false" onclick="onClickHeart('heartClick10')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder19.JPG);">
-                  <button class="button7" id="buttonClick11" value="false" onclick="onClickCompare('buttonClick11')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick11" value="false" onclick="onClickHeart('heartClick11')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
-
-              <div class="box777">
-                <div class="photo777" style="background-image: url(img/유치원/kinder12.JPG);">
-                  <button class="button7" id="buttonClick12" value="false" onclick="onClickCompare('buttonClick12')">
-                    <i class="ci-bookmark"></i>
-                    <b>&nbsp;비교&nbsp;</b>
-                  </button>
-                  <button class="btn-wishlist1 btn-sm" id="heartClick12" value="false" onclick="onClickHeart('heartClick12')"
-                    style="position: relative; left: 150px;">
-                    <img src="img/suit-heart.svg" class="heart">
-                  </button>
-                </div>
-                <div class="container777">
-                  <a class="sarip">&nbsp;&nbsp;사립(법인)&nbsp;&nbsp;</a>
-                  <div class="container888">
-                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-                      <a href="kinder-detail.html"><b>서울시청직장어린이집</b></a>
-                    </h3>
-                  </div>
-                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;서울특별시 관악구 관악로 37길 20</div>
-                </div>
-              </div>
+            
+	            <th:block th:if="${count == 0}">
+	            	<h3 class="text-center">검색 결과가 없습니다.</h3>
+	            </th:block>
+	            
+	            <th:block th:if="${list != null}">
+	            	<th:block th:each="kinder : ${list}">
+		              <div class="box777">
+		                  <div class="photo777" style="background-image: url(img/유치원/kinder1.JPG);">
+		                    <button class="button7" th:id="'compare' + ${kinder.kinNo}" value="false" th:onclick="|onClickCompare('compare' + ${kinder.kinNo})|">
+		                      <i class="ci-bookmark"></i>
+		                      <b>&nbsp;비교&nbsp;</b>
+		                    </button>
+		                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${kinder.kinNo}" value="false" th:onclick="|onClickHeart('heart' + ${kinder.kinNo})|" style="position: relative; left: 150px;">
+		                      <img src="img/suit-heart.svg" class="iimage">
+		                    </button>
+		                  </div>
+		                  <div class="container777">
+		                    <a class="sarip">&nbsp;&nbsp;[[${kinder.establish}]]&nbsp;&nbsp;</a>
+		                    <div class="container888">
+		                      <h3 class="product-title fs-sm" style="margin-top: 10px;" >
+		                        <a href="kinder-detail.html"><b>[[${kinder.kindername}]]</b></a>
+		                      </h3>
+		                    </div>
+		                    <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;[[${kinder.addr}]]</div>
+		                  </div>
+		              </div>
+	            	</th:block>
+	            </th:block>
 
             </div>
-            <nav class="d-flex justify-content-between pt-2 mb-5" aria-label="Page navigation" style="width: 790px;">
-              <ul class="pagination" id="prev">
-                <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-              </ul>
-              <ul class="pagination">
-                <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-                <li class="page-item d-none d-sm-block page" aria-current="page">
-                  <span class="page-link">1<span class="visually-hidden">(current)</span></span>
-                </li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
-                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
-              </ul>
-              <ul class="pagination" id="next">
-                <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-              </ul>
-            </nav>
+            <th:block th:if="${count != 0}">
+	            <nav class="d-flex justify-content-between pt-2 mb-5" aria-label="Page navigation" style="width: 790px;">
+	              <ul class="pagination" id="prev">
+	              	<!-- 이전 페이지 -->
+	                <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.prevPage});|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+	              </ul>
+	              <ul class="pagination">
+	                <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+	                
+	                <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+	                	<th:block th:if="${status.current == pageInfo.currentPage}">
+			                <li class="page-item d-none d-sm-block page" aria-current="page">
+			                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+			                </li>
+	                	</th:block>
+	                	<th:block th:if="${status.current != pageInfo.currentPage}">
+			                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
+	                	</th:block>
+	                </th:block>
+	                
+	              </ul>
+	              <ul class="pagination" id="next">
+	                <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.nextPage});|" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+	              </ul>
+	            </nav>
+            </th:block>
           </section>
         </div>
       </div>
     </main>
     <!-- Footer-->
-    <footer class="footer pt-5" id="footercolor" >
-      <div class="px-lg-3 pt-2 pb-4" id="footercolor">
-        <div class="mx-auto px-3" style="max-width: 80rem;">
-          <div class="row">
-            <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
-              <div class="mt-n1"><a class="d-inline-block align-middle" href="#"><img class="d-block mb-4" src="img//ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-sm-4">
-              <div class="widget widget-links widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
-                <ul class="widget-list">
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-sm-4">
-              <div class="widget widget-links widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
-                <ul class="widget-list">
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
-                </ul>
-              </div>
-              <div class="widget widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
-              </div>
-            </div>
-            <div class="col-xl-4 col-sm-8">
-              <div class="widget pb-2 mb-4">
-                <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
-                <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-                  <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                    <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email" required>
-                    <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
-                  </div>
-                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                    <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
-                  </div>
-                  <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
-                  <div class="subscription-status"></div>
-                </form>
-              </div>
-              <div class="widget pb-2 mb-4">
-                <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
-                <div class="d-flex flex-wrap">
-                  <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
-                  <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="px-lg-3 py-3" id="footerunder">
-        <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
-          <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
-          <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
-        </div>
-      </div>
-    </footer>
+    <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
+    
     <!-- Toolbar for handheld devices (Default)-->
-    <!-- Toolbar for handheld devices (Shop)-->
-    <div class="handheld-toolbar">
-      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#shop-sidebar"><span class="handheld-toolbar-icon"><i class="ci-filter-alt"></i></span><span class="handheld-toolbar-label">Filters</span></a><a class="d-table-cell handheld-toolbar-item" href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
-    </div>
     <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
     <!-- Vendor scrits: js libraries and plugins-->
-    <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-    <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-    <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-    <script src="vendor/nouislider/dist/nouislider.min.js"></script>
-    <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-    <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-    <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
-    <script src="vendor/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
+    <script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/vendor/tiny-slider/dist/min/tiny-slider.js}"></script>
+    <script th:src="@{/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js}"></script>
+    <script th:src="@{/vendor/nouislider/dist/nouislider.min.js}"></script>
+    <script th:src="@{/vendor/drift-zoom/dist/Drift.min.js}"></script>
+    <script th:src="@{/vendor/lightgallery.js/dist/js/lightgallery.min.js}"></script>
+    <script th:src="@{/vendor/lg-video.js/dist/lg-video.min.js}"></script>
+    <script th:src="@{/vendor/flatpickr/dist/flatpickr.min.js}"></script>
+    <script th:src="@{/vendor/flatpickr/dist/plugins/rangePlugin.js}"></script>
     <!-- Main theme script-->
-    <script src="js/theme.min.js"></script>
-    <script src="js/address.js"></script>
-    <script src="js/button-compare.js"></script>
-    <script src="js/button-heart.js"></script>
+    <script th:src="@{/js/theme.min.js}"></script>
+    <script th:src="@{/js/address.js}"></script>
+    <script th:src="@{/js/button-compare.js}"></script>
+    <script th:src="@{/js/button-heart.js}"></script>
+    
+	<script type="text/javascript">
+		var url_href = window.location.href;
+	    var url = new URL(url_href); // URL 객체 선언
+	    
+	    $(function() {
+			const urlParams = new URL(location.href).searchParams;
+			var city = urlParams.get('city');
+			if(city != '') {
+				cityChange();
+			}
+		})
+	    
+		function movePage(page){
+			url.searchParams.set("page", page);
+			
+			window.location.search = url.searchParams;
+		};
+	    
+	</script>
   </body>
 </html>
+
+
+
+

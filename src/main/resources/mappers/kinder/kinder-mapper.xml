@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.ukids.kinder.model.mapper.KinderMapper">
+
+	<select id="selectKinderList" resultType="Kinder" parameterType="map">
+		SELECT
+			kinNo, kinderCode, officeedu, subofficeedu, kindername, establish, edate,
+			odate, addr, telno, hpaddr, opertime, clcnt3, clcnt4, 
+			clcnt5, mixclcnt, shclcnt, ppcnt3, ppcnt4, ppcnt5, mixppcnt, 
+			shppcnt, rppnname, ldgrname, pbnttmng, prmstfcnt, ag3fpcnt, ag4fpcnt, 
+			ag5fpcnt, mixfpcnt, spcnfpcnt, phgrindrarea, drcnt, adcnt, hdst_thcnt, 
+			asps_thcnt, gnrl_thcnt, spcn_thcnt, ntcnt, ntrt_thcnt, shcnt_thcnt, incnt, 
+			owcnt, hdst_tchr_qacnt, rgth_gd1_qacnt, rgth_gd2_qacnt, asth_qacnt, mas_mspl_dclr_yn, vhcl_oprn_yn, 
+			yy1_undr_thcnt, yy1_abv_yy2_undr_thcnt, yy2_abv_yy4_undr_thcnt, yy4_abv_yy6_undr_thcnt, yy6_abv_thcnt, fxtm_dsnf_trgt_yn, fire_avd_yn, 
+			gas_ck_yn, fire_safe_yn, elect_ck_yn, plyg_ck_yn, cctv_ist_yn, cctv_ist_total, afsc_pros_lsn_dcnt
+		FROM KINDER
+		WHERE 1 = 1
+		<if test="search != null">
+			AND kindername LIKE '%${search}%'
+		</if>
+		<if test="build != null">
+			AND (
+				<foreach collection="build" item="item" separator="or">
+					establish LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="city != null">
+			AND addr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND addr LIKE '%${town}%'
+		</if>
+		
+		<if test="class1 != null">
+			AND shclcnt != 0
+		</if>
+		<if test="class2 != null">
+			AND mixclcnt != 0
+		</if>
+		<if test="class3 != null">
+			AND clcnt3 != 0
+		</if>
+		<if test="class4 != null">
+			AND clcnt4 != 0
+		</if>
+		<if test="class5 != null">
+			AND clcnt5 != 0
+		</if>
+		
+		<if test="special != null">
+			AND spcn_thcnt != 0
+		</if>
+		<if test="health != null">
+			AND ntcnt != 0
+		</if>
+		<if test="nutrition != null">
+			AND ntrt_thcnt != 0
+		</if>
+		
+		<if test="bus != null">
+			AND vhcl_oprn_yn LIKE 'Y'
+		</if>
+		<if test="afterschool != null">
+			AND afsc_pros_lsn_dcnt != 0
+		</if>
+		<if test="food != null">
+			AND mas_mspl_dclr_yn LIKE 'Y'
+		</if>
+		<if test="play != null">
+			AND phgrindrarea != '㎡' AND phgrindrarea != '0㎡'
+		</if>
+		<if test="cctv != null">
+			AND cctv_ist_yn LIKE 'Y'
+		</if>
+		
+		<if test="disinfect != null">
+			AND fxtm_dsnf_trgt_yn LIKE 'Y'
+		</if>
+		<if test="firesafe != null">
+			AND fire_safe_yn LIKE 'Y'
+		</if>
+		<if test="firetrain != null">
+			AND fire_avd_yn LIKE 'Y'
+		</if>
+		<if test="playsafe != null">
+			AND plyg_ck_yn LIKE 'Y'
+		</if>
+		<if test="gas != null">
+			AND gas_ck_yn LIKE 'Y'
+		</if>
+		<if test="elect != null">
+			AND elect_ck_yn LIKE 'Y'
+		</if>
+		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectKinderCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(kinNo)
+		FROM KINDER
+		WHERE 1 = 1
+		<if test="search != null">
+			AND kindername LIKE '%${search}%'
+		</if>
+		<if test="build != null">
+			AND (
+				<foreach collection="build" item="item" separator="or">
+					establish LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="city != null">
+			AND addr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND addr LIKE '%${town}%'
+		</if>
+		
+		<if test="class1 != null">
+			AND shclcnt != 0
+		</if>
+		<if test="class2 != null">
+			AND mixclcnt != 0
+		</if>
+		<if test="class3 != null">
+			AND clcnt3 != 0
+		</if>
+		<if test="class4 != null">
+			AND clcnt4 != 0
+		</if>
+		<if test="class5 != null">
+			AND clcnt5 != 0
+		</if>
+		
+		<if test="special != null">
+			AND spcn_thcnt != 0
+		</if>
+		<if test="health != null">
+			AND ntcnt != 0
+		</if>
+		<if test="nutrition != null">
+			AND ntrt_thcnt != 0
+		</if>
+		
+		<if test="bus != null">
+			AND vhcl_oprn_yn LIKE 'Y'
+		</if>
+		<if test="afterschool != null">
+			AND afsc_pros_lsn_dcnt != 0
+		</if>
+		<if test="food != null">
+			AND mas_mspl_dclr_yn LIKE 'Y'
+		</if>
+		<if test="play != null">
+			AND phgrindrarea != '㎡' AND phgrindrarea != '0㎡'
+		</if>
+		<if test="cctv != null">
+			AND cctv_ist_yn LIKE 'Y'
+		</if>
+		
+		<if test="disinfect != null">
+			AND fxtm_dsnf_trgt_yn LIKE 'Y'
+		</if>
+		<if test="firesafe != null">
+			AND fire_safe_yn LIKE 'Y'
+		</if>
+		<if test="firetrain != null">
+			AND fire_avd_yn LIKE 'Y'
+		</if>
+		<if test="playsafe != null">
+			AND plyg_ck_yn LIKE 'Y'
+		</if>
+		<if test="gas != null">
+			AND gas_ck_yn LIKE 'Y'
+		</if>
+		<if test="elect != null">
+			AND elect_ck_yn LIKE 'Y'
+		</if>
+	</select>
+	
+
+
+
+
+
+</mapper>
