@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.ukids.nursery.model.mapper.NurseryMapper">
+
+	<select id="selectNurseryList" resultType="Nursery" parameterType="map">
+		SELECT
+			no, stcode, crname, crtypename, crstatusname, 
+			zipcode, craddr, crtelno, crfaxno, crhome, 
+			nrtrroomcnt, nrtrroomsize, plgrdco, cctvinstlcnt, chcrtescnt, 
+			crcapat, crchcnt, la, lo, crcargbname, 
+			crcnfmdt, crpausebegindt, crpauseenddt, crabldt, crspec, 
+			class_cnt_00, class_cnt_01, class_cnt_02, class_cnt_03, class_cnt_04, 
+			class_cnt_05, class_cnt_m2, class_cnt_m5, class_cnt_sp, class_cnt_tot, 
+			child_cnt_00, child_cnt_01, child_cnt_02, child_cnt_03, child_cnt_04, 
+			child_cnt_05, child_cnt_m2, child_cnt_m5, child_cnt_sp, child_cnt_tot, 
+			em_cnt_0y, em_cnt_1y, em_cnt_2y, em_cnt_4y, em_cnt_6y, 
+			em_cnt_a1, em_cnt_a2, em_cnt_a3, em_cnt_a4, em_cnt_a5, 
+			em_cnt_a6, em_cnt_a10, em_cnt_a7, em_cnt_a8, em_cnt_tot, 
+			Crrepname
+		FROM NURSERY
+		WHERE 1 = 1
+		<if test="search != null">
+			AND crname LIKE '%${search}%'
+		</if>
+		<if test="build != null">
+			AND (
+				<foreach collection="build" item="item" separator="or">
+					crtypename LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="city != null">
+			AND craddr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND craddr LIKE '%${town}%'
+		</if>
+		
+		<if test="class1 != null">
+			AND class_cnt_sp != 0
+		</if>
+		<if test="class2 != null">
+			AND class_cnt_m2 != 0
+		</if>
+		<if test="class3 != null">
+			AND class_cnt_m5 != 0
+		</if>
+		<if test="class4 != null">
+			AND class_cnt_00 != 0
+		</if>
+		<if test="class5 != null">
+			AND class_cnt_01 != 0
+		</if>
+		<if test="class6 != null">
+			AND class_cnt_02 != 0
+		</if>
+		<if test="class7 != null">
+			AND class_cnt_03 != 0
+		</if>
+		<if test="class8 != null">
+			AND class_cnt_04 != 0
+		</if>
+		<if test="class9 != null">
+			AND class_cnt_05 != 0
+		</if>
+		
+		<if test="care != null">
+			AND em_cnt_a2 != 0
+		</if>
+		<if test="special != null">
+			AND em_cnt_a3 != 0
+		</if>
+		<if test="cure != null">
+			AND em_cnt_a4 != 0
+		</if>
+		<if test="nutrition != null">
+			AND em_cnt_a5 != 0
+		</if>
+		<if test="nurse != null">
+			AND (em_cnt_a6 != 0 OR em_cnt_a10 != 0)
+		</if>
+		
+		<if test="bus != null">
+			AND crcargbname LIKE '운영'
+		</if>
+		<if test="afterschool != null">
+			AND crspec LIKE '%방과후%'
+		</if>
+		<if test="food != null">
+			AND em_cnt_a7 != 0
+		</if>
+		<if test="play != null">
+			AND plgrdco != 0
+		</if>
+		<if test="cctv != null">
+			AND cctvinstlcnt != 0
+		</if>
+		
+		ORDER BY no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectNurseryCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(no)
+		FROM NURSERY
+		WHERE 1 = 1
+		<if test="search != null">
+			AND crname LIKE '%${search}%'
+		</if>
+		<if test="build != null">
+			AND (
+				<foreach collection="build" item="item" separator="or">
+					crtypename LIKE '%${item}%'
+				</foreach>
+			)
+		</if>
+		<if test="city != null">
+			AND craddr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND craddr LIKE '%${town}%'
+		</if>
+		
+		<if test="class1 != null">
+			AND class_cnt_sp != 0
+		</if>
+		<if test="class2 != null">
+			AND class_cnt_m2 != 0
+		</if>
+		<if test="class3 != null">
+			AND class_cnt_m5 != 0
+		</if>
+		<if test="class4 != null">
+			AND class_cnt_00 != 0
+		</if>
+		<if test="class5 != null">
+			AND class_cnt_01 != 0
+		</if>
+		<if test="class6 != null">
+			AND class_cnt_02 != 0
+		</if>
+		<if test="class7 != null">
+			AND class_cnt_03 != 0
+		</if>
+		<if test="class8 != null">
+			AND class_cnt_04 != 0
+		</if>
+		<if test="class9 != null">
+			AND class_cnt_05 != 0
+		</if>
+		
+		<if test="care != null">
+			AND em_cnt_a2 != 0
+		</if>
+		<if test="special != null">
+			AND em_cnt_a3 != 0
+		</if>
+		<if test="cure != null">
+			AND em_cnt_a4 != 0
+		</if>
+		<if test="nutrition != null">
+			AND em_cnt_a5 != 0
+		</if>
+		<if test="nurse != null">
+			AND (em_cnt_a6 != 0 OR em_cnt_a10 != 0)
+		</if>
+		
+		<if test="bus != null">
+			AND crcargbname LIKE '운영'
+		</if>
+		<if test="afterschool != null">
+			AND crspec LIKE '%방과후%'
+		</if>
+		<if test="food != null">
+			AND em_cnt_a7 != 0
+		</if>
+		<if test="play != null">
+			AND plgrdco != 0
+		</if>
+		<if test="cctv != null">
+			AND cctvinstlcnt != 0
+		</if>
+	</select>
+	
+
+
+
+
+
+</mapper>

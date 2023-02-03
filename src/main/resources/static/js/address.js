@@ -121,7 +121,7 @@ function cityChange() {
     }
 
     $('#town').empty();
-    var option = $('<option>전체</option>');
+    var option = $('<option value=" ">전체</option>');
     $('#town').append(option);
     for(var i in town_list) {
         option = $('<option vaule="' + town_list[i] + '" >' + town_list[i] + '</option>');
