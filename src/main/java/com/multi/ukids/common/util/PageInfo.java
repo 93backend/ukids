@@ -1,4 +1,4 @@
-package com.multi.bbs.common.util;
+package com.multi.ukids.common.util;
 
 import lombok.Getter;
 
@@ -114,3 +114,4 @@ public class PageInfo {
 		return endList > this.listCount ? this.listCount : endList;
 	}
 }
+

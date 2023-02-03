@@ -2,19 +2,14 @@ package com.multi.ukids;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class UkidsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UkidsApplication.class, args);
-		System.out.println("hello");
-		System.out.println("Git Test!");
-		System.out.println("규완");
-		System.out.println("test test");
-		System.out.println("hello");
-		System.out.println("git test");
-		System.out.println("gti commit test");
+		System.out.println("welcome ukids!!");
 	}
 
 }
