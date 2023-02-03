@@ -79,5 +79,4 @@
 	 	WHERE memberNo = #{memberNo}
 	 </update>
 	
-	
 </mapper>
