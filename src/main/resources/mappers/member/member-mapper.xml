@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<!-- 향후 Mapper interface가 정의 될 위치 -->
+<mapper namespace="com.multi.ukids.member.model.mapper.MemberMapper">
+	<sql id="selectMemberSql">
+		SELECT 	
+			memberNo, id, password, role, name, postCode, address,
+			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
+			STATUS, enrollDate, modifyDate
+		FROM MEMBER
+	</sql>
+	
+	<resultMap type="Member" id="memberResultMap">
+		<id 	property="memberNo" column="memberNo" />
+		<result property="id" 		column="id" />
+		<result property="password" column="password" />
+		<result property="role" 	column="role" />
+		<result property="name" 	column="name" />
+		<result property="postCode" 	column="postCode" />
+		<result property="address" 	column="address" />
+		<result property="email" 	column="email" />
+		<result property="phone" 	column="phone" />
+		<result property="kidNum" 	column="kidNum" />
+		<result property="kidAge1" 	column="kidAge1" />
+		<result property="kidAge2" 	column="kidAge2" />
+		<result property="kidAge3" 	column="kidAge3" />
+		<result property="kakaoToken" 	column="kakaoToken" />
+		<result property="STATUS" 	column="STATUS" />
+		<result property="enrollDate" column="ENROLL_DATE" />
+		<result property="modifyDate" column="MODIFY_DATE" />
+	</resultMap>
+	
+	<select id="selectCount" resultType="int">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+	
+	<select id="selectAll" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE ID = #{id} AND STATUS = 'Y'
+	</select>	
+	
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER(
+			memberNo, id, password, role, name, postCode, address,
+			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
+			STATUS, enrollDate, modifyDate
+		) VALUES (
+			 0, #{id}, #{password}, default, #{name}, #{postCode}, #{address},
+			 #{email}, #{phone}, #{kidNum}, #{kidAge1}, #{kidAge2}, #{kidAge3},
+			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+	
+	 <update id="updateMember" parameterType="Member">
+	 	UPDATE MEMBER
+	 	SET
+	 		NAME		= #{name}, 
+	 		PHONE		= #{phone},
+	 		EMAIL		= #{email},
+	 		ADDRESS		= #{address},
+	 		HOBBY		= #{hobby},
+	 		MODIFY_DATE	= #{modifyDate}
+	 	WHERE MNO = #{memberNo}
+	 </update>
+	 
+	 <update id="updatePwd" parameterType="map">
+	 	UPDATE MEMBER 
+	 		SET PASSWORD = #{password} 
+ 		WHERE MNO = #{memberNo}
+	 </update>
+	 
+	 <update id="deleteMember" parameterType="int">
+	 	UPDATE MEMBER 
+	 		SET STATUS = 'N' 
+	 	WHERE MNO = #{memberNo}
+	 </update>
+	
+	
+</mapper>
