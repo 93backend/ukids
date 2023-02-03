@@ -64,19 +64,19 @@
 	 		EMAIL		= #{email},
 	 		ADDRESS		= #{address},
 	 		MODIFY_DATE	= #{modifyDate}
-	 	WHERE MNO = #{memberNo}
+	 	WHERE memberNo = #{memberNo}
 	 </update>
 	 
 	 <update id="updatePwd" parameterType="map">
 	 	UPDATE MEMBER 
 	 		SET PASSWORD = #{password} 
- 		WHERE MNO = #{memberNo}
+ 		WHERE memberNo = #{memberNo}
 	 </update>
 	 
 	 <update id="deleteMember" parameterType="int">
 	 	UPDATE MEMBER 
 	 		SET STATUS = 'N' 
-	 	WHERE MNO = #{memberNo}
+	 	WHERE memberNo = #{memberNo}
 	 </update>
 	
 	
