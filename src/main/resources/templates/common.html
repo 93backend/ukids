@@ -51,15 +51,15 @@
             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
+            <form class="needs-validation tab-pane fade show active" th:action="@{/login}" method="post" autocomplete="off" novalidate id="signin-tab">
               <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
+                <label class="form-label" for="userId">아이디</label>
+                <input class="form-control" type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요." required>
               </div>
               <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
+                <label class="form-label" for="userPwd">비밀번호</label>
                 <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
+                  <input class="form-control" type="password" name ="userPwd" id="userPwd" required>
                   <label class="password-toggle-btn" aria-label="Show/hide password">
                     <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
                   </label>
@@ -74,29 +74,7 @@
               <a href="#"><img class="cgw16 cgw17 cgw18" th:src="@{/img/ukids/8.png}"></a>
               <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
             </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" th:src="@{/img/ukids/9.png}"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
+
           </div>
         </div>
       </div>
@@ -117,7 +95,7 @@
           <div class="navbar-toolbar d-flex align-items-center order-lg-3">
 
             <!-- 로그인 전!!!!!!!! -->
-
+			<th:block th:if="${session.loginMember == null}">
             <a href="#signin-modal" data-bs-toggle="modal">
               <button type="button" class="btn btn-primary rounded-pill" id="sign">
                 <i class="ci-locked"></i>
@@ -130,25 +108,27 @@
                 <span class="jointext">회원가입</span>
               </button>
             </a>
+            </th:block>
 
             <!-- 로그인 후!!!!!!!!!!!! -->
-
-            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" th:href="@{/mypage}">
+			<th:block th:if="${session.loginMember != null}">
+             <a  class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" th:href="@{/mypage}">
               <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
+              <div class="navbar-tool-text ms-n3"><small>안녕하세요,[[${session.loginMember.name}]]님</small><p class="mypg">마이페이지</p></div>
             </a>
             
-            <a class="navbar-tool ms-3" th:href="@{/}">
+            <a class="navbar-tool ms-3" th:href="@{/logout}">
               <div class="navbar-tool-icon-box bg-secondary">
                 <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
               </div>
-            </a> -->
+            </a> 
 
             <a class="navbar-tool ms-3" th:href="@{/mypage-7}">
               <div class="navbar-tool-icon-box bg-secondary">
                 <i class="navbar-tool-icon ci-cart"></i>
               </div>
             </a>
+
             
           </div>
 

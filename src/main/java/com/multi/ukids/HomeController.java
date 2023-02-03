@@ -20,7 +20,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
-		logger.info("Welcome home! The client locale is {}.", locale);
 //		Member loginMember = memberService.login("admin", "1212");
 //		session.setAttribute("loginMember", loginMember);
 //		test();

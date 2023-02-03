@@ -9,7 +9,7 @@ public class UkidsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UkidsApplication.class, args);
-		System.out.println("welcome ukids!!");
+		System.out.println("유키즈에 오신걸 환영합니다!!!");
 	}
 
 }
