@@ -2,6 +2,15 @@ package com.multi.ukids.member.model.vo;
 
 import java.util.Date;
 
+import com.multi.ukids.member.model.vo.Member;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 	
 	private int memberNo;
