@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.ukids.toy.model.mapper.ToyMapper">
+	
+	<resultMap type="Toy" id="ToyListResultMap">
+		<id property="toyNo" column="ToyNo"/>
+		<result property="toyCd" column="TOYCD"/>
+		<result property="toyNm1" column="TOYNM1"/>
+		<result property="toyNm2" column="TOYNM2"/>
+		<result property="toyEx" column="TOYEX"/>
+		<result property="toySearch" column="TOYSEARCH"/>
+		<result property="toyPay" column="TOYPAY"/>
+		<result property="toyImg" column="TOYIMG"/>
+		<result property="toyCategoryB" column="TOYCATEGORYB"/>
+		<result property="toyCategoryM" column="TOYCATEGORYM"/>
+		<result property="toyCategoryS" column="TOYCATEGORYS"/>
+		<result property="toyType" column="TOYTYPE"/>
+	</resultMap>
+ 
+ 
+ 
+ 	<select id="selectToyList" resultType="Toy" parameterType="map" >
+		SELECT
+		DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
+		FROM TOY 
+		<where>
+		<if test="searchValue != null">
+			 TOYNM1 LIKE '%${searchValue}%'
+		</if>
+			<if test="searchType != null">
+				AND (
+		    	<foreach collection="searchType" item="item" separator="OR">
+			    	TOYCATEGORYM LIKE '%${item}%'
+		    	</foreach>
+		    	)
+			</if>
+	 	</where>
+		ORDER BY TOYNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectCateList" resultType="String" >
+		SELECT DISTINCT TOYCATEGORYM FROM TOY
+	</select>	
+	
+	<select id="selectToyCount" parameterType="map" resultType="int">
+		SELECT COUNT(TOYNO) FROM TOY	
+	 	<where>
+		<if test="searchValue != null">
+			 TOYNM1 LIKE '%${searchValue}%'
+		</if>
+			<if test="searchType != null">
+				AND (
+		    	<foreach collection="searchType" item="item" separator="OR">
+			    	TOYCATEGORYM LIKE '%${item}%'
+		    	</foreach>
+		    	)
+			</if>
+	 	</where>
+	</select>
+	
+</mapper>
