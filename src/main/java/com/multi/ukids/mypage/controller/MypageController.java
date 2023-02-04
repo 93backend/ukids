@@ -40,7 +40,7 @@ public class MypageController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember // 세션 값
 			) {
 		log.info("update 요청, updateMember : " + updateMember);
-		if(loginMember == null || loginMember.getId().equals(updateMember.getId()) == false) {
+		if(loginMember == null) {
 			model.addAttribute("msg","잘못된 접근입니다.");
 			model.addAttribute("location","/");
 			return "common/msg";
@@ -52,10 +52,10 @@ public class MypageController {
 		if(result > 0) {
 			model.addAttribute("loginMember", memberService.findById(loginMember.getId())); // DB에서 있는 값을 다시 세션에 넣어주는 코드
 			model.addAttribute("msg", "회원정보를 수정하였습니다.");
-			model.addAttribute("location", "/member/view");
+			model.addAttribute("location", "/mypage");
 		}else {
 			model.addAttribute("msg", "회원정보 수정에 실패하였습니다.");
-			model.addAttribute("location", "/member/view");
+			model.addAttribute("location", "/mypage");
 		}
 		return "common/msg";
 	}

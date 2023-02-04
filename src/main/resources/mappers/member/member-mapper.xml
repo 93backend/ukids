@@ -7,8 +7,8 @@
 	<sql id="selectMemberSql">
 		SELECT 	
 			memberNo, id, password, role, name, postCode, address,
-			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
-			STATUS, enrollDate, modifyDate, address2
+			email, phone, kidNum, kidAge1, kidAge2, kidAge3, field,
+			fieldCd, kakaoToken, STATUS, enrollDate, modifyDate, address2
 		FROM MEMBER
 	</sql>
 	
@@ -26,6 +26,8 @@
 		<result property="kidAge1" 	column="kidAge1" />
 		<result property="kidAge2" 	column="kidAge2" />
 		<result property="kidAge3" 	column="kidAge3" />
+		<result property="field" 	column="field" />
+		<result property="fieldCd" 	column="fieldCd" />
 		<result property="kakaoToken" 	column="kakaoToken" />
 		<result property="STATUS" 	column="STATUS" />
 		<result property="enrollDate" column="enrollDate" />
@@ -53,8 +55,8 @@
 			STATUS, enrollDate, modifyDate, address2
 		) VALUES (
 			 0, #{id}, #{password}, default, #{name}, #{postCode}, #{address},
-			 #{email}, #{phone}, #{kidNum}, #{kidAge1}, #{kidAge2}, #{kidAge3},
-			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
+			 #{email}, #{phone}, #{kidNum}, #{kidAge1}, #{kidAge2}, #{kidAge3}, #{field}, 
+			 #{fieldCd}, #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
 	</insert>
 	
 	 <update id="updateMember" parameterType="Member">
@@ -66,6 +68,12 @@
 	 		POSTCODE	= #{postCode}, 
 	 		ADDRESS		= #{address},
 	 		ADDRESS2	= #{address2},
+	 		KIDNUM		= #{kidNum},
+	 		KIDAGE1		= #{kidAge1},
+	 		KIDAGE2		= #{kidAge2},
+	 		KIDAGE3		= #{kidAge3},
+	 		FIELD		= #{field},
+	 		FIELDCD		= #{fieldCd},
 	 		MODIFYDATE	= #{modifyDate}
 	 	WHERE memberNo = #{memberNo}
 	 </update>

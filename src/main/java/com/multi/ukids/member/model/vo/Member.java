@@ -26,6 +26,8 @@ public class Member {
 	private int kidAge1; 
 	private int kidAge2; 
 	private int kidAge3;
+	private String field;
+	private String fieldCd;
 	private String kakaoToken;
 	private String STATUS;
 	private Date enrollDate;
