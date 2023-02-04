@@ -64,7 +64,6 @@ public class NurseryController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
 		
-		
 		return "nursery-main";
 	}
 	
@@ -80,9 +79,7 @@ public class NurseryController {
 		model.addAttribute("classCnt", classCnt);
 		model.addAttribute("childCnt", childCnt);
 		
-		
 		return "nursery-detail";
-		
 	}
 
 }

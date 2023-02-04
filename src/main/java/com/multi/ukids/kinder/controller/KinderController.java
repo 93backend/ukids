@@ -20,7 +20,7 @@ public class KinderController {
 	private KinderService kinderService;
 	
 	@GetMapping("/kinder-main")
-	public String kinderList(Model model, 
+	public String kinderMain(Model model, 
 			@RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String[] build,
 			@RequestParam(required = false) String[] classroom,
@@ -71,5 +71,25 @@ public class KinderController {
 		model.addAttribute("param", param);
 		
 		return "/kinder-main";
+	}
+	
+	@GetMapping("/kinder-detail")
+	public String kinderDetail(Model model, @RequestParam("no") int no) {
+		
+		Kinder kinder = kinderService.findByNo(no);
+		
+		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
+		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
+		
+		String edate = kinder.getEdate().substring(0, 4) + "-" + kinder.getEdate().substring(4, 6) + "-" + kinder.getEdate().substring(6);
+		String odate = kinder.getOdate().substring(0, 4) + "-" + kinder.getOdate().substring(4, 6) + "-" + kinder.getOdate().substring(6);
+		
+		model.addAttribute("kinder", kinder);
+		model.addAttribute("classCnt", classCnt);
+		model.addAttribute("childCnt", childCnt);
+		model.addAttribute("edate", edate);
+		model.addAttribute("odate", odate);
+		
+		return "kinder-detail";
 	}
 }

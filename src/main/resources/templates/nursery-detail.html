@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>UKIDS : 어린이집</title>
+    <title>UKIDS | 어린이집</title>
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <!-- Viewport-->
@@ -134,8 +134,8 @@
           <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-                <li class="breadcrumb-item"><a href="./nursery-main.html">어린이집</a></li>
+                <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item"><a href="/nursery-main">어린이집</a></li>
                 <li class="breadcrumb-item text-nowrap text-pink" aria-current="page" style="color: #fc6c93;">어린이집 상세</li>
               </ol>
             </nav>
@@ -518,10 +518,18 @@ let customLegend = function (chart) {
     let sum = chart.data.datasets[0].data[0] + chart.data.datasets[0].data[1] + chart.data.datasets[0].data[2] + chart.data.datasets[0].data[3] + chart.data.datasets[0].data[4] + chart.data.datasets[0].data[5];
 
     chart.data.labels.forEach(function (label, index) {
-        ul.innerHTML += `<li><span style="background-color: ${color[index]}; display: inline-block; width: 15px; height: 15px;"></span>
-        <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
-        <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">${chart.data.datasets[0].data[index]}개</div>
-        <div style="display: inline-block; text-align: right; width: 55px;">${Math.round((chart.data.datasets[0].data[index] / sum) * 100)}%</div></li>`;
+    	let val = chart.data.datasets[0].data[index];
+    	if(val == 0) {
+	        ul.innerHTML += `<li style="color: gray;"><span style="background-color: gray; color: gray; opacity: 20%; display: inline-block; width: 15px; height: 15px;"></span>
+	        <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
+	        <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">-</div>
+	        <div style="display: inline-block; text-align: right; width: 55px;">-</div></li>`;
+    	} else {
+	        ul.innerHTML += `<li><span style="background-color: ${color[index]}; display: inline-block; width: 15px; height: 15px;"></span>
+	        <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
+	        <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">${chart.data.datasets[0].data[index]}개</div>
+	        <div style="display: inline-block; text-align: right; width: 55px;">${Math.round((chart.data.datasets[0].data[index] / sum) * 100)}%</div></li>`;
+    	}
     });
 
     return ul.outerHTML;
@@ -582,10 +590,18 @@ let customLegend2 = function (chart) {
   let sum = chart.data.datasets[0].data[0] + chart.data.datasets[0].data[1] + chart.data.datasets[0].data[2] + chart.data.datasets[0].data[3] + chart.data.datasets[0].data[4] + chart.data.datasets[0].data[5];
 
   chart.data.labels.forEach(function (label, index) {
-    ul2.innerHTML += `<li><span style="background-color: ${color[index]}; display: inline-block; width: 15px; height: 15px;"></span>
-    <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
-    <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">${chart.data.datasets[0].data[index]}명</div>
-    <div style="display: inline-block; text-align: right; width: 55px;">${Math.round((chart.data.datasets[0].data[index] / sum) * 100)}%</div></li>`;
+	  let val = chart.data.datasets[0].data[index];
+	  if(val == 0) {
+	    ul2.innerHTML += `<li style="color: gray;"><span style="background-color: gray; color: gray; opacity: 20%; display: inline-block; width: 15px; height: 15px;"></span>
+	    <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
+	    <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">-</div>
+	    <div style="display: inline-block; text-align: right; width: 55px;">-</div></li>`;
+	  } else {
+	    ul2.innerHTML += `<li><span style="background-color: ${color[index]}; display: inline-block; width: 15px; height: 15px;"></span>
+	    <div style="display: inline-block; margin-right: 20px; text-align: right;">${label}</div>
+	    <div style="display: inline-block; margin-right: 25px; text-align: right; width: 55px;">${chart.data.datasets[0].data[index]}명</div>
+	    <div style="display: inline-block; text-align: right; width: 55px;">${Math.round((chart.data.datasets[0].data[index] / sum) * 100)}%</div></li>`;
+	  }
   });
 
   return ul2.outerHTML;
@@ -596,8 +612,8 @@ let customLegend2 = function (chart) {
 */
 
 var childTot = [[${nursery.child_cnt_tot}]]
-var classTot = [[${nursery.class_cnt_tot}]]
 var teacherTot = [[${nursery.em_cnt_tot}]]
+var classTot = [[${nursery.class_cnt_tot}]]
 
 var avg1 = Math.round(childTot / teacherTot);
 var avg2 = Math.round(childTot / classTot);
@@ -799,11 +815,19 @@ let customLegend5 = function (chart) {
 
   chart.data.labels.forEach(function (label, index) {
     let value = chart.data.datasets[0].data[index];
+    if(value == 0) {
+      ul.innerHTML += `<li style="color: gray;">
+      <span style="background-color: gray; color: gray; opacity: 20%; display: inline-block; width: 15px; height: 15px;"></span>
+       <div style="display: inline-block; width: 60px; margin-right: 5px">${label}</div>
+       <div style="display: inline-block; width: 50px; text-align: right;">-</div>
+       </li>`;
+    } else {
       ul.innerHTML += `<li>
       <span style="background-color: ${color[index]}; display: inline-block; width: 15px; height: 15px;"></span>
        <div style="display: inline-block; width: 60px; margin-right: 5px">${label}</div>
        <div style="display: inline-block; width: 50px; text-align: right;">${value}개</div>
        </li>`;
+    }
   });
 
   return ul.outerHTML;

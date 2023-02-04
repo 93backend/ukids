@@ -180,8 +180,20 @@
 		</if>
 	</select>
 	
-
-
+	<select id="selectKinderByNo" resultType="Kinder" parameterType="int">
+		SELECT
+			kinNo, kinderCode, officeedu, subofficeedu, kindername, establish, edate,
+			odate, addr, telno, hpaddr, opertime, clcnt3, clcnt4, 
+			clcnt5, mixclcnt, shclcnt, ppcnt3, ppcnt4, ppcnt5, mixppcnt, 
+			shppcnt, rppnname, ldgrname, pbnttmng, prmstfcnt, ag3fpcnt, ag4fpcnt, 
+			ag5fpcnt, mixfpcnt, spcnfpcnt, phgrindrarea, drcnt, adcnt, hdst_thcnt, 
+			asps_thcnt, gnrl_thcnt, spcn_thcnt, ntcnt, ntrt_thcnt, shcnt_thcnt, incnt, 
+			owcnt, hdst_tchr_qacnt, rgth_gd1_qacnt, rgth_gd2_qacnt, asth_qacnt, mas_mspl_dclr_yn, vhcl_oprn_yn, 
+			yy1_undr_thcnt, yy1_abv_yy2_undr_thcnt, yy2_abv_yy4_undr_thcnt, yy4_abv_yy6_undr_thcnt, yy6_abv_thcnt, fxtm_dsnf_trgt_yn, fire_avd_yn, 
+			gas_ck_yn, fire_safe_yn, elect_ck_yn, plyg_ck_yn, cctv_ist_yn, cctv_ist_total, afsc_pros_lsn_dcnt
+		FROM KINDER
+		WHERE kinNo = #{no}
+	</select>
 
 
 

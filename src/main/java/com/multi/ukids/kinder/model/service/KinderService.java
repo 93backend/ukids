@@ -24,5 +24,9 @@ public class KinderService {
 	public int getKinderCount(Map<String, Object> map) {
 		return mapper.selectKinderCount(map);
 	}
+	
+	public Kinder findByNo(int no) {
+		return mapper.selectKinderByNo(no);
+	}
 
 }

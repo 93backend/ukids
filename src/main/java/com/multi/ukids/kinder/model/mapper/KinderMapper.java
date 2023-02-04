@@ -11,5 +11,6 @@ import com.multi.ukids.kinder.model.vo.Kinder;
 public interface KinderMapper {
 	List<Kinder> selectKinderList(Map<String, Object> map);
 	int selectKinderCount(Map<String, Object> map);
+	Kinder selectKinderByNo(int no);
 
 }

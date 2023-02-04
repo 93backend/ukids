@@ -443,11 +443,11 @@
 		            	<th:block th:each="nursery : ${list}">
 				              <div class="box777">
 				                <div class="photo777" style="background-image: url(img/어린이집/nursery1.JPG);">
-				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare' + ${nursery.no})|">
+				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare${nursery.no}')|">
 				                    <i class="ci-bookmark"></i>
 				                    <b>&nbsp;비교&nbsp;</b>
 				                  </button>
-				                  <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart('heart' + ${nursery.no})|" style="position: relative; left: 150px;">
+				                  <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart('heart${nursery.no}')|" style="position: relative; left: 150px;">
 				                    <img src="img/suit-heart.svg" class="heart">
 				                  </button>
 				                </div>
