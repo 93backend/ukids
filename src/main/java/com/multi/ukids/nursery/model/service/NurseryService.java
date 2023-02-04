@@ -25,5 +25,9 @@ public class NurseryService {
 	public int gettNurseryCount(Map<String, Object> map) {
 		return mapper.selectNurseryCount(map);
 	}
+	
+	public Nursery findByNo(int no) {
+		return mapper.selectNurseryByNo(no);
+	}
 
 }

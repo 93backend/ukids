@@ -440,28 +440,28 @@
 	            </th:block>
 	            
 	            <th:block th:if="${list != null}">
-	            	<th:block th:each="nursery : ${list}">
-			              <div class="box777">
-			                <div class="photo777" style="background-image: url(img/어린이집/nursery1.JPG);">
-			                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare' + ${nursery.no})|">
-			                    <i class="ci-bookmark"></i>
-			                    <b>&nbsp;비교&nbsp;</b>
-			                  </button>
-			                  <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart('heart' + ${nursery.no})|" style="position: relative; left: 150px;">
-			                    <img src="img/suit-heart.svg" class="heart">
-			                  </button>
-			                </div>
-			                <div class="container777">
-			                  <a class="sarip">&nbsp;&nbsp;[[${nursery.crtypename}]]&nbsp;&nbsp;</a>
-			                  <div class="container888">
-			                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
-			                      <a href="nursery-detail.html"><b>[[${nursery.crname}]]</b></a>
-			                    </h3>
-			                  </div>
-			                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;[[${nursery.craddr}]]</div>
-			                </div>
-			              </div>
-	            	</th:block>
+		            	<th:block th:each="nursery : ${list}">
+				              <div class="box777">
+				                <div class="photo777" style="background-image: url(img/어린이집/nursery1.JPG);">
+				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare' + ${nursery.no})|">
+				                    <i class="ci-bookmark"></i>
+				                    <b>&nbsp;비교&nbsp;</b>
+				                  </button>
+				                  <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart('heart' + ${nursery.no})|" style="position: relative; left: 150px;">
+				                    <img src="img/suit-heart.svg" class="heart">
+				                  </button>
+				                </div>
+				                <div class="container777">
+				                  <a class="sarip">&nbsp;&nbsp;[[${nursery.crtypename}]]&nbsp;&nbsp;</a>
+				                  <div class="container888">
+				                    <h3 class="product-title fs-sm" style="margin-top: 10px;">
+				                      <a th:href="|/nursery-detail?no=${nursery.no}|"><b>[[${nursery.crname}]]</b></a>
+				                    </h3>
+				                  </div>
+				                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;[[${nursery.craddr}]]</div>
+				                </div>
+				              </div>
+		            	</th:block>
 	            </th:block>
 
             </div>

@@ -183,6 +183,24 @@
 		</if>
 	</select>
 	
+	<select id="selectNurseryByNo" resultType="Nursery" parameterType="int">
+		SELECT
+			no, stcode, crname, crtypename, crstatusname, 
+			zipcode, craddr, crtelno, crfaxno, crhome, 
+			nrtrroomcnt, nrtrroomsize, plgrdco, cctvinstlcnt, chcrtescnt, 
+			crcapat, crchcnt, la, lo, crcargbname, 
+			crcnfmdt, crpausebegindt, crpauseenddt, crabldt, crspec, 
+			class_cnt_00, class_cnt_01, class_cnt_02, class_cnt_03, class_cnt_04, 
+			class_cnt_05, class_cnt_m2, class_cnt_m5, class_cnt_sp, class_cnt_tot, 
+			child_cnt_00, child_cnt_01, child_cnt_02, child_cnt_03, child_cnt_04, 
+			child_cnt_05, child_cnt_m2, child_cnt_m5, child_cnt_sp, child_cnt_tot, 
+			em_cnt_0y, em_cnt_1y, em_cnt_2y, em_cnt_4y, em_cnt_6y, 
+			em_cnt_a1, em_cnt_a2, em_cnt_a3, em_cnt_a4, em_cnt_a5, 
+			em_cnt_a6, em_cnt_a10, em_cnt_a7, em_cnt_a8, em_cnt_tot, 
+			Crrepname
+		FROM NURSERY
+		WHERE no = #{no}
+	</select>
 
 
 

@@ -20,7 +20,7 @@ public class NurseryController {
 	private NurseryService nurseryService;
 	
 	@GetMapping("/nursery-main")
-	public String nurseryList(Model model, 
+	public String nurseryMain(Model model, 
 			@RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String[] build,
 			@RequestParam(required = false) String[] classroom,
@@ -66,6 +66,23 @@ public class NurseryController {
 		
 		
 		return "nursery-main";
+	}
+	
+	@GetMapping("/nursery-detail")
+	public String nurseryDetail(Model model, @RequestParam("no") int no) {
+		
+		Nursery nursery = nurseryService.findByNo(no);
+		
+		int classCnt = nursery.getClass_cnt_00() + nursery.getClass_cnt_01() + nursery.getClass_cnt_02() + nursery.getClass_cnt_03() + nursery.getClass_cnt_04() + nursery.getClass_cnt_05();
+		int childCnt = nursery.getChild_cnt_00() + nursery.getChild_cnt_01() + nursery.getChild_cnt_02() + nursery.getChild_cnt_03() + nursery.getChild_cnt_04() + nursery.getChild_cnt_05();
+		
+		model.addAttribute("nursery", nursery);
+		model.addAttribute("classCnt", classCnt);
+		model.addAttribute("childCnt", childCnt);
+		
+		
+		return "nursery-detail";
+		
 	}
 
 }
