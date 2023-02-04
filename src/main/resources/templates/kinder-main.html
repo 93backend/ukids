@@ -55,7 +55,7 @@
       <!-- 헤더!!!!!! -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
       
-      <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="headerimg1">
+      <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="headerimg" style="background-image: url(/img/ukids/배경1.jpg);">
         <span class="position-absolute top-0 start-0 w-100 h-100" style="opacity: .65;"></span>
         <div class="container position-relative zindex-5 mb-3">
           <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
@@ -450,19 +450,20 @@
 	            <th:block th:if="${list != null}">
 	            	<th:block th:each="kinder : ${list}">
 		              <div class="box777">
-		                  <div class="photo777" style="background-image: url(img/유치원/kinder1.JPG);">
+		                  <div class="photo777">
+	                  		<img class="photo" src="img/유치원/kinder1.JPG">
 		                    <button class="button7" th:id="'compare' + ${kinder.kinNo}" value="false" th:onclick="|onClickCompare('compare${kinder.kinNo}')|">
-		                      <i class="ci-bookmark"></i>
+		                      <i class="ci-bookmark fw-bold"></i>
 		                      <b>&nbsp;비교&nbsp;</b>
 		                    </button>
-		                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${kinder.kinNo}" value="false" th:onclick="|onClickHeart('heart${kinder.kinNo}')|" style="position: relative; left: 150px;">
+		                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${kinder.kinNo}" value="false" th:onclick="|onClickHeart('heart${kinder.kinNo}')|">
 		                      <img src="img/suit-heart.svg" class="iimage">
 		                    </button>
 		                  </div>
 		                  <div class="container777">
-		                    <a class="sarip">&nbsp;&nbsp;[[${kinder.establish}]]&nbsp;&nbsp;</a>
+		                    <a class="sarip fw-bold">&nbsp;&nbsp;[[${kinder.establish}]]&nbsp;&nbsp;</a>
 		                    <div class="container888">
-		                      <h3 class="product-title fs-sm" style="margin-top: 10px;" >
+		                      <h3 class="product-title fs-lg" style="margin-top: 10px;" >
 		                        <a th:href="|/kinder-detail?no=${kinder.kinNo}|"><b>[[${kinder.kindername}]]</b></a>
 		                      </h3>
 		                    </div>

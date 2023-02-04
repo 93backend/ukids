@@ -171,10 +171,10 @@
                     <li class="mb-3"><h5 class="fw-bold">원장명</h5><div class="info_content2" style="width: 300px;">[[${kinder.ldgrname}]]</div></li>
                     <li class="mb-3"><h5 class="fw-bold">운영시간</h5><div class="info_content2" style="width: 280px;">[[${kinder.opertime}]]</div></li>
                     <th:block th:if="${kinder.hpaddr == ''}">
-	                    <li class="mb-3"><h5 class="fw-bold">홈페이지</h5><div class="info_content2" style="width: 280px;"><a><i class="ci-home fw-blod" id="home_icon"></i></a></div></li>
+	                    <li class="mb-3"><h5 class="fw-bold">홈페이지</h5><div class="info_content2" style="width: 280px;"><a><i class="ci-home fw-bold" id="home_icon"></i></a></div></li>
                     </th:block>
                     <th:block th:if="${kinder.hpaddr != ''}">
-	                    <li class="mb-3"><h5 class="fw-bold">홈페이지</h5><div class="info_content2" style="width: 280px;"><a th:href="|${kinder.hpaddr}|"><i class="ci-home fw-blod" id="home_icon" style="color: #fc6c93"></i></a></div></li>
+	                    <li class="mb-3"><h5 class="fw-bold">홈페이지</h5><div class="info_content2" style="width: 280px;"><a th:href="|${kinder.hpaddr}|"><i class="ci-home fw-bold" id="home_icon" style="color: #fc6c93"></i></a></div></li>
                     </th:block>
                     <li class="mb-3"><h5 class="fw-bold">제공 서비스</h5>
                       <span style="padding-left: 270px;">
