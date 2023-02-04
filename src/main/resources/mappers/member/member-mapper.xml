@@ -8,7 +8,7 @@
 		SELECT 	
 			memberNo, id, password, role, name, postCode, address,
 			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
-			STATUS, enrollDate, modifyDate
+			STATUS, enrollDate, modifyDate, address2
 		FROM MEMBER
 	</sql>
 	
@@ -30,6 +30,7 @@
 		<result property="STATUS" 	column="STATUS" />
 		<result property="enrollDate" column="ENROLL_DATE" />
 		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="address2" 	column="address2" />
 	</resultMap>
 	
 	<select id="selectCount" resultType="int">
@@ -49,21 +50,23 @@
 		INSERT INTO MEMBER(
 			memberNo, id, password, role, name, postCode, address,
 			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
-			STATUS, enrollDate, modifyDate
+			STATUS, enrollDate, modifyDate, address2
 		) VALUES (
 			 0, #{id}, #{password}, default, #{name}, #{postCode}, #{address},
 			 #{email}, #{phone}, #{kidNum}, #{kidAge1}, #{kidAge2}, #{kidAge3},
-			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT)
+			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
 	</insert>
 	
 	 <update id="updateMember" parameterType="Member">
 	 	UPDATE MEMBER
 	 	SET
 	 		NAME		= #{name}, 
+	 		PASSWORD 	= #{password}, 
 	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
 	 		POSTCODE	= #{postCode}, 
 	 		ADDRESS		= #{address},
+	 		ADDRESS2	= #{address2},
 	 		MODIFY_DATE	= #{modifyDate}
 	 	WHERE memberNo = #{memberNo}
 	 </update>

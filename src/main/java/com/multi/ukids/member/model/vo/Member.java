@@ -30,4 +30,5 @@ public class Member {
 	private String STATUS;
 	private Date enrollDate;
 	private Date modifyDate;
+	private String address2;  // 상세 주소
 }
