@@ -62,6 +62,7 @@
 	 		NAME		= #{name}, 
 	 		PHONE		= #{phone},
 	 		EMAIL		= #{email},
+	 		POSTCODE	= #{postCode}, 
 	 		ADDRESS		= #{address},
 	 		MODIFY_DATE	= #{modifyDate}
 	 	WHERE memberNo = #{memberNo}

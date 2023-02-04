@@ -3,6 +3,7 @@ package com.multi.ukids.member.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.ukids.member.model.mapper.MemberMapper;
 import com.multi.ukids.member.model.vo.Member;
@@ -48,5 +49,22 @@ public class MemberService {
 		}
 		
 		
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int save(Member member) {
+		int result = 0;
+		if(member.getMemberNo() == 0) { // 회원가입
+			String encodePW = pwEncoder.encode(member.getPassword());
+			member.setPassword(encodePW);
+			result = mapper.insertMember(member);
+		}else { // 회원 수정
+			result = mapper.updateMember(member);
+		}
+		return result;
+	}
+	
+	public Member findById(String id) {
+		return mapper.selectMember(id);
 	}
 }
