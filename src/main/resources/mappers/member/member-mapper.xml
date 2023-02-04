@@ -28,8 +28,8 @@
 		<result property="kidAge3" 	column="kidAge3" />
 		<result property="kakaoToken" 	column="kakaoToken" />
 		<result property="STATUS" 	column="STATUS" />
-		<result property="enrollDate" column="ENROLL_DATE" />
-		<result property="modifyDate" column="MODIFY_DATE" />
+		<result property="enrollDate" column="enrollDate" />
+		<result property="modifyDate" column="modifyDate" />
 		<result property="address2" 	column="address2" />
 	</resultMap>
 	
@@ -66,7 +66,7 @@
 	 		POSTCODE	= #{postCode}, 
 	 		ADDRESS		= #{address},
 	 		ADDRESS2	= #{address2},
-	 		MODIFY_DATE	= #{modifyDate}
+	 		MODIFYDATE	= #{modifyDate}
 	 	WHERE memberNo = #{memberNo}
 	 </update>
 	 

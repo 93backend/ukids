@@ -1,5 +1,8 @@
 package com.multi.ukids.member.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,7 +67,25 @@ public class MemberService {
 		return result;
 	}
 	
+	public boolean validate(String userId) {
+		return this.findById(userId) != null;
+	}
+	
 	public Member findById(String id) {
 		return mapper.selectMember(id);
+	}
+
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int delete(int no) {
+		return mapper.deleteMember(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updatePwd(Member loginMember, String userPW) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("memberNo", "" + loginMember.getMemberNo());
+		map.put("password", pwEncoder.encode(userPW));
+		return mapper.updatePwd(map);
 	}
 }
