@@ -11,8 +11,8 @@ import com.multi.ukids.common.util.PageInfo;
 @Service
 public class BoardService {
 	
-	@Autowired
-	private BoardMapper mapper;
+//	@Autowired
+//	private BoardMapper mapper;
 	
 	
 	

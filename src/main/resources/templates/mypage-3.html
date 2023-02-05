@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <title>UKIDS | 찜</title>
-  <!-- SEO Meta Tags-->
+<meta charset="utf-8">
+<title>UKIDS | 찜</title>
+<!-- SEO Meta Tags
   <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
   <meta name="keywords"
     content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-  <meta name="author" content="Createx Studio">
+  <meta name="author" content="Createx Studio"> -->
   <!-- Viewport-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon and Touch Icons-->
@@ -30,519 +30,377 @@
   <link rel="stylesheet" media="screen" href="css/header.css">
   <link rel="stylesheet" media="screen" href="css/footer.css">
 
-  <!--jquery-->
-  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<!--jquery-->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-  <!-- 폰트 -->
-  <style>
-    @font-face {
-      font-family: 'NanumSquareRound';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
-    }
+<!-- 폰트 -->
+<style>
+@font-face {
+	font-family: 'NanumSquareRound';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
-    * {
-      font-family: 'NanumSquareRound';
-    }
-  </style>
-
+* {
+	font-family: 'NanumSquareRound';
+}
+</style>
 </head>
 
 <!-- Body-->
 
 <body class="handheld-toolbar-enabled">
 
-  <!-- 로그인 모달 관련  -->
-  <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <ul class="nav nav-tabs card-header-tabs" role="tablist">
-            <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab"
-                role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
-            <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab"
-                role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
-          </ul>
-          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body tab-content py-4">
-          <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-            <div class="mb-3">
-              <label class="form-label" for="si-email">아이디</label>
-              <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="si-password">비밀번호</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-3 d-flex flex-wrap justify-content-between">
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" id="si-remember">
-                <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-              </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-            </div>
-            <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
-            <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-          </form>
-          <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-            <div class="mb-3">
-              <label class="form-label" for="si-email">아이디</label>
-              <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="si-password">비밀번호</label>
-              <div class="password-toggle">
-                <input class="form-control" type="password" id="si-password" required>
-                <label class="password-toggle-btn" aria-label="Show/hide password">
-                  <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-3 d-flex flex-wrap justify-content-between">
-              <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" id="si-remember">
-                <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-              </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-            </div>
-            <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
-            <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- 로그인 모달 관련  -->
+	<div th:fragment="modal" th:replace="~{common :: modal}"></div>
 
-  <main class="page-wrapper">
+	<main class="page-wrapper" style="height: 2260px;">
 
-    <!-- 헤더!!!!!! -->
-    <header class="navbar navbar-expand-lg navbar-light shadow-sm">
-      <div class="container">
+		<!-- 헤더!!!!!! -->
+		<header th:fragment="header" th:replace="~{common :: header}"></header>
+		<!-- 헤더 끝 -->
+		<!-- Page Title-->
+		<div
+			class="bg-position-top-center bg-repeat-0 bg-size-cover py-5 bg-dark-cgw">
+			<div class="pt-0 pb-5">
+				<div class="container pt-0  pt-lg-0">
+					<div class="mb-3 mb-lg-0 pt-lg-0">
+						<nav aria-label="breadcrumb">
+							<ol
+								class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+								<li class="breadcrumb-item"><a class="text-nowrap"
+									th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
+								<li class="breadcrumb-item text-light">마이페이지</li>
+								<li class="breadcrumb-item text-nowrap cgw3" aria-current="page">찜</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container pb-5 mb-2 mb-md-4 cgw1">
+			<div class="row">
+				<!-- Sidebar-->
+				<form action="/mypage3" method="get">
+				<aside class="col-lg-4 pt-4 pt-lg-0 pe-xl-5">
+					<h1 class="h3 text-white cgw5">마이페이지</h1>
+					<div class="bg-white rounded-3 shadow-lg pt-1 mb-5 mb-lg-0">
+						<div
+							class="d-md-flex justify-content-between align-items-center text-center text-md-start p-4">
+							<div class="d-md-flex align-items-center">
+								<div class="ps-md-3">
+									<h3 class="fs-base mb-0">유키즈</h3>
+									<span class="cgw3 fs-sm">ukids@multi.com</span>
+								</div>
+							</div>
+							<a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0"
+								href="#account-menu" data-bs-toggle="collapse"
+								aria-expanded="false"><i class="ci-menu me-2"></i>Account
+								menu</a>
+						</div>
+						<div class="d-lg-block collapse" id="account-menu">
+							<div class="bg-secondary px-4 py-3">
+								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
+							</div>
+							<ul class="list-unstyled mb-0">
+								<li class="border-bottom mb-0">
+									<div class="cgw3 d-flex align-items-center px-4 py-3">
+										<i class="ci-user opacity-60 me-2"></i>회원정보 수정
+									</div>
+								</li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage2}"><i class="ci-edit opacity-60 me-2"></i>입소
+										신청 조회<span class="fs-sm text-muted ms-auto">1</span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
+										class="fs-sm text-muted ms-auto">3</span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
+										신고 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage5}"><i class="ci-document opacity-60 me-2"></i>내가
+										쓴 게시글<span class="fs-sm text-muted ms-auto">3</span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage6}"><i class="ci-bag opacity-60 me-2"></i>대여
+										내역 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+										class="fs-sm text-muted ms-auto">3</span></a></li>
+								<li class="border-bottom mb-0">
+									<div class="nav-link-style d-flex align-items-center px-4 py-2">
+										<a class="fs-sm ms-auto btn btn-logout btn-sm" href="#"><i
+											class="ci-sign-out me-2"></i>로그아웃</a>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</aside>
+				</form>
+				<!-- Content  -->
+				<section class="col-lg-8">
+					<!-- Toolbar-->
+					<div
+						class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
+						<h6 class="fs-change cgw4 mb-0 fw-fold" style="color: #fc6c93;">찜</h6>
+					</div>
+					<!-- 찜content -->
+					<div class="pt-2 px-4 ps-lg-0 pe-xl-5 ms-5">
 
-        <!-- Brand -->
-        <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
-          <img width="65" src="img/ukids/logo.jpg" alt="ukids" />
-        </a>
+						<!-- Items grid-->
+						<div
+							class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-buy.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorites"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울유치원</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가
+												서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-auction-live.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorites"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울시청직장어린이집</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-auction-live.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorits"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울시청직장어린이집</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+						</div>
+						<!-- Items grid-->
+						<div
+							class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-buy.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorites"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울유치원</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가
+												서울특별시 어딘가 서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-auction-live.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorites"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울유치원</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+							<!-- Product-->
+							<div class="col mb-2">
+								<article class="card h-100 border-0 shadow">
+									<div class="card-img-top position-relative overflow-hidden">
+										<a class="d-block" href="nft-single-auction-live.html"><img
+											src="img/ukids/nursery.JPG" alt="Product image"></a>
+										<!-- Wishlist button-->
+										<button
+											class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0"
+											type="button" data-bs-toggle="tooltip"
+											data-bs-placement="top" title="Remove from favorits"
+											style="margin: 12px;">
+											<i class="ci-heart-filled"></i>
+										</button>
+									</div>
+									<a class="nav-link-style fs-sm stretched-link"
+										href="nft-vendor.html">
+										<div class="card-footer mt-n1 py-0 border-0 mb-3">
+											<div
+												class="d-flex align-items-center position-relative py-3 mt-2">
+												<a class="nav-link-style fs-sm stretched-link"
+													href="nft-vendor.html">서울시청직장어린이집</a>
+											</div>
+											<i class="ci-location me-2 cgw16 fs-ms cgw27"></i>
+											<div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
+										</div>
+									</a>
+								</article>
+							</div>
+						</div>
+						<button class="btn btn-outline-danger">
+							<i class="ci-trash me-2"></i>전체 삭제
+						</button>
+					</div>
+					<!-- pagination -->
+					<th:block th:if="${count != 0}">
+						<nav class="d-flex justify-content-between pt-2 mb-5"
+							aria-label="Page navigation" style="width: 790px;">
+							<ul class="pagination" id="prev">
+								<!-- 이전 페이지 -->
+								<li class="page-item"><a class="page-link"
+									th:onclick="|movePage(${pageInfo.prevPage});|"><i
+										class="ci-arrow-left me-2"></i>Prev</a></li>
+							</ul>
+							<ul class="pagination">
+								<li class="page-item d-sm-none"><span
+									class="page-link page-link-static">1 / 5</span></li>
 
-        <!-- Toolbar -->
-        <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+								<th:block
+									th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+									<th:block th:if="${status.current == pageInfo.currentPage}">
+										<li class="page-item d-none d-sm-block page"
+											aria-current="page"><span class="page-link">[[${status.current}]]<span
+												class="visually-hidden">(current)</span></span></li>
+									</th:block>
+									<th:block th:if="${status.current != pageInfo.currentPage}">
+										<li class="page-item d-none d-sm-block"><a
+											class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
+									</th:block>
+								</th:block>
 
-          <!-- 로그인 전!!!!!!!! -->
+							</ul>
+							<ul class="pagination" id="next">
+								<li class="page-item"><a class="page-link"
+									th:onclick="|movePage(${pageInfo.nextPage});|"
+									aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+							</ul>
+						</nav>
+					</th:block>
+				</section>
+			</div>
+		</div>
+	</main>
+	<!-- Footer-->
+	<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 
-          <a href="#signin-modal" data-bs-toggle="modal">
-            <button type="button" class="btn btn-primary rounded-pill" id="sign">
-              <i class="ci-locked"></i>
-              <span>로그인</span>
-            </button>
-          </a>
-          <a href="join.html">
-            <button type="button" class="btn btn-primary rounded-pill" id="sign">
-              <i class="ci-user me-2"></i>
-              <span class="jointext">회원가입</span>
-            </button>
-          </a>
+	<!-- Toolbar for handheld devices (Default)-->
+	<!-- Back To Top Button-->
+	<!-- Vendor scrits: js libraries and plugins-->
+	<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/simplebar/dist/simplebar.min.js"></script>
+	<script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+	<script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+	<script src="vendor/drift-zoom/dist/Drift.min.js"></script>
+	<script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
+	<script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
 
-          <!-- 로그인 후!!!!!!!!!!!! -->
-
-          <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
-            </a>
-            
-            <a class="navbar-tool ms-3" href="index.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
-              </div>
-            </a> -->
-
-          <a class="navbar-tool ms-3" href="mypage-7.html">
-            <div class="navbar-tool-icon-box bg-secondary">
-              <i class="navbar-tool-icon ci-cart"></i>
-            </div>
-          </a>
-
-        </div>
-
-        <!-- 메뉴 -->
-        <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-          <hr class="d-lg-none my-3">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                id="nav1">어린이집/유치원</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item hmenu" href="nursery-main.html">어린이집</a></li>
-                <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                id="nav2">아동관련시설</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item hmenu" href="welfare-main.html">아동복지시설</a></li>
-                <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
-                <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
-
-              </ul>
-            </li>
-            <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html">장난감대여</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
-            <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                id="nav6">커뮤니티</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item hmenu" href="notice.html">공지사항</a></li>
-                <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </header>
-    <!-- 헤더 끝 -->
-    <!-- Page Title-->
-    <div class="bg-position-top-center bg-repeat-0 bg-size-cover py-5 bg-dark-cgw">
-      <div class="pt-0 pb-5">
-        <div class="container pt-0  pt-lg-0">
-          <div class="mb-3 mb-lg-0 pt-lg-0">
-            <nav aria-label="breadcrumb">
-              <ol
-                class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-                <li class="breadcrumb-item text-light">마이페이지</li>
-                <li class="breadcrumb-item text-nowrap cgw3" aria-current="page">찜</li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container pb-5 mb-2 mb-md-4 cgw1">
-      <div class="row">
-        <!-- Sidebar-->
-        <aside class="col-lg-4 pt-4 pt-lg-0 pe-xl-5">
-          <h1 class="h3 text-white cgw5">마이페이지</h1>
-          <div class="bg-white rounded-3 shadow-lg pt-1 mb-5 mb-lg-0">
-            <div class="d-md-flex justify-content-between align-items-center text-center text-md-start p-4">
-              <div class="d-md-flex align-items-center">
-                <div class="ps-md-3">
-                  <h3 class="fs-base mb-0">유키즈</h3><span class="cgw3 fs-sm">ukids@multi.com</span>
-                </div>
-              </div><a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0" href="#account-menu"
-                data-bs-toggle="collapse" aria-expanded="false"><i class="ci-menu me-2"></i>Account menu</a>
-            </div>
-            <div class="d-lg-block collapse" id="account-menu">
-              <div class="bg-secondary px-4 py-3">
-                <h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
-              </div>
-              <ul class="list-unstyled mb-0">
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage.html"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-2.html"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
-                      class="fs-sm text-muted ms-auto">1</span></a></li>
-                <li class="border-bottom mb-0">
-                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-heart opacity-60 me-2"></i>찜<span
-                      class="fs-sm text-muted ms-auto">3</span></div>
-                </li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-4.html"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-5.html"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-6.html"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-7.html"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
-                <li class="border-bottom mb-0">
-                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
-                      class="fs-sm ms-auto btn btn-logout btn-sm" href="#"><i class="ci-sign-out me-2"></i>로그아웃</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </aside>
-        <!-- Content  -->
-        <section class="col-lg-8">
-          <!-- Toolbar-->
-          <div class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
-            <h6 class="fs-change cgw4 mb-0 fw-fold" style="color: #fc6c93;">찜</h6>
-          </div>
-          <!-- 찜content -->
-          <div class="pt-2 px-4 ps-lg-0 pe-xl-5 ms-5">
-
-            <!-- Items grid-->
-            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-buy.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorits"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-            </div>
-            <!-- Items grid-->
-            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-buy.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                      <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                      <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorits"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-            </div>
-            <button class="btn btn-outline-danger"><i class="ci-trash me-2"></i>전체 삭제</button>
-          </div>
-          <!-- pagination -->
-          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-            </ul>
-            <ul class="pagination">
-              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-              <li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">1<span
-                    class="visually-hidden">(current)</span></span></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
-            </ul>
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
-                    class="ci-arrow-right ms-2"></i></a></li>
-            </ul>
-          </nav>
-        </section>
-      </div>
-    </div>
-  </main>
-  <!-- 푸터!!!!!!!!!!-->
-  <!-- Footer-->
-  <footer class="footer pt-5" id="footercolor">
-    <div class="px-lg-3 pt-2 pb-4">
-      <div class="mx-auto px-3" style="max-width: 80rem;">
-        <div class="row">
-          <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
-            <div class="mt-n1"><a class="d-inline-block align-middle" href="index.html"><img class="d-block mb-4"
-                  src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
-          </div>
-          <div class="col-xl-3 col-lg-4 col-sm-4">
-            <div class="widget widget-links widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
-              <ul class="widget-list">
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a>
-                </li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a>
-                </li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-4 col-sm-4">
-            <div class="widget widget-links widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
-              <ul class="widget-list">
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
-              </ul>
-            </div>
-            <div class="widget widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2"
-                href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i
-                  class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i
-                  class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i
-                  class="ci-youtube"></i></a>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-8">
-            <div class="widget pb-2 mb-4">
-              <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
-              <form class="subscription-form validate"
-                action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126"
-                method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-                <div class="input-group flex-nowrap"><i
-                    class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                  <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="이메일을 입력해주세요."
-                    required>
-                  <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
-                </div>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                  <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126"
-                    tabindex="-1">
-                </div>
-                <div class="form-text text-dark opacity-50">유키즈의 소식을 구독해보세요.</div>
-                <div class="subscription-status"></div>
-              </form>
-            </div>
-            <div class="widget pb-2 mb-4">
-              <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
-              <div class="d-flex flex-wrap">
-                <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span
-                      class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App
-                      Store</span></a></div>
-                <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span
-                      class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google
-                      Play</span></a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="px-lg-3 py-3" id="footerunder">
-      <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
-        <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a
-            class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
-        <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187"
-            alt="Payment methods"></div>
-      </div>
-    </div>
-  </footer>
-
-
-
-  <!-- Toolbar for handheld devices (Default)-->
-  <div class="handheld-toolbar">
-    <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item"
-        href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span
-          class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item"
-        href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-        onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span
-          class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item"
-        href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span
-            class="badge bg-primary rounded-pill ms-1">4</span></span><span
-          class="handheld-toolbar-label">$265.00</span></a></div>
-  </div>
-  <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span
-      class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">
-    </i></a>
-  <!-- Vendor scrits: js libraries and plugins-->
-  <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-  <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-  <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-  <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-  <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-  <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
-
-  <script src="vendor/flatpickr/dist/flatpickr.min.js"></script>
-  <script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
-  <!-- Main theme script-->
-  <script src="js/theme.min.js"></script>
+	<script src="vendor/flatpickr/dist/flatpickr.min.js"></script>
+	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
+	<!-- Main theme script-->
+	<script src="js/theme.min.js"></script>
 </body>
 
 </html>

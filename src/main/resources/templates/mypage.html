@@ -111,27 +111,27 @@
 								</li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-2.html"><i class="ci-edit opacity-60 me-2"></i>입소
+									th:href="@{/mypage2}"><i class="ci-edit opacity-60 me-2"></i>입소
 										신청 조회<span class="fs-sm text-muted ms-auto">1</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-3.html"><i class="ci-heart opacity-60 me-2"></i>찜<span
+									th:href="@{/mypage3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
 										class="fs-sm text-muted ms-auto">3</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-4.html"><i class="ci-edit opacity-60 me-2"></i>불편사항
+									th:href="@{/mypage4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
 										신고 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-5.html"><i class="ci-document opacity-60 me-2"></i>내가
+									th:href="@{/mypage5}"><i class="ci-document opacity-60 me-2"></i>내가
 										쓴 게시글<span class="fs-sm text-muted ms-auto">3</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-6.html"><i class="ci-bag opacity-60 me-2"></i>대여
+									th:href="@{/mypage6}"><i class="ci-bag opacity-60 me-2"></i>대여
 										내역 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									href="mypage-7.html"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+									th:href="@{/mypage7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
 										class="fs-sm text-muted ms-auto">3</span></a></li>
 								<li class="border-bottom mb-0">
 									<div class="nav-link-style d-flex align-items-center px-4 py-2">
@@ -214,42 +214,52 @@
 							<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 							<div class="col-sm-6">
 								<label class="form-label" for="account-phone">자녀 수</label><br>
-								<input class="form-control-postcode" type="number" name="kidNum"
-									id="account-phone" value="0" required>&nbsp;&nbsp;&nbsp;명<br>
+								<input class="form-control-postcode" type="number" name="kidNum" min="0" max="10" 
+									id="account-phone" th:value="${session.loginMember.kidNum}" required>&nbsp;&nbsp;&nbsp;명<br>
 								<br> <label class="form-label" for="account-phone">자녀
-									나이</label><br> <input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									나이</label><br> <input class="form-check-input" type="checkbox" name="kidAge"
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 0)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">0</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 1)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">1</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 2)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">2</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 3)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">3</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 4)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">4</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 5)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">5</label>&nbsp;&nbsp;&nbsp;
 								<input class="form-check-input" type="checkbox"
-									id="subscribe_me">&nbsp; <label
+									th:checked="${#arrays.contains(session.loginMember.kidAge1, 6)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
 									class="form-check-label" for="subscribe_me">6</label>
 							</div>
 							</th:block>
 							<!--선생님-->
 							<th:block th:if="${session.loginMember.role != 'ROLE_USER'}">
 							<div class="col-sm-6">
-								<label class="form-label" for="checkout-country">소속</label> <select
-									class="form-select" name="field" id="checkout-country">
-									<option>유치원</option>
+								<th:block th:if="${session.loginMember.field == '유치원'}">
+								<label class="form-label" for="checkout-country">소속</label> 
+								<select class="form-select" name="field" id="checkout-country" th:value="${session.loginMember.field}">
+									<option selected>유치원</option>
 									<option>어린이집</option>
-								</select><br> <label class="form-label" for="account-phone">소속
+								</select><br> 
+								</th:block>
+								<th:block th:if="${session.loginMember.field == '어린이집'}">
+								<label class="form-label" for="checkout-country">소속</label> 
+								<select class="form-select" name="field" id="checkout-country" th:value="${session.loginMember.field}">
+									<option>유치원</option>
+									<option selected>어린이집</option>
+								</select><br> 
+								</th:block>
+								<label class="form-label" for="account-phone">소속
 									코드</label> <input class="form-control-cgw1" type="text" name="fieldCd"
-									id="account-phone">
+									id="account-phone" th:value="${session.loginMember.fieldCd}">
 							</div>
 							</th:block>
 							<div class="col-12">
