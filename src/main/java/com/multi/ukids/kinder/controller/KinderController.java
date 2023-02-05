@@ -65,18 +65,31 @@ public class KinderController {
 		PageInfo pageInfo = new PageInfo(page, 5, count, 12);
 		List<Kinder> list = kinderService.getKinderList(pageInfo, param);
 		
+		int[] img = new int[12];
+		
+		img[0] = page;
+		
+		for(int i = 0; i < img.length; i++) {
+			if(i != 0) {
+				img[i] = img[i-1] + 2;
+			}
+			img[i] %= 30;
+		}
+		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
+		model.addAttribute("img", img);
 		
 		return "/kinder-main";
 	}
 	
 	@GetMapping("/kinder-detail")
-	public String kinderDetail(Model model, @RequestParam("no") int no) {
+	public String kinderDetail(Model model, @RequestParam("no") int no, @RequestParam("i") int i) {
 		
 		Kinder kinder = kinderService.findByNo(no);
+		int claim = kinderService.getClaimCount(no);
 		
 		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
 		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
@@ -85,10 +98,12 @@ public class KinderController {
 		String odate = kinder.getOdate().substring(0, 4) + "-" + kinder.getOdate().substring(4, 6) + "-" + kinder.getOdate().substring(6);
 		
 		model.addAttribute("kinder", kinder);
+		model.addAttribute("claim", claim);
 		model.addAttribute("classCnt", classCnt);
 		model.addAttribute("childCnt", childCnt);
 		model.addAttribute("edate", edate);
 		model.addAttribute("odate", odate);
+		model.addAttribute("i", i);
 		
 		return "kinder-detail";
 	}

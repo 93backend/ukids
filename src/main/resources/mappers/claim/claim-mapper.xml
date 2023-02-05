@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.multi.ukids.claim.model.mapper.ClaimMapper">
+	
+<!-- ================================ 어린이집 ================================ -->
+
+	<select id="selectNurseryName" resultType="string" parameterType="int">
+		SELECT 
+			crname
+		FROM NURSERY
+		WHERE no = #{no}
+	</select>
+	
+	<select id="selectNurseryClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.nuNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM N_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN NURSERY N ON C.nuNo = N.no
+		WHERE C.STATUS = 'Y' AND C.nuNo = #{no}
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectNurseryClaimCount" resultType="int" parameterType="int">
+		SELECT 
+			COUNT(C.no)
+		FROM N_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN NURSERY N ON C.nuNo = N.no
+		WHERE C.STATUS = 'Y' AND C.nuNo = #{no}
+	</select>
+	
+	<select id="selectNurseryClaimByNo" resultType="Claim" parameterType="int">
+		SELECT 
+			C.no, C.nuNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM N_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN NURSERY N ON C.nuNo = N.no
+		WHERE C.STATUS = 'Y' AND C.no = #{no}
+	</select>
+	
+	<update id="updateReadCountNursery" parameterType="Claim">
+		UPDATE N_CLAIM SET readCount = #{readCount} WHERE no = #{no}
+	</update>
+	
+	<insert id="insertNurseryClaim" parameterType="Claim">
+		INSERT INTO N_CLAIM (
+			no, nuNo, memberNo, title, content, 
+			originalFileName, renamedFileName, readCount, 
+			confirm, status, createDate, modifyDate
+		) VALUES (
+			0, #{knNo}, #{memberNo}, #{title}, #{content}, 
+			#{originalFileName}, #{renamedFileName}, DEFAULT,
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<update id="updateNurseryClaim" parameterType="Claim">
+		UPDATE N_CLAIM SET
+			title = #{title}, 
+			content = #{content},
+			<if test="originalFileName != null">
+				originalFileName = #{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				renamedFileName = #{renamedFileName},
+			</if>
+			modifyDate = CURRENT_TIMESTAMP
+		WHERE no = #{no}
+	</update>
+	
+	<update id="deleteNurseryClaim" parameterType="int">
+		UPDATE N_CLAIM SET status = 'N' WHERE no = #{no}
+	</update>
+	
+<!-- ================================ 유치원 ================================ -->	
+	
+	<select id="selectKinderName" resultType="string" parameterType="int">
+		SELECT 
+			kindername
+		FROM KINDER
+		WHERE kinNo = #{no}
+	</select>
+	
+	<select id="selectKinderClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.kinNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM K_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN KINDER K ON C.kinNo = K.kinNo
+		WHERE C.STATUS = 'Y' AND C.kinNo = #{no}
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectKinderClaimCount" resultType="int" parameterType="int">
+		SELECT 
+			COUNT(C.no)
+		FROM K_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN KINDER K ON C.kinNo = K.kinNo
+		WHERE C.STATUS = 'Y' AND C.kinNo = #{no}
+	</select>
+	
+	<select id="selectKinderClaimByNo" resultType="Claim" parameterType="int">
+		SELECT 
+			C.no, C.kinNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM K_CLAIM C
+		LEFT JOIN MEMBER M ON C.memberNo = M.memberNo
+		LEFT JOIN KINDER K ON C.kinNo = K.kinNo
+		WHERE C.STATUS = 'Y' AND C.no = #{no}
+	</select>
+	
+	<update id="updateReadCountKinder" parameterType="Claim">
+		UPDATE K_CLAIM SET readCount = #{readCount} WHERE no = #{no}
+	</update>
+	
+	<insert id="insertKinderClaim" parameterType="Claim">
+		INSERT INTO K_CLAIM (
+			no, kinNo, memberNo, title, content, 
+			originalFileName, renamedFileName, readCount, 
+			confirm, status, createDate, modifyDate
+		) VALUES (
+			0, #{knNo}, #{memberNo}, #{title}, #{content}, 
+			#{originalFileName}, #{renamedFileName}, DEFAULT,
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<update id="updateKinderClaim" parameterType="Claim">
+		UPDATE K_CLAIM SET
+			title = #{title}, 
+			content = #{content},
+			<if test="originalFileName != null">
+				originalFileName = #{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				renamedFileName = #{renamedFileName},
+			</if>
+			modifyDate = CURRENT_TIMESTAMP
+		WHERE no = #{no}
+	</update>
+	
+	<update id="deleteKinderClaim" parameterType="int">
+		UPDATE K_CLAIM SET status = 'N' WHERE no = #{no}
+	</update>
+
+</mapper>

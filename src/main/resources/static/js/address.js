@@ -1,4 +1,7 @@
 function cityChange() {
+	const urlParams = new URL(location.href).searchParams;
+	var town = urlParams.get('town');
+	
     var seoul = [   // 서울특별시
         '강남구', '강동구', '강북구', '강서구', '관악구', 
         '광진구', '구로구', '금천구', '노원구', '도봉구', 
@@ -124,7 +127,11 @@ function cityChange() {
     var option = $('<option value=" ">전체</option>');
     $('#town').append(option);
     for(var i in town_list) {
-        option = $('<option vaule="' + town_list[i] + '" >' + town_list[i] + '</option>');
+		if(town == town_list[i]) {
+	        option = $('<option vaule="' + town_list[i] + '" selected>' + town_list[i] + '</option>');
+		} else {
+	        option = $('<option vaule="' + town_list[i] + '" >' + town_list[i] + '</option>');
+		}
         $('#town').append(option);
     }
 }

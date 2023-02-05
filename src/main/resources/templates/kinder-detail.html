@@ -50,8 +50,8 @@
         <div id="chatModal" class="modal fade" tabindex="-1" role="dialog">
           <div class= "modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
-              <div class="modal-header" style="background-color: #fc6c93; maring: 0px;">
-                <h4 class="modal-title" style="color: #ffffff;">서울장충유치원</h4>
+              <div class="modal-header" style="background-color: #fc6c93; margin: 0px;">
+                <h4 class="modal-title" style="color: #ffffff;">[[${kinder.kindername}]]</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
 
@@ -143,7 +143,7 @@
               <h1 style="margin-top: 25px; color:black"><img class="me-1" src="/img/ukids/kinder/gcicon.JPG" style="width: 50px; height: 40px;"> [[${kinder.kindername}]] <span id="establish">[[${kinder.establish}]]</span></h1>
               <hr style="margin-top: 10px; margin-left: 25px; width: 95%;">
               <div class="col rounded-3 mb-5 mt-3 mx-3" style="height: 400px; width: 500px;" id="kinderImg">
-                <img class="rounded-3" src="/img/ukids/kinder/서울장충유치원.jpg" width="100%">
+                <img class="rounded-3" th:src="|img/유치원/kinder${i}.JPG|" width="100%" height="100%">
               </div>
               <div class="col mt-3 rounded-3">
                 <div class="rounded-3" id="map" style="width:100%;height:410px; z-index:0;"></div>
@@ -225,18 +225,42 @@
               </div>
               <div class="col-3" id="function_container">
                 <div class="row mb-3" id="row_1"><!-- Launch modal with srolling content -->
-                  <a href="#chatModal" id="modalLink">
-                    <button type="button" class="btn btn-outline-secondary shadow-lg" data-bs-toggle="modal" data-bs-target="#chatModal" id="chatButton">
-                      <span>1:1 채팅</span>
-                    </button>
-                  </a>
-
+                
+                	<th:block th:if="${session.loginMember == null}">
+		                  <a onclick="cantDo();" id="modalLink">
+		                    <button type="button" class="btn btn-outline-secondary shadow-lg" id="chatButton">
+		                      <span>1:1 채팅</span>
+		                    </button>
+		                  </a>
+                	</th:block>
+                	<th:block th:unless="${session.loginMember == null}">
+		                  <a href="#chatModal" id="modalLink">
+		                    <button type="button" class="btn btn-outline-secondary shadow-lg" data-bs-toggle="modal" data-bs-target="#chatModal" id="chatButton">
+		                      <span>1:1 채팅</span>
+		                    </button>
+		                  </a>
+                	</th:block>
+                	
                 </div>
-                <div class="row mb-3" id="row_2"><button type="button" class="btn btn-primary d-block w-100" data-bs-toggle="modal" data-bs-target="#enroll-modal"><span>입소(대기)신청</span></button></div>
+                <div class="row mb-3" id="row_2">
+                	<th:block th:if="${session.loginMember == null}">
+	                	<button type="button" class="btn btn-primary d-block w-100" onclick="cantDo();"><span>입소(대기)신청</span></button>
+                	</th:block>
+                	<th:block th:unless="${session.loginMember == null}">
+	                	<button type="button" class="btn btn-primary d-block w-100" data-bs-toggle="modal" data-bs-target="#enroll-modal"><span>입소(대기)신청</span></button>
+                	</th:block>
+                </div>
                 <div class="row mx-2 mb-3" id="row_3">
-                  <button type="button" class="btn btn-secondary btn-shadow" name="wishButton" id="wishButton">
-                    <i id="heart1" class="ci-heart"> 찜</i>
-                  </button>
+                  <th:block th:if="${session.loginMember == null}">
+	                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" onclick="cantDo();">
+	                    <i id="heart1" class="ci-heart"> 찜</i>
+	                  </button>
+                	</th:block>
+                	<th:block th:unless="${session.loginMember == null}">
+	                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton">
+	                    <i id="heart1" class="ci-heart"> 찜</i>
+	                  </button>
+                	</th:block>
 
                   <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton">
                     <i class="ci-compare"> 비교</i>
@@ -246,10 +270,15 @@
                   <div class="siren_box mx-0"><img src="./img/ukids/kinder/siren.png" height="35px" width="35px"><br>
                     <span style="color: black; font-size: 18px;">불편 사항 신고</span><br><br>
                     <span style="font-size: 13px;">어린이집에서 불편을 겪고 있다면 신고하세요.</span><br><br>
-                    <span style="font-size:12px">해당 기관은 불편사항이 <span id="reportCnt">11건</span> 접수된 기관입니다</span><br><br>
+                    <span style="font-size:12px">해당 기관은 불편사항이 <span id="reportCnt">[[${claim}]]건</span> 접수된 기관입니다</span><br><br>
                     <span>
-                      <a href="./claim-main.html" style="color:  #f5104d;">불편사항보기 ></a>&nbsp;&nbsp;
-                      <a href="./claim-write.html" style="color: #f5104d;">신고하러가기 ></a>
+                      <a th:href="|/claim-main?type=유치원&no=${kinder.kinNo}|" style="color:  #f5104d;">불편사항보기 ></a>&nbsp;&nbsp;
+                      <th:block th:if="${session.loginMember == null}">
+	                      <a onclick="cantDo();" style="color: #f5104d; cursor: pointer;">신고하러가기 ></a>
+                      </th:block>
+                      <th:block th:unless="${session.loginMember == null}">
+	                      <a th:href="|/claim-write?type=유치원&no=${kinder.kinNo}|" style="color: #f5104d;">신고하러가기 ></a>
+                      </th:block>
                     </span>
                   </div>
                 </div>
@@ -453,14 +482,24 @@
                   <div class="mb-3">
                     <input type="hidden" name="memberNo" value="홍길동">
                     <input type="hidden" name="kinNo" value="1">
-                    <textarea name="content"class="form-control fs-6" rows="18" required id="content"></textarea>
+                    <th:block th:if="${session.loginMember == null}">
+	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="로그인 후 리뷰를 작성할 수 있습니다." disabled></textarea>
+                    </th:block>
+                    <th:block th:unless="${session.loginMember == null}">
+	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="리뷰를 작성하세요."></textarea>
+                    </th:block>
                     <div class="invalid-feedback">Please write a review!</div><small class="form-text text-muted d-block" style="text-align: right; font-size: 14px;">1000자 이내 입력하세요.</small>
                   </div>
-
-                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4"id="reviewButton" type="submit">등&emsp;&emsp;록</button>
+				  <th:block th:if="${session.loginMember == null}">
+	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4"id="reviewButton" type="submit" disabled>등&emsp;&emsp;록</button>
+				  </th:block>
+				  <th:block th:unless="${session.loginMember == null}">
+	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4"id="reviewButton" type="submit">등&emsp;&emsp;록</button>
+				  </th:block>
                 </form>
               </div>
             </div>
+            
           </div>
         </div>
       </div> <!-- 본문 끝 -->
@@ -526,6 +565,10 @@ geocoder.addressSearch(addr, function(result, status) {
         map.setCenter(coords);
     } 
 });
+
+function cantDo() {
+	alert('로그인 후 이용가능합니다.');
+}
 
 /* 첫번째 그래프(총 학급수) */
 

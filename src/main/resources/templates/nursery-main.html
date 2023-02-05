@@ -4,10 +4,6 @@
   <head>
     <meta charset="utf-8">
     <title>UKIDS | 어린이집</title>
-    <!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio"> -->
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -134,27 +130,27 @@
                   <div class="widget widget-filter pb-4" id="district">
                     <h3 class="widget-title1"><b>지역</b></h3>
                     <div class="form-inline">
-                      <select class="form-select" name="city" id="city" onchange="cityChange()" style="border-radius: 10px; width: 120px; display: inline;">
-                        <option value=" ">전체</option>
-                        <option value="서울">서울</option>
-                        <option value="부산">부산</option>
-                        <option value="대구">대구</option>
-                        <option value="인천">인천</option>
-                        <option value="광주">광주</option>
-                        <option value="대전">대전</option>
-                        <option value="울산">울산</option>
-                        <option value="세종특별">세종</option>
-                        <option value="경기도">경기도</option>
-                        <option value="강원도">강원도</option>
-                        <option value="충청북도">충청북도</option>
-                        <option value="충청남도">충청남도</option>
-                        <option value="전라북도">전라북도</option>
-                        <option value="전라남도">전라남도</option>
-                        <option value="경상북도">경상북도</option>
-                        <option value="경상남도">경상남도</option>
-                        <option value="제주">제주도</option>
+                      <select class="form-select" name="city" id="city" onchange="cityChange()" style="border-radius: 10px; width: 240px; display: inline;">
+                        <option value=" " th:selected="${#strings.equals(param.city, ' ')}">전체</option>
+                        <option value="서울" th:selected="${#strings.equals(param.city, '서울')}">서울특별시</option>
+                        <option value="부산" th:selected="${#strings.equals(param.city, '부산')}">부산광역시</option>
+                        <option value="대구" th:selected="${#strings.equals(param.city, '대구')}">대구광역시</option>
+                        <option value="인천" th:selected="${#strings.equals(param.city, '인천')}">인천광역시</option>
+                        <option value="광주" th:selected="${#strings.equals(param.city, '광주')}">광주광역시</option>
+                        <option value="대전" th:selected="${#strings.equals(param.city, '대전')}">대전광역시</option>
+                        <option value="울산" th:selected="${#strings.equals(param.city, '울산')}">울산광역시</option>
+                        <option value="세종특별" th:selected="${#strings.equals(param.city, '세종특별')}">세종특별자치시</option>
+                        <option value="경기도" th:selected="${#strings.equals(param.city, '경기도')}">경기도</option>
+                        <option value="강원도" th:selected="${#strings.equals(param.city, '강원도')}">강원도</option>
+                        <option value="충청북도" th:selected="${#strings.equals(param.city, '충청북도')}">충청북도</option>
+                        <option value="충청남도" th:selected="${#strings.equals(param.city, '충청남도')}">충청남도</option>
+                        <option value="전라북도" th:selected="${#strings.equals(param.city, '전라북도')}">전라북도</option>
+                        <option value="전라남도" th:selected="${#strings.equals(param.city, '전라남도')}">전라남도</option>
+                        <option value="경상북도" th:selected="${#strings.equals(param.city, '경상북도')}">경상북도</option>
+                        <option value="경상남도" th:selected="${#strings.equals(param.city, '경상남도')}">경상남도</option>
+                        <option value="제주" th:selected="${#strings.equals(param.city, '제주')}">제주특별자치도</option>
                       </select>&nbsp;
-                      <select class="form-select" name="town" id="town" style="border-radius: 10px; width: 110px; display: inline;">
+                      <select class="form-select mt-2" name="town" id="town" style="border-radius: 10px; width: 240px; display: inline;">
                         <option value=" ">전체</option>
                       </select>&nbsp;
                     </div>
@@ -429,7 +425,7 @@
           <section class="col-lg-8 pt-3" style="margin-left: 90px;">
             <!-- Products grid-->
             <div class="headtext">
-              <b class="bold">검색 목록 [[${count}]]건</b>
+              <b class="bold">검색 목록 <span th:text="${#numbers.formatInteger(count, 3, 'COMMA')}"></span>건</b>
               <a href="/compare-nursery" class="compare">
                 <div class="compareIcon"><img src="img/back(1).svg"></div>&nbsp;&nbsp;<b>선택목록 비교하기</b>
               </a>
@@ -440,10 +436,10 @@
 	            </th:block>
 	            
 	            <th:block th:if="${list != null}">
-		            	<th:block th:each="nursery : ${list}">
+		            	<th:block th:each="nursery, status : ${list}">
 				              <div class="box777">
 				                <div class="photo777">
-				                  <img class="photo" src="img/어린이집/nursery1.JPG">
+				                  <img class="photo" th:src="|img/어린이집/nursery${img[status.index]}.JPG|">
 				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare${nursery.no}')|">
 				                    <i class="ci-bookmark fw-bold"></i>
 				                    <b>&nbsp;비교&nbsp;</b>
@@ -456,7 +452,7 @@
 				                  <a class="sarip fw-bold">&nbsp;&nbsp;[[${nursery.crtypename}]]&nbsp;&nbsp;</a>
 				                  <div class="container888">
 				                    <h3 class="product-title fs-lg" style="margin-top: 10px;">
-				                      <a th:href="|/nursery-detail?no=${nursery.no}|"><b>[[${nursery.crname}]]</b></a>
+				                      <a th:href="|/nursery-detail?no=${nursery.no}&i=${img[status.index]}|"><b>[[${nursery.crname}]]</b></a>
 				                    </h3>
 				                  </div>
 				                  <div class="location"><i class="ci-location text-accent fw-bold"></i>&nbsp;[[${nursery.craddr}]]</div>

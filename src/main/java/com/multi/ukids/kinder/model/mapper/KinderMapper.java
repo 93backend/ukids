@@ -12,5 +12,5 @@ public interface KinderMapper {
 	List<Kinder> selectKinderList(Map<String, Object> map);
 	int selectKinderCount(Map<String, Object> map);
 	Kinder selectKinderByNo(int no);
-
+	int selectKinderClaimCount(int no);
 }

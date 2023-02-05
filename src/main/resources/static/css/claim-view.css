@@ -74,3 +74,9 @@
 #claim-content {
     background-color: #FFF;
 }
+.file {
+	color: black;
+}
+.file:hover {
+	color: #FC6C93;
+}

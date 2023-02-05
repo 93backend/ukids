@@ -194,7 +194,13 @@
 		FROM KINDER
 		WHERE kinNo = #{no}
 	</select>
-
+	
+	<select id="selectKinderClaimCount" resultType="int" parameterType="int">
+		SELECT
+			COUNT(no)
+		FROM K_CLAIM
+		WHERE kinNo = #{no}
+	</select>
 
 
 </mapper>

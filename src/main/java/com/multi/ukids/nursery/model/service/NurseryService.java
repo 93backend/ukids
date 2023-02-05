@@ -29,5 +29,9 @@ public class NurseryService {
 	public Nursery findByNo(int no) {
 		return mapper.selectNurseryByNo(no);
 	}
+	
+	public int getClaimCount(int no) {
+		return mapper.selectNurseryClaimCount(no);
+	}
 
 }

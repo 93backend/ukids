@@ -12,5 +12,5 @@ public interface NurseryMapper {
 	List<Nursery> selectNurseryList(Map<String, Object> map);
 	int selectNurseryCount(Map<String, Object> map);
 	Nursery selectNurseryByNo(int no);
-
+	int selectNurseryClaimCount(int no);
 }

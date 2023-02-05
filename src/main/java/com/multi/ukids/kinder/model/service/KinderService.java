@@ -28,5 +28,8 @@ public class KinderService {
 	public Kinder findByNo(int no) {
 		return mapper.selectKinderByNo(no);
 	}
-
+	
+	public int getClaimCount(int no) {
+		return mapper.selectKinderClaimCount(no);
+	}
 }

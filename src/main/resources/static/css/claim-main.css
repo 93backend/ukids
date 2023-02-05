@@ -54,13 +54,14 @@
     border-bottom: #FF87A4 solid 2px;
 }
 
-#claim-table>tbody>tr {
-    cursor:pointer;
+.claim {
+    cursor: pointer;
 }
 
-#claim-table>tbody>tr:hover {
+.claim:hover {
     background-color: #F3F5F9;
 }
+
 
 #claim-table th,
 #claim-table td {

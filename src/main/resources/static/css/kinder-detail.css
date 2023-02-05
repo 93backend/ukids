@@ -135,7 +135,7 @@ li h5 {
   width: 280px;
 }
 
-#wishButton {
+.wishButton {
   width: 130px;
   float: left;
   margin-right: 15px;

@@ -59,25 +59,40 @@ public class NurseryController {
 		PageInfo pageInfo = new PageInfo(page, 5, count, 12);
 		List<Nursery> list =  nurseryService.getNurseryList(pageInfo, param);
 		
+		int[] img = new int[12];
+		
+		img[0] = page;
+		
+		for(int i = 0; i < img.length; i++) {
+			if(i != 0) {
+				img[i] = img[i-1] + 2;
+			}
+			img[i] %= 31;
+		}
+		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
+		model.addAttribute("img", img);
 		
 		return "nursery-main";
 	}
 	
 	@GetMapping("/nursery-detail")
-	public String nurseryDetail(Model model, @RequestParam("no") int no) {
+	public String nurseryDetail(Model model, @RequestParam("no") int no, @RequestParam("i") int i) {
 		
 		Nursery nursery = nurseryService.findByNo(no);
+		int claim = nurseryService.getClaimCount(no);
 		
 		int classCnt = nursery.getClass_cnt_00() + nursery.getClass_cnt_01() + nursery.getClass_cnt_02() + nursery.getClass_cnt_03() + nursery.getClass_cnt_04() + nursery.getClass_cnt_05();
 		int childCnt = nursery.getChild_cnt_00() + nursery.getChild_cnt_01() + nursery.getChild_cnt_02() + nursery.getChild_cnt_03() + nursery.getChild_cnt_04() + nursery.getChild_cnt_05();
 		
 		model.addAttribute("nursery", nursery);
+		model.addAttribute("claim", claim);
 		model.addAttribute("classCnt", classCnt);
 		model.addAttribute("childCnt", childCnt);
+		model.addAttribute("i", i);
 		
 		return "nursery-detail";
 	}
