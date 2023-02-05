@@ -47,4 +47,10 @@ public class MemberContoller {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/join")
+	public String join() {
+		log.info("회원가입 페이지 요청");
+		return "join";
+	}
+	
 }
