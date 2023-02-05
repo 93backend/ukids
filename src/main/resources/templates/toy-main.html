@@ -181,7 +181,7 @@
       <th:block th:if="${list != null}">
       	<tr th:each="toy : ${list}">
 	        <div class="col-md-4 col-sm-6 mb-grid-gutter"><a class="card product-card h-100 border-0 shadow pb-2"
-	            th:href="@{/toy-detail}"><img class="card-img-top" th:src="${toy.toyImg}">
+	            th:href="@{|/toy-detail?no=${toy.toyNo}|}"><img class="card-img-top" th:src="${toy.toyImg}">
 	            <div class="card-body  pt-3 pb-4">
 	              <div class="card-body p-0 h-75">
 	                <h3 class="h5 mb-2" th:text="${toy.toyNm1}"></h3>

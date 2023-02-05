@@ -5,7 +5,7 @@
 <mapper namespace="com.multi.ukids.toy.model.mapper.ToyMapper">
 	
 	<resultMap type="Toy" id="ToyListResultMap">
-		<id property="toyNo" column="ToyNo"/>
+		<id property="toyNo" column="TOYNO"/>
 		<result property="toyCd" column="TOYCD"/>
 		<result property="toyNm1" column="TOYNM1"/>
 		<result property="toyNm2" column="TOYNM2"/>
@@ -18,7 +18,17 @@
 		<result property="toyCategoryS" column="TOYCATEGORYS"/>
 		<result property="toyType" column="TOYTYPE"/>
 	</resultMap>
- 
+ 	
+ 	<resultMap type="T_Review" id="ToyReviewResultMap">
+		<id 	property="no"			column="NO"/>
+		<result property="toyNo" 		column="TOYNO"/>
+		<result property="memberNo" 	column="MEMBERNO"/>
+		<result property="content" 		column="CONTENT"/>
+		<result property="createDate" 	column="CREATEDATE"/>
+		<result property="modifyDate" 	column="MODIFYDATE"/>
+		<result property="memberId" 	column="MEMBERID"/>
+		
+	</resultMap>
  
  
  	<select id="selectToyList" resultType="Toy" parameterType="map" >
@@ -59,5 +69,44 @@
 			</if>
 	 	</where>
 	</select>
+	
+	<select id="selectToyByNo" resultType="Toy" parameterType="int">
+		SELECT
+			TOYNO, TOYCD, TOYNM1, TOYNM2, REPLACE(TOYEX,'""','"') AS TOYEX, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, 
+	   		TOYCATEGORYB, TOYCATEGORYM, TOYCATEGORYS, TOYTYPE
+		FROM TOY
+		WHERE TOYNO = #{no}
+	</select>
+	
+	<select id="selectToyReviewByNo" resultType="T_REVIEW" parameterType="int">
+		SELECT R.NO, R.TOYNO, R.MEMBERNO, R.CONTENT, R.CREATEDATE, R.MODIFYDATE,
+			   M.ID AS MEMBERID FROM T_REVIEW R
+		JOIN MEMBER M ON (R.MEMBERNO = M.MEMBERNO)
+		WHERE TOYNO = #{toyNo}
+	</select>
+	
+	<insert id="insertToyReview" parameterType="T_Review">
+		INSERT INTO T_REVIEW(
+				NO, TOYNO, MEMBERNO, 
+				CONTENT, CREATEDATE, MODIFYDATE) 
+			VALUES(
+				0, #{toyNo}, #{memberNo}, 
+				#{content}, DEFAULT, DEFAULT
+			)
+	</insert>
+	
+	<delete id="deleteToyReview" parameterType="int">
+		DELETE FROM T_REVIEW WHERE NO=#{no}
+	</delete>
+	
+	<select id="selectSimilarToy" resultType="Toy" parameterType="Toy">
+		SELECT
+		DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
+		FROM TOY 
+		WHERE TOYCATEGORYM = #{toyCategoryM} 
+		AND TOYNO != #{toyNo}
+		ORDER BY TOYNO DESC LIMIT 10
+	</select>
+	
 	
 </mapper>
