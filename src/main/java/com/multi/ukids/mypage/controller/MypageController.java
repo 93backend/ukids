@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.multi.ukids.board.model.service.BoardService;
+import com.multi.ukids.board.model.vo.Board;
+import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.member.model.service.MemberService;
 import com.multi.ukids.member.model.vo.Member;
@@ -33,6 +36,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private BoardService boardservice;
 	
 	@PostMapping("/member/update")
 	public String update(Model model, 
@@ -67,27 +73,41 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage2")
-	public String list(
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			Model model, @RequestParam Map<String, String> param) {
-		log.info("리스트 요청, param : " + param);
-		int page = 1;
-		Map<String, String> searchMap = new HashMap<String, String>();
-		try {
-			String searchValue = param.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = param.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}
-			page = Integer.parseInt(param.get("page"));
-		} catch (Exception e) {}
-		
-		if (loginMember == null) {
-			return "/login";
-		}
-		
-		return "/mypage2";
+	public String mypageView2(
+			
+			) {
+
+		return "mypage2";
 	}
+	
+	@GetMapping("/mypage3")
+	public String mypageView3() {
+
+		return "mypage3";
+	}
+	
+//	@GetMapping("/mypage2")
+//	public String list(
+//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+//			Model model, @RequestParam Map<String, String> param) {
+//		log.info("리스트 요청, param : " + param);
+//		int page = 1;
+//		Map<String, String> searchMap = new HashMap<String, String>();
+//		try {
+//			String searchValue = param.get("searchValue");
+//			if(searchValue != null && searchValue.length() > 0) {
+//				String searchType = param.get("searchType");
+//				searchMap.put(searchType, searchValue);
+//			}
+//			page = Integer.parseInt(param.get("page"));
+//		} catch (Exception e) {}
+//		
+//		if (loginMember == null) {
+//			return "/login";
+//		}
+//		
+//		return "/mypage2";
+//	}
 	
 //	@GetMapping("/mypage2")
 //	public String mypageView2() {
@@ -138,12 +158,13 @@ public class MypageController {
 //	}
 //	
 //	@GetMapping("/mypage5")
-//	public String list(
+//	public String myArticle(
 //			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+//			@ModelAttribute Board board,
 //			Model model, @RequestParam Map<String, String> param) {
 //		log.info("리스트 요청, param : " + param);
 //		int page = 1;
-//		Map<String, String> searchMap = new HashMap()<String, String>();
+//		Map<String, String> searchMap = new HashMap<String, String>();
 //		try {
 //			String searchValue = param.get("searchValue");
 //			if(searchValue != null && searchValue.length() > 0) {
@@ -156,6 +177,17 @@ public class MypageController {
 //		if (loginMember == null) {
 //			return "/login";
 //		}
+//		
+//		searchMap.put("memberNo", "" + loginMember.getMemberNo());
+//		int boardCount = BoardService.getBoardCount4(searchMap);
+//		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 15);
+//		List<Board> list = boardservice.getBoardList4(pageInfo, searchMap);
+//		
+//		model.addAttribute("list", list);
+//		model.addAttribute("param", param);
+//		model.addAttribute("pageInfo", pageInfo);
+//		
+//		return "/mypage5";
 //	}
 //	
 //	@GetMapping("/mypage6")

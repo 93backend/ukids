@@ -82,9 +82,51 @@
 	</select>
 	
 	
-
 	
 	
+	
+	
+	<!-- mypage -->
+	<select id="selectBoardCount4" resultType="int" parameterType="map">
+		SELECT  
+			COUNT(*)
+		FROM BOARD B JOIN MEMBER M ON(B.memberNo = M.memberNo) 
+		WHERE B.STATUS = 'Y'
+		AND M.memberNo LIKE B.memberNo
+		<if test="writer != null">
+			AND M.id LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.title LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.content LIKE '%${content}%' 
+		</if>		
+		<if test="memberNo != null">
+			AND B.memberNo = #{memberNo}
+		</if>	
+	</select>
+	
+	<select id="selectBoardList4" resultMap="boardListResultMap" parameterType="map">
+		SELECT  
+			 ROW_NUMBER() OVER(ORDER BY B.boardNo ASC) as no,B.boardNo, B.type,B.title, M.id, B.createDate, B.originalFileName, B.readcount, B.good, B.STATUS
+		FROM MEMBER M LEFT OUTER JOIN BOARD B ON(B.memberNo = M.memberNo) 
+		WHERE B.STATUS = 'Y'
+		AND M.memberNo LIKE B.memberNo
+		<if test="writer != null">
+			AND M.id LIKE '%${writer}%' 
+		</if>		
+		<if test="title != null">
+			AND B.title LIKE '%${title}%' 
+		</if>		
+		<if test="content != null">
+			AND B.content LIKE '%${content}%' 
+		</if>		
+		<if test="memberNo != null">
+			AND B.memberNo = #{memberNo}
+		</if>		
+		ORDER BY B.boardNo DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
 	
 
 </mapper>
