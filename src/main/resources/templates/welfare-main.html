@@ -33,7 +33,6 @@
     
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="js/address.js"></script>
     <!-- 폰트 -->
     <style>
       @font-face {
@@ -66,7 +65,7 @@
             <div class="mb-3 mb-lg-0 pt-lg-0">
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                  <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                  <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
                   <li class="breadcrumb-item text-light">아동 관련 시설</li>
                   <li class="breadcrumb-item text-nowrap text-pink" aria-current="page">아동복지시설</li>
                 </ol>
@@ -90,24 +89,24 @@
               <div class="col-md-1">지역 선택</div>
               <div class="col-md-2 me-2">
                 <select class="form-select" id="city" name="city" onchange="cityChange()">
-                  <option value=" " th:selected="${param.city} == ' '">전체</option>
-                  <option value="서울" th:selected="${param.city} == '서울'">서울특별시</option>
-                  <option value="부산" th:selected="${param.city} == '부산'">부산광역시</option>
-                  <option value="대구" th:selected="${param.city} == '대구'">대구광역시</option>
-                  <option value="인천" th:selected="${param.city} == '인천'">인천광역시</option>
-                  <option value="광주" th:selected="${param.city} == '광주'">광주광역시</option>
-                  <option value="대전" th:selected="${param.city} == '대전'">대전광역시</option>
-                  <option value="울산" th:selected="${param.city} == '울산'">울산광역시</option>
-                  <option value="세종특별" th:selected="${param.city} == '세종특별'">세종특별자치시</option>
-                  <option value="경기도" th:selected="${param.city} == '경기도'">경기도</option>
-                  <option value="강원도" th:selected="${param.city} == '강원도'">강원도</option>
-                  <option value="충청북도" th:selected="${param.city} == '충청북도'">충청북도</option>
-                  <option value="충청남도" th:selected="${param.city} == '충청남도'">충청남도</option>
-                  <option value="전라북도" th:selected="${param.city} == '전라북도'">전라북도</option>
-                  <option value="전라남도" th:selected="${param.city} == '전라남도'">전라남도</option>
-                  <option value="경상북도" th:selected="${param.city} == '경상북도'">경상북도</option>
-                  <option value="경상남도" th:selected="${param.city} == '경상남도'">경상남도</option>
-                  <option value="제주" th:selected="${param.city} == '제주'">제주특별자치도</option>
+                  <option value=" " th:selected="${#strings.equals(param.city, ' ')}">전체</option>
+                  <option value="서울" th:selected="${#strings.equals(param.city, '서울')}">서울특별시</option>
+                  <option value="부산" th:selected="${#strings.equals(param.city, '부산')}">부산광역시</option>
+                  <option value="대구" th:selected="${#strings.equals(param.city, '대구')}">대구광역시</option>
+                  <option value="인천" th:selected="${#strings.equals(param.city, '인천')}">인천광역시</option>
+                  <option value="광주" th:selected="${#strings.equals(param.city, '광주')}">광주광역시</option>
+                  <option value="대전" th:selected="${#strings.equals(param.city, '대전')}">대전광역시</option>
+                  <option value="울산" th:selected="${#strings.equals(param.city, '울산')}">울산광역시</option>
+                  <option value="세종특별" th:selected="${#strings.equals(param.city, '세종특별')}">세종특별자치시</option>
+                  <option value="경기도" th:selected="${#strings.equals(param.city, '경기도')}">경기도</option>
+                  <option value="강원도" th:selected="${#strings.equals(param.city, '강원도')}">강원도</option>
+                  <option value="충청북도" th:selected="${#strings.equals(param.city, '충청북도')}">충청북도</option>
+                  <option value="충청남도" th:selected="${#strings.equals(param.city, '충청남도')}">충청남도</option>
+                  <option value="전라북도" th:selected="${#strings.equals(param.city, '전라북도')}">전라북도</option>
+                  <option value="전라남도" th:selected="${#strings.equals(param.city, '전라남도')}">전라남도</option>
+                  <option value="경상북도" th:selected="${#strings.equals(param.city, '경상북도')}">경상북도</option>
+                  <option value="경상남도" th:selected="${#strings.equals(param.city, '경상남도')}">경상남도</option>
+                  <option value="제주" th:selected="${#strings.equals(param.city, '제주')}">제주특별자치도</option>
                 </select>
               </div>
               <div class="col-md-2 me-2">
@@ -144,17 +143,14 @@
           	<th:block th:each="welfare : ${list}">
           		<div class="col-lg-4 col-md-4 col-sm-6 px-2 mb-1">
 		            <div class="card product-card shadow-sm mb-5 bg-body">
-		              <a th:href="@{/welfare-detail}">
+		              <a th:href="@{|/welfare-detail?no=${welfare.cwNo}|}">
 		                <div class="card-img-top"><img src="img/ukids/facility/welfare/wf1.jpg" alt="복지"></div>
 		                <div class="card-body py-2 welfare-card">
 		                  <h3 class="welfare-name fs-lg fw-bold my-1">
 		                  	[[${welfare.fcltNm}]]
 		                  </h3>
 		                  <div class="text-muted d-block fs-sm md-2"><i class="ci-bell text-accent fw-bold me-2"></i>
-		                  	 [[${welfare.cfbNm}]]
-		                  	 <!--
-		                  	 <th:block th:text="${welfare.cfbNm} == '-' ? '아동복지' : ${welfare.cfbNm}"></th:block>
-		                  	 -->
+	                  		[[${welfare.cfbNm}]]
 		                  </div>
 		                  <div class="d-flex justify-content-between"><div class="welfare-address fs-md fw-bold text-dark"><i class="ci-location text-danger fw-bold me-1"></i>
 		                  	[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]</div>
@@ -220,8 +216,9 @@
     <script th:src="@{/vendor/flatpickr/dist/plugins/rangePlugin.js}"></script>
     <!-- Main theme script-->
     <script th:src="@{/js/theme.min.js}"></script>
+    <script th:src="@{/js/address.js}"></script>
     
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
 			var url_href = window.location.href;
 	    var url = new URL(url_href); // URL 객체 선언
 	    

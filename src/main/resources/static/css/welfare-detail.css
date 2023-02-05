@@ -210,3 +210,36 @@
   line-height: 30px; 
   margin-top: 5px;
 }
+
+
+/* 23.02.05 상세정보 수정 */
+.detailInfo {
+  min-height: 402px;  
+}
+.detailInfo dl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 24px;
+}
+.detailInfo dl div {
+  display: flex;
+}
+.detailInfo dl div dt {
+  flex-shrink: 0;
+  width: 150px;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgb(143, 143, 143);
+}
+.detailInfo dl div dt i {
+  margin-right: 10px;
+  color: #fc6c93;
+}
+.detailInfo dl div dd {
+  font-size: 16px;
+  font-weight: 600;
+}
+.detailInfo dl div:last-child dd {
+  margin-bottom: 0;
+}

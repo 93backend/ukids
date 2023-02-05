@@ -35,5 +35,24 @@
 			AND fcltAddr LIKE '%${town}%'
 		</if>
 	</select>
+	
+	<select id="selectWelfareByNo" resultType="Welfare" parameterType="int">
+		SELECT
+			cwNo, fcltCd, fcltNm, fcltEngNm, rprsNm, homepageAddr,
+			fcltMailAddr, fcltZipcd, fcltAddr, fcltDtl_1Addr,
+			fcltTelNo, faxNo, estbDe, cprNm, cfbNm
+		FROM WELFARE
+		WHERE cwNo = #{cwNo}
+	</select>
+	
+	<select id="selectNearWelfareList" resultType="Welfare" parameterType="Welfare">
+		SELECT
+			cwNo, fcltCd, fcltNm, fcltEngNm, rprsNm, homepageAddr,
+			fcltMailAddr, fcltZipcd, fcltAddr, fcltDtl_1Addr,
+			fcltTelNo, faxNo, estbDe, cprNm, cfbNm
+		FROM WELFARE
+		WHERE LEFT(fcltZipcd, 3) = LEFT(#{fcltZipcd}, 3) AND cwNo != #{cwNo}
+		ORDER BY cwNo DESC LIMIT 10
+	</select>
 
 </mapper>

@@ -11,4 +11,6 @@ import com.multi.ukids.welfare.model.vo.Welfare;
 public interface WelfareMapper {
 	List<Welfare> selectWelfareList(Map<String, String> map);
 	int selectWelfareCount(Map<String, String> map);	
+	Welfare selectWelfareByNo(int no);
+	List<Welfare> selectNearWelfareList(Welfare welfare);
 }

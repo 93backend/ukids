@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.multi.ukids.common.util.PageInfo;
+import com.multi.ukids.nursery.model.vo.Nursery;
 import com.multi.ukids.welfare.model.mapper.WelfareMapper;
 import com.multi.ukids.welfare.model.vo.Welfare;
 
@@ -23,6 +24,14 @@ public class WelfareService {
 	
 	public int getWelfareCount(Map<String, String> param) {
 		return mapper.selectWelfareCount(param);
+	}
+	
+	public Welfare findByNo(int no) {
+		return mapper.selectWelfareByNo(no);
+	}
+	
+	public List<Welfare> getNearWelfareList(Welfare welfare) {
+		return mapper.selectNearWelfareList(welfare);
 	}
 
 

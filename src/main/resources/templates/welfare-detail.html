@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>UKIDS</title>
+    <title>UKIDS | 아동복지시설</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -10,30 +10,27 @@
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="mask-icon" color="#fe6a6a" th:href="@{/safari-pinned-tab.svg}">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-    <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css"/>
-    <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/drift-zoom/dist/drift-basic.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/lightgallery.js/dist/css/lightgallery.min.css}"/>
     
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="css/theme.min.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-
-    <!--해당 페이지 css-->
-    <link rel="stylesheet" href="css/welfare-detail.css">
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/welfare-detail.css}">
     
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
     <!-- 폰트 -->
     <style>
     @font-face {
@@ -54,168 +51,22 @@
   <body class="handheld-toolbar-enabled">
 
     <!-- 로그인 모달 관련  -->
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
-              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <div th:fragment="modal" th:replace="~{common :: modal}"></div>
+    
     <main class="page-wrapper">
 
       <!-- 헤더!!!!!! -->
-      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-
-          <!-- Brand -->
-          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
-            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
-          </a>
-
-          <!-- Toolbar -->
-          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-
-            <!-- 로그인 전!!!!!!!! -->
-
-            <a href="#signin-modal" data-bs-toggle="modal">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-locked"></i>
-                <span>로그인</span>
-              </button>
-            </a>
-            <a href="join.html">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-user me-2"></i>
-                <span class="jointext">회원가입</span>
-              </button>
-            </a>
-
-            <!-- 로그인 후!!!!!!!!!!!! -->
-
-            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
-            </a>
-            
-            <a class="navbar-tool ms-3" href="index.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
-              </div>
-            </a> -->
-
-            <a class="navbar-tool ms-3" href="mypage3.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="navbar-tool-icon ci-cart"></i>
-              </div>
-            </a>
-            
-          </div>
-
-          <!-- 메뉴 -->
-          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-            <hr class="d-lg-none my-3">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
-                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
-
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
-                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
-
-
-
-
-
+      <header th:fragment="header" th:replace="~{common :: header}"></header>
 
       <!-- 아동복지시설 상세 시작!!!!!!! -->
       <!-- Page Title-->
-
       <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="mainImg">
         <div class="container position-relative zindex-5 mb-3">
           <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-                <li class="breadcrumb-item text-nowrap"><a href="welfare-main.html">아동복지시설</a></li>
+                <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item text-nowrap"><a th:href="@{/welfare-main}">아동복지시설</a></li>
                 <li class="breadcrumb-item text-nowrap active" aria-current="page" style="color: #fc6c93;">아동복지시설 상세보기</li>
               </ol>
             </nav>
@@ -237,20 +88,21 @@
               <div class="pt-4 px-4 pe-lg-0 ps-xl-5">
                 <!-- Product gallery-->
                 <div class="gallery">
-                  <h4 class="weltitle fw-bold"><img class="wfIcon"src="img/ukids/welfareIcon.png">서울특별시 아동복지시설</h4>
+                  <h4 class="weltitle fw-bold"><img class="wfIcon" src="img/ukids/welfareIcon.png">[[${welfare.fcltNm}]]</h4>
                   <div class="welfarebox">
                     <a class="gallery-item rounded-3 mb-grid-gutter" href="img/ukids/seoul-welfare.jpg">
                       <img class="wfImg" src="img/ukids/seoul-welfare.jpg" alt="Gallery preview">
-                      <span class="gallery-item-caption">서울특별시 아동복지시설</span>
+                      <span class="gallery-item-caption">[[${welfare.fcltNm}]]</span>
                     </a>
                   </div>
                   <div class="row">
                     <div class="col-sm-6 mx-1 underdiv">
                       <div style="display: flex;"><h4 class="location fw-bold">찾아오시는 곳</h4><img class="line"src="img/ukids/2.PNG"></div>
                       <div id="map"></div>
-                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b74c68ca9c842d7f49d121fdec713bf1&libraries=services,clusterer,drawing"></script>
-                        <script>
-                          var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0784c083b85732bbc3f69c5259d72e38&libraries=services,clusterer,drawing"></script>
+                        <script th:inline="javascript">
+                        	/*<![CDATA[*/
+                        	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
                               mapOption = {
                                   center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                                   level: 3 // 지도의 확대 레벨
@@ -263,7 +115,8 @@
                           var geocoder = new kakao.maps.services.Geocoder();
                           
                           // 주소로 좌표를 검색합니다
-                          geocoder.addressSearch('서울특별시 강남구 광평로34길 124', function(result, status) {
+                          var addr = /*[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]*/;
+                          geocoder.addressSearch(addr, function(result, status) {
                           
                               // 정상적으로 검색이 완료됐으면 
                               if (status === kakao.maps.services.Status.OK) {
@@ -276,7 +129,8 @@
                                     position: coords
                                 });
                         
-                                var content = '<div class="info-title">서울특별시 아동복지시설</div>';
+                                var name = /*[[${welfare.fcltNm}]]*/;
+                                var content = `<div class="info-title">${name}</div>`;
 
                                 // 커스텀 오버레이가 표시될 위치입니다 
                                 var position = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -293,43 +147,93 @@
                                 // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
                                 map.setCenter(coords);
                               } 
-                          });   
+                          });
+                          /*]]>*/
                         </script>
                     </div>
 
                     <div class="col-sm-6 underdiv" style="width:510px">
                       <div style="display: flex; margin-bottom: 2px;"><h4 class="location fw-bold">상세정보</h4><img class="line2"src="img/ukids/2.PNG"></div>
                       <div class="detailInfo">
+                      
+                      		<!-- 
+                      		성남시 다함께돌봄센터 22호점(더샵판교포레스트11단지 어린이식당)
+                      		경기도 평택시 비전2로 317, 주민공동시설동 2층 (죽백동, 평택소사벌 반도유보라 아이비파크 (2단지))
+                      		 -->
+                      
+                      		<dl>
+	                          <div>
+	                            <dt><i class="ci-store"></i>시설명</dt>
+	                            <dd>[[${welfare.fcltNm}]]</dd>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-user"></i>대표자</dt>
+	                            <dd>[[${welfare.rprsNm}]]</dd>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-list"></i>설립일자</dt>
+	                            <dd>[[${formattedEstbDe}]]</dd>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-home"></i>홈페이지</dt>
+	                           	<th:block th:if="${welfare.homepageAddr == '-'}">
+						                    <dd><i class="ci-home fs-lg" style="color: #8f8f8f;"></i></dd>
+					                    </th:block>
+					                    <th:block th:if="${welfare.homepageAddr != '-'}">
+						                    <dd><a th:href="|${welfare.homepageAddr}|"><i class="ci-home fs-lg" style="color: #fc6c93;"></i></a></dd>
+					                    </th:block>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-mail"></i>이메일</dt>
+	                            <dd>[[${welfare.fcltMailAddr}]]</dd>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-phone"></i>전화번호</dt>
+	                            <dd>[[${welfare.fcltTelNo}]]</dd>
+	                          </div>
+	                          <div>
+	                            <dt><i class="ci-location"></i>주소</dt>
+	                            <dd>[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]</dd>
+	                          </div>
+	                        </dl>
 
-                          <ul class="icons">
-                            <li><i class="ci-store" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-user" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-list" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-home" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-mail" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-location" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                            <li><i class="ci-phone" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                          </ul>
+												<!--  
+                         <ul class="icons">
+                           <li><i class="ci-store" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-user" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-list" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-home" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-mail" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-location" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                           <li><i class="ci-phone" style="color: #fc6c93; margin-right: 10px;"></i></li>
+                         </ul>
 
-                          <ul class="wel-details">
-                            <li>시설명</li>
-                            <li>대표자</li>
-                            <li>설립일자</li>
-                            <li>홈페이지</li>
-                            <li>이메일</li>
-                            <li>전화번호</li>
-                            <li>주소</li>
-                          </ul>
+                         <ul class="wel-details">
+                           <li>시설명</li>
+                           <li>대표자</li>
+                           <li>설립일자</li>
+                           <li>홈페이지</li>
+                           <li>이메일</li>
+                           <li>전화번호</li>
+                           <li>주소</li>
+                         </ul>
+                         
+                         <ul class="wel-details2">
+                           <li>성남시 다함께돌봄센터 22호점(더샵판교포레스트11단지 어린이식당)</li>
+                           <li>[[${welfare.rprsNm}]]</li>
+                           <li>[[${formattedEstbDe}]]</li>
+                           <th:block th:if="${welfare.homepageAddr == '-'}">
+					                    <li><i class="ci-home fs-lg" style="color: #8f8f8f;"></i></li>
+				                    </th:block>
+				                    <th:block th:if="${welfare.homepageAddr != '-'}">
+					                    <li><a th:href="|${welfare.homepageAddr}|"><i class="ci-home fs-lg" style="color: #fc6c93;"></i></a></li>
+				                    </th:block>
+                           <li>[[${welfare.fcltMailAddr}]]</li>
+                           <li>[[${welfare.fcltTelNo}]]</li>
+                           <li class="haddr">경기도 평택시 비전2로 317, 주민공동시설동 2층 (죽백동, 평택소사벌 반도유보라 아이비파크 (2단지))</li>
+                         </ul>
+                         -->
                           
-                          <ul class="wel-details2">
-                            <li>서울특별시 아동복지센터</span></li>
-                            <li>임명언</li>
-                            <li>1963.03</li>
-                            <li><a href="https://child.seoul.go.kr/"><i class="ci-home fs-lg" style="color: #fc6c93;"></i></a></li>
-                            <li>sb7c@hanmail.net</li>
-                            <li>02-706-0621</li>
-                            <li class="haddr">서울특별시 강남구 광평로 34-124</li>
-                          </ul>
                       </div>
                     </div>
                   </div>
@@ -337,6 +241,7 @@
               </div> 
 
 
+							<!-- 근처 아동복지시설 -->
               <div class="container" style="width: 95%; margin-bottom: 6%;">
                 <div  style="display: flex; margin-bottom: 25px;">
                   <h4 class="location fw-bold">근처 아동복지시설</h4><img class="line3" src="img/ukids/2x2.png">
@@ -344,60 +249,24 @@
                 <div class="tns-carousel tns-controls-static tns-controls-outside">
                   <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
                     <!-- Product-->
-                    <div>
-                      <div class="card product-card card-static welcard">
-                        <a class="card-img-top d-block overflow-hidden" href="welfare-detail.html"><img class="near" src="img/ukids/wel1.jpg" alt="Product"></a>
-                        <div class="card-body nearwelfare py-2">
-                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">누리봄 다함께 키움 센터</a></h3>
-                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">서울 강남구 영동대로 22</span></div>       
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                      <div class="card product-card card-static welcard">
-                        <a class="card-img-top d-block overflow-hidden" href="welfare-detail.html"><img class="near" src="img/ukids/wel2.jpg" alt="Product"></a>
-                        <div class="card-body nearwelfare py-2">
-                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">서울 거점형 키움센터</a></h3>
-                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">서울 강남구 영동대로 22</span></div>         
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                      <div class="card product-card card-static welcard">
-                        <a class="card-img-top d-block overflow-hidden" href="welfare-detail.html"><img class="near" src="img/ukids/wel3.jpg" alt="Product"></a>
-                        <div class="card-body nearwelfare py-2">
-                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">군포 We Start 산본마을 운영센터</a></h3>
-                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">경기도 안양시 동안구 경수대로883번길 70</span></div>         
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                      <div class="card product-card card-static welcard">
-                        <a class="card-img-top d-block overflow-hidden" href="welfare-detail.html"><img class="near" src="img/ukids/wel4.jpg" alt="Product"></a>
-                        <div class="card-body nearwelfare py-2">
-                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">우리동네 키움센터</a></h3>
-                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">경기도 성남시 중원구 산성대로476번길 12</span></div>       
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Product-->
-                    <div>
-                      <div class="card product-card card-static welcard">
-                        <a class="card-img-top d-block overflow-hidden" href="welfare-detail.html"><img class="near" src="img/ukids/wel1.jpg" alt="Product"></a>
-                        <div class="card-body nearwelfare py-2">
-                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">누리봄 다함께 키움 센터</a></h3>
-                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">서울 강남구 영동대로 22</span></div>       
-                        </div>
-                      </div>
-                    </div>
+                    <th:block th:if="${nearWelfareList != null}">
+                    	<th:block th:each="nearWelfare : ${nearWelfareList}">
+                    		<div>
+		                      <div class="card product-card card-static welcard">
+		                        <a class="card-img-top d-block overflow-hidden" th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}|}><img class="near" src="img/ukids/wel1.jpg" alt="Product"></a>
+		                        <div class="card-body nearwelfare py-2">
+		                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">[[${nearWelfare.fcltNm}]]</a></h3>
+		                          <div class="product-price"><i class="ci-phone ic"></i><span class="timelocation">[[${nearWelfare.fcltTelNo}]]</span></div>
+		                          <!--
+		                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
+		                          -->
+		                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">[[${nearWelfare.fcltAddr} + ' ' + ${nearWelfare.fcltDtl_1Addr}]]</span></div>       
+		                        </div>
+		                      </div>
+		                    </div>
+                    	</th:block>
+                    </th:block>
+                    
                   </div>
                 </div>
               </div>
