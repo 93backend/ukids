@@ -104,8 +104,6 @@ public class ClaimController {
 			count = service.getKinderClaimCount(claim.getKnNo());
 		}
 		
-		System.out.println(claim.toString());
-		
 		model.addAttribute("type", type);
 		model.addAttribute("name", name);
 		model.addAttribute("count", count);
