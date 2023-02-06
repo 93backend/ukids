@@ -13,16 +13,6 @@
     
 }
 
-
-//댓글 삭제
-
-$(document).ready(function(){
-  $('.trashbtn').click(function(){
-      $(this).closest('.reviewlist').remove();
-  });
-});
-
-
 //리뷰 더 보기
 //댓글 더 보기 누르면 댓글 전체 나옴
 
@@ -32,16 +22,16 @@ $(function () {
   if ($('.reviewlist:hidden').length == 0)  // 댓글이 없을때
   {
       $('#seeMore').attr('disabled',true);
-      document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2" style="color: #fc6c93;"></i><span style="color: #fc6c93;">댓글 없음</span>';
+      document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2"></i><span>댓글 없음</span>';
   }
   $('#seeMore').click(function (e) {  //댓글더보기 클릭시 
       if (isHidden == true)
       {
-          document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2" style="color: #fc6c93;"></i><span style="color: #fc6c93;">댓글 더 보기</span>';
+          document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2"></i><span>댓글 더 보기</span>';
           $('.reviewlist').slice(4, $(".reviewlist").length).hide();
       } else
       {
-          document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2" style="color: #fc6c93;"></i><span style="color: #fc6c93;"> 댓글 감추기 </span>';
+          document.getElementById('seeMore').innerHTML = '<i class="ci-reload me-2"></i><span> 댓글 감추기 </span>';
           $('.reviewlist').show();
       }
       isHidden = !isHidden;

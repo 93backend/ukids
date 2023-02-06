@@ -8,11 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
+import com.multi.ukids.kinder.model.vo.KReview;
 import com.multi.ukids.kinder.model.vo.Kinder;
+import com.multi.ukids.member.model.vo.Member;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class KinderController {
@@ -90,6 +98,8 @@ public class KinderController {
 		
 		Kinder kinder = kinderService.findByNo(no);
 		int claim = kinderService.getClaimCount(no);
+		List<KReview> review = kinderService.getReviewList(no);
+		int reviewCnt = kinderService.getReviewCount(no);
 		
 		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
 		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
@@ -99,6 +109,8 @@ public class KinderController {
 		
 		model.addAttribute("kinder", kinder);
 		model.addAttribute("claim", claim);
+		model.addAttribute("review", review);
+		model.addAttribute("reviewCnt", reviewCnt);
 		model.addAttribute("classCnt", classCnt);
 		model.addAttribute("childCnt", childCnt);
 		model.addAttribute("edate", edate);
@@ -106,5 +118,51 @@ public class KinderController {
 		model.addAttribute("i", i);
 		
 		return "kinder-detail";
+	}
+	
+	@PostMapping("/kinder-writeReview")
+	public String writeReview (Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute KReview review,
+			@RequestParam Map<String, String> param
+		) {
+			int i = Integer.parseInt(param.get("i"));
+			int no = review.getKinNo();
+			
+			review.setMemberNo(loginMember.getMemberNo());
+			
+			int result = kinderService.saveReview(review);
+			
+			if(result > 0) {
+				model.addAttribute("msg", "해당 유치원에 리뷰가 등록 되었습니다.");
+			} else {
+				model.addAttribute("msg", "해당 유치원 리뷰 등록에 실패하였습니다.");
+			}
+			
+			model.addAttribute("location", "/kinder-detail?no=" + no +"&i=" + i);
+			
+			return "common/msg";
+		}
+	
+	@RequestMapping("/kinder-deleteReview")
+	public String deleteReview(Model model,  HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@RequestParam Map<String, String> param
+	) {
+		int no = Integer.parseInt(param.get("no"));
+		int kinNo = Integer.parseInt(param.get("kinNo"));
+		int i = Integer.parseInt(param.get("i"));
+		
+		int result = kinderService.deleteReview(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "리뷰가 삭제되었습니다.");
+		} else {
+			model.addAttribute("msg", "리뷰 삭제에 실패하였습니다.");
+		}
+		
+		model.addAttribute("location", "/kinder-detail?no=" + kinNo +"&i=" + i);
+		
+		return "common/msg";
 	}
 }

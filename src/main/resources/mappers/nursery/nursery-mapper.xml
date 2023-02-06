@@ -97,7 +97,7 @@
 			AND cctvinstlcnt != 0
 		</if>
 		
-		ORDER BY no DESC LIMIT ${limit} OFFSET ${offset}
+		ORDER BY no LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	<select id="selectNurseryCount" resultType="int" parameterType="map">
@@ -208,5 +208,36 @@
 		FROM N_CLAIM
 		WHERE nuNo = #{no}
 	</select>
+	
+	<select id="selectNurseryReviewList" resultType="NReview" parameterType="int">
+		SELECT 
+			R.no, R.nuNo, R.memberNo, M.id, 
+			R.content, R.createDate, R.modifyDate
+		FROM N_REVIEW R
+		LEFT JOIN MEMBER M ON R.memberNo = M.memberNo
+		LEFT JOIN NURSERY N ON R.nuNo = N.no
+		WHERE R.nuNo = #{no}
+	</select>
+	
+	<select id="selectNurseryReviewCount" resultType="int" parameterType="int">
+		SELECT 
+			COUNT(R.no)
+		FROM N_REVIEW R
+		LEFT JOIN MEMBER M ON R.memberNo = M.memberNo
+		LEFT JOIN NURSERY N ON R.nuNo = N.no
+		WHERE R.nuNo = #{no}
+	</select>
+	
+	<insert id="insertNurseryReview" parameterType="NReview">
+		INSERT INTO N_REVIEW (
+			no, nuNo, memberNo, content, createDate, modifyDate
+		) VALUES (
+			0, #{nuNo}, #{memberNo}, #{content}, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<delete id="deleteNurseryReview" parameterType="int">
+		 DELETE FROM N_REVIEW WHERE no = #{no}
+	</delete>
 
 </mapper>

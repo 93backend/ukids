@@ -93,7 +93,7 @@
 		<if test="elect != null">
 			AND elect_ck_yn LIKE 'Y'
 		</if>
-		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}
+		ORDER BY kinNo LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	<select id="selectKinderCount" resultType="int" parameterType="map">
@@ -201,6 +201,37 @@
 		FROM K_CLAIM
 		WHERE kinNo = #{no}
 	</select>
+	
+	<select id="selectKinderReviewList" resultType="KReview" parameterType="int">
+		SELECT 
+			R.no, R.kinNo, R.memberNo, M.id, 
+			R.content, R.createDate, R.modifyDate
+		FROM K_REVIEW R
+		LEFT JOIN MEMBER M ON R.memberNo = M.memberNo
+		LEFT JOIN KINDER K ON R.kinNo = K.kinNo
+		WHERE R.kinNo = #{no}
+	</select>
+	
+	<select id="selectKinderReviewCount" resultType="int" parameterType="int">
+		SELECT 
+			COUNT(R.no)
+		FROM K_REVIEW R
+		LEFT JOIN MEMBER M ON R.memberNo = M.memberNo
+		LEFT JOIN KINDER K ON R.kinNo = K.kinNo
+		WHERE R.kinNo = #{no}
+	</select>
+	
+	<insert id="insertKinderReview" parameterType="KReview">
+		INSERT INTO K_REVIEW (
+			no, kinNo, memberNo, content, createDate, modifyDate
+		) VALUES (
+			0, #{kinNo}, #{memberNo}, #{content}, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<delete id="deleteKinderReview" parameterType="int">
+		 DELETE FROM K_REVIEW WHERE no = #{no}
+	</delete>
 
 
 </mapper>

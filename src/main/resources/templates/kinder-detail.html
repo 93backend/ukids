@@ -439,29 +439,36 @@
         <div class="review-container" style="margin-bottom: 50px; margin-top: 80px">
           <div class="row">
             <div class="col">
-              <h3 class="fw-bold d-inline-block text-dark">리뷰 (3)<img src="./img/ukids/kinder/line2.png" style="height: 50px; width: 565px; margin-left: 7px;"></h3>
+              <h3 class="fw-bold d-inline-block text-dark">리뷰 ([[${reviewCnt}]])<img src="./img/ukids/kinder/line2.png" style="height: 50px; width: 565px; margin-left: 7px;"></h3>
 
               <ul id="testbox" class="list-unstyled">
                 <li>
-                  <div class="reviewlist">
-                    <div id="reviewBox"class="product-review pb-4 mb-4 border-bottom reviewlist" style="margin-left: 2%;">
-                      <!-- 작성자, 작성 시간-->
-                      <div class="d-flex mb-3">
-                        <div class="d-flex align-items-center me-4 pe-2">
-                          <div>
-                            <h6 class="fs-sm mb-0">유키즈1</h6><span class="fs-ms text-muted">2023-01-01</span>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- 리뷰 삭제 버튼-->
-                      <div id="reviewDel" class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
-                        <span class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn">
-                          <i class="ci-trash"></i>
-                        </span>
-                      </div>
-                      <!-- 리뷰 내용-->
-                      <p class="fs-md mb-2" style="width: 600px;">아이가 너무 좋아하네요!<br> 대여하는거라 걱정했는데 깨끗하고 좋아요~</p>
-                    </div>
+                	<th:block th:if="${reviewCnt == 0}">
+	                  <div style="width: 100%; text-align: center;">등록된 리뷰가 없습니다.</div>
+                	</th:block>
+                  <div class="reviewlist" th:if="${review != null}">
+                    <th:block th:each="review : ${review}">
+	                    <div id="reviewBox"class="product-review pb-4 mb-4 border-bottom reviewBox reviewlist" style="margin-left: 2%;">
+	                      <!-- 작성자, 작성 시간-->
+	                      <div class="d-flex mb-3">
+	                        <div class="d-flex align-items-center me-4 pe-2">
+	                          <div>
+	                            <h6 class="fs-sm mb-0">[[${review.id}]]</h6><span class="fs-ms text-muted">[[${#dates.format(review.createDate, 'yyyy-MM-dd')}]]</span>
+	                          </div>
+	                        </div>
+	                      </div>
+	                      <!-- 리뷰 삭제 버튼-->
+	                      <th:block th:if="${session.loginMember != null && (session.loginMember.id == review.id || session.loginMember.role == 'ROLE_ADMIN')}">
+		                      <div id="reviewDel" class="d-block position-relative mb-3 mb-sm-0 me-sm-4 ms-sm-0 mx-auto" style="width: 12.5rem; float: right;">
+		                        <button class="btn btn-icon btn-danger position-absolute top-0 end-0 py-0 px-1 m-2 trashbtn" th:onclick="deleteReview([[${review.no}]]);">
+		                          <i class="ci-trash"></i>
+		                        </button>
+		                      </div>
+	                      </th:block>
+	                      <!-- 리뷰 내용-->
+	                      <p class="fs-md mb-2" style="width: 600px;">[[${review.content}]]</p>
+	                    </div>
+                  	</th:block>
                   </div><!-- 리뷰리스트 끝-->
                 </li>
               </ul>
@@ -471,17 +478,20 @@
 
               <!-- 더보기 버튼 -->
               <div class="mt-5" style="text-align: center;">
-                <button class="btn btn-outline-accent" type="button" id="seeMore"><i class="ci-reload me-2" style="color: #fc6c93;"></i><span style="color: #fc6c93;">댓글 더 보기</span></button>
+                <button class="btn btn-outline-pink" type="button" id="seeMore"><i class="ci-reload me-2"></i><span>댓글 더 보기</span></button>
               </div>
             </div>
   
             <div class="col-md-5 mt-2 pt-4 mt-md-0 pt-md-0">
               <div class="py-grid-gutter px-grid-gutter rounded-3" id="review-box1">
                 <h3 class="h4 pb-2 fw-bold fs-3">리뷰쓰기</h3>
-                <form class="needs-validation" action="./kinder-detail.html" method="post" novalidate>
+                <form class="needs-validation" action="/kinder-writeReview" method="POST" novalidate>
                   <div class="mb-3">
-                    <input type="hidden" name="memberNo" value="홍길동">
-                    <input type="hidden" name="kinNo" value="1">
+                  	<th:block th:unless="${session.loginMember == null}">
+                    	<input type="hidden" name="id" th:value="${session.loginMember.id}">
+                    </th:block>
+                    <input type="hidden" name="kinNo" th:value="${kinder.kinNo}">
+                    <input type="hidden" name="i" th:value="${i}">
                     <th:block th:if="${session.loginMember == null}">
 	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="로그인 후 리뷰를 작성할 수 있습니다." disabled></textarea>
                     </th:block>
@@ -491,10 +501,10 @@
                     <div class="invalid-feedback">Please write a review!</div><small class="form-text text-muted d-block" style="text-align: right; font-size: 14px;">1000자 이내 입력하세요.</small>
                   </div>
 				  <th:block th:if="${session.loginMember == null}">
-	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4"id="reviewButton" type="submit" disabled>등&emsp;&emsp;록</button>
+	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4" id="reviewButton" type="submit" disabled>등&emsp;&emsp;록</button>
 				  </th:block>
 				  <th:block th:unless="${session.loginMember == null}">
-	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4"id="reviewButton" type="submit">등&emsp;&emsp;록</button>
+	                  <button class="btn btn-primary btn-shadow d-block w-100 fs-4" id="reviewButton" type="submit">등&emsp;&emsp;록</button>
 				  </th:block>
                 </form>
               </div>
@@ -929,6 +939,14 @@ let customLegend5 = function (chart) {
 
   return ul.outerHTML;
 };
+
+//댓글 삭제
+function deleteReview(no) {
+	var url = "/kinder-deleteReview?no=" + no + "&kinNo=" + [[${kinder.kinNo}]] + "&i=" + [[${i}]];
+	if(confirm("댓글을 삭제 하시겠습니까?")) {
+		location.replace(url);
+	}
+}
 
 </script>
   </body>

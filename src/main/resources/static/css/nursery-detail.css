@@ -303,17 +303,20 @@ li span {
   opacity: 0;
 }
 
-.reviewlist:hover .trashbtn{
+.reviewBox:hover .trashbtn{
   opacity: 1;
 }
 
 
-#seeMore{
-  border-color: #fc6c93;
+.btn-outline-pink {
+	border: 1px solid #FC6C93;
+	color: #FC6C93;
+	background-color: #FFF;
 }
 
-#seeMore :hover{
-  background-color: #ffffff;
+.btn-outline-pink:hover {
+	color: #FFF;
+	background-color: #FC6C93;
 }
 
 #reviewButton{

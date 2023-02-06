@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.nursery.model.mapper.NurseryMapper;
+import com.multi.ukids.nursery.model.vo.NReview;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
 
@@ -32,6 +34,24 @@ public class NurseryService {
 	
 	public int getClaimCount(int no) {
 		return mapper.selectNurseryClaimCount(no);
+	}
+	
+	public List<NReview> getReviewList(int no) {
+		return mapper.selectNurseryReviewList(no);
+	}
+	
+	public int getReviewCount(int no) {
+		return mapper.selectNurseryReviewCount(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveReview(NReview review) {
+		return mapper.insertNurseryReview(review);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteReview(int no) {
+		return mapper.deleteNurseryReview(no);
 	}
 
 }

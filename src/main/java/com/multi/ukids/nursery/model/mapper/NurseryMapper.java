@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.multi.ukids.nursery.model.vo.NReview;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
 @Mapper
@@ -13,4 +14,8 @@ public interface NurseryMapper {
 	int selectNurseryCount(Map<String, Object> map);
 	Nursery selectNurseryByNo(int no);
 	int selectNurseryClaimCount(int no);
+	List<NReview> selectNurseryReviewList(int no);
+	int selectNurseryReviewCount(int no);
+	int insertNurseryReview(NReview review);
+	int deleteNurseryReview(int no);
 }
