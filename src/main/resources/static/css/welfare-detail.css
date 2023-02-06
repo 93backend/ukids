@@ -243,3 +243,7 @@
 .detailInfo dl div:last-child dd {
   margin-bottom: 0;
 } 
+/* 23.02.06 이미지 수정 */
+.wfImg{
+  object-fit: cover;
+}

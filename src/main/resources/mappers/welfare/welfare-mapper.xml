@@ -52,7 +52,7 @@
 			fcltTelNo, faxNo, estbDe, cprNm, cfbNm
 		FROM WELFARE
 		WHERE LEFT(fcltZipcd, 3) = LEFT(#{fcltZipcd}, 3) AND cwNo != #{cwNo}
-		ORDER BY cwNo DESC LIMIT 10
+		ORDER BY cwNo DESC LIMIT 9
 	</select>
 
 </mapper>

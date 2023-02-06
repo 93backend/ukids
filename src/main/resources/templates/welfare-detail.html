@@ -90,8 +90,8 @@
                 <div class="gallery">
                   <h4 class="weltitle fw-bold"><img class="wfIcon" src="img/ukids/welfareIcon.png">[[${welfare.fcltNm}]]</h4>
                   <div class="welfarebox">
-                    <a class="gallery-item rounded-3 mb-grid-gutter" href="img/ukids/seoul-welfare.jpg">
-                      <img class="wfImg" src="img/ukids/seoul-welfare.jpg" alt="Gallery preview">
+                    <a class="gallery-item rounded-3 mb-grid-gutter" th:href="|img/ukids/facility/welfare/wf${imgIdx}.jpg|">
+                      <img class="wfImg" th:src="|img/ukids/facility/welfare/wf${imgIdx}.jpg|" alt="Gallery preview">
                       <span class="gallery-item-caption">[[${welfare.fcltNm}]]</span>
                     </a>
                   </div>
@@ -185,7 +185,7 @@
 	                          </div>
 	                          <div>
 	                            <dt><i class="ci-mail"></i>이메일</dt>
-	                            <dd>[[${welfare.fcltMailAddr}]]</dd>
+	                            <dd>[[${formattedMailAddr}]]</dd>
 	                          </div>
 	                          <div>
 	                            <dt><i class="ci-phone"></i>전화번호</dt>
@@ -196,43 +196,6 @@
 	                            <dd>[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]</dd>
 	                          </div>
 	                        </dl>
-
-												<!--  
-                         <ul class="icons">
-                           <li><i class="ci-store" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-user" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-list" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-home" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-mail" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-location" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                           <li><i class="ci-phone" style="color: #fc6c93; margin-right: 10px;"></i></li>
-                         </ul>
-
-                         <ul class="wel-details">
-                           <li>시설명</li>
-                           <li>대표자</li>
-                           <li>설립일자</li>
-                           <li>홈페이지</li>
-                           <li>이메일</li>
-                           <li>전화번호</li>
-                           <li>주소</li>
-                         </ul>
-                         
-                         <ul class="wel-details2">
-                           <li>성남시 다함께돌봄센터 22호점(더샵판교포레스트11단지 어린이식당)</li>
-                           <li>[[${welfare.rprsNm}]]</li>
-                           <li>[[${formattedEstbDe}]]</li>
-                           <th:block th:if="${welfare.homepageAddr == '-'}">
-					                    <li><i class="ci-home fs-lg" style="color: #8f8f8f;"></i></li>
-				                    </th:block>
-				                    <th:block th:if="${welfare.homepageAddr != '-'}">
-					                    <li><a th:href="|${welfare.homepageAddr}|"><i class="ci-home fs-lg" style="color: #fc6c93;"></i></a></li>
-				                    </th:block>
-                           <li>[[${welfare.fcltMailAddr}]]</li>
-                           <li>[[${welfare.fcltTelNo}]]</li>
-                           <li class="haddr">경기도 평택시 비전2로 317, 주민공동시설동 2층 (죽백동, 평택소사벌 반도유보라 아이비파크 (2단지))</li>
-                         </ul>
-                         -->
                           
                       </div>
                     </div>
@@ -250,17 +213,27 @@
                   <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: true, &quot;nav&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 18},&quot;768&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 20}, &quot;1100&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 30}}}">
                     <!-- Product-->
                     <th:block th:if="${nearWelfareList != null}">
-                    	<th:block th:each="nearWelfare : ${nearWelfareList}">
+                    	<th:block th:each="nearWelfare, status : ${nearWelfareList}">
                     		<div>
 		                      <div class="card product-card card-static welcard">
-		                        <a class="card-img-top d-block overflow-hidden" th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}|}><img class="near" src="img/ukids/wel1.jpg" alt="Product"></a>
+		                        <a class="card-img-top d-block overflow-hidden" th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}&img=${nearWfImgIdx[status.index]}|}>
+		                        	<img class="near" th:src="|img/ukids/facility/welfare/wf${nearWfImgIdx[status.index]}.jpg|" alt="Product">
+		                        </a>
 		                        <div class="card-body nearwelfare py-2">
-		                          <h3 class="product-title fs-lg fw-bold toyname"><a href="welfare-detail.html">[[${nearWelfare.fcltNm}]]</a></h3>
-		                          <div class="product-price"><i class="ci-phone ic"></i><span class="timelocation">[[${nearWelfare.fcltTelNo}]]</span></div>
-		                          <!--
-		                          <div class="product-price"><i class="ci-time ic"></i><span class="timelocation">08:30 ~ 17:30</span></div>
-		                          -->
-		                          <div class="product-price mb-2"><i class="ci-location ic"></i><span class="timelocation">[[${nearWelfare.fcltAddr} + ' ' + ${nearWelfare.fcltDtl_1Addr}]]</span></div>       
+		                          <h3 class="product-title fs-lg fw-bold toyname">
+		                          	<a th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}&img=${status.index}|}>[[${nearWelfare.fcltNm}]]</a>
+		                          </h3>
+		                          <div class="product-price">
+		                          	<i class="ci-bell ic"></i>
+		                          	<span class="timelocation">
+			                          	<th:block th:if="${nearWelfare.cfbNm} != '-' and  ${nearWelfare.cfbNm} != '없음'">[[${nearWelfare.cfbNm}]]</th:block>
+		                  						<th:block th:if="${nearWelfare.cfbNm} == '-' or  ${nearWelfare.cfbNm} == '없음'">아동복지</th:block>
+		                          	</span>
+		                          </div>
+		                          <div class="product-price mb-2">
+		                          	<i class="ci-location ic"></i>
+		                          	<span class="timelocation">[[${nearWelfare.fcltAddr} + ' ' + ${nearWelfare.fcltDtl_1Addr}]]</span>
+		                          </div>       
 		                        </div>
 		                      </div>
 		                    </div>
@@ -280,73 +253,7 @@
 
     <!-- 푸터!!!!!!!!!!-->
     <!-- Footer-->
-    <footer class="footer pt-5" id="footercolor" >
-      <div class="px-lg-3 pt-2 pb-4" id="footercolor">
-        <div class="mx-auto px-3" style="max-width: 80rem;">
-          <div class="row">
-            <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
-              <div class="mt-n1"><a class="d-inline-block align-middle" href="index.html"><img class="d-block mb-4" src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-sm-4">
-              <div class="widget widget-links widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
-                <ul class="widget-list">
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-sm-4">
-              <div class="widget widget-links widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
-                <ul class="widget-list">
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
-                  <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
-                </ul>
-              </div>
-              <div class="widget widget-light pb-2 mb-4">
-                <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
-              </div>
-            </div>
-            <div class="col-xl-4 col-sm-8">
-              <div class="widget pb-2 mb-4">
-                <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
-                <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-                  <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                    <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="이메일을 입력해주세요." required>
-                    <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
-                  </div>
-                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                    <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
-                  </div>
-                  <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
-                  <div class="subscription-status"></div>
-                </form>
-              </div>
-              <div class="widget pb-2 mb-4">
-                <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
-                <div class="d-flex flex-wrap">
-                  <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
-                  <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="px-lg-3 py-3" id="footerunder">
-        <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
-          <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
-          <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
-        </div>
-      </div>
-    </footer>
-    
+    <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
     
     <!-- Toolbar for handheld devices (Default)-->
     <div class="handheld-toolbar">
@@ -354,15 +261,15 @@
     </div>
     <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
     <!-- Vendor scrits: js libraries and plugins-->
-    <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-    <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-    <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-    <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-    <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-    <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
+    <script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/vendor/tiny-slider/dist/min/tiny-slider.js}"></script>
+    <script th:src="@{/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js}"></script>
+    <script th:src="@{/vendor/drift-zoom/dist/Drift.min.js}"></script>
+    <script th:src="@{/vendor/lightgallery.js/dist/js/lightgallery.min.js}"></script>
+    <script th:src="@{/vendor/lg-video.js/dist/lg-video.min.js}"></script>
     
     <!-- Main theme script-->
-    <script src="js/theme.min.js"></script>
+    <script th:src="@{/js/theme.min.js}"></script>
     </body>
     </html>

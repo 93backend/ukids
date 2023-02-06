@@ -38,3 +38,11 @@
 .page>.page-link {
     box-shadow: 0 .5rem 1.125rem -0.425rem rgba(252, 108, 147, .9)
 }
+
+
+/* 23.02.06 시설 이미지 레이아웃 수정 */
+.card-img-top img {
+	width: 400px;
+	height: 300px;
+	object-fit: cover;
+}

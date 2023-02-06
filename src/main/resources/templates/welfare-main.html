@@ -140,17 +140,18 @@
           
           <!-- 검색결과 -->
           <th:block th:if="${list != null}">
-          	<th:block th:each="welfare : ${list}">
+          	<th:block th:each="welfare, status : ${list}">
           		<div class="col-lg-4 col-md-4 col-sm-6 px-2 mb-1">
 		            <div class="card product-card shadow-sm mb-5 bg-body">
-		              <a th:href="@{|/welfare-detail?no=${welfare.cwNo}|}">
-		                <div class="card-img-top"><img src="img/ukids/facility/welfare/wf1.jpg" alt="복지"></div>
+		              <a th:href="@{|/welfare-detail?no=${welfare.cwNo}&img=${imgIdx[status.index]}|}">
+		                <div class="card-img-top"><img th:src="|img/ukids/facility/welfare/wf${imgIdx[status.index]}.jpg|" alt="복지"></div>
 		                <div class="card-body py-2 welfare-card">
 		                  <h3 class="welfare-name fs-lg fw-bold my-1">
 		                  	[[${welfare.fcltNm}]]
 		                  </h3>
 		                  <div class="text-muted d-block fs-sm md-2"><i class="ci-bell text-accent fw-bold me-2"></i>
-	                  		[[${welfare.cfbNm}]]
+	                  		<th:block th:if="${welfare.cfbNm} != '-' and  ${welfare.cfbNm} != '없음'">[[${welfare.cfbNm}]]</th:block>
+	                  		<th:block th:if="${welfare.cfbNm} == '-' or  ${welfare.cfbNm} == '없음'">아동복지</th:block>
 		                  </div>
 		                  <div class="d-flex justify-content-between"><div class="welfare-address fs-md fw-bold text-dark"><i class="ci-location text-danger fw-bold me-1"></i>
 		                  	[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]</div>
