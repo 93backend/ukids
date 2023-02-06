@@ -29,27 +29,27 @@ public class MemberService {
 		}
 		
 		// passwordEncoder 활용법
-//		System.out.println(member.getPassword()); // hash로 암호화된 코드가 들어있다.
-//		System.out.println(pwEncoder.encode(pw)); // encode를 통해 평문에서 hash 코드로 변환
-//		System.out.println(pwEncoder.matches(pw, member.getPassword())); // 평문 변환하고 비교까지
-//
-//		if (id.equals("admin")) { // admin 테스트를 위한 코드
-//			return member;
-//		}
-//
-//		if (member != null && pwEncoder.matches(pw, member.getPassword()) == true) {
-//			// 성공
-//			return member;
-//		} else {
-//			// 로그인 실패
-//			return null;
-//		}
-		
-		if (member != null && member.getPassword().equals(pw)) {
+		System.out.println(member.getPassword()); // hash로 암호화된 코드가 들어있다.
+		System.out.println(pwEncoder.encode(pw)); // encode를 통해 평문에서 hash 코드로 변환
+		System.out.println(pwEncoder.matches(pw, member.getPassword())); // 평문 변환하고 비교까지
+
+		if (id.equals("admin")) { // admin 테스트를 위한 코드
+			return member;
+		}
+
+		if (member != null && pwEncoder.matches(pw, member.getPassword()) == true) {
+			// 성공
 			return member;
 		} else {
+			// 로그인 실패
 			return null;
 		}
+		
+//		if (member != null && member.getPassword().equals(pw)) {
+//			return member;
+//		} else {
+//			return null;
+//		}
 		
 		
 	}
@@ -87,5 +87,17 @@ public class MemberService {
 		map.put("memberNo", "" + loginMember.getMemberNo());
 		map.put("password", pwEncoder.encode(userPW));
 		return mapper.updatePwd(map);
+	}
+	
+	public Member loginKaKao(String kakaoToken) {
+		Member member = mapper.selectMemberByKakaoToken(kakaoToken);
+		
+		if (member != null) {
+			// 성공일때!
+			return member;
+		} else {
+			// 인증 실패했을때
+			return null;
+		}
 	}
 }

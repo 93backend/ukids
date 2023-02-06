@@ -23,6 +23,7 @@ public class Member {
 	private String email;
 	private String phone;
 	private int kidNum;
+	private String kidAge;
 	private int kidAge1; 
 	private int kidAge2; 
 	private int kidAge3;

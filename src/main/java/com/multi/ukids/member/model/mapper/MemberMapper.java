@@ -18,5 +18,6 @@ public interface MemberMapper {
 	int updateMember(Member member);
 	int updatePwd(Map<String, String> map);
 	int deleteMember(int no);
+	Member selectMemberByKakaoToken(String kakaoToken);
 
 }

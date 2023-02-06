@@ -7,7 +7,7 @@
 	<sql id="selectMemberSql">
 		SELECT 	
 			memberNo, id, password, role, name, postCode, address,
-			email, phone, kidNum, kidAge1, kidAge2, kidAge3, field,
+			email, phone, kidNum, kidAge, kidAge1, kidAge2, kidAge3, field,
 			fieldCd, kakaoToken, STATUS, enrollDate, modifyDate, address2
 		FROM MEMBER
 	</sql>
@@ -18,21 +18,22 @@
 		<result property="password" column="password" />
 		<result property="role" 	column="role" />
 		<result property="name" 	column="name" />
-		<result property="postCode" 	column="postCode" />
+		<result property="postCode" column="postCode" />
 		<result property="address" 	column="address" />
 		<result property="email" 	column="email" />
 		<result property="phone" 	column="phone" />
 		<result property="kidNum" 	column="kidNum" />
+		<result property="kidAge" 	column="kidAge" />
 		<result property="kidAge1" 	column="kidAge1" />
 		<result property="kidAge2" 	column="kidAge2" />
 		<result property="kidAge3" 	column="kidAge3" />
 		<result property="field" 	column="field" />
 		<result property="fieldCd" 	column="fieldCd" />
-		<result property="kakaoToken" 	column="kakaoToken" />
-		<result property="STATUS" 	column="STATUS" />
+		<result property="kakaoToken" column="kakaoToken" />
+		<result property="STATUS" 	  column="STATUS" />
 		<result property="enrollDate" column="enrollDate" />
 		<result property="modifyDate" column="modifyDate" />
-		<result property="address2" 	column="address2" />
+		<result property="address2"   column="address2" />
 	</resultMap>
 	
 	<select id="selectCount" resultType="int">
@@ -51,12 +52,12 @@
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(
 			memberNo, id, password, role, name, postCode, address,
-			email, phone, kidNum, kidAge1, kidAge2, kidAge3, kakaoToken,
-			STATUS, enrollDate, modifyDate, address2
+			email, phone, kidNum, kidAge, kidAge1, kidAge2, kidAge3, field, fieldCd,
+			kakaoToken, STATUS, enrollDate, modifyDate, address2
 		) VALUES (
 			 0, #{id}, #{password}, default, #{name}, #{postCode}, #{address},
-			 #{email}, #{phone}, #{kidNum}, #{kidAge1}, #{kidAge2}, #{kidAge3}, #{field}, 
-			 #{fieldCd}, #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
+			 #{email}, #{phone}, #{kidNum}, #{kidAge}, 0, 0, 0, #{field}, #{fieldCd},
+			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
 	</insert>
 	
 	 <update id="updateMember" parameterType="Member">
@@ -69,9 +70,10 @@
 	 		ADDRESS		= #{address},
 	 		ADDRESS2	= #{address2},
 	 		KIDNUM		= #{kidNum},
-	 		KIDAGE1		= #{kidAge1},
-	 		KIDAGE2		= #{kidAge2},
-	 		KIDAGE3		= #{kidAge3},
+	 		KIDAGE		= #{kidAge},
+	 		KIDAGE1		= 0,
+	 		KIDAGE2		= 0,
+	 		KIDAGE3		= 0,
 	 		FIELD		= #{field},
 	 		FIELDCD		= #{fieldCd},
 	 		MODIFYDATE	= #{modifyDate}
@@ -89,5 +91,10 @@
 	 		SET STATUS = 'N' 
 	 	WHERE memberNo = #{memberNo}
 	 </update>
+	 
+	 <select id="selectMemberByKakaoToken" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE KAKAOTOKEN = #{kakaoToKen} AND STATUS = 'Y'
+	 </select>
 	
 </mapper>
