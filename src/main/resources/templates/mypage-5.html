@@ -83,7 +83,6 @@
 		<div class="container pb-5 mb-2 mb-md-4 cgw1">
 			<div class="row">
 				<!-- Sidebar-->
-				<form action="/mypage5" method="get">
 				<aside class="col-lg-4 pt-4 pt-lg-0 pe-xl-5">
 					<h1 class="h3 text-white cgw5">마이페이지</h1>
 					<div class="bg-white rounded-3 shadow-lg pt-1 mb-5 mb-lg-0">
@@ -91,8 +90,8 @@
 							class="d-md-flex justify-content-between align-items-center text-center text-md-start p-4">
 							<div class="d-md-flex align-items-center">
 								<div class="ps-md-3">
-									<h3 class="fs-base mb-0">유키즈</h3>
-									<span class="cgw3 fs-sm">ukids@multi.com</span>
+									<h3 class="fs-base mb-0">[[${session.loginMember.name}]]</h3>
+									<span class="cgw3 fs-sm">[[${session.loginMember.email}]]</span>
 								</div>
 							</div>
 							<a class="btn btn-primary d-lg-none mb-2 mt-3 mt-md-0"
@@ -106,25 +105,25 @@
 							</div>
 							<ul class="list-unstyled mb-0">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage.html"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-2.html"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
+                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
                       class="fs-sm text-muted ms-auto">1</span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-3.html"><i class="ci-heart opacity-60 me-2"></i>찜<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-4.html"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
-                      class="fs-sm text-muted ms-auto">3</span></a></li>
                 <li class="border-bottom mb-0">
-                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-document opacity-60 me-2"></i>내가 쓴
-                    게시글<span class="fs-sm text-muted ms-auto">3</span></div>
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-heart opacity-60 me-2"></i>찜<span
+                      class="fs-sm text-muted ms-auto">3</span></div>
                 </li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-6.html"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                    th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
                       class="fs-sm text-muted ms-auto">3</span></a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    href="mypage-7.html"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto">3</span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto">3</span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
                       class="fs-sm text-muted ms-auto">3</span></a></li>
                 <li class="border-bottom mb-0">
                   <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
@@ -135,7 +134,6 @@
 						</div>
 					</div>
 				</aside>
-				</form>
 				<!-- Content  -->
 				<section class="col-lg-8">
 					<!-- Toolbar-->
