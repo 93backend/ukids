@@ -62,8 +62,7 @@
 
 		<!-- 헤더 끝 -->
 		<!-- Page Title-->
-		<div
-			class="bg-position-top-center bg-repeat-0 bg-size-cover py-5 bg-dark-cgw">
+		<div class="bg-position-top-center bg-repeat-0 bg-size-cover py-5 bg-dark-cgw">
 			<div class="pt-0 pb-5">
 				<div class="container pt-0  pt-lg-0">
 					<div class="mb-3 mb-lg-0 pt-lg-0">
@@ -71,7 +70,7 @@
 							<ol
 								class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
 								<li class="breadcrumb-item"><a class="text-nowrap"
-									href="index.html"><i class="ci-home"></i>유키즈</a></li>
+									th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
 								<li class="breadcrumb-item text-light">마이페이지</li>
 								<li class="breadcrumb-item text-nowrap cgw3" aria-current="page">대여
 									내역 조회</li>
@@ -148,155 +147,126 @@
 				<!-- Content  -->
 				<section class="col-lg-8">
 					<!-- Toolbar-->
-					<div
-						class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
-						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">대여
-							내역 조회</h6>
+					<div class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
+						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">대여 내역 조회</h6>
 					</div>
-					<!-- 어린이집 입소 신청 목록-->
-					<div class="table-responsive fs-md mb-4 ms-4">
-						<table class="table table-hover mb-0">
-							<thead>
-								<tr>
-									<th class="cgw8 cgw9" colspan="2">상품정보</th>
-									<th class="cgw8 cgw9">대여일자</th>
-									<th class="cgw8 cgw9">대여기간</th>
-									<th class="cgw8 cgw9">주문번호</th>
-									<th class="cgw8 cgw9">대여금액</th>
-									<th class="cgw8 cgw9">대여상태</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">대여중</div>
-										<a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">반납하기</span></a>
-									</td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..페어리루비즈아트..페어리루비즈아트..</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">반납중</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">반납완료</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">배송중</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">주문완료</div>
-										<a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
-									</td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img
-											class="cgw21" src="img/ukids/toy1.JPG"></a></td>
-									<td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-									<td class="py-3 cgw9 cgw22">2023-01-01</td>
-									<td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03
-									</td>
-									<td class="py-3 cgw9 cgw22">1</td>
-									<td class="py-3 cgw9 cgw22">1000원</td>
-									<td class="py-3 cgw9 cgw22">
-										<div class="">주문완료</div>
-										<a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<!-- pagination -->
-					<th:block th:if="${count != 0}">
-						<nav class="d-flex justify-content-between pt-2 mb-5"
-							aria-label="Page navigation" style="width: 790px;">
-							<ul class="pagination" id="prev">
-								<!-- 이전 페이지 -->
-								<li class="page-item"><a class="page-link"
-									th:onclick="|movePage(${pageInfo.prevPage});|"><i
-										class="ci-arrow-left me-2"></i>Prev</a></li>
-							</ul>
-							<ul class="pagination">
-								<li class="page-item d-sm-none"><span
-									class="page-link page-link-static">1 / 5</span></li>
-
-								<th:block
-									th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-									<th:block th:if="${status.current == pageInfo.currentPage}">
-										<li class="page-item d-none d-sm-block page"
-											aria-current="page"><span class="page-link">[[${status.current}]]<span
-												class="visually-hidden">(current)</span></span></li>
-									</th:block>
-									<th:block th:if="${status.current != pageInfo.currentPage}">
-										<li class="page-item d-none d-sm-block"><a
-											class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
-									</th:block>
-								</th:block>
-
-							</ul>
-							<ul class="pagination" id="next">
-								<li class="page-item"><a class="page-link"
-									th:onclick="|movePage(${pageInfo.nextPage});|"
-									aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-							</ul>
-						</nav>
-					</th:block>
-				</section>
-			</div>
-		</div>
-	</main>
-	<!-- 푸터!!!!!!!!!!-->
+					
+          <div class="table-responsive fs-md mb-4 ms-4">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th class="cgw8 cgw9" colspan="2">상품정보</th>
+                  <th class="cgw8 cgw9">대여일자</th>
+                  <th class="cgw8 cgw9">대여기간</th>
+                  <th class="cgw8 cgw9">주문번호</th>
+                  <th class="cgw8 cgw9">대여금액</th>
+                  <th class="cgw8 cgw9">대여상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">대여중</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">반납하기</span></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..페어리루비즈아트..페어리루비즈아트..</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">반납중</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">반납완료</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">배송중</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+                  </td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
+                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
+                  <td class="py-3 cgw9 cgw22">1</td>
+                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22">
+                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- pagination -->
+          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+            </ul>
+            <ul class="pagination">
+              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+              <li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">1<span
+                    class="visually-hidden">(current)</span></span></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
+            </ul>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
+                    class="ci-arrow-right ms-2"></i></a></li>
+            </ul>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+  <!-- 푸터!!!!!!!!!!-->
 	<!-- Footer-->
 	<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 
 
-	<!-- Toolbar for handheld devices (Default)-->
-	<!-- Back To Top Button-->
 	<!-- Vendor scrits: js libraries and plugins-->
 	<script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/simplebar/dist/simplebar.min.js"></script>
