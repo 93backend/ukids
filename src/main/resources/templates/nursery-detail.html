@@ -75,37 +75,39 @@
 
                 <div class="modal-header" style="background-color: #fc6c93;">
                   <div style="width: 100%; text-align: center;">
-                    <i class="ci-user me-2 mt-n1" style="font-size: 24px; color: #ffffff"></i><span style="font-size: 24px; letter-spacing: 2px; color: #ffffff;">입소신청</span>
+                    <i class="ci-user me-2 fs-xl text-light" style="margin-top: 4px;"></i><span class="fs-xl text-light" style="letter-spacing: 2px;">입소신청</span>
                   </div>
                   <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body tab-content py-4">
-                  <form action="" method="get" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
+                  <form action="/nursery-enroll" method="POST" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
+	                  <input type="hidden" name="nuNo" th:value="${nursery.no}">
+	                  <input type="hidden" name="i" th:value="${i}">
                     <label class="form-label fs-6">희망학급</label>
                     <div class="mb-3 fs-5">
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input" type="radio" id="class0" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class0" name="classSort">
                         <label class="form-check-label" for="class0">만0세반</label>
                       </div>
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input" type="radio" id="class1" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class1" name="classSort">
                         <label class="form-check-label" for="class1">만1세반</label>
                       </div>
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input" type="radio" id="class2" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class2" name="classSort">
                         <label class="form-check-label" for="class2">만2세반</label>
                       </div><br>
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input" type="radio" id="class3" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class3" name="classSort">
                         <label class="form-check-label" for="class3">만3세반</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="class4" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class4" name="classSort">
                         <label class="form-check-label" for="class4">만4세반</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="class5" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class5" name="classSort">
                         <label class="form-check-label" for="class5">만5세반</label>
                       </div>
                     </div>
@@ -114,8 +116,7 @@
                       <!-- Date picker -->
                       <label class="form-label fs-6">희망날짜</label>
                       <div class="input-group">
-                        <input name="hopeDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
-                        <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                        <input name="hDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
                       </div>
                     </div>
                     <button id="enrollBtn" class="btn btn-primary d-block w-100" type="submit">신&nbsp;청&nbsp;하&nbsp;기</button>

@@ -81,19 +81,21 @@
                 </div>
 
                 <div class="modal-body tab-content py-4">
-                  <form action="" method="get" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
+                  <form action="/kinder-enroll" method="POST" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
+                  	<input type="hidden" name="kinNo" th:value="${kinder.kinNo}">
+	                <input type="hidden" name="i" th:value="${i}">
                     <label class="form-label fs-6">희망학급</label>
                     <div class="mb-3 fs-5">
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input" type="radio" id="class3" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class3" name="classSort">
                         <label class="form-check-label" for="class3">3세반</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="class4" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class4" name="classSort">
                         <label class="form-check-label" for="class4">4세반</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" id="class5" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class5" name="classSort">
                         <label class="form-check-label" for="class5">5세반</label>
                       </div>
                     </div>
@@ -102,7 +104,7 @@
                       <!-- Date picker -->
                       <label class="form-label fs-6">희망날짜</label>
                       <div class="input-group">
-                        <input name="hopeDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
+                        <input name="hDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
                         <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                       </div>
                     </div>

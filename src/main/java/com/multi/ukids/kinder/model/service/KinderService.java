@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.mapper.KinderMapper;
+import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.kinder.model.vo.KReview;
 import com.multi.ukids.kinder.model.vo.Kinder;
 
@@ -29,6 +30,11 @@ public class KinderService {
 	
 	public Kinder findByNo(int no) {
 		return mapper.selectKinderByNo(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveAdmission(KAdmission admission) {
+		return mapper.insertKinderAdmission(admission);
 	}
 	
 	public int getClaimCount(int no) {

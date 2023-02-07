@@ -1,5 +1,7 @@
 package com.multi.ukids.kinder.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
+import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.kinder.model.vo.KReview;
 import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
@@ -160,9 +163,35 @@ public class KinderController {
 		} else {
 			model.addAttribute("msg", "리뷰 삭제에 실패하였습니다.");
 		}
-		
 		model.addAttribute("location", "/kinder-detail?no=" + kinNo +"&i=" + i);
+		return "common/msg";
+	}
+	
+	@PostMapping("/kinder-enroll")
+	public String enroll(Model model,  HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@ModelAttribute KAdmission admission,
+		@RequestParam Map<String, String> param
+	) {
+		int i = Integer.parseInt(param.get("i"));
+		String hopeDate = param.get("hDate");
 		
+		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
+		
+		admission.setMemberNo(loginMember.getMemberNo());
+		try {
+			admission.setHopeDate(format.parse(hopeDate));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		int result = kinderService.saveAdmission(admission);
+		if(result > 0) {
+			model.addAttribute("msg", "입소 신청되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소 신청에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/kinder-detail?no=" + admission.getKinNo() +"&i=" + i);
 		return "common/msg";
 	}
 }

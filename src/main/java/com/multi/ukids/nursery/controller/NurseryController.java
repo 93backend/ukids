@@ -1,5 +1,7 @@
 package com.multi.ukids.nursery.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
+import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.nursery.model.vo.NReview;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
@@ -111,7 +113,7 @@ public class NurseryController {
 	}
 	
 	@PostMapping("/nursery-writeReview")
-	public String writeReview (Model model, HttpSession session,
+	public String writeReview(Model model, HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 		@ModelAttribute NReview review,
 		@RequestParam Map<String, String> param
@@ -153,6 +155,34 @@ public class NurseryController {
 		
 		model.addAttribute("location", "/nursery-detail?no=" + nuNo +"&i=" + i);
 		
+		return "common/msg";
+	}
+	
+	@PostMapping("/nursery-enroll")
+	public String enroll(Model model,  HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@ModelAttribute NAdmission admission,
+		@RequestParam Map<String, String> param
+	) {
+		int i = Integer.parseInt(param.get("i"));
+		String hopeDate = param.get("hDate");
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyyy-MM-dd");
+		
+		admission.setMemberNo(loginMember.getMemberNo());
+		try {
+			admission.setHopeDate(format.parse(hopeDate));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		int result = nurseryService.saveAdmission(admission);
+		if(result > 0) {
+			model.addAttribute("msg", "입소 신청되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소 신청에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/nursery-detail?no=" + admission.getNuNo() +"&i=" + i);
 		return "common/msg";
 	}
 

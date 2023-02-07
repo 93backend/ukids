@@ -202,6 +202,14 @@
 		WHERE no = #{no}
 	</select>
 	
+	<insert id="insertNurseryAdmission" parameterType="NAdmission">
+		INSERT INTO N_Admission (
+			no, nuNo, memberNo, enrollDate, hopeDate, status
+		) VALUES (
+			0, #{nuNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W'
+		)
+	</insert>
+	
 	<select id="selectNurseryClaimCount" resultType="int" parameterType="int">
 		SELECT
 			COUNT(no)

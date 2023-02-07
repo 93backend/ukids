@@ -195,6 +195,14 @@
 		WHERE kinNo = #{no}
 	</select>
 	
+	<insert id="insertKinderAdmission" parameterType="KAdmission">
+		INSERT INTO K_Admission (
+			no, kinNo, memberNo, enrollDate, hopeDate, status
+		) VALUES (
+			0, #{kinNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W'
+		)
+	</insert>
+	
 	<select id="selectKinderClaimCount" resultType="int" parameterType="int">
 		SELECT
 			COUNT(no)

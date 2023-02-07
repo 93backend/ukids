@@ -386,6 +386,9 @@ li span {
   color: #f5104d;
 }
 
+.radio-pink:checked {
+	background-color: #FC6C93;
+}
 
 
 

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.nursery.model.mapper.NurseryMapper;
+import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.nursery.model.vo.NReview;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
@@ -30,6 +31,11 @@ public class NurseryService {
 	
 	public Nursery findByNo(int no) {
 		return mapper.selectNurseryByNo(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveAdmission(NAdmission admission) {
+		return mapper.insertNurseryAdmission(admission);
 	}
 	
 	public int getClaimCount(int no) {
