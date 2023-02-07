@@ -55,7 +55,7 @@
 			email, phone, kidNum, kidAge, kidAge1, kidAge2, kidAge3, field, fieldCd,
 			kakaoToken, STATUS, enrollDate, modifyDate, address2
 		) VALUES (
-			 0, #{id}, #{password}, default, #{name}, #{postCode}, #{address},
+			 0, #{id}, #{password}, #{role}, #{name}, #{postCode}, #{address},
 			 #{email}, #{phone}, #{kidNum}, #{kidAge}, 0, 0, 0, #{field}, #{fieldCd},
 			 #{kakaoToken}, DEFAULT, DEFAULT, DEFAULT, #{address2})
 	</insert>
