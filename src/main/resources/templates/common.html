@@ -69,7 +69,7 @@
                 <div class="form-check mb-2">
                   <input class="form-check-input" type="checkbox" id="si-remember">
                   <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
+                </div><a class="fs-sm login" th:href="@{/member/recovery}">비밀번호 찾기</a>
               </div>
               <a th:href="@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4f6893c26b967b74677e6e11e11210b6&redirect_uri=http://localhost/kakaoLogin}"><img class="cgw16 cgw17 cgw18" th:src="@{/img/ukids/8.png}"></a>
               <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
@@ -79,8 +79,9 @@
         </div>
       </div>
     </div>
+ 
 
-    <main class="page-wrapper">
+	<main class="page-wrapper">
 
       <!-- 헤더!!!!!! -->
       <header th:fragment="header" class="navbar navbar-expand-lg navbar-light shadow-sm">

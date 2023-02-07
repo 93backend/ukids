@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <title>UKIDS | 비밀번호 찾기</title>
+
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="mask-icon" color="#fe6a6a" th:href="@{/safari-pinned-tab.svg}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
+    <link rel="stylesheet" media="screen" th:href="@{/css/header.css}">
+    <link rel="stylesheet" media="screen" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" media="screen" th:href="@{/css/recovery.css}">
+    <!--jquery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+  <!-- 폰트 -->
+  <style>
+    @font-face {
+      font-family: 'NanumSquareRound';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      font-family: 'NanumSquareRound';
+    }
+
+  </style>
+  </head>
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+
+  <!-- 로그인 모달 관련  -->
+	<div th:fragment="modal" th:replace="~{common :: modal}"></div>
+    <main class="page-wrapper">
+    <!-- 헤더!!!!!! -->
+    <header th:fragment="header" th:replace="~{common :: header}"></header>
+    <!-- 헤더 끝 -->
+    
+    <!-- 백그라운드 이미지 부분-->
+      <div class="bg-box">
+        <h1 class="pageTitle">비밀번호 찾기</h1>
+        <!-- Page Title-->
+        <div class="bg-position-top-center bg-repeat-0 py-5 bg-dark-cgw3">
+          <div class="pt-0 pb-5">
+            <div class="container pt-0  pt-lg-0">
+              <div class="mb-3 mb-lg-0 pt-lg-0">
+                <nav aria-label="breadcrumb">
+                  <ol
+                    class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+                    <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/index.html}"><i class="ci-home"></i>유키즈</a></li>
+                    <li class="breadcrumb-item text-nowrap" aria-current="page" style="color: #FC6C93;">비밀번호 찾기</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container py-4 py-lg-5 my-4">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <h2 class="h3 mb-4">비밀번호를 잊어버리셨나요?</h2>
+            <p class="fs-md">간단한 3단계로 비밀번호를 변경하세요. 이렇게 하면 새 암호를 안전하게 유지하는 데 도움이 됩니다.</p>
+            <ol class="list-unstyled fs-md">
+              <li><span class="text-primary me-2">1.</span>아래에 이메일 주소와 이름을 입력하세요.</li>
+              <li><span class="text-primary me-2">2.</span>이메일로 임시 코드를 보내드립니다.</li>
+              <li><span class="text-primary me-2">3.</span>이메일로 발송된 코드를 사용하여 비밀번호를 변경하십시오.</li>
+            </ol>
+            <div class="card py-2 mt-4">
+              <form class="card-body needs-validation" novalidate>
+                <div class="mb-3">
+                  <label class="form-label" for="recover-name">이름을 입력해 주세요</label>
+                  <input class="form-control" type="text" id="recover-name" required>
+                  <div class="invalid-feedback">Please provide valid email address.</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="recover-email">가입 시 등록한 이메일을 입력해 주세요</label>
+                  <input class="form-control" type="email" id="recover-email" required>
+                  <div class="invalid-feedback">Please provide valid email address.</div>
+                </div>
+                <button id="sendBtn" class="btn btn-primary" type="submit">새 비밀번호 받기</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+      <!-- 푸터!!!!!!!!!!-->
+  <!-- Footer-->
+	<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>	
+    <!-- Toolbar for handheld devices (Default)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" th:href="@{/account-wishlist.html}"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/simplebar/dist/simplebar.min.js}"></script>
+    <script th:src="@{/vendor/tiny-slider/dist/min/tiny-slider.js}"></script>
+    <script th:src="@{/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js}"></script>
+    <!-- Main theme script-->
+    <script th:src="@{/js/theme.min.js}"></script>
+  </body>
+</html>

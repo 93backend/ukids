@@ -141,6 +141,11 @@ public class MemberContoller {
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
+	
+	@GetMapping("/member/recovery")
+	public String passwordRecovery() {
+		return "recovery";
+	}
 
 	
 }
