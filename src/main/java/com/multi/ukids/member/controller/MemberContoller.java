@@ -111,6 +111,25 @@ public class MemberContoller {
 		return model;
 	}
 	
+	@GetMapping("/member/kakaoEnroll")
+	public String enrollKakao(Model model, String code) {
+		log.info("가입 페이지 요청");
+		if(code != null) {
+			try {
+				String enrollUrl = "http://localhost/member/kakaoEnroll";
+				System.out.println("code : " + code);
+				String token = kakaoService.getToken(code, enrollUrl);
+				System.out.println("token : " + token);
+				Map<String, Object> map = kakaoService.getUserInfo(token);
+				System.out.println(map);
+				model.addAttribute("kakaoMap",map);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return "join";
+	}
+	
 	// AJAX 회원아이디 중복 검사부
 	@GetMapping("/member/idCheck")
 	public ResponseEntity<Map<String, Object>> idCheck(String id){
