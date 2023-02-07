@@ -13,6 +13,26 @@
     
 }
 
+// 로그인 되어있지 않은 경우 기능 차단
+function cantDo() {
+	alert('로그인 후 이용가능합니다.');
+}
+
+// 해당 유치원 선생님이 아니면 채팅 X
+function cantChat() {
+	alert('해당 유치원 선생님이 아닙니다.');
+}
+
+// 입소 신청 날짜 값 확인
+function submitCheck() {
+    var date = $("#hopeDate").val();
+    if(date == "") {
+		$("#date-notice").text(" * 희망날짜를 선택해주세요.")
+        return false;
+    }
+    return true
+};
+
 //리뷰 더 보기
 //댓글 더 보기 누르면 댓글 전체 나옴
 

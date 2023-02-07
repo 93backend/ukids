@@ -52,22 +52,20 @@
             <div class="modal-content">
               <div class="modal-header" style="background-color: #fc6c93; margin: 0px;">
                 <h4 class="modal-title" style="color: #ffffff;">[[${kinder.kindername}]]</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-
-              <div class="modal-body">
-                <textarea name="msgArea" id="msgArea" cols="47" rows="20"></textarea>
+              <div class="modal-body" style="height: 500px;">
+                <div id="msgArea" class="col" style="height: 450px;"></div>
               </div>
 
               <div class="modal-footer">
-                <input class="form-control" type="text" id="chatMsg" value="">
+                <input class="form-control" type="text" id="chatMsg">
                 <button id="sendBtn" type="button" class="btn btn-primary btn-sm">전&emsp;송</button>
               </div>
-
             </div>
           </div>
         </div>
-
+        
           <!-- 유치원 신청 모달 -->
           <div class="modal fade" id="enroll-modal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -77,17 +75,17 @@
                   <div style="width: 100%; text-align: center;">
                     <i class="ci-user me-2 mt-n1" style="font-size: 24px; color: #ffffff"></i><span style="font-size: 24px; letter-spacing: 2px; color: #ffffff;">입소신청</span>
                   </div>
-                  <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <div class="modal-body tab-content py-4">
-                  <form action="/kinder-enroll" method="POST" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
+                  <form action="/kinder-enroll" method="POST" onsubmit="return submitCheck();" class="needs-validation tab-pane fade show active" novalidate id="signin-tab">
                   	<input type="hidden" name="kinNo" th:value="${kinder.kinNo}">
 	                <input type="hidden" name="i" th:value="${i}">
                     <label class="form-label fs-6">희망학급</label>
                     <div class="mb-3 fs-5">
                       <div class="form-check form-check-inline" id="classBox">
-                        <input class="form-check-input radio-pink" type="radio" id="class3" name="classSort">
+                        <input class="form-check-input radio-pink" type="radio" id="class3" name="classSort" required>
                         <label class="form-check-label" for="class3">3세반</label>
                       </div>
                       <div class="form-check form-check-inline">
@@ -104,9 +102,9 @@
                       <!-- Date picker -->
                       <label class="form-label fs-6">희망날짜</label>
                       <div class="input-group">
-                        <input name="hDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
-                        <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                        <input name="hDate" id="hopeDate" class="form-control date-picker rounded pe-5" type="text" placeholder="희망하는 날짜를 입력해주세요" required data-datepicker-options='{"altInput": false, "altFormat": "F j, Y", "dateFormat": "Y-m-d", "monthSelectorType": "static", "minDate": "today", "locale": "ko"}'>
                       </div>
+                      <span class="text-danger fs-sm" id="date-notice"></span>
                     </div>
                     <button id="enrollBtn" class="btn btn-primary d-block w-100" type="submit">신&nbsp;청&nbsp;하&nbsp;기</button>
                   </form>
@@ -236,11 +234,29 @@
 		                  </a>
                 	</th:block>
                 	<th:block th:unless="${session.loginMember == null}">
+                		<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+                			<th:block th:if="${session.loginMember.field == '유치원' && session.loginMember.fieldCd == kinder.kinderCode}">
+			                  <a href="#chatModal" id="modalLink">
+			                    <button type="button" class="btn btn-outline-secondary shadow-lg" data-bs-toggle="modal" data-bs-target="#chatModal" id="chatButton">
+			                      <span>1:1 채팅</span>
+			                    </button>
+			                  </a>
+                			</th:block>
+                			<th:block th:unless="${session.loginMember.field == '유치원' && session.loginMember.fieldCd == kinder.kinderCode}">
+			                  <a onclick="cantChat();" id="modalLink">
+			                    <button type="button" class="btn btn-outline-secondary shadow-lg" id="chatButton">
+			                      <span>1:1 채팅</span>
+			                    </button>
+			                  </a>
+                			</th:block>
+                		</th:block>
+                		<th:block th:unless="${session.loginMember.role == 'ROLE_T'}">
 		                  <a href="#chatModal" id="modalLink">
 		                    <button type="button" class="btn btn-outline-secondary shadow-lg" data-bs-toggle="modal" data-bs-target="#chatModal" id="chatButton">
 		                      <span>1:1 채팅</span>
 		                    </button>
 		                  </a>
+                		</th:block>
                 	</th:block>
                 	
                 </div>
@@ -537,6 +553,71 @@
     <script src="js/theme.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=70757a654a9051c40ba7d774ed0ad701&libraries=services"></script>
     
+    <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
+       
+       	$(document).ready(function() {
+       		const memberId = [[${session.loginMember.id}]];
+       		
+       		$("#sendBtn").on("click", (e) => {
+                   send();
+               });
+       		
+       		const websocket = new WebSocket("ws://localhost/kinder-chat");
+       		
+       		websocket.onmessage = onMessage;
+               websocket.onopen = onOpen;
+               websocket.onclose = onClose;
+               
+               function send(){
+
+                   let msg = document.getElementById("chatMsg");
+
+                   console.log(memberId + ":" + msg.value);
+                   websocket.send(memberId + ":" + msg.value);
+                   msg.value = '';
+               }
+               
+               function onMessage(msg) {
+                   var data = msg.data;
+                   var sessionId = null;
+                   //데이터를 보낸 사람
+                   var message = null;
+                   var arr = data.split(":");
+
+                   for(var i=0; i<arr.length; i++){
+                       console.log('arr[' + i + ']: ' + arr[i]);
+                   }
+
+                   var cur_session = memberId;
+
+                   //현재 세션에 로그인 한 사람
+                   console.log("cur_session : " + cur_session);
+                   sessionId = arr[0];
+                   message = arr[1];
+
+                   console.log("sessionID : " + sessionId);
+                   console.log("cur_session : " + cur_session);
+
+                   //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+                   if(sessionId == cur_session){
+                       var str = "<div class='col-8 float-end'>";
+                       str += "<div class='alert' style='background-color: #FFE8EC'>";
+                       str += "<b>" + message + "</b>";
+                       str += "</div></div>";
+                       $("#msgArea").append(str);
+                   }
+                   else{
+                       var str = "<div class='col-8 float-start'>";
+                       str += "<div class='alert' style='background-color: #F0F0F0'>";
+                       str += "<b>" + message + "</b>";
+                       str += "</div></div>";
+                       $("#msgArea").append(str);
+                   }
+               }
+       	})
+	
+     </script>
+    
 <script th:inline="javascript">
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
@@ -578,9 +659,6 @@ geocoder.addressSearch(addr, function(result, status) {
     } 
 });
 
-function cantDo() {
-	alert('로그인 후 이용가능합니다.');
-}
 
 /* 첫번째 그래프(총 학급수) */
 
