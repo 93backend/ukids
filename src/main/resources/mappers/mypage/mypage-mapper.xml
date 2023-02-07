@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.multi.ukids.mypage.model.mapper.MypageMapper">
+
+
+	<!-- mypage2 -->
+ 	<select id="selectKAdmissionList" resultType="KAdmission" parameterType="map">
+		SELECT
+			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM KINDER K
+		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		where A.memberNo = #{memberNo}
+		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	
+	<select id="selectKAdmissionCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM KINDER K
+		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		WHERE 1=1
+		AND A.memberNo = #{memberNo}
+	</select> 
+	<delete id="deleteKAdmission" parameterType="KAdmission">
+		DELETE FROM K_ADMISSION WHERE no = #{no}
+	</delete>
+	
+	<select id="selectNAdmissionList" resultType="NAdmission" parameterType="map">
+		SELECT
+			A.nuNo, N.crname, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM NURSERY N 
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		where A.memberNo = #{memberNo}
+		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	<select id="selectNAdmissionCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		WHERE 1=1
+		AND A.memberNo = #{memberNo}
+	</select> 
+	<delete id="deleteNAdmission" parameterType="NAdmission">
+		DELETE FROM N_ADMISSION WHERE no = #{no}
+	</delete>
+
+	<!-- mypage3 -->
+	<!-- <select id="selectKWishList" resultType="KWish" parameterType="map">
+		SELECT
+			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM KINDER K
+		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		where K.memberNo = #{memberNo}
+		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select> -->
+	
+	
+	
+</mapper>

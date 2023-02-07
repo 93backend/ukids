@@ -1,53 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8">
-<title>UKIDS | 회원정보 수정</title>
-<!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio"> -->
-  <!-- Viewport-->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Favicon and Touch Icons-->
-  <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="theme-color" content="#ffffff">
-  <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-  <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css" />
-  <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css" />
-  <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
-  <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css" />
-  <!-- Main Theme Styles + Bootstrap-->
-  <link rel="stylesheet" media="screen" href="css/theme.min.css">
-  <link rel="stylesheet" media="screen" href="css/cgw.css">
-  <link rel="stylesheet" media="screen" href="css/header.css">
-  <link rel="stylesheet" media="screen" href="css/footer.css">
-
-<!--jquery-->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
-<!-- 폰트 -->
-<style>
-@font-face {
-	font-family: 'NanumSquareRound';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-* {
-	font-family: 'NanumSquareRound';
-}
-</style>
+	<meta charset="utf-8">
+	<title>UKIDS | 회원정보 수정</title>
+	<!-- Viewport-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Favicon and Touch Icons-->
+	<link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
+	<link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
+	<link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+	<link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css" />
+	<link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css" />
+	<link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
+	<link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css" />
+	<!-- Main Theme Styles + Bootstrap-->
+	<link rel="stylesheet" media="screen" href="css/theme.min.css">
+	<link rel="stylesheet" media="screen" href="css/cgw.css">
+	<link rel="stylesheet" media="screen" href="css/header.css">
+	<link rel="stylesheet" media="screen" href="css/footer.css">
+	
+	<!--jquery-->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	
+	<!-- 폰트 -->
+	<style>
+	@font-face {
+		font-family: 'NanumSquareRound';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	* {
+		font-family: 'NanumSquareRound';
+	}
+	</style>
 
 </head>
 
@@ -174,8 +167,7 @@
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<label class="form-label" for="account-confirm-pass">비밀번호
-									확인</label>
+								<label class="form-label" for="account-confirm-pass">비밀번호 확인</label>
 								<div class="password-toggle">
 									<input class="form-control" type="password"
 										id="account-confirm-pass"> <label
@@ -211,31 +203,49 @@
 							<!--일반회원-->
 							<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 							<div class="col-sm-6">
-								<label class="form-label" for="account-phone">자녀 수</label><br>
-								<input class="form-control-postcode" type="number" name="kidNum" min="0" max="10" 
-									id="account-phone" th:value="${session.loginMember.kidNum}" required>&nbsp;&nbsp;&nbsp;명<br>
-								<br> <label class="form-label" for="account-phone">자녀
-									나이</label><br> <input class="form-check-input" type="checkbox" name="kidAge"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 0)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">0</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 1)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">1</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 2)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">2</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 3)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">3</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 4)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">4</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 5)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">5</label>&nbsp;&nbsp;&nbsp;
-								<input class="form-check-input" type="checkbox"
-									th:checked="${#arrays.contains(session.loginMember.kidAge1, 6)  ? 'checked' : null}" id="subscribe_me">&nbsp; <label
-									class="form-check-label" for="subscribe_me">6</label>
+								<label class="form-label" for="account-childNum">자녀 수</label><br>
+								<input class="form-control-postcode" type="number" name="kidNum" min="0" max="3" 
+									id="account-childNum" th:value="${session.loginMember.kidNum}" required>&nbsp;&nbsp;&nbsp;명<br>
+								<br> 
+								
+								<!-- 자녀 나이 체크박스 제한 관련 스크립트 -->  
+			                    <script type="text/javascript">
+			                    $(document).ready(function(){ 
+			                   	$("input[type='checkbox']").on("click", function(){ 
+			                   		let count = $("input:checked[type='checkbox']").length;     
+			                   		let limit = $("#account-childNum").val();
+			                   			    if(count > limit){ 
+			                   			    $(this).prop("checked" , false); 
+			                   	                    //또는 this.checked=false;
+			                   				alert("선택한 자녀의 수 만큼 체크가 가능합니다."); 
+			                   			  }		 
+			                   		}); 
+			                   	}); 
+			                    </script>
+			                    
+								<label class="form-label" for="account-childAge">자녀 나이</label>
+								<br> 
+								<input class="form-check-input" type="checkbox" name="kidAge" value="0세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '0세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">0</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="1세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '1세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">1</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="2세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '2세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">2</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="3세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '3세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">3</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="4세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '4세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">4</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="5세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '5세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">5</label>&nbsp;&nbsp;&nbsp;
+								<input class="form-check-input" type="checkbox" name="kidAge" value="6세"
+									th:checked="${#arrays.contains(session.loginMember.kidAge, '6세')  ? 'checked' : null}" id="subscribe_me">&nbsp; 
+								<label class="form-check-label" for="account-childAge">6</label>
 							</div>
 							</th:block>
 							<!--선생님-->

@@ -13,6 +13,7 @@ public class KAdmission {
 	private int no;
 	private int kinNo;
 	private int memberNo;
+	private String kinderName;
 	private String status;
 	private Date hopeDate;
 	private Date enrollDate;

@@ -1,53 +1,46 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="utf-8">
-<title>UKIDS | 입소 신청 조회</title>
-<!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio"> -->
-  <!-- Viewport-->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Favicon and Touch Icons-->
-  <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
-  <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
-  <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="theme-color" content="#ffffff">
-  <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
-  <link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css" />
-  <link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css" />
-  <link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
-  <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css" />
-  <!-- Main Theme Styles + Bootstrap-->
-  <link rel="stylesheet" media="screen" href="css/theme.min.css">
-  <link rel="stylesheet" media="screen" href="css/cgw.css">
-  <link rel="stylesheet" media="screen" href="css/header.css">
-  <link rel="stylesheet" media="screen" href="css/footer.css">
-
-<!--jquery-->
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
-<!-- 폰트 -->
-<style>
-@font-face {
-	font-family: 'NanumSquareRound';
-	src:
-		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff')
-		format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-* {
-	font-family: 'NanumSquareRound';
-}
-</style>
+	<meta charset="utf-8">
+	<title>UKIDS | 회원정보 수정</title>
+	<!-- Viewport-->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Favicon and Touch Icons-->
+	<link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
+	<link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
+	<link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+	<!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+	<link rel="stylesheet" media="screen" href="vendor/simplebar/dist/simplebar.min.css" />
+	<link rel="stylesheet" media="screen" href="vendor/tiny-slider/dist/tiny-slider.css" />
+	<link rel="stylesheet" media="screen" href="vendor/drift-zoom/dist/drift-basic.min.css" />
+	<link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css" />
+	<!-- Main Theme Styles + Bootstrap-->
+	<link rel="stylesheet" media="screen" href="css/theme.min.css">
+	<link rel="stylesheet" media="screen" href="css/cgw.css">
+	<link rel="stylesheet" media="screen" href="css/header.css">
+	<link rel="stylesheet" media="screen" href="css/footer.css">
+	
+	<!--jquery-->
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	
+	<!-- 폰트 -->
+	<style>
+	@font-face {
+		font-family: 'NanumSquareRound';
+		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+	
+	* {
+		font-family: 'NanumSquareRound';
+	}
+	</style>
 
 </head>
 
@@ -159,57 +152,105 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="py-3 cgw9">1</td>
+								<th:block th:if="${nlist == null}">
+									<tr>
+										<td colspan="5">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${nlist != null}">
+								<tr th:each="nadmission, stat : ${nlist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9"><a
 										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울시청직장어린이집</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-warning m-0">신청완료</span></td>
-									<td class="py-3 cgw9"><a href="#" class=""><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
+										href="account-single-ticket.html">[[${nadmission.crname}]]</a></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.enrollDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.hopeDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nadmission.status == 'Y'}" class="badge bg-success m-0">입소확정</span>
+										<span th:if="${nadmission.status == 'N'}" class="badge bg-danger m-0">신청실패</span>
+										<span th:if="${nadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
+									</td>
+									<td class="py-3 cgw9">
+										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteNAdmission" th:if="${nadmission.status != 'Y'}" >
+											<span>입소신청취소</span>
+										</button>
+										<span th:if="${nadmission.status == 'Y'}" class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+									</td>
 								</tr>
-								<tr>
-									<td class="py-3 cgw9">2</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울시청직장어린이집</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-info m-0">&nbsp;대기중&nbsp;</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">3</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울시청직장어린이집 서울시청직장어린이집
-											서울시청직장어린이집</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-success m-0">입소확정</span></td>
-									<td class="py-3 cgw9"><span
-										class="badge-cgw2 bg-secondary m-0">입소취소불가</span></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">4</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">어린이집</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-danger m-0">신청실패</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
-								</tr>
+								<div id="nAdmissionListContent"></div>
+								</th:block>
 							</tbody>
 						</table>
 					</div>
 					<div class="text-end">
 						<button class="btn btn-primary-cgw2" data-bs-toggle="modal"
-							data-bs-target="#open-ticket">더보기</button>
+							 onclick="getNAdmissionList()">더보기</button>
+						<script type="text/javascript">
+						function getNAdmissionList(){
+							  id = $('#timeline_moimId').val();
+
+							  var callLength = $('.postHeader').length; //시작 인덱스
+							  var limit = 3; // 더보기 누를때마다 나타낼 카드수
+
+							  $.ajax({
+							    url: '/moimDetail/moimTodoList/boardTimelineMore/'+id,
+							    contentType: "application/json; charset=utf-8",
+							    dataType:'json',
+							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
+							    success:function(data){
+							      	if(data.code==1){
+							            var board = data.boardList;
+							            var planTitle = data.planTitle
+							            var timehtml = "";
+
+							            var max = board.length-callLength;
+							            var min = max-limit;
+							            if(min<=0){
+							              min= 0;
+							              $("#moreBtn").hide();
+							              $("#endMark").show();
+							            }
+
+							            //alert("board.length: "+board.length+" /max :"+max+" /min: "+ min);
+
+							            for(var i=max-1; i>=min; i--){
+							                  timehtml+="<div class='card gedf-card postCard' style='width: 950px; height: auto;'>";
+							                  timehtml+='<div class="card-header postHeader">'
+							                  timehtml+='<div class="d-flex justify-content-between align-items-center">'
+							                  timehtml+='<div class="d-flex justify-content-between align-items-center">'
+							                  timehtml+='<div class="mr-2">'
+							                  timehtml+='<img class="rounded-circle" width="45" src="https://picsum.photos/50/50">'
+							                  timehtml+='</div>'
+							                  timehtml+='<div class="ml-2">'
+							                  timehtml+='<div class="h5 m-0">'+board[i].people.name+'</div>'
+							                  timehtml+='<div class="h7 text-muted">Miracles Lee Cross</div>'
+							                  timehtml+='</div>'
+							                  timehtml+='</div>'
+							                  timehtml+='</div>'
+							                  timehtml+='</div>'
+							                  timehtml+='<div class="card-body">'
+							                  timehtml+='<div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i>'+board[i].createDate+'</div>'
+							                  timehtml+='<a class="card-link" href="#">'
+							                  timehtml+='<h5 class="card-title">'+board[i].toDoWriteList.toDoWrite.plan_title+'</h5>'
+							                  timehtml+='<h6 class="card-title">'+board[i].title+'</h6></a>'
+							                  timehtml+='<p class="card-text">'+board[i].memo+'</p></div>'
+							                  timehtml+='<div class="card-footer"><a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a><a href="#" class="card-link">'
+							                  timehtml+='<i class="fa fa-mail-forward"></i> Share</a></div>'
+							                  timehtml+='<input type="hidden" id="timeline_moimId" th:value="'+board[i].moim.id+'"/>'
+							                  timehtml+='</div>'
+							            }//for
+							            alert("result : " + timehtml);
+							            $("#postWrapper .postCard:last").after(timehtml);
+							        }else{
+							          alert(data.code);
+							        }
+							    },error:function(e){
+							      alert(data.code);
+							      alert(data.message);
+							    }
+							  });
+							}
+						</script>
 					</div>
 					<!-- </form> -->
 					<br>
@@ -231,50 +272,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="py-3 cgw9">1</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울유치원</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-warning m-0">신청완료</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
+								<th:block th:if="${klist == null}">
+									<tr>
+										<td colspan="5">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${klist != null}">
+								<tr th:each="kadmission, stat : ${klist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw26"
+										href="account-single-ticket.html">[[${kadmission.kinderName}]]</a></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.enrollDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.hopeDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${kadmission.status == 'Y'}" class="badge bg-success m-0">입소확정</span>
+										<span th:if="${kadmission.status == 'N'}" class="badge bg-danger m-0">신청실패</span>
+										<span th:if="${kadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
+									</td>
+									<td class="py-3 cgw9">
+										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:if="${kadmission.status != 'Y'}" >
+											<span>입소신청취소</span>
+										</button>
+										<span th:if="${kadmission.status == 'Y'}" class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+									</td>
 								</tr>
-								<tr>
-									<td class="py-3 cgw9">2</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울유치원 서울유치원서울유치원서울유치원</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-info m-0">&nbsp;대기중&nbsp;</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">3</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울유치원</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-success m-0">입소확정</span></td>
-									<td class="py-3 cgw9"><span
-										class="badge-cgw2 bg-secondary m-0">입소취소불가</span></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">4</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										href="account-single-ticket.html">서울유치원</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9">2023-03-01</td>
-									<td class="py-3 cgw9"><span class="badge bg-danger m-0">신청실패</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw1 bg-secondary-cgw1 m-0">입소신청취소</span></a></td>
-								</tr>
+								</th:block>
 							</tbody>
 						</table>
 					</div>
@@ -309,6 +331,16 @@
 	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
+	<script>
+		$(document).ready(() => {
+			$("#deleteKAdmission").on("click", (e) => {
+				if(confirm("정말로 입소신청을 취소 하시겠습니까?")) {
+					location.replace("/mypage-2");
+				}
+			});
+			
+		});
+	</script>
 </body>
 
 </html>
