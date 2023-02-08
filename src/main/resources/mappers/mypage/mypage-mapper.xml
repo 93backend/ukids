@@ -5,7 +5,7 @@
 <mapper namespace="com.multi.ukids.mypage.model.mapper.MypageMapper">
 
 
-	<!-- mypage2 -->
+	<!-- ===============================mypage2=============================== -->
  	<select id="selectKAdmissionList" resultType="KAdmission" parameterType="map">
 		SELECT
 			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
@@ -25,6 +25,7 @@
 		WHERE 1=1
 		AND A.memberNo = #{memberNo}
 	</select> 
+	
 	<delete id="deleteKAdmission" parameterType="KAdmission">
 		DELETE FROM K_ADMISSION WHERE no = #{no}
 	</delete>
@@ -38,6 +39,7 @@
 		where A.memberNo = #{memberNo}
 		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
+	
 	<select id="selectNAdmissionCount" resultType="int" parameterType="map">
 		SELECT
 			COUNT(*)
@@ -47,20 +49,96 @@
 		WHERE 1=1
 		AND A.memberNo = #{memberNo}
 	</select> 
+	
 	<delete id="deleteNAdmission" parameterType="NAdmission">
 		DELETE FROM N_ADMISSION WHERE no = #{no}
 	</delete>
 
-	<!-- mypage3 -->
-	<!-- <select id="selectKWishList" resultType="KWish" parameterType="map">
+	<!-- ===============================mypage3=============================== -->
+	
+	<select id="selectKinderWishList" resultType="Wish" parameterType="map">
 		SELECT
-			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+			K.kinNo AS 'knNo', K.kindername AS 'knName', W.no, W.memberNo, K.addr AS 'knAddr'    
 		FROM KINDER K
 		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
 		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
-		where K.memberNo = #{memberNo}
+		where W.memberNo = #{memberNo}
 		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
-	</select> -->
+	</select> 
+	
+	<select id="selectKinderWishCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(W.no)
+		FROM KINDER K
+		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		WHERE 1=1
+		AND W.memberNo = #{memberNo}
+	</select> 
+	
+	<delete id="deleteKinderWish" parameterType="Wish">
+		DELETE FROM K_WISH WHERE no = #{no}
+	</delete>
+	
+	
+	
+	<select id="selectNurseryWishList" resultType="Wish" parameterType="map">
+		SELECT
+			W.nuNo AS 'knNo', N.crname AS 'knName', W.no,W.memberNo, N.craddr AS 'knAddr'   
+		FROM NURSERY N
+		LEFT OUTER JOIN N_WISH W ON (N.no = W.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		where W.memberNo = #{memberNo}
+		ORDER BY W.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select> 
+	
+	<select id="selectNurseryWishCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(W.no)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_WISH W ON (N.no = W.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		WHERE 1=1
+		AND W.memberNo = #{memberNo}
+	</select> 
+	
+	<delete id="deleteNurseryWish" parameterType="Wish">
+		DELETE FROM N_WISH WHERE no = #{no}
+	</delete> 
+	
+	<resultMap type="Cart" id="CartResultMap">
+		<id 	property="no"			column="NO"/>
+		<result property="toyNo" 		column="TOYNO"/>
+		<result property="memberNo" 	column="MEMBERNO"/>
+		<result property="startDate" 	column="STARTDATE"/>
+		<result property="endDate" 		column="ENDDATE"/>
+						
+	</resultMap>
+	
+	
+	<!-- ===============================mypage7=============================== -->
+	<select id="selectCartList" resultType="Cart" parameterType="map">
+		SELECT
+			T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE
+		FROM TOY T
+		LEFT OUTER JOIN CART C ON (T.TOYNO = C.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (C.MEMBERNO = M.MEMBERNO)
+		WHERE C.MEMBERNO = #{memberNo}
+		ORDER BY C.TOYNO DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	<select id="selectCartCount" parameterType="map" resultType="int">
+		SELECT
+			COUNT(C.NO)
+		FROM CART C
+		LEFT OUTER JOIN TOY T ON (C.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (C.MEMBERNO = M.MEMBERNO)
+		WHERE 1=1
+		AND C.MEMBERNO = #{memberNo}
+	</select>
+	
+	<delete id="deleteCart" parameterType="Cart">
+		DELETE FROM CART WHERE NO = #{no}
+	</delete>
 	
 	
 	

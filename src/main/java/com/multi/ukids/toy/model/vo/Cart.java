@@ -13,6 +13,11 @@ public class Cart {
 	private int no;
 	private int toyNo;
 	private int memberNo;
+	public String toyNm1;
+	public String toyImg;
 	private Date startdate;
 	private Date endDate;
+	private String toyPay;
+	private int realPay;
+	private int date;
 }

@@ -22,11 +22,18 @@ import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.kinder.model.vo.KAdmission;
+import com.multi.ukids.kinder.model.vo.KWish;
 import com.multi.ukids.member.model.service.MemberService;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
+import com.multi.ukids.nursery.model.vo.NWish;
+import com.multi.ukids.toy.model.service.ToyService;
+import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Toy;
+import com.multi.ukids.wish.model.service.WishService;
+import com.multi.ukids.wish.model.vo.Wish;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,10 +55,13 @@ public class MypageController {
 	private MemberService memberService;
 	
 	@Autowired
-	private BoardService boardservice;
+	private BoardService boardService;
 	
 	@Autowired
 	private MypageService service;
+	
+	@Autowired
+	private ToyService toyService;
 	
 	@PostMapping("/member/update")
 	public String update(Model model, 
@@ -99,9 +109,9 @@ public class MypageController {
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
 		// nursery
-		int ncount = service.selectNAdmissionCount(param);
+		int ncount = service.getNAdmissionCount(param);
 		PageInfo npageInfo = new PageInfo(page, 1, ncount, 4);
-		List<NAdmission> nlist = service.selectNAdmissionList(npageInfo, param);
+		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
 		
 		System.out.println("nlist : " + nlist);
 		model.addAttribute("nlist", nlist);
@@ -109,9 +119,9 @@ public class MypageController {
 		model.addAttribute("param", param);		
 		
 		// kinder
-		int kcount = service.selectKAdmissionCount(param);
+		int kcount = service.getKAdmissionCount(param);
 		PageInfo kpageInfo = new PageInfo(page, 1, kcount, 4);
-		List<KAdmission> klist = service.selectKAdmissionList(kpageInfo, param);
+		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
 		
 		System.out.println("klist : " + klist);
 		model.addAttribute("klist", klist);
@@ -126,9 +136,9 @@ public class MypageController {
 	public String searchNAdmission(Model model,
 			@RequestParam Map<String, Object> param
 			) {
-		int count = service.selectNAdmissionCount(param);
+		int count = service.getNAdmissionCount(param);
 		PageInfo pageInfo = new PageInfo(1, 1, count, count);
-		List<NAdmission> list = service.selectNAdmissionList(pageInfo, param);
+		List<NAdmission> list = service.getNAdmissionList(pageInfo, param);
 		
 		model.addAttribute("list", list);
 		
@@ -157,7 +167,35 @@ public class MypageController {
 	}
 		
 	@GetMapping("/mypage-3")
-	public String mypageView3() {
+	public String mypageView3(
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			Model model, @RequestParam Map<String, Object> param
+			) {
+//		int page = 1;
+//		if (loginMember == null) {
+//			return "/login";
+//		}
+//		param.put("memberNo", "" + loginMember.getMemberNo());
+//		
+//		// nursery
+//		int count = service.selectNurseryWishCount(param);
+//		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+//		List<Wish> list = service.selectNurseryWishList(pageInfo, param);
+//		
+//		model.addAttribute("list", list);
+//		model.addAttribute("pageInfo", pageInfo);
+//		model.addAttribute("param", param);		
+//		
+		// kinder
+//		count = service.selectKinderWishCount(param);
+//		pageInfo = new PageInfo(page, 5, count, 3);
+//		list = service.selectKinderWishList(pageInfo, param);
+//		
+//		System.out.println("list : " + list);
+//		model.addAttribute("list", list);
+//		model.addAttribute("pageInfo", pageInfo);
+//		model.addAttribute("param", param);
+
 
 		return "mypage-3";
 	}
@@ -186,133 +224,49 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage-7")
-	public String mypageView7() {
-
+	public String mypageView7(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
+			@RequestParam Map<String, Object> param) {
+		int page = 1;
+		if (loginMember == null) {
+			return "/";
+		}
+		
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		// nursery
+		int count = service.getCartCount(param);
+		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+		List<Cart> list = service.getCartList(pageInfo, param);
+		
+		int pay = 0;
+		for (Cart c : list) {
+			int p = (Integer.parseInt(c.getToyPay()) / 10);
+			if (c.getStartdate() != null || c.getEndDate() != null) {
+			long sec = (c.getEndDate().getTime() - c.getStartdate().getTime()) / 1000;
+			int date = (int)(sec / (24*60*60));
+			c.setDate(date);
+			p *= date;
+			}
+			c.setRealPay(p);
+			pay += p;
+		}
+		
+		int totalPay = pay + 1000;
+		
+		System.out.println(pay);
+		System.out.println("list" + list);
+		model.addAttribute("pay", pay);
+		model.addAttribute("totalPay", totalPay);
+		model.addAttribute("list", list);
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("param", param);	
+		
+		
 		return "mypage-7";
 	}
 	
-//	@GetMapping("/mypage2")
-//	public String list(
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			Model model, @RequestParam Map<String, String> param) {
-//		log.info("리스트 요청, param : " + param);
-//		int page = 1;
-//		Map<String, String> searchMap = new HashMap<String, String>();
-//		try {
-//			String searchValue = param.get("searchValue");
-//			if(searchValue != null && searchValue.length() > 0) {
-//				String searchType = param.get("searchType");
-//				searchMap.put(searchType, searchValue);
-//			}
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//		
-//		return "/mypage2";
-//	}
 	
-//	@GetMapping("/mypage2")
-//	public String mypageView2() {
-//		log.info("회원 정보 페이지 요청");
-//		return "mypage2";
-//	}
 	
-//	@GetMapping("/mypage3")
-//	public String list(
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			Model model, @RequestParam Map<String, String> param) {
-//		log.info("리스트 요청, param : " + param);
-//		int page = 1;
-//		Map<String, String> searchMap = new HashMap()<String, String>();
-//		try {
-//			String searchValue = param.get("searchValue");
-//			if(searchValue != null && searchValue.length() > 0) {
-//				String searchType = param.get("searchType");
-//				searchMap.put(searchType, searchValue);
-//			}
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//	}
-//	
-//	@GetMapping("/mypage4")
-//	public String list(
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			Model model, @RequestParam Map<String, String> param) {
-//		log.info("리스트 요청, param : " + param);
-//		int page = 1;
-//		Map<String, String> searchMap = new HashMap()<String, String>();
-//		try {
-//			String searchValue = param.get("searchValue");
-//			if(searchValue != null && searchValue.length() > 0) {
-//				String searchType = param.get("searchType");
-//				searchMap.put(searchType, searchValue);
-//			}
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//	}
-//	
-//	@GetMapping("/mypage5")
-//	public String myArticle(
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			@ModelAttribute Board board,
-//			Model model, @RequestParam Map<String, String> param) {
-//		log.info("리스트 요청, param : " + param);
-//		int page = 1;
-//		Map<String, String> searchMap = new HashMap<String, String>();
-//		try {
-//			String searchValue = param.get("searchValue");
-//			if(searchValue != null && searchValue.length() > 0) {
-//				String searchType = param.get("searchType");
-//				searchMap.put(searchType, searchValue);
-//			}
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//		
-//		searchMap.put("memberNo", "" + loginMember.getMemberNo());
-//		int boardCount = BoardService.getBoardCount4(searchMap);
-//		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 15);
-//		List<Board> list = boardservice.getBoardList4(pageInfo, searchMap);
-//		
-//		model.addAttribute("list", list);
-//		model.addAttribute("param", param);
-//		model.addAttribute("pageInfo", pageInfo);
-//		
-//		return "/mypage5";
-//	}
-//	
-//	@GetMapping("/mypage6")
-//	public String list(
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			Model model, @RequestParam Map<String, String> param) {
-//		log.info("리스트 요청, param : " + param);
-//		int page = 1;
-//		Map<String, String> searchMap = new HashMap()<String, String>();
-//		try {
-//			String searchValue = param.get("searchValue");
-//			if(searchValue != null && searchValue.length() > 0) {
-//				String searchType = param.get("searchType");
-//				searchMap.put(searchType, searchValue);
-//			}
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//	}
+
 }

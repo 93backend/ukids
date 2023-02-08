@@ -145,9 +145,18 @@
 					<!-- 찜content -->
 					<div class="pt-2 px-4 ps-lg-0 pe-xl-5 ms-5">
 
+			
             <!-- Items grid-->
             <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
               <!-- Product-->
+              <th:block th:if="${list == null}">
+				<tr>
+					<div>조회된 찜 목록이 없습니다.</div>
+				</tr>
+			  </th:block>
+			  <th:block th:if="${list != null}">
+			  <th:block th:each="wish, stat : ${list}">
+			  
               <div class="col mb-2">
                 <article class="card h-100 border-0 shadow">
                   <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
@@ -159,112 +168,19 @@
                   </div>
                   <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
                     <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorits"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
+                      <div class="d-flex align-items-center position-relative py-3 mt-2">
+                      	<a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">[[${wish.knname}]]</a></div>
+                        <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">[[${wish.knaddr}]]</div>
+                      </div>
+                    </a>
+                  </article>
+                </div>
+                </th:block>
+              
+                </th:block>
+              
             </div>
-            <!-- Items grid-->
-            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-buy.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                      <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가 서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울유치원</a></div>
-                      <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-              <!-- Product-->
-              <div class="col mb-2">
-                <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-auction-live.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
-                    <!-- Wishlist button-->
-                    <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorits"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
-                  </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
-                    <div class="card-footer mt-n1 py-0 border-0 mb-3">
-                      <div class="d-flex align-items-center position-relative py-3 mt-2"><a
-                          class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">서울시청직장어린이집</a></div>
-                          <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">서울특별시 어딘가</div>
-                    </div>
-                  </a>
-                </article>
-              </div>
-            </div>
+            
             <button class="btn btn-outline-danger"><i class="ci-trash me-2"></i>전체 삭제</button>
           </div>
           <!-- pagination -->

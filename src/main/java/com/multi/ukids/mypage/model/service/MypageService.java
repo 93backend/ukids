@@ -11,19 +11,22 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.mypage.model.mapper.MypageMapper;
 import com.multi.ukids.nursery.model.vo.NAdmission;
+import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.wish.model.vo.Wish;
 
 @Service
 public class MypageService {
 	@Autowired
 	private MypageMapper mapper;
 	
-	public List<KAdmission> selectKAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
+	// mypage2
+	public List<KAdmission> getKAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectKAdmissionList(map);
 	}
 	
-	public int selectKAdmissionCount(Map<String, Object> map) {
+	public int getKAdmissionCount(Map<String, Object> map) {
 		return mapper.selectKAdmissionCount(map);
 	}
 	
@@ -32,13 +35,13 @@ public class MypageService {
 		return mapper.deleteKAdmission(no);
 	}
 	
-	public List<NAdmission> selectNAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
+	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectNAdmissionList(map);
 	}
 	
-	public int selectNAdmissionCount(Map<String, Object> map) {
+	public int getNAdmissionCount(Map<String, Object> map) {
 		return mapper.selectNAdmissionCount(map);
 	}
 	
@@ -46,4 +49,58 @@ public class MypageService {
 	public int deleteNAdmission(int no) {
 		return mapper.deleteNAdmission(no);
 	}
+	
+	
+	
+	
+	
+	// mypage3
+	public List<Wish> selectNurseryWishList(PageInfo pageInfo, Map<String, Object> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectNurseryWishList(param);
+	}
+	
+	public List<Wish> selectKinderWishList(PageInfo pageInfo, Map<String, Object> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectKinderWishList(param);
+	}
+	
+	public int selectNurseryWishCount(Map<String, Object> map) {
+		return mapper.selectNurseryWishCount(map);
+	}
+	public int selectKinderWishCount(Map<String, Object> map) {
+		return mapper.selectKinderWishCount(map);
+	}
+
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteNurseryWish(int no, String rootPath) {
+		return mapper.deleteNurseryWish(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteKinderWish(int no, String rootPath) {
+		return mapper.deleteKinderWish(no);
+	}
+	
+	
+	
+	// mypage7
+	public List<Cart> getCartList(PageInfo pageInfo,Map<String, Object> paramMap){
+		paramMap.put("limit", "" + pageInfo.getListLimit());
+		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectCartList(paramMap);
+	}
+	
+	public int getCartCount(Map<String, Object> map) {
+		return mapper.selectCartCount(map);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteCart(int no, String rootPath) {
+		return mapper.deleteCart(no);
+	}
+	
 }

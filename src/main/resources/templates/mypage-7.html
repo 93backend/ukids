@@ -156,10 +156,13 @@
 						<div class="row gx-4 gy-3">
 							<!-- Wishlist-->
 							<!-- Item-->
-							<div
-								class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
-								<label
-									class="d-block d-sm-flex align-items-start text-center text-sm-start">
+							<th:block th:if="${list == null}">
+								<hr>
+							</th:block>
+							<th:block th:if="${list != null}">
+							<th:block th:each="cart, stat : ${list}">
+							<div class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
+								<label class="d-block d-sm-flex align-items-start text-center text-sm-start">
 									<input class="form-check-input" type="checkbox" name="toyCheck"
 									id="subscribe_me" onclick="checkSelectAll()">&nbsp;&nbsp;
 									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
@@ -167,14 +170,14 @@
 										src="img/ukids/toy1.JPG" alt="Product"></a>
 									<div class="pt-2">
 										<h3 class="product-title fs-base mb-2">
-											<a href="shop-single-v1.html">페어리루비즈아트 18000 비즈놀이<br>비즈공예
-												유아장난감
-											</a>
+											<a href="shop-single-v1.html">[[${cart.toyNm1}]]</a>
+											<br><br>
 										</h3>
 										<div class="fs-sm">대여기간</div>
-										<div class="fs-sm">2023.01.02 ~ 2023.01.03 (1일)</div>
+										<span class="fs-sm" th:text="${#dates.format(cart.startdate, 'yyyy-MM-dd ~')}"></span>
+										<span class="fs-sm" th:text="|${#dates.format(cart.endDate, 'yyyy-MM-dd')} (${cart.date}일)|"></span>
 										<div class="fs-lg cgw3 pt-2">
-											<small>1000원</small>
+											<small>[[${cart.realPay}]]원</small>
 										</div>
 									</div>
 								</label>
@@ -184,68 +187,13 @@
 									</button>
 								</div>
 							</div>
-							<!-- Item-->
-							<div
-								class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
-								<label
-									class="d-block d-sm-flex align-items-start text-center text-sm-start">
-									<input class="form-check-input" type="checkbox" name="toyCheck"
-									id="subscribe_me" onclick="checkSelectAll()">&nbsp;&nbsp;
-									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
-									href="shop-single-v1.html" style="width: 10rem;"><img
-										src="img/ukids/toy1.JPG" alt="Product"></a>
-									<div class="pt-2">
-										<h3 class="product-title fs-base mb-2">
-											<a href="shop-single-v1.html">페어리루비즈아트 18000 비즈놀이<br>비즈공예
-												유아장난감
-											</a>
-										</h3>
-										<div class="fs-sm">대여기간</div>
-										<div class="fs-sm">2023.01.02 ~ 2023.01.03 (1일)</div>
-										<div class="fs-lg cgw3 pt-2">
-											<small>1000원</small>
-										</div>
-									</div>
-								</label>
-								<div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-									<button class="btn btn-primary-cgw2 btn-sm" type="button">
-										<i class="ci-trash me-2"></i>삭제
-									</button>
-								</div>
-							</div>
-							<!-- Item-->
-							<div
-								class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
-								<label
-									class="d-block d-sm-flex align-items-start text-center text-sm-start">
-									<input class="form-check-input" type="checkbox" name="toyCheck"
-									id="subscribe_me" onclick="checkSelectAll()">&nbsp;&nbsp;
-									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
-									href="shop-single-v1.html" style="width: 10rem;"><img
-										src="img/ukids/toy1.JPG" alt="Product"></a>
-									<div class="pt-2">
-										<h3 class="product-title fs-base mb-2">
-											<a href="shop-single-v1.html">페어리루비즈아트 18000 비즈놀이<br>비즈공예
-												유아장난감
-											</a>
-										</h3>
-										<div class="fs-sm">대여기간</div>
-										<div class="fs-sm">2023.01.02 ~ 2023.01.03 (1일)</div>
-										<div class="fs-lg cgw3 pt-2">
-											<small>1000원</small>
-										</div>
-									</div>
-								</label>
-								<div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-									<button class="btn btn-primary-cgw2 btn-sm" type="button">
-										<i class="ci-trash me-2"></i>삭제
-									</button>
-								</div>
-							</div>
+							</th:block>
+							</th:block>
 							<!-- 대여버튼 -->
 
 							<div class="col-12 mt-lg-3 ">
 								<div>
+								<th:block th:if="${count == 0}">
 									<label class=""> <input class="form-check-input cgw12"
 										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
 										선택&nbsp;
@@ -253,16 +201,35 @@
 											<i class="ci-trash me-2"></i>전체 삭제
 										</button>
 									</label> <span class="cgw10"> <span class="mx-1 cgw11">총
-											상품 가격</span> <span class="mx-1"><b>2000원</b></span> <span
+											상품 가격</span> <span class="mx-1"><b id="result">
+											0원</b></span> <span
+										class="mx-1 cgw11">+</span> <span class="mx-1 cgw11">배송비</span>
+										<span class="mx-1"><b>0원</b></span> <span
+										class="mx-1 cgw11">=</span> <span class="mx-1 cgw11">총
+											대여 금액</span> <span class="mx-1 cgw3"><b>0원</b></span>
+									</span>
+								</th:block>
+								<th:block th:if="${count != 0}">
+									<label class=""> <input class="form-check-input cgw12"
+										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
+										선택&nbsp;
+										<button class="btn btn-primary-cgw2 btn-sm" type="button">
+											<i class="ci-trash me-2"></i>전체 삭제
+										</button>
+									</label> <span class="cgw10"> <span class="mx-1 cgw11">총
+											상품 가격</span> <span class="mx-1"><b th:text="|${pay}원|">
+											</b></span> <span
 										class="mx-1 cgw11">+</span> <span class="mx-1 cgw11">배송비</span>
 										<span class="mx-1"><b>1000원</b></span> <span
 										class="mx-1 cgw11">=</span> <span class="mx-1 cgw11">총
-											대여 금액</span> <span class="mx-1 cgw3"><b>3000원</b></span>
+											대여 금액</span> <span class="mx-1 cgw3"><b th:text="|${totalPay}원|"></b></span>
 									</span>
+								</th:block>
 								</div>
 								<div class="mt-lg-3 cgw9">
 									<button class="btn btn-primary-cgw2 btn-sm mx-2" type="button">상품계속보기</button>
-									<button class="btn btn-primary-cgw1 btn-sm mx-2" type="button">&nbsp;&nbsp;대여하기&nbsp;&nbsp;</button>
+									<button class="btn btn-primary-cgw1 btn-sm mx-2" type="button" 
+									th:onclick="|location.href='@{/pay}'|">&nbsp;&nbsp;대여하기&nbsp;&nbsp;</button>
 								</div>
 							</div>
 						</div>

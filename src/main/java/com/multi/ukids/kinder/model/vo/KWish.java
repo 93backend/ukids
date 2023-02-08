@@ -1,7 +1,5 @@
 package com.multi.ukids.kinder.model.vo;
 
-import com.multi.ukids.nursery.model.vo.NWish;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class KWish {
 	private int no;
-	private int nuNo;
+	private int kinNo;
 	private int memberNo;
+	private String kindername;
+	private String addr;
 }
