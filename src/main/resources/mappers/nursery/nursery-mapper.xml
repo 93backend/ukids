@@ -183,6 +183,13 @@
 		</if>
 	</select>
 	
+	<select id="selectNurseryWishList" resultType="int" parameterType="int">
+		SELECT
+			nuNo
+		FROM N_WISH
+		WHERE memberNo = #{memberNo}
+	</select>
+	
 	<select id="selectNurseryByNo" resultType="Nursery" parameterType="int">
 		SELECT
 			no, stcode, crname, crtypename, crstatusname, 

@@ -38,13 +38,14 @@ public class KinderController {
 	
 	// 유치원 검색
 	@GetMapping("/kinder-main")
-	public String kinderMain(Model model, 
-			@RequestParam Map<String, Object> param,
-			@RequestParam(required = false) String[] build,
-			@RequestParam(required = false) String[] classroom,
-			@RequestParam(required = false) String[] teacher,
-			@RequestParam(required = false) String[] service,
-			@RequestParam(required = false) String[] facility
+	public String kinderMain(Model model, HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@RequestParam Map<String, Object> param,
+		@RequestParam(required = false) String[] build,
+		@RequestParam(required = false) String[] classroom,
+		@RequestParam(required = false) String[] teacher,
+		@RequestParam(required = false) String[] service,
+		@RequestParam(required = false) String[] facility
 	) {
 		int page = 1;
 		try {
@@ -83,6 +84,13 @@ public class KinderController {
 		PageInfo pageInfo = new PageInfo(page, 5, count, 12);
 		List<Kinder> list = kinderService.getKinderList(pageInfo, param);
 		
+		int[] wishNo = {};
+		if(loginMember != null) {
+			wishNo = kinderService.getKinderWishLsit(loginMember.getMemberNo());
+		}
+		String wish = Arrays.toString(wishNo);
+		log.info("찜 목록 : " + wish);
+		
 		int[] img = new int[12];
 		
 		for(int i = 0; i < img.length; i++) {
@@ -97,6 +105,7 @@ public class KinderController {
 		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
+		model.addAttribute("wish", wish);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
 		model.addAttribute("img", img);

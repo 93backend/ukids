@@ -12,8 +12,12 @@ import com.multi.ukids.nursery.model.vo.Nursery;
 
 @Mapper
 public interface NurseryMapper {
+	// 검색
 	List<Nursery> selectNurseryList(Map<String, Object> map);
 	int selectNurseryCount(Map<String, Object> map);
+	int[] selectNurseryWishList(int memberNo);
+	
+	// 상세
 	Nursery selectNurseryByNo(int no);
 	int insertNurseryAdmission(NAdmission admission);
 	int selectNurseryClaimCount(int no);

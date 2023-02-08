@@ -29,6 +29,10 @@ public class KinderService {
 		return mapper.selectKinderCount(map);
 	}
 	
+	public int[] getKinderWishLsit(int memberNo) {
+		return mapper.selectKinderWishList(memberNo);
+	}
+	
 	public Kinder findByNo(int no) {
 		return mapper.selectKinderByNo(no);
 	}

@@ -15,6 +15,7 @@ public interface KinderMapper {
 	// 검색
 	List<Kinder> selectKinderList(Map<String, Object> map);
 	int selectKinderCount(Map<String, Object> map);
+	int[] selectKinderWishList(int memberNo);
 	
 	// 상세
 	Kinder selectKinderByNo(int no);

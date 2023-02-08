@@ -38,7 +38,8 @@ public class NurseryController {
 	
 	// 어린이집 검색
 	@GetMapping("/nursery-main")
-	public String nurseryMain(Model model, 
+	public String nurseryMain(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String[] build,
 			@RequestParam(required = false) String[] classroom,
@@ -77,6 +78,13 @@ public class NurseryController {
 		PageInfo pageInfo = new PageInfo(page, 5, count, 12);
 		List<Nursery> list =  nurseryService.getNurseryList(pageInfo, param);
 		
+		int[] wishNo = {};
+		if(loginMember != null) {
+			wishNo = nurseryService.getNurseryWishLsit(loginMember.getMemberNo());
+		}
+		String wish = Arrays.toString(wishNo);
+		log.info("찜 목록 : " + wish);
+		
 		int[] img = new int[12];
 		
 		img[0] = page;
@@ -93,6 +101,7 @@ public class NurseryController {
 		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
+		model.addAttribute("wish", wish);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
 		model.addAttribute("img", img);

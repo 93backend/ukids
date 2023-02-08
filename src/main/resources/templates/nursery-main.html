@@ -440,13 +440,27 @@
 				              <div class="box777">
 				                <div class="photo777">
 				                  <img class="photo" th:src="|img/어린이집/nursery${img[status.index]}.JPG|">
-				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare('compare${nursery.no}')|">
+				                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare(${nursery.no})|">
 				                    <i class="ci-bookmark fw-bold mt-1"></i>
 				                    <b>&nbsp;비교&nbsp;</b>
 				                  </button>
-				                  <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart('heart${nursery.no}')|">
-				                    <img src="img/suit-heart.svg" class="heart">
-				                  </button>
+				                  <th:block th:if="${session.loginMember == null}">
+				                    <button class="btn-wishlist1 btn-sm" onclick="cantDo();">
+				                      <i id="heart" class="ci-heart fw-bold text-danger"></i>
+				                    </button>
+				                  </th:block>
+				                  <th:block th:unless="${session.loginMember == null}">
+			                    	<th:block th:if="${#strings.contains(wish, nursery.no)}">
+					                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="true" th:onclick="|onClickHeart(${nursery.no})|">
+					                      <i id="heart" class="ci-heart-filled"></i>
+					                    </button>
+			                    	</th:block>
+			                    	<th:block th:unless="${#strings.contains(wish, nursery.no)}">
+					                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart(${nursery.no})|">
+					                      <i id="heart" class="ci-heart fw-bold text-danger"></i>
+					                    </button>
+			                    	</th:block>
+			                    </th:block>
 				                </div>
 				                <div class="container777">
 				                  <a class="sarip fw-bold">&nbsp;&nbsp;[[${nursery.crtypename}]]&nbsp;&nbsp;</a>
@@ -514,8 +528,65 @@
     <!-- Main theme script-->
     <script src="js/theme.min.js"></script>
     <script src="js/address.js"></script>
-    <script src="js/button-compare.js"></script>
-    <script src="js/button-heart.js"></script>
+    <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
+    	var memberNo = [[${session.loginMember.memberNo}]];
+	    function onClickHeart(id) {
+			var no = id;
+			id = '#heart' + id;
+			var heartValue = null;
+			
+			if($(id).val() == "false") {
+				heartValue = true;
+			} else {
+				heartValue = false;
+			}
+			console.log(no);
+			if(heartValue == true) {
+				$.ajax({
+	        		type: "post",
+	        		url: "/nursery-addWish",
+	        		data: {no, memberNo},
+	        		success:
+	        			(data) => {
+	        				console.log(data);
+	        				if(data.add === true) {
+	        					alert("해당 어린이집이 찜목록에 추가되었습니다.");
+	        					$(id).html('<i id="heart" class="ci-heart-filled"></i>');
+	        					$(id).attr("value", "true");
+	        					
+	        				} else {
+	        					alert("찜목록 추가에 실패하였습니다.");
+	        				}
+	        			},
+        			error:
+	        			(e)=>{
+    						console.log(e);	  
+    	    			}
+	        	});
+			} else {
+				$.ajax({
+	        		type: "post",
+	        		url: "/nursery-deleteWish",
+	        		data: {no, memberNo},
+	        		success:
+	        			(data) => {
+	        				console.log(data);
+	        				if(data.add === true) {
+	        					alert("해당 어린이집이 찜목록에서 삭제되었습니다.");
+	        					$(id).html('<i id="heart" class="ci-heart fw-bold text-danger"></i>');
+	        					$(id).attr("value", "false");
+	        				} else {
+	        					alert("찜목록 삭제에 실패하였습니다.");
+	        				}
+	        			},
+	        		error:
+	        			(e)=>{
+    						console.log(e);	    				
+    	    			}
+		        });
+			}
+		}
+    </script>
     <script type="text/javascript">
 		var url_href = window.location.href;
 	    var url = new URL(url_href); // URL 객체 선언
@@ -533,6 +604,25 @@
 			
 			window.location.search = url.searchParams;
 		};
+		
+		function onClickCompare(id) {
+			id = '#compare' + id;
+		    var compareValue = null;
+		    
+		    if($(id).val() == "false") {
+		    	compareValue = true;
+			} else {
+				compareValue = false;
+			}
+		    
+		    if(compareValue == true) {
+		    	$(id).attr('class', 'button7-fill');
+		    	$(id).attr("value", "true");
+		    } else {
+		    	$(id).attr('class', 'button7');
+		    	$(id).attr("value", "false");
+		    }
+		  }
 	    
 	</script>
   </body>

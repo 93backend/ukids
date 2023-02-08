@@ -180,6 +180,13 @@
 		</if>
 	</select>
 	
+	<select id="selectKinderWishList" resultType="int" parameterType="int">
+		SELECT
+			kinNo
+		FROM K_WISH
+		WHERE memberNo = #{memberNo}
+	</select>
+	
 	<select id="selectKinderByNo" resultType="Kinder" parameterType="int">
 		SELECT
 			kinNo, kinderCode, officeedu, subofficeedu, kindername, establish, edate,

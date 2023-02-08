@@ -30,6 +30,10 @@ public class NurseryService {
 		return mapper.selectNurseryCount(map);
 	}
 	
+	public int[] getNurseryWishLsit(int memberNo) {
+		return mapper.selectNurseryWishList(memberNo);
+	}
+	
 	public Nursery findByNo(int no) {
 		return mapper.selectNurseryByNo(no);
 	}

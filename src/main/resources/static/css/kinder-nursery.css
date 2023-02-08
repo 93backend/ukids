@@ -121,7 +121,8 @@
     border-radius: 50%;
     text-align: center;
     width:25px; 
-    height: 25px; 
+    height: 25px;
+    line-height: 25px; 
     background-color: white; 
     margin-right: 5px; 
     margin-top: 5px; 
@@ -265,3 +266,9 @@
     position: relative;
     left: 95px;
   }
+ #heart {
+ 	margin-top: 6px;
+ }
+  .ci-heart-filled {
+  color: #f5104d;
+}
