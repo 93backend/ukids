@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.multi.ukids.toy.model.vo.Toy;
+import com.multi.ukids.toy.model.vo.Pay;
 import com.multi.ukids.toy.model.vo.T_Review;
 
 
@@ -19,4 +20,8 @@ public interface ToyMapper {
 	int deleteToyReview(int no);
 	List<T_Review> selectToyReviewByNo(int toyNo);
 	List<Toy> selectSimilarToy(Toy toy);
+	void insertPay(Pay pay);
+	Pay selectPay (int payNo);
+	List<Pay> selectPayDate (int toyNo);
+	
 }

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <title>UKIDS | 결제</title>
+    <!-- SEO Meta Tags
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio"> -->
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon and Touch Icons-->
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/ukids/logo.jpg}">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="mask-icon" color="#fe6a6a" th:href="@{/safari-pinned-tab.svg}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/simplebar/dist/simplebar.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/tiny-slider/dist/tiny-slider.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/drift-zoom/dist/drift-basic.min.css}"/>
+    <link rel="stylesheet" media="screen" th:href="@{/vendor/lightgallery.js/dist/css/lightgallery.min.css}"/>
+    
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" th:href="@{/css/theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+
+    <!--해당 페이지 css-->
+    <link rel="stylesheet" th:href="@{/css/pay.css}">
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    
+    <style>
+      #toybtn{
+        width: 150px;
+        border-color: #fc6c93;
+      }
+      
+      #toybtn:hover{
+        background-color: #fc6c93;
+      }
+      
+      #rentlist{
+        width: 150px;
+        background-color: #fc6c93;
+        margin-left: 15px;
+      }
+      
+      #rentlist:hover{
+        background-color: #ff3b6f;
+      }
+      </style>
+  </head>
+
+    <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+
+    <!-- 로그인 모달 관련  -->
+    <div th:fragment="modal" th:replace="~{common :: modal}"></div>
+
+    <main class="page-wrapper">
+
+      <!-- 헤더!!!!!! -->
+      <header th:fragment="header" th:replace="~{common :: header}"></header>
+
+
+
+
+      <!-- 결제 시작!!!!!!!!!-->
+      <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="paymain">
+        <div class="container position-relative zindex-5 mb-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
+                <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/index}"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item text-nowrap"><a th:href="@{/mypage-7}">장바구니</a></li>
+                <li class="breadcrumb-item text-nowrap active" aria-current="page" style="color: #ee0842;">결제</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 text-light mb-0 fw-bold" style="margin-top: 110px; margin-left: 30px;">대여 / 결제</h1>
+          </div>
+        </div>
+      </section>
+
+      <div class="container py-4 py-lg-5 my-4">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 col-md-10">
+            <img th:src="@{/img/ukids/check.png}" style="width: 100px; height: 100px; margin-left: 45%; margin-bottom: 5%;" >
+            <h2 style="text-align: center;">주문이 정상적으로 완료되었습니다.</h2>
+            <div class="card py-2 mt-4">
+              <div class="mt-3"style="display: flex;" >
+                <ul style="list-style: none; font-weight: bold; width: 20%;">
+                  <li style="margin-bottom: 25px;">주문번호</li>
+                  <li style="margin-bottom: 75px;">배송지 정보</li>
+                  <li style="margin-bottom: 70px;">결제정보</li>
+                  <li>결제금액</li>
+                </ul>
+
+                <ul style="list-style: none; margin-left: 20px;">
+                  <li style="margin-bottom: 25px;">[[${pay.payNo}]]</li>
+                  <li>[[${pay.name}]]</li>
+                  <li>[[${#strings.substring(pay.phone,0, 3)}]] - [[${#strings.substring(pay.phone,3, 7)}]] - [[${#strings.substring(pay.phone,7, 11)}]]</li>
+                  <li style="margin-bottom: 25px; margin-right: 10px;">[[${pay.postCode}]], [[${pay.address}]] [[${pay.address2}]]</li>
+                  <li>[[${pay.method}]]</li>
+                  <li th:if="${pay.method} == '카드'">일시불</li>
+                  <li th:unless="${pay.method} == '카드'">실시간계좌이체</li>
+                  <li style="margin-bottom: 25px;"><span th:text="${#dates.format(date,'yyyy-MM-dd (E) a HH:mm:ss')}"></span></li>
+                  <li>[[${pay.price}+원]]</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="rentbtn mt-5" style="text-align: center">
+              <button type="button" class="btn btn-outline-primary rounded-pill" id="toybtn" style="color:#fc6c93" th:onclick="|location.href='@{/toy-main}'|">상품계속보기</button>
+              <button type="button" class="btn btn-primary rounded-pill" id="rentlist"th:onclick="|location.href='@{/mypage-6}'|">대여목록으로</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+
+<!-- 푸터!!!!!!!!!!-->
+<!-- Footer-->
+<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
+
+
+<!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+<!-- Vendor scrits: js libraries and plugins-->
+<script th:src="@{/vendor/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/vendor/simplebar/dist/simplebar.min.js}"></script>
+<script th:src="@{/vendor/tiny-slider/dist/min/tiny-slider.js}"></script>
+<script th:src="@{/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js}"></script>
+<script th:src="@{/vendor/drift-zoom/dist/Drift.min.js}"></script>
+<script th:src="@{/vendor/lightgallery.js/dist/js/lightgallery.min.js}"></script>
+<script th:src="@{/vendor/lg-video.js/dist/lg-video.min.js}"></script>
+
+<!-- Main theme script-->
+<script th:src="@{/js/theme.min.js}"></script>
+
+</body>
+</html>

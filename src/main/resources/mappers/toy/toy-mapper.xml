@@ -3,110 +3,144 @@
 
 
 <mapper namespace="com.multi.ukids.toy.model.mapper.ToyMapper">
-	
-	<resultMap type="Toy" id="ToyListResultMap">
-		<id property="toyNo" column="TOYNO"/>
-		<result property="toyCd" column="TOYCD"/>
-		<result property="toyNm1" column="TOYNM1"/>
-		<result property="toyNm2" column="TOYNM2"/>
-		<result property="toyEx" column="TOYEX"/>
-		<result property="toySearch" column="TOYSEARCH"/>
-		<result property="toyPay" column="TOYPAY"/>
-		<result property="toyImg" column="TOYIMG"/>
-		<result property="toyCategoryB" column="TOYCATEGORYB"/>
-		<result property="toyCategoryM" column="TOYCATEGORYM"/>
-		<result property="toyCategoryS" column="TOYCATEGORYS"/>
-		<result property="toyType" column="TOYTYPE"/>
-	</resultMap>
- 	
- 	<resultMap type="T_Review" id="ToyReviewResultMap">
-		<id 	property="no"			column="NO"/>
-		<result property="toyNo" 		column="TOYNO"/>
-		<result property="memberNo" 	column="MEMBERNO"/>
-		<result property="content" 		column="CONTENT"/>
-		<result property="createDate" 	column="CREATEDATE"/>
-		<result property="modifyDate" 	column="MODIFYDATE"/>
-		<result property="memberId" 	column="MEMBERID"/>
-		
-	</resultMap>
+   
+   <resultMap type="Toy" id="ToyListResultMap">
+      <id property="toyNo" column="TOYNO"/>
+      <result property="toyCd" column="TOYCD"/>
+      <result property="toyNm1" column="TOYNM1"/>
+      <result property="toyNm2" column="TOYNM2"/>
+      <result property="toyEx" column="TOYEX"/>
+      <result property="toySearch" column="TOYSEARCH"/>
+      <result property="toyPay" column="TOYPAY"/>
+      <result property="toyImg" column="TOYIMG"/>
+      <result property="toyCategoryB" column="TOYCATEGORYB"/>
+      <result property="toyCategoryM" column="TOYCATEGORYM"/>
+      <result property="toyCategoryS" column="TOYCATEGORYS"/>
+      <result property="toyType" column="TOYTYPE"/>
+   </resultMap>
+    
+    <resultMap type="T_Review" id="ToyReviewResultMap">
+      <id    property="no"         column="NO"/>
+      <result property="toyNo"       column="TOYNO"/>
+      <result property="memberNo"    column="MEMBERNO"/>
+      <result property="content"       column="CONTENT"/>
+      <result property="createDate"    column="CREATEDATE"/>
+      <result property="modifyDate"    column="MODIFYDATE"/>
+      <result property="memberId"    column="MEMBERID"/>
+      
+   </resultMap>
+   
+   <resultMap type="Pay" id="PayResultMap">
+      <id    property="payNo"         column="PAYNO"/>
+      <result property="memberNo"    column="MEMBERNO"/>
+      <result property="toyNo"       column="TOYNO"/>
+      <result property="price"       column="PRICE"/>
+      <result property="name"    column="NAME"/>
+      <result property="phone"    column="PHONE"/>
+      <result property="postCode"    column="POSTCODE"/>
+      <result property="address"    column="ADDRESS"/>
+      <result property="request"    column="REQUEST"/>
+      <result property="method"    column="METHOD"/>
+      <result property="startDate"    column="STARTDATE"/>
+      <result property="endDate"    column="ENDDATE"/>
+      <result property="address2"    column="ADDRESS2"/>
+   </resultMap>
  
  
- 	<select id="selectToyList" resultType="Toy" parameterType="map" >
-		SELECT
-		DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
-		FROM TOY 
-		<where>
-		<if test="searchValue != null">
-			 TOYNM1 LIKE '%${searchValue}%'
-		</if>
-			<if test="searchType != null">
-				AND (
-		    	<foreach collection="searchType" item="item" separator="OR">
-			    	TOYCATEGORYM LIKE '%${item}%'
-		    	</foreach>
-		    	)
-			</if>
-	 	</where>
-		ORDER BY TOYNO DESC LIMIT ${limit} OFFSET ${offset}
-	</select>
-	
-	<select id="selectCateList" resultType="String" >
-		SELECT DISTINCT TOYCATEGORYM FROM TOY
-	</select>	
-	
-	<select id="selectToyCount" parameterType="map" resultType="int">
-		SELECT COUNT(TOYNO) FROM TOY	
-	 	<where>
-		<if test="searchValue != null">
-			 TOYNM1 LIKE '%${searchValue}%'
-		</if>
-			<if test="searchType != null">
-				AND (
-		    	<foreach collection="searchType" item="item" separator="OR">
-			    	TOYCATEGORYM LIKE '%${item}%'
-		    	</foreach>
-		    	)
-			</if>
-	 	</where>
-	</select>
-	
-	<select id="selectToyByNo" resultType="Toy" parameterType="int">
-		SELECT
-			TOYNO, TOYCD, TOYNM1, TOYNM2, REPLACE(TOYEX,'""','"') AS TOYEX, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, 
-	   		TOYCATEGORYB, TOYCATEGORYM, TOYCATEGORYS, TOYTYPE
-		FROM TOY
-		WHERE TOYNO = #{no}
-	</select>
-	
-	<select id="selectToyReviewByNo" resultType="T_REVIEW" parameterType="int">
-		SELECT R.NO, R.TOYNO, R.MEMBERNO, R.CONTENT, R.CREATEDATE, R.MODIFYDATE,
-			   M.ID AS MEMBERID FROM T_REVIEW R
-		JOIN MEMBER M ON (R.MEMBERNO = M.MEMBERNO)
+    <select id="selectToyList" resultType="Toy" parameterType="map" >
+      SELECT
+      DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
+      FROM TOY 
+      <where>
+      <if test="searchValue != null">
+          TOYNM1 LIKE '%${searchValue}%'
+      </if>
+         <if test="searchType != null">
+            AND (
+             <foreach collection="searchType" item="item" separator="OR">
+                TOYCATEGORYM LIKE '%${item}%'
+             </foreach>
+             )
+         </if>
+       </where>
+      ORDER BY TOYNO DESC LIMIT ${limit} OFFSET ${offset}
+   </select>
+   
+   <select id="selectCateList" resultType="String" >
+      SELECT DISTINCT TOYCATEGORYM FROM TOY
+   </select>   
+   
+   <select id="selectToyCount" parameterType="map" resultType="int">
+      SELECT COUNT(TOYNO) FROM TOY   
+       <where>
+      <if test="searchValue != null">
+          TOYNM1 LIKE '%${searchValue}%'
+      </if>
+         <if test="searchType != null">
+            AND (
+             <foreach collection="searchType" item="item" separator="OR">
+                TOYCATEGORYM LIKE '%${item}%'
+             </foreach>
+             )
+         </if>
+       </where>
+   </select>
+   
+   <select id="selectToyByNo" resultType="Toy" parameterType="int">
+      SELECT
+         TOYNO, TOYCD, TOYNM1, TOYNM2, REPLACE(TOYEX,'""','"') AS TOYEX, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, 
+            TOYCATEGORYB, TOYCATEGORYM, TOYCATEGORYS, TOYTYPE
+      FROM TOY
+      WHERE TOYNO = #{no}
+   </select>
+   
+   <select id="selectToyReviewByNo" resultType="T_REVIEW" parameterType="int">
+      SELECT R.NO, R.TOYNO, R.MEMBERNO, R.CONTENT, R.CREATEDATE, R.MODIFYDATE,
+            M.ID AS MEMBERID FROM T_REVIEW R
+      JOIN MEMBER M ON (R.MEMBERNO = M.MEMBERNO)
+      WHERE TOYNO = #{toyNo}
+   </select>
+   
+   <insert id="insertToyReview" parameterType="T_Review">
+      INSERT INTO T_REVIEW(
+            NO, TOYNO, MEMBERNO, 
+            CONTENT, CREATEDATE, MODIFYDATE) 
+         VALUES(
+            0, #{toyNo}, #{memberNo}, 
+            #{content}, DEFAULT, DEFAULT
+         )
+   </insert>
+   
+   <delete id="deleteToyReview" parameterType="int">
+      DELETE FROM T_REVIEW WHERE NO=#{no}
+   </delete>
+   
+   <select id="selectSimilarToy" resultType="Toy" parameterType="Toy">
+      SELECT
+      DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
+      FROM TOY 
+      WHERE TOYCATEGORYM = #{toyCategoryM} 
+      AND TOYNO != #{toyNo}
+      ORDER BY TOYNO DESC LIMIT 10
+   </select>
+   
+   <insert id="insertPay" parameterType="Pay" useGeneratedKeys="true"  keyProperty="payNo" keyColumn="PAYNO">
+      INSERT INTO PAY (
+         MEMBERNO, TOYNO, PRICE, NAME, PHONE, POSTCODE, 
+         ADDRESS, REQUEST, METHOD, STARTDATE, ENDDATE, ADDRESS2) 
+      VALUES(#{memberNo},#{toyNo},#{price},#{name},#{phone},
+      #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2})
+      
+   </insert>
+   
+   <select id="selectPay" parameterType="int" resultType="Pay">
+      SELECT * FROM PAY WHERE PAYNO = #{payNo};      
+   </select>
+
+   
+   <select id="selectPayDate" parameterType="int" resultType="Pay">
+   		SELECT TOYNO, STARTDATE, ENDDATE
+		FROM PAY
 		WHERE TOYNO = #{toyNo}
-	</select>
-	
-	<insert id="insertToyReview" parameterType="T_Review">
-		INSERT INTO T_REVIEW(
-				NO, TOYNO, MEMBERNO, 
-				CONTENT, CREATEDATE, MODIFYDATE) 
-			VALUES(
-				0, #{toyNo}, #{memberNo}, 
-				#{content}, DEFAULT, DEFAULT
-			)
-	</insert>
-	
-	<delete id="deleteToyReview" parameterType="int">
-		DELETE FROM T_REVIEW WHERE NO=#{no}
-	</delete>
-	
-	<select id="selectSimilarToy" resultType="Toy" parameterType="Toy">
-		SELECT
-		DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
-		FROM TOY 
-		WHERE TOYCATEGORYM = #{toyCategoryM} 
-		AND TOYNO != #{toyNo}
-		ORDER BY TOYNO DESC LIMIT 10
-	</select>
-	
-	
+   </select>
 </mapper>

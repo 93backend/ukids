@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.toy.model.mapper.ToyMapper;
+import com.multi.ukids.toy.model.vo.Pay;
 import com.multi.ukids.toy.model.vo.T_Review;
 import com.multi.ukids.toy.model.vo.Toy;
 
@@ -53,5 +54,17 @@ public class ToyService {
 		return mapper.selectSimilarToy(toy);
 	}
 
+	public void insertPay(Pay pay) {
+		mapper.insertPay(pay);
+	}
+	
+	public Pay selectPay(int payNo) {
+		return mapper.selectPay(payNo);
+	}
+	
+	
+	public List<Pay> selectPayDate(int toyNo) {
+		return mapper.selectPayDate(toyNo);
+	}
 	
 }

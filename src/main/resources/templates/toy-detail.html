@@ -94,7 +94,7 @@
               <!-- Product details-->
               <div class="col-lg-5 pt-4 pt-lg-0">
                 <div class="product-details ms-auto pb-3">
-                  <form method="">
+                  <form id="payInfo" method="get">
                     <div> 
                       <ul class="toy-details">
                         <li>상품명</li>
@@ -119,16 +119,19 @@
                     
                     <div class="mb-3" style="max-width: 30rem; margin-left: 35px; margin-right: 20px;">
                       <div class="input-group"><span class="input-group-text"><i class="ci-calendar"></i></span>
-                        <input class="form-control date-picker" type="text" placeholder="대여시작일" id="start-date" onchange="changePickr()">
-                        <input class="form-control date-picker" type="text" placeholder="대여반납일" id="end-date" onclick="clickPickr()">
+                        <input name="startDate" class="form-control date-picker" type="text" placeholder="대여시작일" id="start-date" onchange="changePickr()">
+                        <input name="endDate" class="form-control date-picker" type="text" placeholder="대여반납일" id="end-date" onclick="clickPickr()">
+                        <input name="no" type="hidden" th:value="${toy.toyNo}">
                       </div>
                     </div>  
                     <div class="rentbtn">
                       <div class="n-add-cart-layer" style="width: 380px; height: 40px;">
                           <div class="add_cart"><div style="display: inline;">장바구니에 상품이 담겼습니다.</div><a th:href="@{/mypage-7}" class="cart">&nbsp;장바구니로 가기</a></div>
                       </div>
-                      <button type="submit" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93"><i class="ci-cart"></i>&nbsp;장바구니</button>
-                      <button type="submit" class="btn btn-primary rounded-pill" id="rentbtn2">₩ 대여하기</button>
+                       <button type="submit" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93" th:if="${session.loginMember != null}"><i class="ci-cart"></i>&nbsp;장바구니</button>
+                       <a href="#signin-modal" data-bs-toggle="modal"><button type="button" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93" th:if="${session.loginMember == null}" th:onclick="|alert('로그인을 해주세요.')|"><i class="ci-cart"></i>&nbsp;장바구니</button></a>
+                       <button type="submit" class="btn btn-primary rounded-pill" id="rentbtn2" th:if="${session.loginMember != null}">₩ 대여하기</button>
+                       <a href="#signin-modal" data-bs-toggle="modal"><button type="button" class="btn btn-primary rounded-pill" id="rentbtn2" th:if="${session.loginMember == null}" th:onclick="|alert('로그인을 해주세요.')|">₩ 대여하기</button></a>
                     </div>
                   </form>
                 </div>
@@ -275,13 +278,44 @@
 <script th:inline="javascript">
 $( document ).ready( function() {
 	var lm =/*[[${session.loginMember}]]*/{};
-	if(lm ==null){
+	if(lm == null){
 		$("#review-text").attr("placeholder", "로그인 후 댓글을 작성해주세요.");
 	}
+	
+	$('#rentbtn2' ).click( function(e) {
+		if(lm != null){
+		    if($('#start-date').val() != ''&& $('#end-date').val() != ''){
+		    	const param_password = $("<input type='hidden' value='true' name='ListOrNot' readonly>");
+		    	$("#payInfo").append(param_password);
+		    	$("#payInfo").attr("action", "/pay")
+		    	$("#payInfo").submit();
+		    }else{
+		      alert("대여일을 선택해주세요.")
+		      e.preventDefault();
+		    }			
+		} 
+	});	
+
+	 $( '#cartbtn' ).click( function(e) {
+		if(lm != null){
+		    if($('#start-date').val() != ''&& $('#end-date').val() != ''){
+		      $( '.add_cart' ).fadeIn(1000).delay(1000).fadeOut(1000);
+		/*      $("#payInfo").attr("action", "/mypage-7")
+		  	  $("#payInfo").submit(); */
+		      e.preventDefault();
+		    }else{
+			      alert("대여일을 선택해주세요.")
+			      e.preventDefault();
+			}	
+		}
+	 });
+
 });
+
 function deleteReview(no, toyNo){
 	var url = "/toyReviewDel?no=";
 	var requestURL = url + no +"&toyNo=" + toyNo;
 	location.replace(requestURL);
 }
+
 </script>

@@ -5,7 +5,7 @@
     monthSelectorType : 'static',
     locale: "ko",                            
     minDate: tmrw,
-    dateFormat: "Y-m-d",
+    dateFormat: "Y-m-d"
   });
 
 
@@ -20,6 +20,7 @@ function changePickr(){
   });
 }
 
+//대여시작일 지정 안하고 눌렀을때
 $("#end-date").flatpickr({
   monthSelectorType : 'static',
     locale: "ko",   
@@ -50,33 +51,6 @@ function clickPickr(){
       alert("대여 시작일을 선택해주세요.")
   }
 }
-
-
-//장바구니 
-$( document ).ready( function() {
-  $( '#cartbtn' ).click( function(e) {
-    if($('#start-date').val() != ''&& $('#end-date').val() != ''){
-      $( '.add_cart' ).fadeIn(1000).delay(1000).fadeOut(1000);
-      e.preventDefault();
-    }else{
-      alert("대여일을 선택해주세요.")
-      e.preventDefault();
-    }
-  } );
-} );
-
-//결제 
-$( document ).ready( function() {
-  $( '#rentbtn2' ).click( function(e) {
-    if($('#start-date').val() != ''&& $('#end-date').val() != ''){
-      $(location).attr("href", "pay.html")
-      e.preventDefault();
-    }else{
-      alert("대여일을 선택해주세요.")
-      e.preventDefault();
-    }
-  } );
-} );
 
 
 //상세 더 보기

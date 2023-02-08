@@ -122,7 +122,7 @@ function postcode() {
 
 //결제
 
-var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+/*var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
 var tossPayments = TossPayments(clientKey) // 클라이언트 키로 초기화하기
 
 var button = document.getElementById('payment-button') // 결제하기 버튼
@@ -149,4 +149,4 @@ function checkForm(){
       })
   }
   return false;
-}
+}*/
