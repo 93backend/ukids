@@ -54,12 +54,11 @@
                 <h4 class="modal-title" style="color: #ffffff;">[[${kinder.kindername}]]</h4>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body" style="height: 500px;">
-                <div id="msgArea" class="col" style="height: 450px;"></div>
-              </div>
+              
+              <div id="msgArea" class="py-2 px-3" style="height: 500px; overflow-y: auto;"></div>
 
               <div class="modal-footer">
-                <input class="form-control" type="text" id="chatMsg">
+                <input class="form-control" type="text" id="chatMsg" spellcheck="false">
                 <button id="sendBtn" type="button" class="btn btn-primary btn-sm">전&emsp;송</button>
               </div>
             </div>
@@ -275,9 +274,16 @@
 	                  </button>
                 	</th:block>
                 	<th:block th:unless="${session.loginMember == null}">
-	                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton">
-	                    <i id="heart1" class="ci-heart"> 찜</i>
-	                  </button>
+                		<th:block th:if="${wishCnt} == 0">
+		                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton" value="false">
+		                    <i id="heart1" class="ci-heart"> 찜</i>
+		                  </button>
+                		</th:block>
+                		<th:block th:unless="${wishCnt} == 0">
+		                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton" value="true">
+		                    <i id="heart1" class="ci-heart-filled"> 찜</i>
+		                  </button>
+                		</th:block>
                 	</th:block>
 
                   <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton">
@@ -514,7 +520,7 @@
 	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="로그인 후 리뷰를 작성할 수 있습니다." disabled></textarea>
                     </th:block>
                     <th:block th:unless="${session.loginMember == null}">
-	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="리뷰를 작성하세요."></textarea>
+	                    <textarea name="content"class="form-control fs-6" rows="18" required id="content" placeholder="리뷰를 작성하세요." spellcheck="false"></textarea>
                     </th:block>
                     <div class="invalid-feedback">Please write a review!</div><small class="form-text text-muted d-block" style="text-align: right; font-size: 14px;">1000자 이내 입력하세요.</small>
                   </div>
@@ -555,68 +561,155 @@
     
     <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
        
-       	$(document).ready(function() {
-       		const memberId = [[${session.loginMember.id}]];
-       		
-       		$("#sendBtn").on("click", (e) => {
-                   send();
-               });
-       		
-       		const websocket = new WebSocket("ws://localhost/kinder-chat");
-       		
-       		websocket.onmessage = onMessage;
-               websocket.onopen = onOpen;
-               websocket.onclose = onClose;
-               
-               function send(){
-
-                   let msg = document.getElementById("chatMsg");
-
-                   console.log(memberId + ":" + msg.value);
-                   websocket.send(memberId + ":" + msg.value);
-                   msg.value = '';
-               }
-               
-               function onMessage(msg) {
-                   var data = msg.data;
-                   var sessionId = null;
-                   //데이터를 보낸 사람
-                   var message = null;
-                   var arr = data.split(":");
-
-                   for(var i=0; i<arr.length; i++){
-                       console.log('arr[' + i + ']: ' + arr[i]);
-                   }
-
-                   var cur_session = memberId;
-
-                   //현재 세션에 로그인 한 사람
-                   console.log("cur_session : " + cur_session);
-                   sessionId = arr[0];
-                   message = arr[1];
-
-                   console.log("sessionID : " + sessionId);
-                   console.log("cur_session : " + cur_session);
-
-                   //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-                   if(sessionId == cur_session){
-                       var str = "<div class='col-8 float-end'>";
-                       str += "<div class='alert' style='background-color: #FFE8EC'>";
-                       str += "<b>" + message + "</b>";
-                       str += "</div></div>";
-                       $("#msgArea").append(str);
-                   }
-                   else{
-                       var str = "<div class='col-8 float-start'>";
-                       str += "<div class='alert' style='background-color: #F0F0F0'>";
-                       str += "<b>" + message + "</b>";
-                       str += "</div></div>";
-                       $("#msgArea").append(str);
-                   }
-               }
-       	})
+	    $(document).ready(function() {
+	   		const memberId = [[${session.loginMember.id}]];
+	   		var role = '';
+	   		if([[${session.loginMember.role}]] =='ROLE_USER') {
+	   			role = '학부모';
+	   		} else {
+	   			role = '선생님';
+	   		}
+	   		
+	   		$("#chatMsg").keyup(function(event) {
+	   	        if (event.keyCode === 13) {
+	   	            $("#sendBtn").click();
+	   	        }
+	   	    });
+	   		
+	   		$("#sendBtn").on("click", (e) => {
+	      	    send();
+	        });
+	   		
+	   		const websocket = new WebSocket("ws://localhost/kinder-chat");
+	   		
+	   		websocket.onmessage = onMessage;
+	           
+	        function send(){
+	            let msg = document.getElementById("chatMsg");
 	
-     </script>
+	            console.log(memberId + ":" + msg.value);
+	            websocket.send(memberId + ":" + msg.value + ":role:" + role);
+	            msg.value = '';
+	        }
+	        
+	        function onMessage(msg) {
+	            var data = msg.data;
+	            var sessionId = null;
+	            //데이터를 보낸 사람
+	            var message = null;
+	            var chatName = null;
+	            var arr = data.split(":");
+	
+	            for(var i=0; i<arr.length; i++){
+	                console.log('arr[' + i + ']: ' + arr[i]);
+	            }
+	
+	            var cur_session = memberId;
+	
+	            //현재 세션에 로그인 한 사람
+	            console.log("cur_session : " + cur_session);
+	            sessionId = arr[0];
+	            message = arr[1];
+	            chatName = arr[3];
+	
+	            console.log("sessionID : " + sessionId);
+	            console.log("cur_session : " + cur_session);
+	            console.log("chatName : " + chatName);
+				
+	            if(message != "") {
+		            //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+		            if(sessionId == cur_session){
+		                var str = "<div class='col-8 float-end'>";
+		                str += "<div class='fs-sm text-end pe-1'>" + chatName + "</div>";
+		                str += "<div class='alert' style='background-color: #FFE8EC; color: black;'>";
+		                str += "<b>" + message + "</b>";
+		                str += "</div></div>";
+		                $("#msgArea").append(str);
+		                $("#msgArea").stop().animate({ scrollTop: $('#msgArea')[0].scrollHeight }, 1000);
+		            }
+		            else{
+		            	var str = "<div class='col-8 float-start'>";
+		                str += "<div class='fs-sm text-start ps-1'>" + chatName + "</div>";
+		                str += "<div class='alert' style='background-color: #F0F0F0; color: black;'>";
+		                str += "<b>" + message + "</b>";
+		                str += "</div></div>";
+		                $("#msgArea").append(str).stop().animate({ scrollTop: $('#msgArea')[0].scrollHeight }, 1000);
+		            }
+	            }
+	        }
+	        
+	        /* 찜 관련, 비교 관련 */
+	        
+	        var no = [[${kinder.kinNo}]];
+	        var memberNo = [[${session.loginMember.memberNo}]];
+			
+	        var isHeartChecked = null;
+	        $('#wishButton').click(function() {
+	        	
+	        	 if ($('#wishButton').val() == "false") {
+	        		 isHeartChecked = true;
+	        	 } else {
+	        		 isHeartChecked = false;
+	        	 }
+	        	 console.log(isHeartChecked);
+
+	          if (isHeartChecked == true) {
+	        	$.ajax({
+	        		type: "post",
+	        		url: "/kinder-addWish",
+	        		data: {no, memberNo},
+	        		success:
+	        			(data) => {
+	        				console.log(data);
+	        				if(data.add === true) {
+	        					alert("해당 유치원이 찜목록에 추가되었습니다.");
+	        					wishButton.innerHTML = '<i id="heart1" class="ci-heart-filled"> 찜</i>';
+	        					$('#wishButton').attr("value", "true");
+	        					
+	        				} else {
+	        					alert("찜목록 추가에 실패하였습니다.");
+	        				}
+	        			},
+        			error:
+	        			(e)=>{
+    						console.log(e);	  
+    	    			}
+	        	});
+	          } else {
+	        	  $.ajax({
+	        		type: "post",
+	        		url: "/kinder-deleteWish",
+	        		data: {no, memberNo},
+	        		success:
+	        			(data) => {
+	        				console.log(data);
+	        				if(data.add === true) {
+	        					alert("해당 유치원이 찜목록에서 삭제되었습니다.");
+	        					wishButton.innerHTML = '<i id="heart1" class="ci-heart"> 찜</i>';
+	        					$('#wishButton').attr("value", "false");
+	        				} else {
+	        					alert("찜목록 삭제에 실패하였습니다.");
+	        				}
+	        			},
+	        		error:
+	        			(e)=>{
+    						console.log(e);	    				
+    	    			}
+		        });
+	          }
+	        });
+
+	        $('#compareButton').click(function() {
+	          isCompareChecked = !isCompareChecked;
+	          if (isCompareChecked == false) {
+	            compareButton.innerHTML = '<i id="compareIcon1" class="ci-compare"> 비교</i>';
+	          } else {
+	            compareButton.innerHTML = '<i id="compareIcon2" class="ci-compare fw-bolder" style="color:#fc6c93;"> 비교</i>';
+	          }
+
+	        });
+	   	});
+    </script>
     
 <script th:inline="javascript">
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 

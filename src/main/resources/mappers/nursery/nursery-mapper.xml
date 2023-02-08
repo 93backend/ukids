@@ -217,6 +217,26 @@
 		WHERE nuNo = #{no}
 	</select>
 	
+	<select id="selectNurseryWish" resultType="int" parameterType="NWish">
+		SELECT
+			COUNT(no)
+		FROM N_WISH
+		WHERE nuNo = #{nuNo} AND memberNo = #{memberNo}
+	</select>
+	
+	
+	<insert id="insertNurseryWish" parameterType="NWish">
+		INSERT INTO N_WISH (
+			no, nuNo, memberNo
+		) VALUES (
+			0, #{nuNo}, #{memberNo}
+		)
+	</insert>
+	
+	<delete id="deleteNurseryWish" parameterType="NWish">
+		DELETE FROM N_WISH WHERE nuNo = #{nuNo} AND memberNo = #{memberNo}
+	</delete>
+	
 	<select id="selectNurseryReviewList" resultType="NReview" parameterType="int">
 		SELECT 
 			R.no, R.nuNo, R.memberNo, M.id, 
@@ -247,5 +267,5 @@
 	<delete id="deleteNurseryReview" parameterType="int">
 		 DELETE FROM N_REVIEW WHERE no = #{no}
 	</delete>
-
+	
 </mapper>

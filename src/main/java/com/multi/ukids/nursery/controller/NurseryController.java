@@ -3,10 +3,13 @@ package com.multi.ukids.nursery.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +24,19 @@ import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.nursery.model.vo.NReview;
+import com.multi.ukids.nursery.model.vo.NWish;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class NurseryController {
 	@Autowired
 	private NurseryService nurseryService;
 	
+	// 어린이집 검색
 	@GetMapping("/nursery-main")
 	public String nurseryMain(Model model, 
 			@RequestParam Map<String, Object> param,
@@ -75,10 +82,13 @@ public class NurseryController {
 		img[0] = page;
 		
 		for(int i = 0; i < img.length; i++) {
-			if(i != 0) {
-				img[i] = img[i-1] + 2;
+			img[i] = (int)(Math.random()*31);
+			for(int j = 0; j < i; j++) {
+				if(img[i] == img[j]) {
+					i--;
+					break;
+				}
 			}
-			img[i] %= 31;
 		}
 		
 		model.addAttribute("count", count);
@@ -90,19 +100,32 @@ public class NurseryController {
 		return "nursery-main";
 	}
 	
+	// 어린이집 상세
 	@GetMapping("/nursery-detail")
-	public String nurseryDetail(Model model, @RequestParam("no") int no, @RequestParam("i") int i) {
+	public String nurseryDetail(Model model, HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@RequestParam("no") int no, @RequestParam("i") int i
+	) {
 		
 		Nursery nursery = nurseryService.findByNo(no);
 		int claim = nurseryService.getClaimCount(no);
 		List<NReview> review = nurseryService.getReviewList(no);
 		int reviewCnt = nurseryService.getReviewCount(no);
 		
+		int wishCnt = 0;
+		if(loginMember != null) {
+			NWish wish = new NWish();
+			wish.setNuNo(no);
+			wish.setMemberNo(loginMember.getMemberNo());
+			wishCnt = nurseryService.getWish(wish);
+		}
+		
 		int classCnt = nursery.getClass_cnt_00() + nursery.getClass_cnt_01() + nursery.getClass_cnt_02() + nursery.getClass_cnt_03() + nursery.getClass_cnt_04() + nursery.getClass_cnt_05();
 		int childCnt = nursery.getChild_cnt_00() + nursery.getChild_cnt_01() + nursery.getChild_cnt_02() + nursery.getChild_cnt_03() + nursery.getChild_cnt_04() + nursery.getChild_cnt_05();
 		
 		model.addAttribute("nursery", nursery);
 		model.addAttribute("claim", claim);
+		model.addAttribute("wishCnt", wishCnt);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);
 		model.addAttribute("classCnt", classCnt);
@@ -112,6 +135,7 @@ public class NurseryController {
 		return "nursery-detail";
 	}
 	
+	// 리뷰 쓰기
 	@PostMapping("/nursery-writeReview")
 	public String writeReview(Model model, HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -136,6 +160,7 @@ public class NurseryController {
 		return "common/msg";
 	}
 	
+	// 리뷰 삭제
 	@RequestMapping("/nursery-deleteReview")
 	public String deleteReview(Model model,  HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -158,6 +183,7 @@ public class NurseryController {
 		return "common/msg";
 	}
 	
+	// 입소 신청
 	@PostMapping("/nursery-enroll")
 	public String enroll(Model model,  HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -184,6 +210,52 @@ public class NurseryController {
 		}
 		model.addAttribute("location", "/nursery-detail?no=" + admission.getNuNo() +"&i=" + i);
 		return "common/msg";
+	}
+	
+	// 찜 추가
+	@PostMapping("/nursery-addWish")
+	public ResponseEntity<Map<String, Object>> addWish(int no, int memberNo) {
+		log.info("찜 추가 : " + no + " " + memberNo);
+		
+		NWish wish = new NWish();
+		wish.setNuNo(no);
+		wish.setMemberNo(memberNo);
+		
+		int result = nurseryService.saveWish(wish);
+		
+		boolean add;
+		if(result > 0) {
+			add = true;
+		} else {
+			add = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 찜 삭제
+	@PostMapping("/nursery-deleteWish")
+	public ResponseEntity<Map<String, Object>> deleteWish(int no, int memberNo) {
+		log.info("찜 추가 : " + no + " " + memberNo);
+		
+		NWish wish = new NWish();
+		wish.setNuNo(no);
+		wish.setMemberNo(memberNo);
+		
+		int result = nurseryService.deleteWish(wish);
+		
+		boolean add;
+		if(result > 0) {
+			add = true;
+		} else {
+			add = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 
 }

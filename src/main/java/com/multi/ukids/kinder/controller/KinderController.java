@@ -3,10 +3,13 @@ package com.multi.ukids.kinder.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +23,20 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.kinder.model.vo.KReview;
+import com.multi.ukids.kinder.model.vo.KWish;
 import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class KinderController {
 	@Autowired
 	private KinderService kinderService;
 	
+	// 유치원 검색
 	@GetMapping("/kinder-main")
 	public String kinderMain(Model model, 
 			@RequestParam Map<String, Object> param,
@@ -78,13 +85,14 @@ public class KinderController {
 		
 		int[] img = new int[12];
 		
-		img[0] = page;
-		
 		for(int i = 0; i < img.length; i++) {
-			if(i != 0) {
-				img[i] = img[i-1] + 2;
+			img[i] = (int)(Math.random()*30);
+			for(int j = 0; j < i; j++) {
+				if(img[i] == img[j]) {
+					i--;
+					break;
+				}
 			}
-			img[i] %= 30;
 		}
 		
 		model.addAttribute("count", count);
@@ -96,13 +104,24 @@ public class KinderController {
 		return "/kinder-main";
 	}
 	
+	// 유치원 상세보기
 	@GetMapping("/kinder-detail")
-	public String kinderDetail(Model model, @RequestParam("no") int no, @RequestParam("i") int i) {
-		
+	public String kinderDetail(Model model, HttpSession session,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@RequestParam("no") int no, @RequestParam("i") int i
+	) {
 		Kinder kinder = kinderService.findByNo(no);
 		int claim = kinderService.getClaimCount(no);
 		List<KReview> review = kinderService.getReviewList(no);
 		int reviewCnt = kinderService.getReviewCount(no);
+		
+		int wishCnt = 0;
+		if(loginMember != null) {
+			KWish wish = new KWish();
+			wish.setKinNo(no);
+			wish.setMemberNo(loginMember.getMemberNo());
+			wishCnt = kinderService.getWish(wish);
+		}
 		
 		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
 		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
@@ -112,6 +131,7 @@ public class KinderController {
 		
 		model.addAttribute("kinder", kinder);
 		model.addAttribute("claim", claim);
+		model.addAttribute("wishCnt", wishCnt);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);
 		model.addAttribute("classCnt", classCnt);
@@ -123,6 +143,7 @@ public class KinderController {
 		return "kinder-detail";
 	}
 	
+	// 리뷰 쓰기
 	@PostMapping("/kinder-writeReview")
 	public String writeReview (Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -147,6 +168,7 @@ public class KinderController {
 			return "common/msg";
 		}
 	
+	// 리뷰 삭제
 	@RequestMapping("/kinder-deleteReview")
 	public String deleteReview(Model model,  HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -167,6 +189,7 @@ public class KinderController {
 		return "common/msg";
 	}
 	
+	// 입소 신청
 	@PostMapping("/kinder-enroll")
 	public String enroll(Model model,  HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -193,5 +216,51 @@ public class KinderController {
 		}
 		model.addAttribute("location", "/kinder-detail?no=" + admission.getKinNo() +"&i=" + i);
 		return "common/msg";
+	}
+	
+	// 찜 추가
+	@PostMapping("/kinder-addWish")
+	public ResponseEntity<Map<String, Object>> addWish(int no, int memberNo) {
+		log.info("찜 추가 : " + no + " " + memberNo);
+		
+		KWish wish = new KWish();
+		wish.setKinNo(no);
+		wish.setMemberNo(memberNo);
+		
+		int result = kinderService.saveWish(wish);
+		
+		boolean add;
+		if(result > 0) {
+			add = true;
+		} else {
+			add = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 찜 삭제
+	@PostMapping("/kinder-deleteWish")
+	public ResponseEntity<Map<String, Object>> deleteWish(int no, int memberNo) {
+		log.info("찜 추가 : " + no + " " + memberNo);
+		
+		KWish wish = new KWish();
+		wish.setKinNo(no);
+		wish.setMemberNo(memberNo);
+		
+		int result = kinderService.deleteWish(wish);
+		
+		boolean add;
+		if(result > 0) {
+			add = true;
+		} else {
+			add = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 }

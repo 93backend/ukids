@@ -11,6 +11,7 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.mapper.KinderMapper;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.kinder.model.vo.KReview;
+import com.multi.ukids.kinder.model.vo.KWish;
 import com.multi.ukids.kinder.model.vo.Kinder;
 
 @Service
@@ -41,6 +42,20 @@ public class KinderService {
 		return mapper.selectKinderClaimCount(no);
 	}
 	
+	public int getWish(KWish wish) {
+		return mapper.selectKinderWish(wish);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveWish(KWish wish) {
+		return mapper.insertKinderWish(wish);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteWish(KWish wish) {
+		return mapper.deleteKinderWish(wish);
+	}
+	
 	public List<KReview> getReviewList(int no) {
 		return mapper.selectKinderReviewList(no);
 	}
@@ -58,4 +73,5 @@ public class KinderService {
 	public int deleteReview(int no) {
 		return mapper.deleteKinderReview(no);
 	}
+	
 }

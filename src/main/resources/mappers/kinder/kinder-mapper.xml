@@ -196,7 +196,7 @@
 	</select>
 	
 	<insert id="insertKinderAdmission" parameterType="KAdmission">
-		INSERT INTO K_Admission (
+		INSERT INTO K_ADMISSION (
 			no, kinNo, memberNo, enrollDate, hopeDate, status
 		) VALUES (
 			0, #{kinNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W'
@@ -209,6 +209,25 @@
 		FROM K_CLAIM
 		WHERE kinNo = #{no}
 	</select>
+	
+	<select id="selectKinderWish" resultType="int" parameterType="KWish">
+		SELECT
+			COUNT(no)
+		FROM K_WISH
+		WHERE kinNo = #{kinNo} AND memberNo = #{memberNo}
+	</select>
+	
+	<insert id="insertKinderWish" parameterType="KWish">
+		INSERT INTO K_WISH (
+			no, kinNo, memberNo
+		) VALUES (
+			0, #{kinNo}, #{memberNo}
+		)
+	</insert>
+	
+	<delete id="deleteKinderWish" parameterType="KWish">
+		DELETE FROM K_WISH WHERE kinNo = #{kinNo} AND memberNo = #{memberNo}
+	</delete>
 	
 	<select id="selectKinderReviewList" resultType="KReview" parameterType="int">
 		SELECT 
@@ -240,6 +259,5 @@
 	<delete id="deleteKinderReview" parameterType="int">
 		 DELETE FROM K_REVIEW WHERE no = #{no}
 	</delete>
-
-
+	
 </mapper>

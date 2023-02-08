@@ -11,6 +11,7 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.nursery.model.mapper.NurseryMapper;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.nursery.model.vo.NReview;
+import com.multi.ukids.nursery.model.vo.NWish;
 import com.multi.ukids.nursery.model.vo.Nursery;
 
 
@@ -40,6 +41,20 @@ public class NurseryService {
 	
 	public int getClaimCount(int no) {
 		return mapper.selectNurseryClaimCount(no);
+	}
+	
+	public int getWish(NWish wish) {
+		return mapper.selectNurseryWish(wish);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int saveWish(NWish wish) {
+		return mapper.insertNurseryWish(wish);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteWish(NWish wish) {
+		return mapper.deleteNurseryWish(wish);
 	}
 	
 	public List<NReview> getReviewList(int no) {

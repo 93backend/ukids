@@ -75,7 +75,7 @@
           <div class="rounded-3 shadow px-3 py-3">
             <form class="needs-validation row g-4" method="POST" enctype="multipart/form-data" novalidate>
               <div class="col-12">
-                <input class="form-control border-0 fs-2 fw-bold claim-input" type="text" name="title" th:value="${claim.title}" required>
+                <input class="form-control border-0 fs-2 fw-bold claim-input" type="text" name="title" th:value="${claim.title}" required spellcheck="false">
                 <input type="hidden" name="knNo" th:value="${param.no}">
                 <input type="hidden" name="type" th:value="${param.type}">
                 <input type="hidden" name="id" th:value="${session.loginMember.id}">
@@ -86,7 +86,7 @@
                 <hr class="border-0" style="width: 95%; height: 3px;">
               </div>
               <div class="col-12 mt-sm-3">
-                <textarea class="form-control border-0 fs-5 claim-input" rows="20" name="content" required>[[${claim.content}]]</textarea>
+                <textarea class="form-control border-0 fs-5 claim-input" rows="20" name="content" required spellcheck="false">[[${claim.content}]]</textarea>
               </div>
               <div class="col-12">
                 <input class="form-control" type="file" name="reloadFile">
