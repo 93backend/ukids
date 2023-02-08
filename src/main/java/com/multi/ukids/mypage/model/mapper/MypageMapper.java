@@ -38,5 +38,8 @@ public interface MypageMapper {
 	// mypage7
 	List<Cart> selectCartList(Map<String, Object> map);
 	int selectCartCount(Map<String, Object> map);
+	Cart selectCartByNo(int no);
+	int insertCart(Cart cart);
+	int updateCart(Cart cart);
 	int deleteCart(int no);
 }

@@ -80,8 +80,6 @@
 		DELETE FROM K_WISH WHERE no = #{no}
 	</delete>
 	
-	
-	
 	<select id="selectNurseryWishList" resultType="Wish" parameterType="map">
 		SELECT
 			W.nuNo AS 'knNo', N.crname AS 'knName', W.no,W.memberNo, N.craddr AS 'knAddr'   
@@ -119,7 +117,7 @@
 	<!-- ===============================mypage7=============================== -->
 	<select id="selectCartList" resultType="Cart" parameterType="map">
 		SELECT
-			T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE
+			C.NO, T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE
 		FROM TOY T
 		LEFT OUTER JOIN CART C ON (T.TOYNO = C.TOYNO)
 		LEFT OUTER JOIN MEMBER M ON (C.MEMBERNO = M.MEMBERNO)
@@ -135,6 +133,33 @@
 		WHERE 1=1
 		AND C.MEMBERNO = #{memberNo}
 	</select>
+	
+	<select id="selectCartByNo" parameterType="int" resultType="Cart">
+		SELECT
+			C.NO, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE, 
+			T.TOYNM1, T.TOYIMG, T.TOYPAY 
+		FROM CART C
+		LEFT OUTER JOIN TOY T ON (C.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (C.MEMBERNO = M.MEMBERNO)
+		WHERE C.NO = #{no}
+	</select>
+	
+	<insert id="insertCart" parameterType="Cart">
+		INSERT INTO CART(
+			NO, TOYNO, MEMBERNO, STARTDATE, ENDDATE
+		) VALUES (
+			0, #{no}, #{toyNo}, #{memberNo}, #{startDate}, #{endDate} 
+		)
+	</insert>
+	
+	<update id="updateCart" parameterType="Cart">
+		UPDATE CART
+		SET
+			STARTDATE=#{startDate},
+			ENDDATE=#{endDate}
+		WHERE
+			NO = #{no}
+	</update>
 	
 	<delete id="deleteCart" parameterType="Cart">
 		DELETE FROM CART WHERE NO = #{no}

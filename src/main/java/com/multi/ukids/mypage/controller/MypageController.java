@@ -171,30 +171,29 @@ public class MypageController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			Model model, @RequestParam Map<String, Object> param
 			) {
-//		int page = 1;
-//		if (loginMember == null) {
-//			return "/login";
-//		}
-//		param.put("memberNo", "" + loginMember.getMemberNo());
-//		
-//		// nursery
-//		int count = service.selectNurseryWishCount(param);
-//		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
-//		List<Wish> list = service.selectNurseryWishList(pageInfo, param);
-//		
-//		model.addAttribute("list", list);
-//		model.addAttribute("pageInfo", pageInfo);
-//		model.addAttribute("param", param);		
+		int page = 1;
+		if (loginMember == null) {
+			return "/login";
+		}
+		
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		// nursery
+		int count = service.selectNurseryWishCount(param);
+		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+		List<Wish>  nlist = service.selectNurseryWishList(pageInfo, param);
+
+		model.addAttribute("nlist", nlist);
+		model.addAttribute("nPageInfo", pageInfo);
 //		
 		// kinder
-//		count = service.selectKinderWishCount(param);
-//		pageInfo = new PageInfo(page, 5, count, 3);
-//		list = service.selectKinderWishList(pageInfo, param);
+		count = service.selectKinderWishCount(param);
+		pageInfo = new PageInfo(page, 5, count, 3);
+		List<Wish> klist = service.selectKinderWishList(pageInfo, param);
 //		
-//		System.out.println("list : " + list);
-//		model.addAttribute("list", list);
-//		model.addAttribute("pageInfo", pageInfo);
-//		model.addAttribute("param", param);
+		System.out.println("list : " + klist);
+		model.addAttribute("klist", klist);
+		model.addAttribute("kPageInfo", pageInfo);
 
 
 		return "mypage-3";
@@ -234,7 +233,6 @@ public class MypageController {
 		
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
-		// nursery
 		int count = service.getCartCount(param);
 		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
 		List<Cart> list = service.getCartList(pageInfo, param);

@@ -99,6 +99,22 @@ public class MypageService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
+	public int saveCart(Cart cart) {
+		int result = 0;
+		if(cart.getNo() == 0) {
+			result = mapper.insertCart(cart);
+		}else {
+			result = mapper.updateCart(cart);
+		}
+		return result;
+	}
+	
+	public Cart findByNo(int no) {
+		Cart cart = mapper.selectCartByNo(no);
+		return cart;
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
 	public int deleteCart(int no, String rootPath) {
 		return mapper.deleteCart(no);
 	}
