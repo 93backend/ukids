@@ -140,11 +140,11 @@
 					<!-- Toolbar-->
 					<div
 						class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
-						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">불편사항
-							신고 조회</h6>
+						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">불편사항 신고 조회</h6>
 					</div>
-					<!-- 어린이집 입소 신청 목록-->
-					<div class="table-responsive fs-md mb-4 ms-4">
+					<!-- 어린이집 불편사항신고조회 목록-->
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">어린이집 불편사항 신고 조회 목록</h5> <br>
 						<table class="table table-hover mb-0">
 							<thead>
 								<tr>
@@ -156,93 +156,109 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="py-3 cgw9">1</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
+								<th:block th:if="${nlist == null}">
+									<tr>
+										<td colspan="5">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${nlist != null}">
+								<tr th:each="nclaim, stat : ${nlist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium cgw25" href="account-single-ticket.html">[[${nclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${nclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${nclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<a href="#"><span class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;
+										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+									</td>
+									</th:block>
+									<th:block th:if="${nclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+									</td>
+									</th:block>
 								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					<!-- pagination -->
+					<nav class="d-flex justify-content-between pt-2"
+						aria-label="Page navigation">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="#"><i
+									class="ci-arrow-left me-2"></i>Prev</a></li>
+						</ul>
+						<ul class="pagination">
+							<li class="page-item d-sm-none"><span
+								class="page-link page-link-static">1 / 5</span></li>
+							<li class="page-item page d-none d-sm-block" aria-current="page"><span
+								class="page-link">1<span class="visually-hidden">(current)</span></span></li>
+							<li class="page-item d-none d-sm-block"><a class="page-link"
+								href="#">2</a></li>
+							<li class="page-item d-none d-sm-block"><a class="page-link"
+								href="#">3</a></li>
+							<li class="page-item d-none d-sm-block"><a class="page-link"
+								href="#">4</a></li>
+							<li class="page-item d-none d-sm-block"><a class="page-link"
+								href="#">5</a></li>
+						</ul>
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+						</ul>
+					</nav>
+					<br><br>
+					
+					<!-- 유치원 불편사항신고조회 목록-->
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">유치원 불편사항 신고 조회 목록</h5> <br>
+						<table class="table table-hover mb-0">
+							<thead>
 								<tr>
-									<td class="py-3 cgw9">2</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요. 선생님이 너무
-											불친절해요. 선생님이 너무 불친절해요. 선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">제목</th>
+									<th class="cgw8 cgw9">작성일</th>
+									<th class="cgw8 cgw9">신고접수상태</th>
+									<th class="cgw8 cgw9"></th>
 								</tr>
-								<tr>
-									<td class="py-3 cgw9">3</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
+							</thead>
+							<tbody>
+								<th:block th:if="${klist == null}">
+									<tr>
+										<td colspan="5">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${klist != null}">
+								<tr th:each="kclaim, stat : ${nlist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium cgw25" href="account-single-ticket.html">[[${kclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${kclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${kclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${kclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<a href="#"><span class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;
+										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+									</td>
+									</th:block>
+									<th:block th:if="${kclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+									</td>
+									</th:block>
 								</tr>
-								<tr>
-									<td class="py-3 cgw9">4</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">5</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">6</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw20">신고확인완료</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge bg-secondary m-0">삭제</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">7</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님이 너무 불친절해요.</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw3">신고확인중</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a
-										href="#"><span class="badge bg-secondary m-0">삭제</span></a></td>
-								</tr>
-								<tr>
-									<td class="py-3 cgw9">8</td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw25"
-										href="account-single-ticket.html">선생님</a></td>
-									<td class="py-3 cgw9">2023-01-01</td>
-									<td class="py-3 cgw9"><span class="cgw20">신고확인완료</span></td>
-									<td class="py-3 cgw9"><a href="#"><span
-											class="badge bg-secondary m-0">삭제</span></a></td>
-								</tr>
+								</th:block>
 							</tbody>
 						</table>
 					</div>

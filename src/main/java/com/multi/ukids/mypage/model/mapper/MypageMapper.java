@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
@@ -34,6 +35,24 @@ public interface MypageMapper {
 	int updateKinderWish(Wish wish);
 	int deleteKinderWish(int no);
 	
+	//mypage4 - 불편사항 신고목록
+	String selectNurseryName(int no);
+	List<Claim> selectNurseryClaimList(Map<String, Object> map);
+	int selectNurseryClaimCount(Map<String, Object> map);
+	Claim selectNurseryClaimByNo(int no);
+	int updateReadCountNursery(Claim claim);
+	int insertNurseryClaim(Claim claim);
+	int updateNurseryClaim(Claim claim);
+	int deleteNurseryClaim(int no);
+	
+	String selectKinderName(int no);
+	List<Claim> selectKinderClaimList(Map<String, Object> map);
+	int selectKinderClaimCount(Map<String, Object> map);
+	Claim selectKinderClaimByNo(int no);
+	int updateReadCountKinder(Claim claim);
+	int insertKinderClaim(Claim claim);
+	int updateKinderClaim(Claim claim);
+	int deleteKinderClaim(int no);
 	
 	// mypage7
 	List<Cart> selectCartList(Map<String, Object> map);

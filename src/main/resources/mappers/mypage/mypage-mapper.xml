@@ -6,6 +6,33 @@
 
 
 	<!-- ===============================mypage2=============================== -->
+	
+	<!-- 어린이집 -->
+	<select id="selectNAdmissionList" resultType="NAdmission" parameterType="map">
+		SELECT
+			A.nuNo, N.crname, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM NURSERY N 
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		where A.memberNo = #{memberNo}
+		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	
+	<select id="selectNAdmissionCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
+		WHERE 1=1
+		AND A.memberNo = #{memberNo}
+	</select> 
+	
+	<delete id="deleteNAdmission" parameterType="NAdmission">
+		DELETE FROM N_ADMISSION WHERE no = #{no}
+	</delete>
+	
+	<!-- 유치원 -->
  	<select id="selectKAdmissionList" resultType="KAdmission" parameterType="map">
 		SELECT
 			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
@@ -30,56 +57,10 @@
 		DELETE FROM K_ADMISSION WHERE no = #{no}
 	</delete>
 	
-	<select id="selectNAdmissionList" resultType="NAdmission" parameterType="map">
-		SELECT
-			A.nuNo, N.crname, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
-		FROM NURSERY N 
-		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
-		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
-		where A.memberNo = #{memberNo}
-		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
-	</select>
-	
-	<select id="selectNAdmissionCount" resultType="int" parameterType="map">
-		SELECT
-			COUNT(*)
-		FROM NURSERY N
-		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
-		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
-		WHERE 1=1
-		AND A.memberNo = #{memberNo}
-	</select> 
-	
-	<delete id="deleteNAdmission" parameterType="NAdmission">
-		DELETE FROM N_ADMISSION WHERE no = #{no}
-	</delete>
 
 	<!-- ===============================mypage3=============================== -->
 	
-	<select id="selectKinderWishList" resultType="Wish" parameterType="map">
-		SELECT
-			K.kinNo AS 'knNo', K.kindername AS 'knName', W.no, W.memberNo, K.addr AS 'knAddr'    
-		FROM KINDER K
-		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
-		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
-		where W.memberNo = #{memberNo}
-		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
-	</select> 
-	
-	<select id="selectKinderWishCount" resultType="int" parameterType="map">
-		SELECT
-			COUNT(W.no)
-		FROM KINDER K
-		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
-		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
-		WHERE 1=1
-		AND W.memberNo = #{memberNo}
-	</select> 
-	
-	<delete id="deleteKinderWish" parameterType="Wish">
-		DELETE FROM K_WISH WHERE no = #{no}
-	</delete>
-	
+	<!-- 어린이집 -->
 	<select id="selectNurseryWishList" resultType="Wish" parameterType="map">
 		SELECT
 			W.nuNo AS 'knNo', N.crname AS 'knName', W.no,W.memberNo, N.craddr AS 'knAddr'   
@@ -113,6 +94,179 @@
 						
 	</resultMap>
 	
+	<!-- 유치원 -->
+	
+	<select id="selectKinderWishList" resultType="Wish" parameterType="map">
+		SELECT
+			K.kinNo AS 'knNo', K.kindername AS 'knName', W.no, W.memberNo, K.addr AS 'knAddr'    
+		FROM KINDER K
+		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		where W.memberNo = #{memberNo}
+		ORDER BY W.kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select> 
+	
+	<select id="selectKinderWishCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(W.no)
+		FROM KINDER K
+		LEFT OUTER JOIN K_WISH W ON (K.kinNo = W.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (W.memberNo = M.memberNo)
+		WHERE 1=1
+		AND W.memberNo = #{memberNo}
+	</select> 
+	
+	<delete id="deleteKinderWish" parameterType="Wish">
+		DELETE FROM K_WISH WHERE no = #{no}
+	</delete>
+	
+	
+	
+	<!-- ===============================mypage4=============================== -->
+	
+	<!-- 어린이집 -->
+	<select id="selectNurseryName" resultType="string" parameterType="int">
+		SELECT 
+			crname
+		FROM NURSERY
+		WHERE no = #{no}
+	</select>
+	
+	<select id="selectNurseryClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.nuNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM NURSERY N
+		LEFT OUTER JOIN N_CLAIM C ON (N.no = C.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.nuNo = #{no}
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectNurseryClaimCount" resultType="int" parameterType="map">
+		SELECT 
+			COUNT(C.no)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_CLAIM C ON (N.no = C.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.nuNo = #{no}
+	</select>
+	
+	<select id="selectNurseryClaimByNo" resultType="Claim" parameterType="int">
+		SELECT 
+			C.no, C.nuNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM NURSERY N
+		LEFT OUTER JOIN N_CLAIM C ON (N.no = C.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.no = #{no}
+	</select>
+	
+	<insert id="insertNurseryClaim" parameterType="Claim">
+		INSERT INTO N_CLAIM (
+			no, nuNo, memberNo, title, content, 
+			originalFileName, renamedFileName, readCount, 
+			confirm, status, createDate, modifyDate
+		) VALUES (
+			0, #{knNo}, #{memberNo}, #{title}, #{content}, 
+			#{originalFileName}, #{renamedFileName}, DEFAULT,
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<update id="updateReadCountNursery" parameterType="Claim">
+		UPDATE N_CLAIM SET readCount = #{readCount} WHERE no = #{no}
+	</update>
+	
+	<update id="updateNurseryClaim" parameterType="Claim">
+		UPDATE N_CLAIM SET
+			title = #{title}, 
+			content = #{content},
+			<if test="originalFileName != null">
+				originalFileName = #{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				renamedFileName = #{renamedFileName},
+			</if>
+			modifyDate = CURRENT_TIMESTAMP
+		WHERE no = #{no}
+	</update>
+	
+	<update id="deleteNurseryClaim" parameterType="int">
+		UPDATE N_CLAIM SET status = 'N' WHERE no = #{no}
+	</update>
+	
+	<!-- 유치원 -->
+	<select id="selectKinderName" resultType="string" parameterType="int">
+		SELECT 
+			kindername
+		FROM KINDER
+		WHERE kinNo = #{no}
+	</select>
+	
+	<select id="selectKinderClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.kinNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM KINDER K
+		LEFT OUTER JOIN K_CLAIM C ON (K.kinNo = C.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.kinNo = #{no}
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectKinderClaimCount" resultType="int" parameterType="map">
+		SELECT 
+			COUNT(C.no)
+		FROM KINDER K
+		LEFT OUTER JOIN K_CLAIM C ON (K.kinNo = C.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.kinNo = #{no}
+	</select>
+	
+	<select id="selectKinderClaimByNo" resultType="Claim" parameterType="int">
+		SELECT 
+			C.no, C.kinNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM KINDER K
+		LEFT OUTER JOIN K_CLAIM C ON (K.kinNo = C.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (C.memberNo = M.memberNo)
+		WHERE C.STATUS = 'Y' AND C.no = #{no}
+	</select>
+	
+	<insert id="insertKinderClaim" parameterType="Claim">
+		INSERT INTO K_CLAIM (
+			no, kinNo, memberNo, title, content, 
+			originalFileName, renamedFileName, readCount, 
+			confirm, status, createDate, modifyDate
+		) VALUES (
+			0, #{knNo}, #{memberNo}, #{title}, #{content}, 
+			#{originalFileName}, #{renamedFileName}, DEFAULT,
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
+	
+	<update id="updateKinderClaim" parameterType="Claim">
+		UPDATE K_CLAIM SET
+			title = #{title}, 
+			content = #{content},
+			<if test="originalFileName != null">
+				originalFileName = #{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				renamedFileName = #{renamedFileName},
+			</if>
+			modifyDate = CURRENT_TIMESTAMP
+		WHERE no = #{no}
+	</update>
+	
+	<update id="deleteKinderClaim" parameterType="int">
+		UPDATE K_CLAIM SET status = 'N' WHERE no = #{no}
+	</update>
 	
 	<!-- ===============================mypage7=============================== -->
 	<select id="selectCartList" resultType="Cart" parameterType="map">

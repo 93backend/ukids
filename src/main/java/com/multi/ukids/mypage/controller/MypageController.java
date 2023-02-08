@@ -15,24 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.multi.ukids.board.model.service.BoardService;
-import com.multi.ukids.board.model.vo.Board;
 import com.multi.ukids.claim.model.service.ClaimService;
 import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
-import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.kinder.model.vo.KAdmission;
-import com.multi.ukids.kinder.model.vo.KWish;
 import com.multi.ukids.member.model.service.MemberService;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.mypage.model.service.MypageService;
-import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
-import com.multi.ukids.nursery.model.vo.NWish;
-import com.multi.ukids.toy.model.service.ToyService;
 import com.multi.ukids.toy.model.vo.Cart;
-import com.multi.ukids.toy.model.vo.Toy;
-import com.multi.ukids.wish.model.service.WishService;
 import com.multi.ukids.wish.model.vo.Wish;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,25 +34,13 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageController {
 	
 	@Autowired
-	private NurseryService nurseryService;
-	
-	@Autowired
-	private KinderService kinderService;
+	private MemberService memberService;
 	
 	@Autowired
 	private ClaimService claimService;
 	
 	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
-	private BoardService boardService;
-	
-	@Autowired
 	private MypageService service;
-	
-	@Autowired
-	private ToyService toyService;
 	
 	@PostMapping("/member/update")
 	public String update(Model model, 
@@ -98,103 +77,115 @@ public class MypageController {
 	@GetMapping("/mypage-2")
 	public String mypageView2( Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
-			@RequestParam Map<String, Object> param
-			) {
-		
-		int page = 1;
+			@RequestParam Map<String, Object> param) {
 		
 		if (loginMember == null) {
-			return "/";
+			return "/login";
 		}
 		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		int page = 1;
+		try {
+			if(param.get("page") != null) {
+				page = Integer.parseInt((String) param.get("page"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		// nursery
 		int ncount = service.getNAdmissionCount(param);
 		PageInfo npageInfo = new PageInfo(page, 1, ncount, 4);
 		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
 		
-		System.out.println("nlist : " + nlist);
+		System.out.println("nlist(입소신청) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("pageInfo", npageInfo);
-		model.addAttribute("param", param);		
 		
 		// kinder
 		int kcount = service.getKAdmissionCount(param);
 		PageInfo kpageInfo = new PageInfo(page, 1, kcount, 4);
 		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
 		
-		System.out.println("klist : " + klist);
+		System.out.println("klist(입소신청) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("pageInfo", kpageInfo);
-		model.addAttribute("param", param);
 		
 
 		return "mypage-2";
 	}
 	
-	@PostMapping("/nAdmission/search")
-	public String searchNAdmission(Model model,
-			@RequestParam Map<String, Object> param
-			) {
-		int count = service.getNAdmissionCount(param);
-		PageInfo pageInfo = new PageInfo(1, 1, count, count);
-		List<NAdmission> list = service.getNAdmissionList(pageInfo, param);
-		
-		model.addAttribute("list", list);
-		
-		return "nAdmission-list";
-	}
+//	@PostMapping("/nAdmission/search")
+//	public String searchNAdmission(Model model,
+//			@RequestParam Map<String, Object> param
+//			) {
+//		int count = service.getNAdmissionCount(param);
+//		PageInfo pageInfo = new PageInfo(1, 1, count, count);
+//		List<NAdmission> list = service.getNAdmissionList(pageInfo, param);
+//		
+//		model.addAttribute("list", list);
+//		
+//		return "nAdmission-list";
+//	}
 	
-	@RequestMapping("/deleteKAdmission")
-	public String deleteKAdmission(Model model,
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int no
-			) {
-		log.info("유치원 신청 삭제 요청");
-		if (loginMember == null) {
-			return "/";
-		}
-		int result = service.deleteKAdmission(no);
-		
-		if(result > 0) {
-			model.addAttribute("msg", "유치원 신청 삭제가 정상적으로 완료되었습니다.");
-		}else {
-			model.addAttribute("msg", "유치원 신청 삭제에 실패하였습니다.");
-		}
-		model.addAttribute("location", "/mypage-2");
-		
-		return "/common/msg";
-	}
+//	@RequestMapping("/deleteKAdmission")
+//	public String deleteKAdmission(Model model,
+//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+//			int no
+//			) {
+//		log.info("유치원 신청 삭제 요청");
+//		if (loginMember == null) {
+//			return "/";
+//		}
+//		
+//		int result = service.deleteKAdmission(no);
+//		
+//		if(result > 0) {
+//			model.addAttribute("msg", "유치원 신청 삭제가 정상적으로 완료되었습니다.");
+//		}else {
+//			model.addAttribute("msg", "유치원 신청 삭제에 실패하였습니다.");
+//		}
+//		model.addAttribute("location", "/mypage-2");
+//		
+//		return "/common/msg";
+//	}
 		
 	@GetMapping("/mypage-3")
 	public String mypageView3(
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			Model model, @RequestParam Map<String, Object> param
-			) {
-		int page = 1;
+			Model model, @RequestParam Map<String, Object> param) {
+		
 		if (loginMember == null) {
 			return "/login";
 		}
-		
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
+		int page = 1;
+		try {
+			if(param.get("page") != null) {
+				page = Integer.parseInt((String) param.get("page"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		// nursery
-		int count = service.selectNurseryWishCount(param);
-		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
-		List<Wish>  nlist = service.selectNurseryWishList(pageInfo, param);
+		int ncount = service.getNurseryWishCount(param);
+		PageInfo npageInfo = new PageInfo(page, 5, ncount, 3);
+		List<Wish>  nlist = service.getNurseryWishList(npageInfo, param);
 
+		System.out.println("nlist(찜) : " + nlist);
 		model.addAttribute("nlist", nlist);
-		model.addAttribute("nPageInfo", pageInfo);
+		model.addAttribute("nPageInfo", npageInfo);
 //		
 		// kinder
-		count = service.selectKinderWishCount(param);
-		pageInfo = new PageInfo(page, 5, count, 3);
-		List<Wish> klist = service.selectKinderWishList(pageInfo, param);
+		int kcount = service.getKinderWishCount(param);
+		PageInfo kpageInfo = new PageInfo(page, 5, kcount, 3);
+		List<Wish> klist = service.getKinderWishList(kpageInfo, param);
 //		
-		System.out.println("list : " + klist);
+		System.out.println("klist(찜) : " + klist);
 		model.addAttribute("klist", klist);
-		model.addAttribute("kPageInfo", pageInfo);
-
+		model.addAttribute("kPageInfo", kpageInfo);
 
 		return "mypage-3";
 	}
@@ -202,10 +193,38 @@ public class MypageController {
 	@GetMapping("/mypage-4")
 	public String mypageView4(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
-			@RequestParam Map<String, String> param) {
+			@RequestParam Map<String, Object> param) {
+		
 		if (loginMember == null) {
-			return "/";
+			return "/login";
 		}
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		int page = 1;
+		try {
+			if(param.get("page") != null) {
+				page = Integer.parseInt((String) param.get("page"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int ncount = service.getNurseryClaimCount(param);
+		PageInfo npageInfo = new PageInfo(page, 5, ncount, 4);
+		List<Claim> nlist = service.getNurseryClaimList(npageInfo, param);
+		
+		System.out.println("nlist(불편사항) : " + nlist);
+		model.addAttribute("nlist", nlist);
+		model.addAttribute("npageInfo", npageInfo);
+		
+		int kcount = service.getKinderClaimCount(param);
+		PageInfo kpageInfo = new PageInfo(page, 5, kcount, 4);
+		List<Claim> klist = service.getKinderClaimList(kpageInfo, param);
+		
+		System.out.println("klist(불편사항) : " + klist);
+		model.addAttribute("klist", klist);
+		model.addAttribute("kpageInfo", kpageInfo);
+		model.addAttribute("param", param);	
 		
 		return "mypage-4";
 	}

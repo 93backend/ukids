@@ -303,6 +303,11 @@
   	border: none; 
   	background-color: white;
   }
+  
+  .cgw31 {
+    margin-right: 2rem !important;
+    margin-left: 2rem !important;
+  }
 
   .btn-primary-cgw1 {
     color: rgb(255, 255, 255);
