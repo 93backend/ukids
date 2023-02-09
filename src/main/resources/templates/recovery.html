@@ -24,6 +24,7 @@
     <link rel="stylesheet" media="screen" th:href="@{/css/recovery.css}">
     <!--jquery-->
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- 폰트 -->
   <style>
@@ -61,7 +62,7 @@
                 <nav aria-label="breadcrumb">
                   <ol
                     class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                    <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/index.html}"><i class="ci-home"></i>유키즈</a></li>
+                    <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/index}"><i class="ci-home"></i>유키즈</a></li>
                     <li class="breadcrumb-item text-nowrap" aria-current="page" style="color: #FC6C93;">비밀번호 찾기</li>
                   </ol>
                 </nav>
@@ -83,18 +84,57 @@
             <div class="card py-2 mt-4">
               <form class="card-body needs-validation" novalidate>
                 <div class="mb-3">
-                  <label class="form-label" for="recover-name">이름을 입력해 주세요</label>
-                  <input class="form-control" type="text" id="recover-name" required>
+                  <label class="form-label" for="name">이름을 입력해 주세요</label>
+                  <input class="form-control" type="text" name="name" id="name" required>
                   <div class="invalid-feedback">Please provide valid email address.</div>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label" for="recover-email">가입 시 등록한 이메일을 입력해 주세요</label>
-                  <input class="form-control" type="email" id="recover-email" required>
+                  <label class="form-label" for="email">가입 시 등록한 이메일을 입력해 주세요</label>
+                  <input class="form-control" type="email" name="email" id="email" required>
                   <div class="invalid-feedback">Please provide valid email address.</div>
                 </div>
-                <button id="sendBtn" class="btn btn-primary" type="submit">새 비밀번호 받기</button>
+                <button id="sendBtn" class="btn btn-primary" type="button">임시 비밀번호 받기</button>
               </form>
+              <!-- 메일 발송 관련 스크립트 -->
+              <script type="text/javascript">
+              $("#sendBtn").click(function () {
+                  let name = $("#name").val();
+                  let email = $("#email").val();
+
+                  $.ajax({
+                      type: "GET",
+                      url: "/member/findPw",
+                      data: {
+                          "name": name,
+                          "email": email,
+                      },
+                      success: function (res) {
+                          if (res['check']) {
+                              swal("발송 완료!", "입력하신 이메일로 임시비밀번호가 발송되었습니다.", "success").then((OK) => {
+                                  if(OK) {
+                                      $.ajax({
+                                          type: "POST",
+                                          url: "/member/findPw/sendEmail",
+                                          data: {
+                                              "name": name,
+                                              "email": email
+                                          }
+                                      })
+                                      window.location = "/index";
+                                  }
+
+                              }
+                          )
+                          } else {
+                              alert("일치하는 정보가 없습니다.");
+                          }
+                      }
+                  })
+              })
+          </script>
+              
             </div>
+           
           </div>
         </div>
       </div>

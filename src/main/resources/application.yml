@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: user
+    url: jdbc:mysql://localhost:3306/ukids
+    password: '1212'
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: ukids0919@naver.com
+    password: dbzlwm123!
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+mybatis:
+  mapper-locations: mappers/**/*.xml
+  type-aliases-package: '**.model.vo'
+server:
+  port: '80'
+

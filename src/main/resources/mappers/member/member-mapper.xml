@@ -47,7 +47,24 @@
 	<select id="selectMember" parameterType="string" resultMap="memberResultMap">
 		<include refid="selectMemberSql"/>
 		WHERE ID = #{id} AND STATUS = 'Y'
-	</select>	
+	</select>
+	
+	<!-- 비밀번호 찾기에 사용 이름, 이메일로 멤버 조회 -->
+	<select id="selectByNameAndEamilMember" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE NAME = #{name} AND EMAIL = #{email} AND STATUS = 'Y'
+	</select>
+	<!-- 비밀번호 찾기에 사용 -->
+	<select id="selectByEamilMember" parameterType="string" resultMap="memberResultMap">
+		<include refid="selectMemberSql"/>
+		WHERE EMAIL = #{email} AND STATUS = 'Y'
+	</select>
+	<!--  비밀번호 찾기에 사용 -->
+	<update id="updateTempPwd" parameterType="string">
+		UPDATE MEMBER 
+	 		SET PASSWORD = #{password} 
+ 		WHERE ID = #{id}
+	</update>	
 	
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER(

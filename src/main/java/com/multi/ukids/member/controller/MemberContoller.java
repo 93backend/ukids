@@ -7,17 +7,23 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.multi.ukids.kakao.KaKaoService;
+import com.multi.ukids.mail.vo.MailDto;
+import com.multi.ukids.mail.vo.SendEmailService;
 import com.multi.ukids.member.model.service.MemberService;
 import com.multi.ukids.member.model.vo.Member;
 
@@ -30,6 +36,8 @@ public class MemberContoller {
 	
 	@Autowired MemberService service;
 	@Autowired KaKaoService kakaoService;
+	@Autowired SendEmailService sendEmailService;
+	
 	
 	@PostMapping("/login")
 	String login(Model model, String userId, String userPwd) {
@@ -146,6 +154,39 @@ public class MemberContoller {
 	public String passwordRecovery() {
 		return "recovery";
 	}
+	
+	@GetMapping("/index")
+	public String index() {
+		return "index";
+	}
+	
+	@GetMapping("/member/findPw")
+	public @ResponseBody Map<String, Boolean> pw_find(String name, String email) {
+		log.info("pw_find 호출!!");
+		log.info("name : " + name + ", email : " + email);
+		Map<String, Boolean> json = new HashMap<>();
+		
+		boolean pwFindCheck = (service.findByNameAndEmail(name, email)) != null ? true : false;
+		System.out.println("메일 조회 결과 : " + pwFindCheck);
+		
+		json.put("check", pwFindCheck);
+		System.out.println(json);
+		return json;
+		
+	}
+		
+	
+	  @PostMapping("/member/findPw/sendEmail")
+	  public @ResponseBody void sendEmail(String name, String email) {
+		  log.info("sendEmail 호출!!");
+		  log.info("name : " + name + ", email : " + email);
+		  MailDto dto = sendEmailService.createMailAndChangePassword(name, email);
+		  sendEmailService.mailSend(dto);
+		  System.out.println("메일 발송 완료!!!");
+		  
+	  }
+	  
+
 
 	
 }

@@ -45,13 +45,6 @@ public class MemberService {
 			return null;
 		}
 		
-//		if (member != null && member.getPassword().equals(pw)) {
-//			return member;
-//		} else {
-//			return null;
-//		}
-		
-		
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -99,5 +92,16 @@ public class MemberService {
 			// 인증 실패했을때
 			return null;
 		}
+	}
+	
+	public Member findByNameAndEmail(String userName, String userEmail) {
+		Member member = mapper.selectByNameAndEamilMember(userName, userEmail);
+		
+		if (member.getName().equals(userName) &&  member.getEmail() != null && !member.getEmail().equals("")) {
+			return member;
+		} else {
+			return null;
+		}
+		
 	}
 }

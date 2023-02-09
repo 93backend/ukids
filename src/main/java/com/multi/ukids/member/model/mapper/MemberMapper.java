@@ -19,5 +19,8 @@ public interface MemberMapper {
 	int updatePwd(Map<String, String> map);
 	int deleteMember(int no);
 	Member selectMemberByKakaoToken(String kakaoToken);
+	Member selectByNameAndEamilMember(@Param("name") String name, @Param("email") String email);
+	Member selectByEamilMember(@Param("email") String email);
+	int updateTempPwd(@Param("id") String id, @Param("password") String password);
 
 }
