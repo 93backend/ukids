@@ -21,11 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class WelfareController {
 	
-	//아동복지시설
 	@Autowired
 	private WelfareService welfareService;
 	
-	//이미지 인덱스 랜덤 생성
+	//이미지 랜덤 인덱스 생성
 	public int[] setRandomImgIdx(int start, int term) {
 		int[] idx = new int[9];
 		idx[0] = start;
@@ -51,14 +50,14 @@ public class WelfareController {
 		} catch (Exception e) {}
 		
 		//아동복지시설 목록
-		int welfareCount = welfareService.getWelfareCount(param);
-		PageInfo pageInfo = new PageInfo(page, 5, welfareCount, 9);
+		int count = welfareService.getWelfareCount(param);
+		PageInfo pageInfo = new PageInfo(page, 5, count, 9);
 		List<Welfare> list = welfareService.getWelfareList(pageInfo, param);
 		
 		//아동복지시설 랜덤 이미지
 		int[] imgIdx = setRandomImgIdx(page, 2);
 		
-		model.addAttribute("count", welfareCount);
+		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
@@ -98,10 +97,10 @@ public class WelfareController {
 		
 		model.addAttribute("welfare", welfare);
 		model.addAttribute("imgIdx", imgIdx);
-		model.addAttribute("nearWfImgIdx", nearWfImgIdx);
 		model.addAttribute("formattedEstbDe", formattedEstbDe);
 		model.addAttribute("formattedMailAddr", formattedMailAddr);
 		model.addAttribute("nearWelfareList", nearWelfareList);
+		model.addAttribute("nearWfImgIdx", nearWfImgIdx);
 		
 //		for (Welfare data : nearWelfareList) {
 //			log.info(data.toString());

@@ -199,6 +199,7 @@
                           
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               </div> 
@@ -219,9 +220,10 @@
 		                        <a class="card-img-top d-block overflow-hidden" th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}&img=${nearWfImgIdx[status.index]}|}>
 		                        	<img class="near" th:src="|img/ukids/facility/welfare/wf${nearWfImgIdx[status.index]}.jpg|" alt="Product">
 		                        </a>
+		                        
 		                        <div class="card-body nearwelfare py-2">
 		                          <h3 class="product-title fs-lg fw-bold toyname">
-		                          	<a th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}&img=${status.index}|}>[[${nearWelfare.fcltNm}]]</a>
+		                          	<a th:href=@{|/welfare-detail?no=${nearWelfare.cwNo}&img=${nearWfImgIdx[status.index]}|}>[[${nearWelfare.fcltNm}]]</a>
 		                          </h3>
 		                          <div class="product-price">
 		                          	<i class="ci-bell ic"></i>
