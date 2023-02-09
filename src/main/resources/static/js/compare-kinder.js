@@ -166,12 +166,12 @@ function convertToLatLng(address) {
       // <span class="tag">${searchList[count].kind}</span>  
       var infowindow = new kakao.maps.InfoWindow({
         content: 
-          `<a id="marker-box" href="#">
-            <span id="info-type">${searchList[count].type}</span>
-            <div>
+          `<a id="marker-box">
+            <span id="info-type" class="mt-1 ms-1">${searchList[count].type}</span>
+            <div class="ms-1">
               <span id="info-name">${searchList[count].name}</span>
             </div>
-            <span id="info-addr"><i class="ci-location"></i>${searchList[count].address}</span>
+            <span id="info-addr" class="mb-1 ms-1"><i class="ci-location"></i>${searchList[count].address}</span>
           </a>`,
         removable: true,
       });

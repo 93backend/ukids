@@ -339,5 +339,23 @@ public class NurseryController {
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
-
+	
+	// 비교 화면
+	@GetMapping("/compare-nursery")
+	public String compareNursery(Model model) {
+		System.out.println(nurseryCompareNo);
+		
+		List<Nursery> list = new ArrayList<>();
+		
+		if(nurseryCompareNo.size() > 0) {
+			for(int no : nurseryCompareNo) {
+				Nursery nursery = nurseryService.findByNo(no);
+				list.add(nursery);
+			}
+		}
+		model.addAttribute("list", list);
+		
+		return("compare-nursery");
+	}
+	
 }

@@ -348,4 +348,22 @@ public class KinderController {
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
+	// 비교 화면
+	@GetMapping("/compare-kinder")
+	public String compareKinder(Model model) {
+		System.out.println(kinderCompareNo.toString());
+		
+		List<Kinder> list = new ArrayList<Kinder>();
+		
+		if(kinderCompareNo.size() > 0) {
+			for(int no : kinderCompareNo) {
+				Kinder kinder = kinderService.findByNo(no);
+				list.add(kinder);
+			}
+		}
+		model.addAttribute("list", list);
+		
+		return "compare-kinder";
+	}
+	
 }
