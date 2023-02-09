@@ -157,7 +157,7 @@ public class MemberContoller {
 	
 	@GetMapping("/index")
 	public String index() {
-		return "index";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/member/findPw")
