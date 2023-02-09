@@ -83,12 +83,13 @@ public class ToyController {
       Toy toy = toyService.findByNo(no);
       List<T_Review> reviewList = toyService.selectToyReviewByNo(no);
       String tcm = toy.getToyCategoryM();
-      
+
       List<Toy> smilarToy = toyService.selectSimilarToy(toy);
       System.out.println(toy.getToyCategoryM());
       
       List<Pay> dateToy = toyService.selectPayDate(no);
       
+
       model.addAttribute("dateToy", dateToy);
       model.addAttribute("toy", toy);
       model.addAttribute("reviewList", reviewList);
@@ -134,7 +135,9 @@ public class ToyController {
 
    @GetMapping("/pay")
    public String pay(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
-                   String startDate,String endDate, int no, boolean ListOrNot, @RequestParam(required=false) List<Cart> cartList) {   
+		   @RequestParam(required=false)String startDate,@RequestParam(required=false)String endDate, 
+		   @RequestParam(required=false)int no, @RequestParam(required=false)boolean ListOrNot, 
+		   @RequestParam(required=false) List<Cart> cartList) {   
       
       if(ListOrNot == true) {
          Toy toy = toyService.findByNo(no);
@@ -194,6 +197,7 @@ public class ToyController {
       String payCountNo = payNoAry[1];
       Pay pay =  (Pay) session.getAttribute(""+payCountNo);
       toyService.insertPay(pay);
+      toyService.updateToyType(pay.getToyNo());
       Pay pay2 = toyService.selectPay(pay.getPayNo());
       model.addAttribute("pay", pay2);
       model.addAttribute("date", new Date());
@@ -201,9 +205,12 @@ public class ToyController {
    }
    
    @GetMapping("/failPay")
-   public String failPay() {      
-	   
+   public String failPay(Model model,@SessionAttribute(name = "loginMember", required = false) Member loginMember, @RequestParam("payNo") int payNo) {      
+
+
       return "failPay";
    }
    
+   
+ 
 }

@@ -23,5 +23,7 @@ public interface ToyMapper {
 	void insertPay(Pay pay);
 	Pay selectPay (int payNo);
 	List<Pay> selectPayDate (int toyNo);
+	int deletePay(int payNo);
+	int updateToyType(int toyNo);
 	
 }

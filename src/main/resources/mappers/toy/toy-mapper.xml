@@ -132,11 +132,17 @@
       #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2})
       
    </insert>
+   <update id="updateToyType" parameterType="int">
+   	   UPDATE TOY SET TOYTYPE = '대여중' WHERE TOYNO = #{toyNo}
+   </update>
    
    <select id="selectPay" parameterType="int" resultType="Pay">
       SELECT * FROM PAY WHERE PAYNO = #{payNo};      
    </select>
-
+   
+   <delete id="deletePay" parameterType="int">
+      DELETE FROM PAY WHERE PAYNO=#{payNo}
+   </delete>
    
    <select id="selectPayDate" parameterType="int" resultType="Pay">
    		SELECT TOYNO, STARTDATE, ENDDATE

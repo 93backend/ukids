@@ -1,5 +1,5 @@
 //대여일 지정
-  var today = new Date();
+  /*var today = new Date();
   var tmrw = new Date(today.setDate(today.getDate()+2));
   $("#start-date").flatpickr({
     monthSelectorType : 'static',
@@ -19,9 +19,9 @@ function changePickr(){
     dateFormat: "Y-m-d"
   });
 }
-
+*/
 //대여시작일 지정 안하고 눌렀을때
-$("#end-date").flatpickr({
+/*$("#end-date").flatpickr({
   monthSelectorType : 'static',
     locale: "ko",   
     minDate: tmrw,                  
@@ -50,8 +50,7 @@ function clickPickr(){
       });
       alert("대여 시작일을 선택해주세요.")
   }
-}
-
+}*/
 
 //상세 더 보기
 document.addEventListener('DOMContentLoaded', function(){ //DOM 생성 후 이벤트 리스너 등록

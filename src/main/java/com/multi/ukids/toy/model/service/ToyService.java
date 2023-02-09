@@ -57,6 +57,9 @@ public class ToyService {
 	public void insertPay(Pay pay) {
 		mapper.insertPay(pay);
 	}
+	public int updateToyType(int toyNo) {
+		return mapper.updateToyType(toyNo);
+	}
 	
 	public Pay selectPay(int payNo) {
 		return mapper.selectPay(payNo);
@@ -65,6 +68,11 @@ public class ToyService {
 	
 	public List<Pay> selectPayDate(int toyNo) {
 		return mapper.selectPayDate(toyNo);
+	}
+
+	public int deletePay(int payNo) {
+		return mapper.deletePay(payNo);
+		
 	}
 	
 }

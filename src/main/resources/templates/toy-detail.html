@@ -275,8 +275,133 @@
 </body>
 </html>
 
-<script th:inline="javascript">
-$( document ).ready( function() {
+<script type="text/javascript" th:inline="javascript">
+$( document ).ready( function() {//대여일 지정
+  //var datatoy = /*[[${dateToy}]]*/{};
+/* 	console.log(datatoy);
+  var sdArr = [];
+  var edArr = [];
+  
+	for(var i=0; i<datatoy.length; i++){
+		const happyNewYear = new Date(datatoy[i].startDate);
+		const year = happyNewYear.getFullYear();
+		const month = happyNewYear.getMonth() + 1;
+		const date = happyNewYear.getDate();
+		const happyNewYear2 = new Date(datatoy[i].endDate);
+		const year2 = happyNewYear2.getFullYear();
+		const month2 = happyNewYear2.getMonth() + 1;
+		const date2 = happyNewYear2.getDate();
+		sdArr.push(`${year}-${month >= 10 ? month : '0' + month}-${date >= 10 ? date : '0' + date}`);
+		edArr.push(`${year2}-${month2 >= 10 ? month2 : '0' + month2}-${date2 >= 10 ? date2 : '0' + date2}`);
+	}
+	console.log(sdArr);
+	console.log(edArr);
+	let ranges = [];
+	for (let i = 0; i < sdArr.length; i++) {
+	  ranges.push({from: sdArr[i], to: edArr[i]});
+	}
+	console.log(ranges); */
+  var type = /*[[${toy.toyType}]]*/{};
+  var today = new Date();
+  var tmrw = new Date(today.setDate(today.getDate()+2));
+
+if(type == null){
+	
+  $("#start-date").flatpickr({
+    monthSelectorType : 'static',
+    locale: "ko",                            
+    minDate: tmrw,
+    dateFormat: "Y-m-d"
+  });
+
+
+	$('#start-date').change(function(){
+	  var date = new Date($("#start-date").val());
+	  date.setDate(date.getDate() + 1);
+	  $("#end-date").flatpickr({
+	    monthSelectorType : 'static',
+	    minDate : date,
+	    locale: "ko",  
+	    dateFormat: "Y-m-d"
+	  });
+	})
+	
+
+	//대여시작일 지정 안하고 눌렀을때
+	$("#end-date").flatpickr({
+	  monthSelectorType : 'static',
+	    locale: "ko",   
+	    minDate: tmrw,                  
+	    dateFormat: "Y-m-d",
+	    disable: [
+	      function(date) {
+	        // disable every multiple of 8
+	        return (date.getDate());
+	      }
+	    ]  
+	  });
+
+	$('#end-date').click(function(){
+	  if($('#start-date').val()==false){
+	    $("#end-date").flatpickr({
+	      monthSelectorType : 'static',
+	        locale: "ko",   
+	        minDate: tmrw,                  
+	        dateFormat: "Y-m-d",
+	        disable: [
+	          function(date) {
+	            // disable every multiple of 8
+	            return (date.getDate());
+	          }
+	        ]  
+	      });
+	      alert("대여 시작일을 선택해주세요.")
+	  }
+	});
+
+}else{
+	$("#start-date").flatpickr({
+		  monthSelectorType : 'static',
+		  locale: "ko",   
+		  minDate: tmrw,                  
+		  dateFormat: "Y-m-d",
+		  disable: [
+		    function(date) {
+		       // disable every multiple of 8
+		       return (date.getDate());
+		    }
+		  ]  
+	});
+		
+	$("#start-date").click(function(){
+		$(".flatpickr-calendar").hide();
+		alert("현재 장난감은 대여중입니다. 다음에 이용해 주세요ㅣ");
+
+	});
+	
+	$("#end-date").flatpickr({
+	  monthSelectorType : 'static',
+	  locale: "ko",   
+	  minDate: tmrw,                  
+	  dateFormat: "Y-m-d",
+	  disable: [
+	    function(date) {
+	      // disable every multiple of 8
+	      return (date.getDate());
+	    }
+	  ]  
+	 });
+	
+	$("#end-date").click(function(){
+		$(".flatpickr-calendar").hide();
+		alert("현재 장난감은 대여중입니다. 다음에 이용해 주세요ㅣ");
+
+	});
+
+}
+
+
+//로그인 alert
 	var lm =/*[[${session.loginMember}]]*/{};
 	if(lm == null){
 		$("#review-text").attr("placeholder", "로그인 후 댓글을 작성해주세요.");
