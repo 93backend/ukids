@@ -216,14 +216,7 @@
 					  <input class="form-check-input" type="radio" id="teacher" name="role" value="ROLE_T">
 					  <label class="form-check-label" for="teacher">선생님</label>
 					</div><hr>
-                    <h2 class="h4 mb-3">일반회원이신가요?</h2>
-                    <p class="fs-sm text-muted mb-4">일반회원입력란입니다. (선택입력 사항입니다.)</p>
-                    <br>
-                    <div class="col-sm-12">
-                      <label class="form-label" for="account-childNum">자녀 수</label>&nbsp;
-                      <input class="form-control-postcode" type="number" name="kidNum" id="account-childNum" value="0" min="0" max="3" 
-                        required>&nbsp;&nbsp;&nbsp;명<br><br>
-                      <!-- 자녀 나이 체크박스 제한 관련 스크립트 -->  
+					 <!-- 자녀 나이 체크박스 제한 관련 스크립트 -->  
                       <script type="text/javascript">
                       $(document).ready(function(){ 
                     	$("input[type='checkbox']").on("click", function(){ 
@@ -236,10 +229,15 @@
                     			  }		 
                     		}); 
                     	}); 
-						
                       </script>
-                      <label class="form-label" for="account-childAge">자녀 나이</label>
-                      <div class="">
+                    <h2 class="h4 mb-0">일반회원이신가요?</h2>
+                    <p class="fs-sm text-muted mb-0">일반회원입력란입니다. (선택입력 사항입니다.)</p>
+                    <br>
+                    <div class="col-sm-12 mb-2">
+                      <label class="form-label" for="account-childNum">자녀 수</label>&nbsp;
+                      <input class="form-control-postcode mb-0" type="number" name="kidNum" id="account-childNum" value="0" min="0" max="3" 
+                        required>&nbsp;&nbsp;&nbsp;명<br><br>
+                      <label class="form-label" for="account-childAge">자녀 나이</label><br>
                         <input class="form-check-input" type="checkbox" name="kidAge" id="account-childAge" value="0세">&nbsp;
                         <label class="form-check-label" for="account-childAge">0</label >&nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="kidAge" id="account-childAge" value="1세">&nbsp;
@@ -252,12 +250,10 @@
                         <label class="form-check-label" for="account-childAge">4</label>&nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="checkbox" name="kidAge" id="account-childAge" value="5세">&nbsp;
                         <label class="form-check-label" for="account-childAge">5</label>&nbsp;&nbsp;&nbsp;
-                      </div>
-                      
                     </div>
-                    <hr class="mt-4">
-                    <h2 class="h4 mb-3 d-inline-block">선생님이신가요?</h2>
-                    <p class="fs-sm text-muted mb-4">선생님입력란입니다. (필수입력 사항입니다.)</p>
+                    <hr class="mt-0">
+                    <h2 class="h4 mb-0 d-inline-block">선생님이신가요?</h2>
+                    <p class="fs-sm text-muted mb-0">선생님입력란입니다. (필수입력 사항입니다.)</p>
                     <div class="col-sm-12">
                       <label class="form-label" for="checkout-country">소속</label>
                       <select class="form-select" name="field" id="checkout-country">
