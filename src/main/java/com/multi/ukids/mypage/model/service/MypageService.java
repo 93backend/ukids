@@ -17,6 +17,7 @@ import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.mypage.model.mapper.MypageMapper;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
 @Service
@@ -205,6 +206,31 @@ public class MypageService {
 	}
 
 	
+	
+	// mypage6
+	public List<Rental> getRentalList(PageInfo pageInfo,Map<String, Object> paramMap){
+		paramMap.put("limit", "" + pageInfo.getListLimit());
+		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectRentalList(paramMap);
+	}
+	
+	public int getRentalCount(Map<String, Object> map) {
+		return mapper.selectRentalCount(map);
+	}
+	
+	public Rental findByRentalNo(int no) {
+		return mapper.selectRentalByNo(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateRental(Rental rental) {
+		return mapper.updateRental(rental);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteRental(int no, String rootPath) {
+		return mapper.deleteRental(no);
+	}
 	
 	
 	

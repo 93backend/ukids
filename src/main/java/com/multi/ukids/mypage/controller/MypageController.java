@@ -24,6 +24,7 @@ import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
 import lombok.extern.slf4j.Slf4j;
@@ -236,7 +237,42 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage-6")
-	public String mypageView6() {
+	public String mypageView6(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
+			@RequestParam Map<String, Object> param) {
+		if (loginMember == null) {
+			return "/login";
+		}
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		int page = 1;
+		try {
+			if(param.get("page") != null) {
+				page = Integer.parseInt((String) param.get("page"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int count = service.getRentalCount(param);
+		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+		List<Rental> list = service.getRentalList(pageInfo, param);
+		
+		for (Rental r : list) {
+			int p = (Integer.parseInt(r.getToyPay()) / 10);
+			if (r.getStartDate() != null || r.getEndDate() != null) {
+				long sec = (r.getEndDate().getTime() - r.getStartDate().getTime()) / 1000;
+				int date = (int)(sec / (24*60*60));
+				r.setDate(date);
+				p *= date;
+			}
+			r.setRealPrice(p);
+		}
+		
+		System.out.println("list : " + list);
+		model.addAttribute("list", list);
+		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("param", param);	
 
 		return "mypage-6";
 	}
@@ -253,7 +289,7 @@ public class MypageController {
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
 		int count = service.getCartCount(param);
-		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+		PageInfo pageInfo = new PageInfo(page, 5, count, 10);
 		List<Cart> list = service.getCartList(pageInfo, param);
 		
 		int pay = 0;

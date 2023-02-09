@@ -164,78 +164,42 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
+              	<th:block th:if="${list == null}">
+					<tr>
+						<td colspan="5">조회된 대여내역이 없습니다.</td>
+					</tr>
+				</th:block>
+				<th:block th:if="${list != null}">
+                <tr th:each="rental, stat : ${list}">
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" th:src="${rental.toyImg}"></a>
                   </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">[[${rental.toyNm1}]]</a></td>
+                  <td class="py-3 cgw9 cgw22" th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9 cgw22">
+					<span th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></span><br>
+					<span th:text="${#dates.format(rental.endDate, '~yyyy-MM-dd')}"></span><br>
+				  </td>
+                  <td class="py-3 cgw9 cgw22">[[${rental.payNo}]]</td>
+                  <td class="py-3 cgw9 cgw22">[[${rental.realPrice}]]</td>
+                  <td class="py-3 cgw9 cgw22">
+                  <th:block th:if="${rental.status == 'Y'}">
                     <div class="">대여중</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">반납하기</span></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..페어리루비즈아트..페어리루비즈아트..</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
-                  <td class="py-3 cgw9 cgw22">
-                    <div class="">반납중</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
-                  <td class="py-3 cgw9 cgw22">
+                  </th:block>
+                  <th:block th:if="${rental.status == 'A'}">
+                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
+                  </th:block>
+                  <th:block th:if="${rental.status == 'N'}">
                     <div class="">반납완료</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
-                  <td class="py-3 cgw9 cgw22">
+                  </th:block>
+                  <th:block th:if="${rental.status == 'R'}">
+                    <div class="">반납중</div>
+                  </th:block>
+                  <th:block th:if="${rental.status == 'T'}">
                     <div class="">배송중</div>
+                  </th:block>
                   </td>
                 </tr>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
-                  <td class="py-3 cgw9 cgw22">
-                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" src="img/ukids/toy1.JPG"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">페어리루비즈아트..</a></td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01</td>
-                  <td class="py-3 cgw9 cgw22">2023-01-01<br>~2023-01-03</td>
-                  <td class="py-3 cgw9 cgw22">1</td>
-                  <td class="py-3 cgw9 cgw22">1000원</td>
-                  <td class="py-3 cgw9 cgw22">
-                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
-                  </td>
-                </tr>
+                </th:block>
               </tbody>
             </table>
           </div>

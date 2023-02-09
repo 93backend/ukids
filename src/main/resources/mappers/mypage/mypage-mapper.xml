@@ -268,7 +268,54 @@
 		UPDATE K_CLAIM SET status = 'N' WHERE no = #{no}
 	</update>
 	
+	
+	
+	<!-- ===============================mypage6=============================== -->
+	
+	<select id="selectRentalList" resultType="Rental" parameterType="map">
+		SELECT
+			P.PAYNO, P.MEMBERNO, P.TOYNO, P.PRICE, P.STARTDATE, P.ENDDATE, P.STATUS, T.TOYPAY, T.TOYNM1, T.TOYIMG
+		FROM PAY P
+		LEFT OUTER JOIN TOY T ON(P.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON(P.MEMBERNO = M.MEMBERNO)
+		WHERE P.MEMBERNO = #{memberNo}
+		ORDER BY P.TOYNO DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectRentalCount" parameterType="map" resultType="int">
+		SELECT
+			COUNT(P.PAYNO)
+		FROM PAY P
+		LEFT OUTER JOIN TOY T ON(P.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON(P.MEMBERNO = M.MEMBERNO)
+		WHERE 1=1
+		AND P.MEMBERNO = #{memberNo}
+	</select>
+	
+	<select id="selectRentalByNo" parameterType="int" resultType="Rental">
+		SELECT
+			P.PAYNO, P.MEMBERNO, P.TOYNO, P.PRICE, P.STARTDATE, P.ENDDATE, P.STATUS, T.TOYPAY, T.TOYNM1, T.TOYIMG
+		FROM PAY P
+		LEFT OUTER JOIN TOY T ON(P.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON(P.MEMBERNO = M.MEMBERNO)
+		WHERE P.PAYNO = #{payNo}
+	</select>
+	
+	<update id="updateRental" parameterType="Rental">
+		UPDATE PAY
+		SET
+			STATUS=#{status}
+		WHERE
+			PAYNO = #{payNo}
+	</update>
+	
+	<delete id="deleteRental" parameterType="Rental">
+		DELETE FROM RENTAL WHERE PAYNO = #{payNo}
+	</delete>
+	
+	
 	<!-- ===============================mypage7=============================== -->
+	
 	<select id="selectCartList" resultType="Cart" parameterType="map">
 		SELECT
 			C.NO, T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE

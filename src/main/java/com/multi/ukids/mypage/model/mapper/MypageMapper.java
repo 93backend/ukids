@@ -9,6 +9,7 @@ import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
 
@@ -54,7 +55,14 @@ public interface MypageMapper {
 	int updateKinderClaim(Claim claim);
 	int deleteKinderClaim(int no);
 	
-	// mypage7
+	// mypage7 - 대여 내역 조회
+	List<Rental> selectRentalList(Map<String, Object> map);
+	int selectRentalCount(Map<String, Object> map);
+	Rental selectRentalByNo(int no);
+	int updateRental(Rental rental);
+	int deleteRental(int no);
+	
+	// mypage7 - 장바구니
 	List<Cart> selectCartList(Map<String, Object> map);
 	int selectCartCount(Map<String, Object> map);
 	Cart selectCartByNo(int no);
