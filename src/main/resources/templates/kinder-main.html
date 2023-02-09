@@ -453,10 +453,26 @@
 		              <div class="box777">
 		                  <div class="photo777">
 	                  		<img class="photo" th:src="|img/유치원/kinder${img[status.index]}.JPG|">
-		                    <button class="button7" th:id="'compare' + ${kinder.kinNo}" value="false" th:onclick="|onClickCompare(${kinder.kinNo})|">
-		                      <i class="ci-bookmark fw-bold mt-1"></i>
-		                      <b>&nbsp;비교&nbsp;</b>
-		                    </button>
+		                    <th:block th:if="${compare == null}">
+				                  <button class="button7" th:id="'compare' + ${kinder.kinNo}" value="false" th:onclick="|onClickCompare(${kinder.kinNo})|">
+				                    <i class="ci-bookmark fw-bold mt-1"></i>
+				                    <b>&nbsp;비교&nbsp;</b>
+				                  </button>
+			                  </th:block>
+			                  <th:block th:unless="${compare == null}">
+			                  	<th:block th:if="${#strings.contains(compare, kinder.kinNo)}">
+				                  <button class="button7-fill" th:id="'compare' + ${kinder.kinNo}" value="true" th:onclick="|onClickCompare(${kinder.kinNo})|">
+				                    <i class="ci-bookmark fw-bold mt-1"></i>
+				                    <b>&nbsp;비교&nbsp;</b>
+				                  </button>
+			                  	</th:block>
+			                  	<th:block th:unless="${#strings.contains(compare, kinder.kinNo)}">
+				                  <button class="button7" th:id="'compare' + ${kinder.kinNo}" value="false" th:onclick="|onClickCompare(${kinder.kinNo})|">
+				                    <i class="ci-bookmark fw-bold mt-1"></i>
+				                    <b>&nbsp;비교&nbsp;</b>
+				                  </button>
+			                  	</th:block>
+			                </th:block>
 		                    <th:block th:if="${session.loginMember == null}">
 			                    <button class="btn-wishlist1 btn-sm" onclick="cantDo();">
 			                      <i id="heart" class="ci-heart fw-bold text-danger"></i>
@@ -581,7 +597,7 @@
 	        		success:
 	        			(data) => {
 	        				console.log(data);
-	        				if(data.add === true) {
+	        				if(data.remove === true) {
 	        					alert("해당 유치원이 찜목록에서 삭제되었습니다.");
 	        					$(id).html('<i id="heart" class="ci-heart fw-bold text-danger"></i>');
 	        					$(id).attr("value", "false");
@@ -622,6 +638,7 @@
 		}
 		
 		function onClickCompare(id) {
+			var no = id;
 			id = '#compare' + id;
 		    var compareValue = null;
 		    
@@ -632,13 +649,52 @@
 			}
 		    
 		    if(compareValue == true) {
-		    	$(id).attr('class', 'button7-fill');
-		    	$(id).attr("value", "true");
+		    	$.ajax({
+					 type: "post",
+					 url: "/kinder-addCompare",
+					 data: {no},
+					 success:
+						 (data) => {
+		     				console.log(data);
+		     				if(data.add === true) {
+								 alert("해당 유치원이 비교목록에 추가되었습니다.");
+								 $(id).attr('class', 'button7-fill');
+							     $(id).attr("value", "true");
+		     					
+		     				} else {
+		     					alert("비교목록 추가에 실패하였습니다. \n(목록에 최대 4개까지 추가할 수 있습니다.)");
+		     				}
+		     			},
+					error:
+						(e) => {
+							console.log(e);
+						}
+				 });
+		    	
 		    } else {
-		    	$(id).attr('class', 'button7');
-		    	$(id).attr("value", "false");
+		    	$.ajax({
+					 type: "post",
+					 url: "/kinder-deleteCompare",
+					 data: {no},
+					 success:
+						 (data) => {
+		     				console.log(data);
+		     				if(data.remove === true) {
+								 alert("해당 유치원이 비교목록에서 삭제되었습니다.");
+								 $(id).attr('class', 'button7');
+							     $(id).attr("value", "false");
+		     					
+		     				} else {
+		     					alert("비교목록 삭제에 실패하였습니다.");
+		     				}
+		     			},
+					error:
+						(e) => {
+							console.log(e);
+						}
+				 });
 		    }
-		  }
+		}
 	</script>
   </body>
 </html>

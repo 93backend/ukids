@@ -2,6 +2,7 @@ package com.multi.ukids.nursery.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,9 @@ public class NurseryController {
 	@Autowired
 	private NurseryService nurseryService;
 	
+	private static List<Integer> nurseryCompareNo = new ArrayList<>();
+	private static final int MAX_SIZE = 4;
+	
 	// 어린이집 검색
 	@GetMapping("/nursery-main")
 	public String nurseryMain(Model model, HttpSession session,
@@ -46,6 +50,8 @@ public class NurseryController {
 			@RequestParam(required = false) String[] teacher,
 			@RequestParam(required = false) String[] service
 	) {
+		log.info("어린이집 검색");
+		
 		int page = 1;
 		try {
 			if(build != null) {
@@ -85,6 +91,11 @@ public class NurseryController {
 		String wish = Arrays.toString(wishNo);
 		log.info("찜 목록 : " + wish);
 		
+		String compare = null;
+		if(nurseryCompareNo != null) {
+			compare = nurseryCompareNo.toString();
+		}
+		
 		int[] img = new int[12];
 		
 		img[0] = page;
@@ -102,6 +113,7 @@ public class NurseryController {
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("wish", wish);
+		model.addAttribute("compare", compare);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
 		model.addAttribute("img", img);
@@ -115,6 +127,7 @@ public class NurseryController {
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 		@RequestParam("no") int no, @RequestParam("i") int i
 	) {
+		log.info("어린이집 상세");
 		
 		Nursery nursery = nurseryService.findByNo(no);
 		int claim = nurseryService.getClaimCount(no);
@@ -129,12 +142,19 @@ public class NurseryController {
 			wishCnt = nurseryService.getWish(wish);
 		}
 		
+		String compare = null;
+		if(nurseryCompareNo != null) {
+			compare = nurseryCompareNo.toString();
+		}
+		log.info("비교 목록 : " + compare);
+		
 		int classCnt = nursery.getClass_cnt_00() + nursery.getClass_cnt_01() + nursery.getClass_cnt_02() + nursery.getClass_cnt_03() + nursery.getClass_cnt_04() + nursery.getClass_cnt_05();
 		int childCnt = nursery.getChild_cnt_00() + nursery.getChild_cnt_01() + nursery.getChild_cnt_02() + nursery.getChild_cnt_03() + nursery.getChild_cnt_04() + nursery.getChild_cnt_05();
 		
 		model.addAttribute("nursery", nursery);
 		model.addAttribute("claim", claim);
 		model.addAttribute("wishCnt", wishCnt);
+		model.addAttribute("compare", compare);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);
 		model.addAttribute("classCnt", classCnt);
@@ -151,6 +171,8 @@ public class NurseryController {
 		@ModelAttribute NReview review,
 		@RequestParam Map<String, String> param
 	) {
+		log.info("어린이집 리뷰 쓰기");
+		
 		int i = Integer.parseInt(param.get("i"));
 		int no = review.getNuNo();
 		
@@ -175,6 +197,8 @@ public class NurseryController {
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 		@RequestParam Map<String, String> param
 	) {
+		log.info("어린이집 리뷰 삭제");
+		
 		int no = Integer.parseInt(param.get("no"));
 		int nuNo = Integer.parseInt(param.get("nuNo"));
 		int i = Integer.parseInt(param.get("i"));
@@ -199,6 +223,8 @@ public class NurseryController {
 		@ModelAttribute NAdmission admission,
 		@RequestParam Map<String, String> param
 	) {
+		log.info("어린이집 입소 신청");
+		
 		int i = Integer.parseInt(param.get("i"));
 		String hopeDate = param.get("hDate");
 		
@@ -224,7 +250,7 @@ public class NurseryController {
 	// 찜 추가
 	@PostMapping("/nursery-addWish")
 	public ResponseEntity<Map<String, Object>> addWish(int no, int memberNo) {
-		log.info("찜 추가 : " + no + " " + memberNo);
+		log.info("어린이집 찜 추가 : " + no + " " + memberNo);
 		
 		NWish wish = new NWish();
 		wish.setNuNo(no);
@@ -247,7 +273,7 @@ public class NurseryController {
 	// 찜 삭제
 	@PostMapping("/nursery-deleteWish")
 	public ResponseEntity<Map<String, Object>> deleteWish(int no, int memberNo) {
-		log.info("찜 추가 : " + no + " " + memberNo);
+		log.info("어린이집 찜 삭제 : " + no + " " + memberNo);
 		
 		NWish wish = new NWish();
 		wish.setNuNo(no);
@@ -255,14 +281,61 @@ public class NurseryController {
 		
 		int result = nurseryService.deleteWish(wish);
 		
-		boolean add;
+		boolean remove;
 		if(result > 0) {
+			remove = true;
+		} else {
+			remove = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("remove", remove);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 비교 추가
+	@PostMapping("/nursery-addCompare")
+	public ResponseEntity<Map<String, Object>> addCompare(int no) {
+		log.info("어린이집 비교 추가 : " + no );
+		
+		if(nurseryCompareNo.size() < MAX_SIZE) {
+			nurseryCompareNo.add(no);
+		}
+		
+		boolean add;
+		if(nurseryCompareNo.contains(no) == true) {
 			add = true;
 		} else {
 			add = false;
 		}
+		log.info(nurseryCompareNo.toString());
+		System.out.println(add);
+		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 비교 삭제
+	@PostMapping("/nursery-deleteCompare")
+	public ResponseEntity<Map<String, Object>> deleteCompare(int no) {
+		log.info("어린이집 비교 삭제 : " + no );
+		
+		int index = nurseryCompareNo.indexOf(no);
+		nurseryCompareNo.remove(index);
+		
+		boolean remove;
+		if(nurseryCompareNo.contains(no) == false) {
+			remove = true;
+		} else {
+			remove = false;
+		}
+		log.info(nurseryCompareNo.toString());
+		System.out.println(remove);
+		
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("remove", remove);
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}

@@ -285,10 +285,25 @@
 		                  </button>
                 		</th:block>
                 	</th:block>
-
-                  <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton">
-                    <i class="ci-compare"> 비교</i>
-                  </button>
+                	
+					<th:block th:if="${compare == null}">
+                		<button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="false">
+		                    <i class="ci-compare"> 비교</i>
+		                  </button>
+                	</th:block>
+                	<th:block th:unless="${compare == null}">
+	                	<th:block th:if="${#strings.contains(compare, kinder.kinNo)}">
+		                  <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="true">
+		                    <i id="compareIcon2" class="ci-compare fw-bolder" style="color:#fc6c93;"> 비교</i>
+		                  </button>
+	                	</th:block>
+	                	<th:block th:unless="${#strings.contains(compare, kinder.kinNo)}">
+		                  <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="false">
+		                    <i class="ci-compare"> 비교</i>
+		                  </button>
+	                	</th:block>
+                	</th:block>
+                	
                 </div>
                 <div class="row mx-2 shadow-lg" id="row_4">
                   <div class="siren_box mx-0"><img src="./img/ukids/kinder/siren.png" height="35px" width="35px"><br>
@@ -645,7 +660,6 @@
 			
 	        var isHeartChecked = null;
 	        $('#wishButton').click(function() {
-	        	
 	        	 if ($('#wishButton').val() == "false") {
 	        		 isHeartChecked = true;
 	        	 } else {
@@ -683,7 +697,7 @@
 	        		success:
 	        			(data) => {
 	        				console.log(data);
-	        				if(data.add === true) {
+	        				if(data.remove === true) {
 	        					alert("해당 유치원이 찜목록에서 삭제되었습니다.");
 	        					wishButton.innerHTML = '<i id="heart1" class="ci-heart"> 찜</i>';
 	        					$('#wishButton').attr("value", "false");
@@ -697,16 +711,6 @@
     	    			}
 		        });
 	          }
-	        });
-
-	        $('#compareButton').click(function() {
-	          isCompareChecked = !isCompareChecked;
-	          if (isCompareChecked == false) {
-	            compareButton.innerHTML = '<i id="compareIcon1" class="ci-compare"> 비교</i>';
-	          } else {
-	            compareButton.innerHTML = '<i id="compareIcon2" class="ci-compare fw-bolder" style="color:#fc6c93;"> 비교</i>';
-	          }
-
 	        });
 	   	});
     </script>
@@ -1113,7 +1117,65 @@ let customLegend5 = function (chart) {
   return ul.outerHTML;
 };
 
-//댓글 삭제
+// 비교 버튼
+var no = [[${kinder.kinNo}]];
+var isCompareChecked = null;
+$('#compareButton').click(function() {
+	if($('#compareButton').val() == "false") {
+		isCompareChecked = true;
+	} else {
+		isCompareChecked = false;
+	}
+	console.log(isCompareChecked);	
+	 if (isCompareChecked == true) {
+		 $.ajax({
+			 type: "post",
+			 url: "/kinder-addCompare",
+			 data: {no},
+			 success:
+				 (data) => {
+     				console.log(data);
+     				if(data.add === true) {
+						 alert("해당 유치원이 비교목록에 추가되었습니다.");
+						 $('#compareButton').html('<i id="compareIcon2" class="ci-compare fw-bolder" style="color:#fc6c93;"> 비교</i>');
+						 $('#compareButton').attr("value", "true");
+     					
+     				} else {
+     					alert("비교목록 추가에 실패하였습니다. \n(목록에 최대 4개까지 추가할 수 있습니다.)");
+     				}
+     			},
+			error:
+				(e) => {
+					console.log(e);
+				}
+		 });
+	 } else {
+		 $.ajax({
+			 type: "post",
+			 url: "/kinder-deleteCompare",
+			 data: {no},
+			 success:
+				 (data) => {
+     				console.log(data);
+     				if(data.remove === true) {
+						 alert("해당 유치원이 비교목록에서 삭제되었습니다.");
+						 $('#compareButton').html('<i id="compareIcon1" class="ci-compare"> 비교</i>');
+						 $('#compareButton').attr("value", "false");
+     					
+     				} else {
+     					alert("비교목록 삭제에 실패하였습니다.");
+     				}
+     			},
+			error:
+				(e) => {
+					console.log(e);
+				}
+		 });
+	 }
+
+});
+
+// 리뷰 삭제
 function deleteReview(no) {
 	var url = "/kinder-deleteReview?no=" + no + "&kinNo=" + [[${kinder.kinNo}]] + "&i=" + [[${i}]];
 	if(confirm("댓글을 삭제 하시겠습니까?")) {

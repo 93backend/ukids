@@ -2,6 +2,7 @@ package com.multi.ukids.kinder.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,9 @@ public class KinderController {
 	@Autowired
 	private KinderService kinderService;
 	
+	private static List<Integer> kinderCompareNo = new ArrayList<>();
+	private static final int MAX_SIZE = 4;
+	
 	// 유치원 검색
 	@GetMapping("/kinder-main")
 	public String kinderMain(Model model, HttpSession session,
@@ -47,6 +51,8 @@ public class KinderController {
 		@RequestParam(required = false) String[] service,
 		@RequestParam(required = false) String[] facility
 	) {
+		log.info("유치원 검색");
+		
 		int page = 1;
 		try {
 			if(build != null) {
@@ -91,6 +97,12 @@ public class KinderController {
 		String wish = Arrays.toString(wishNo);
 		log.info("찜 목록 : " + wish);
 		
+		String compare = null;
+		if(kinderCompareNo != null) {
+			compare = kinderCompareNo.toString();
+		}
+		log.info("비교 목록 : " + compare);
+		
 		int[] img = new int[12];
 		
 		for(int i = 0; i < img.length; i++) {
@@ -106,6 +118,7 @@ public class KinderController {
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
 		model.addAttribute("wish", wish);
+		model.addAttribute("compare", compare);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("param", param);
 		model.addAttribute("img", img);
@@ -119,6 +132,8 @@ public class KinderController {
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 		@RequestParam("no") int no, @RequestParam("i") int i
 	) {
+		log.info("유치원 상세보기");
+		
 		Kinder kinder = kinderService.findByNo(no);
 		int claim = kinderService.getClaimCount(no);
 		List<KReview> review = kinderService.getReviewList(no);
@@ -132,6 +147,12 @@ public class KinderController {
 			wishCnt = kinderService.getWish(wish);
 		}
 		
+		String compare = null;
+		if(kinderCompareNo != null) {
+			compare = kinderCompareNo.toString();
+		}
+		log.info("비교 목록 : " + compare);
+		
 		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
 		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
 		
@@ -141,6 +162,7 @@ public class KinderController {
 		model.addAttribute("kinder", kinder);
 		model.addAttribute("claim", claim);
 		model.addAttribute("wishCnt", wishCnt);
+		model.addAttribute("compare", compare);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);
 		model.addAttribute("classCnt", classCnt);
@@ -155,27 +177,29 @@ public class KinderController {
 	// 리뷰 쓰기
 	@PostMapping("/kinder-writeReview")
 	public String writeReview (Model model, HttpSession session,
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute KReview review,
-			@RequestParam Map<String, String> param
-		) {
-			int i = Integer.parseInt(param.get("i"));
-			int no = review.getKinNo();
-			
-			review.setMemberNo(loginMember.getMemberNo());
-			
-			int result = kinderService.saveReview(review);
-			
-			if(result > 0) {
-				model.addAttribute("msg", "해당 유치원에 리뷰가 등록 되었습니다.");
-			} else {
-				model.addAttribute("msg", "해당 유치원 리뷰 등록에 실패하였습니다.");
-			}
-			
-			model.addAttribute("location", "/kinder-detail?no=" + no +"&i=" + i);
-			
-			return "common/msg";
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@ModelAttribute KReview review,
+		@RequestParam Map<String, String> param
+	) {
+		log.info("유치원 리뷰 쓰기");
+	
+		int i = Integer.parseInt(param.get("i"));
+		int no = review.getKinNo();
+		
+		review.setMemberNo(loginMember.getMemberNo());
+		
+		int result = kinderService.saveReview(review);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "해당 유치원에 리뷰가 등록 되었습니다.");
+		} else {
+			model.addAttribute("msg", "해당 유치원 리뷰 등록에 실패하였습니다.");
 		}
+		
+		model.addAttribute("location", "/kinder-detail?no=" + no +"&i=" + i);
+		
+		return "common/msg";
+	}
 	
 	// 리뷰 삭제
 	@RequestMapping("/kinder-deleteReview")
@@ -183,6 +207,8 @@ public class KinderController {
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 		@RequestParam Map<String, String> param
 	) {
+		log.info("유치원 리뷰 삭제");
+		
 		int no = Integer.parseInt(param.get("no"));
 		int kinNo = Integer.parseInt(param.get("kinNo"));
 		int i = Integer.parseInt(param.get("i"));
@@ -205,6 +231,8 @@ public class KinderController {
 		@ModelAttribute KAdmission admission,
 		@RequestParam Map<String, String> param
 	) {
+		log.info("유치원 입소 신청");
+		
 		int i = Integer.parseInt(param.get("i"));
 		String hopeDate = param.get("hDate");
 		
@@ -230,7 +258,7 @@ public class KinderController {
 	// 찜 추가
 	@PostMapping("/kinder-addWish")
 	public ResponseEntity<Map<String, Object>> addWish(int no, int memberNo) {
-		log.info("찜 추가 : " + no + " " + memberNo);
+		log.info("유치원 찜 추가 : " + no + " " + memberNo);
 		
 		KWish wish = new KWish();
 		wish.setKinNo(no);
@@ -253,7 +281,7 @@ public class KinderController {
 	// 찜 삭제
 	@PostMapping("/kinder-deleteWish")
 	public ResponseEntity<Map<String, Object>> deleteWish(int no, int memberNo) {
-		log.info("찜 추가 : " + no + " " + memberNo);
+		log.info("유치원 찜 삭제 : " + no + " " + memberNo);
 		
 		KWish wish = new KWish();
 		wish.setKinNo(no);
@@ -261,15 +289,63 @@ public class KinderController {
 		
 		int result = kinderService.deleteWish(wish);
 		
-		boolean add;
+		boolean remove;
 		if(result > 0) {
+			remove = true;
+		} else {
+			remove = false;
+		}
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("remove", remove);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 비교 추가
+	@PostMapping("/kinder-addCompare")
+	public ResponseEntity<Map<String, Object>> addCompare(int no) {
+		log.info("유치원 비교 추가 : " + no );
+		
+		if(kinderCompareNo.size() < MAX_SIZE) {
+			kinderCompareNo.add(no);
+		}
+		
+		boolean add;
+		if(kinderCompareNo.contains(no) == true) {
 			add = true;
 		} else {
 			add = false;
 		}
+		log.info(kinderCompareNo.toString());
+		System.out.println(add);
+		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("add", add);
 		
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
+	
+	// 비교 삭제
+	@PostMapping("/kinder-deleteCompare")
+	public ResponseEntity<Map<String, Object>> deleteCompare(int no) {
+		log.info("유치원 비교 삭제 : " + no );
+		
+		int index = kinderCompareNo.indexOf(no);
+		kinderCompareNo.remove(index);
+		
+		boolean remove;
+		if(kinderCompareNo.contains(no) == false) {
+			remove = true;
+		} else {
+			remove = false;
+		}
+		log.info(kinderCompareNo.toString());
+		System.out.println(remove);
+		
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("remove", remove);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
 }
