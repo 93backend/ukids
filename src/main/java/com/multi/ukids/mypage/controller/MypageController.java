@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.multi.ukids.board.model.vo.Board;
 import com.multi.ukids.claim.model.service.ClaimService;
 import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
@@ -231,8 +232,32 @@ public class MypageController {
 	}
 	
 	@GetMapping("/mypage-5")
-	public String mypageView5() {
+	public String mypageView5(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
+			@RequestParam Map<String, Object> param) {
+		if (loginMember == null) {
+			return "/login";
+		}
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
+		int page = 1;
+		try {
+			if(param.get("page") != null) {
+				page = Integer.parseInt((String) param.get("page"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		int boardCount = service.getBoardCount(param);
+		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 8);
+		List<Board> list = service.getBoardList(pageInfo, param);
 
+		System.out.println("list : " + list);
+		model.addAttribute("list", list);
+		model.addAttribute("param", param);
+		model.addAttribute("pageInfo", pageInfo);
+		
 		return "mypage-5";
 	}
 	

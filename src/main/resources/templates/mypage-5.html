@@ -153,78 +153,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="py-3 cgw9">1</td>
+              <th:block th:if="${list == null}">
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+				</th:block>
+				<th:block th:if="${list != null}">
+                <tr th:each="board, stat : ${list}">
+                  <td class="py-3 cgw9">[[${board.boardNo}]]</td>
                   <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
+                      href="account-single-ticket.html">[[${board.title}]]</a></td>
+                  <td class="py-3 cgw9" th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9"><a href="#"><span
                         class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
                         class="badge bg-secondary m-0">삭제</span></a></td>
                 </tr>
-                <tr>
-                  <td class="py-3 cgw9">2</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글글. 글글글글글글글글글글. 글글글글글글글글글글. </a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">3</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">4</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">5</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">6</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">7</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
-                <tr>
-                  <td class="py-3 cgw9">8</td>
-                  <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">글글글글글글글글글글.</a></td>
-                  <td class="py-3 cgw9">2023-01-01</td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
-                </tr>
+                </th:block>
               </tbody>
             </table>
           </div>

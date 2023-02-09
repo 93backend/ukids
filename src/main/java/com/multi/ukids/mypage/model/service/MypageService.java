@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.multi.ukids.board.model.vo.Board;
 import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.vo.KAdmission;
@@ -120,7 +121,7 @@ public class MypageService {
 		return mapper.selectKinderClaimCount(map);
 	}
 	
-	public String saveFile(MultipartFile file, String savePath) {
+	public String saveClaimFile(MultipartFile file, String savePath) {
 		File folder = new File(savePath);
 		
 		// 폴더 없으면 만드는 코드
@@ -184,7 +185,7 @@ public class MypageService {
 		return result;
 	}
 	
-	public void deleteFile(String filePath) {
+	public void deleteClaimFile(String filePath) {
 		File file = new File(filePath);
 		if(file.exists()) {
 			file.delete();
@@ -194,17 +195,80 @@ public class MypageService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteNurseryClaim(int no, String rootPath) {
 		Claim claim = mapper.selectNurseryClaimByNo(no);
-		deleteFile(rootPath + "\\" + claim.getRenamedFileName());
+		deleteClaimFile(rootPath + "\\" + claim.getRenamedFileName());
 		return mapper.deleteNurseryClaim(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteKinderClaim(int no, String rootPath) {
 		Claim claim = mapper.selectKinderClaimByNo(no);
-		deleteFile(rootPath + "\\" + claim.getRenamedFileName());
+		deleteClaimFile(rootPath + "\\" + claim.getRenamedFileName());
 		return mapper.deleteKinderClaim(no);
 	}
 
+	
+	// mypage5
+	public List<Board> getBoardList(PageInfo pageInfo, Map<String, Object> param){
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectBoardList(param);
+	}
+	
+	public int getBoardCount(Map<String, Object> param) {
+		return mapper.selectBoardCount(param);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public Board findBoardByNo(int boardNo) {
+		Board board = mapper.selectBoardByNo(boardNo); 
+		board.setReadcount(board.getReadcount() + 1);  
+		mapper.updateReadCount(board);
+		return board; 
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateBoard(Board board) {
+		return mapper.updateBoard(board);
+	}
+	
+	public String saveBoardFile(MultipartFile upFile, String savePath) {
+		File folder = new File(savePath);
+		
+		// 폴더 없으면 만드는 코드
+		if(folder.exists() == false) {
+			folder.mkdir();
+		}
+		System.out.println("savePath : " + savePath);
+		
+		// 파일이름을 랜덤하게 바꾸는 코드, test.txt -> 20221213_1728291212.txt
+		String originalFileName = upFile.getOriginalFilename();
+		String reNameFileName = 
+					LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS"));
+		reNameFileName += originalFileName.substring(originalFileName.lastIndexOf("."));
+		String reNamePath = savePath + "/" + reNameFileName;
+		
+		try {
+			// 실제 파일이 저장되는 코드
+			upFile.transferTo(new File(reNamePath));
+		} catch (Exception e) {
+			return null;
+		}
+		return reNameFileName;
+	}
+	
+	public void deleteBoardFile(String filePath) {
+		File file = new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteBoard(int no, String rootPath) {
+		Board board = mapper.selectBoardByNo(no);
+		deleteBoardFile(rootPath + "\\" + board.getRenamedFileName());
+		return mapper.deleteBoard(no);
+	}
 	
 	
 	// mypage6
@@ -232,6 +296,10 @@ public class MypageService {
 		return mapper.deleteRental(no);
 	}
 	
+	
+	
+	
+
 	
 	
 	// mypage7

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.multi.ukids.board.model.vo.Board;
 import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.nursery.model.vo.NAdmission;
@@ -55,7 +56,15 @@ public interface MypageMapper {
 	int updateKinderClaim(Claim claim);
 	int deleteKinderClaim(int no);
 	
-	// mypage7 - 대여 내역 조회
+	// mypage6 - 내가 쓴 게시글
+	List<Board> selectBoardList(Map<String, Object> map);
+	int selectBoardCount(Map<String, Object> map);
+	Board selectBoardByNo(int no);
+	int updateBoard(Board board);
+	int updateReadCount(Board board);
+	int deleteBoard(int no);
+	
+	// mypage6 - 대여 내역 조회
 	List<Rental> selectRentalList(Map<String, Object> map);
 	int selectRentalCount(Map<String, Object> map);
 	Rental selectRentalByNo(int no);
