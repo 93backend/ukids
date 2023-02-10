@@ -167,10 +167,10 @@
                     <div class="col-sm-9">
                       <label class="form-label" for="name">이름</label>
                       <th:block th:if="${kakaoMap == null}">
-                      <input class="form-control-cgw1" type="text" name="name" id="name">
+                      <input class="form-control-cgw1" type="text" name="name" id="name" required placeholder="이름을 입력해 주세요.">
                       </th:block>
                       <th:block th:if="${kakaoMap != null}">
-                      <input class="form-control-cgw1" type="text" name="name" id="name" th:value="${kakaoMap.nickname}">
+                      <input class="form-control-cgw1" type="text" name="name" id="name" th:value="${kakaoMap.nickname}" required>
                       </th:block>
                       
                     </div>
@@ -188,11 +188,11 @@
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-email">이메일</label>
-                      <input class="form-control-cgw1" type="email" name="email" id="account-email" placeholder="ukids@example.com">
+                      <input class="form-control-cgw1" type="email" name="email" id="account-email" placeholder="ukids@example.com" required>
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-phone">연락처</label>
-                      <input class="form-control-cgw1" type="text" name="phone" id="account-phone" placeholder="010-0000-0000">
+                      <input class="form-control-cgw1" type="text" name="phone" id="account-phone" placeholder="010-0000-0000" required>
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-address">주소</label>
