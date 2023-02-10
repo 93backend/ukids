@@ -183,36 +183,33 @@ public class MypageController {
 		}
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
-		int page = 1;
-		Map<String, String> searchMap = new HashMap<String, String>();
+		int nPage = 1;
+		int kPage = 1;
+		
 		try {
-			String searchValue = param.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = param.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}else {
-				param.put("searchType", "all");
-			}
-			page = Integer.parseInt(param.get("page"));
+			nPage = Integer.parseInt(param.get("nPage"));
+		} catch (Exception e) {}
+		try {
+			kPage = Integer.parseInt(param.get("kPage"));
 		} catch (Exception e) {}
 		
 		// nursery
-		int ncount = service.getNurseryWishCount(null);
-		PageInfo npageInfo = new PageInfo(page, 5, ncount, 3);
+		int ncount = service.getNurseryWishCount(param);
+		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 3);
 		List<Wish>  nlist = service.getNurseryWishList(npageInfo, param);
 
 		System.out.println("nlist(찜) : " + nlist);
 		model.addAttribute("nlist", nlist);
-		model.addAttribute("PageInfo", npageInfo);
+		model.addAttribute("nPageInfo", npageInfo);
 //		
 		// kinder
 		int kcount = service.getKinderWishCount(param);
-		PageInfo kpageInfo = new PageInfo(page, 5, kcount, 3);
+		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 3);
 		List<Wish> klist = service.getKinderWishList(kpageInfo, param);
 //		
 		System.out.println("klist(찜) : " + klist);
 		model.addAttribute("klist", klist);
-		model.addAttribute("PageInfo", kpageInfo);
+		model.addAttribute("kPageInfo", kpageInfo);
 
 		return "mypage-3";
 	}
@@ -227,34 +224,32 @@ public class MypageController {
 		}
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
-		int page = 1;
-		Map<String, String> searchMap = new HashMap<String, String>();
+		int nPage = 1;
+		int kPage = 1;
+		
 		try {
-			String searchValue = param.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = param.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}else {
-				param.put("searchType", "all");
-			}
-			page = Integer.parseInt(param.get("page"));
+			nPage = Integer.parseInt(param.get("nPage"));
+		} catch (Exception e) {}
+		try {
+			kPage = Integer.parseInt(param.get("kPage"));
 		} catch (Exception e) {}
 		
+		// nursery
 		int ncount = service.getNurseryClaimCount(param);
-		PageInfo npageInfo = new PageInfo(page, 5, ncount, 4);
+		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 4);
 		List<Claim> nlist = service.getNurseryClaimList(npageInfo, param);
 		
 		System.out.println("nlist(불편사항) : " + nlist);
 		model.addAttribute("nlist", nlist);
-		model.addAttribute("npageInfo", npageInfo);
+		model.addAttribute("nPageInfo", npageInfo);
 		
 		int kcount = service.getKinderClaimCount(param);
-		PageInfo kpageInfo = new PageInfo(page, 5, kcount, 4);
+		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 4);
 		List<Claim> klist = service.getKinderClaimList(kpageInfo, param);
 		
 		System.out.println("klist(불편사항) : " + klist);
 		model.addAttribute("klist", klist);
-		model.addAttribute("kpageInfo", kpageInfo);
+		model.addAttribute("kPageInfo", kpageInfo);
 		model.addAttribute("param", param);	
 		
 		return "mypage-4";
@@ -270,15 +265,7 @@ public class MypageController {
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
 		int page = 1;
-		Map<String, String> searchMap = new HashMap<String, String>();
 		try {
-			String searchValue = param.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = param.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}else {
-				param.put("searchType", "all");
-			}
 			page = Integer.parseInt(param.get("page"));
 		} catch (Exception e) {}
 		
@@ -297,7 +284,7 @@ public class MypageController {
 	@GetMapping("/mypage-6")
 	public String mypageView6(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
-			@RequestParam Map<String, Object> param) {
+			@RequestParam Map<String, String> param) {
 		if (loginMember == null) {
 			return "/login";
 		}
@@ -305,12 +292,8 @@ public class MypageController {
 		
 		int page = 1;
 		try {
-			if(param.get("page") != null) {
-				page = Integer.parseInt((String) param.get("page"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			page = Integer.parseInt(param.get("page"));
+		} catch (Exception e) {}
 		
 		int count = service.getRentalCount(param);
 		PageInfo pageInfo = new PageInfo(page, 5, count, 6);

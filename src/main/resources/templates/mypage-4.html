@@ -188,33 +188,34 @@
 							</tbody>
 						</table>
 					</div>
-					<!-- pagination -->
-					<nav class="d-flex justify-content-between pt-2"
-						aria-label="Page navigation">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="ci-arrow-left me-2"></i>Prev</a></li>
-						</ul>
-						<ul class="pagination">
-							<li class="page-item d-sm-none"><span
-								class="page-link page-link-static">1 / 5</span></li>
-							<li class="page-item page d-none d-sm-block" aria-current="page"><span
-								class="page-link">1<span class="visually-hidden">(current)</span></span></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">2</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">3</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">4</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">5</a></li>
-						</ul>
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-						</ul>
-					</nav>
-					<br><br>
+					
+
+ 
+		          <!-- pagination -->
+		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              
+		              <th:block th:each="num, status : ${#numbers.sequence(nPageInfo.startPage, nPageInfo.endPage)}">
+			                	<th:block th:if="${status.current == nPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block page" aria-current="page">
+					                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					                </li>
+			                	</th:block>
+			                	<th:block th:if="${status.current != nPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${status.current}');|">[[${status.current}]]</a></li>
+			                	</th:block>
+			                </th:block>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></a></li>
+		            </ul>
+		          </nav>  
+		          <br><br>
 					
 					<!-- 유치원 불편사항신고조회 목록-->
 					<div class="table-responsive fs-md mb-4">
@@ -262,32 +263,33 @@
 							</tbody>
 						</table>
 					</div>
+					
+
 					<!-- pagination -->
-					<nav class="d-flex justify-content-between pt-2"
-						aria-label="Page navigation">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"><i
-									class="ci-arrow-left me-2"></i>Prev</a></li>
-						</ul>
-						<ul class="pagination">
-							<li class="page-item d-sm-none"><span
-								class="page-link page-link-static">1 / 5</span></li>
-							<li class="page-item page d-none d-sm-block" aria-current="page"><span
-								class="page-link">1<span class="visually-hidden">(current)</span></span></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">2</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">3</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">4</a></li>
-							<li class="page-item d-none d-sm-block"><a class="page-link"
-								href="#">5</a></li>
-						</ul>
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-						</ul>
-					</nav>
+		          <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              <th:block th:each="num, status : ${#numbers.sequence(kPageInfo.startPage, kPageInfo.endPage)}">
+			          	<th:block th:if="${status.current == kPageInfo.currentPage}">
+					          <li class="page-item d-none d-sm-block page" aria-current="page">
+					            <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					          </li>
+			            </th:block>
+			            <th:block th:if="${status.current != kPageInfo.currentPage}">
+					    	<li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveKPage('/mypage-4?kPage=${status.current}');|">[[${status.current}]]</a></li>
+			            </th:block>
+			           </th:block>
+			         </ul>
+			         <ul class="pagination">
+			           <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|" aria-label="Next">Next<i
+			           class="ci-arrow-right ms-2"></i></a></li>
+			         </ul>
+			        </nav>  
+			        
+			        
 				</section>
 			</div>
 		</div>
@@ -313,6 +315,18 @@
 	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
+	<script type="text/javascript">
+		nPage = '[[${nPageInfo.currentPage}]]'; 
+	    kPage = '[[${kPageInfo.currentPage}]]';
+		function moveNPage(pageUrl){
+			pageUrl += '&kPage=' + kPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		function moveKPage(pageUrl){
+			pageUrl += '&nPage=' + nPage 
+			location.href = encodeURI(pageUrl);	
+		}
+	</script>
 </body>
 
 </html>

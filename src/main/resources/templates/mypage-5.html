@@ -190,12 +190,12 @@
 			                </li>
 	                	</th:block>
 	                	<th:block th:if="${status.current != pageInfo.currentPage}">
-			                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
+			                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|movePage('/mypage-5?page=${status.current}');|">[[${status.current}]]</a></li>
 	                	</th:block>
 	                </th:block>
             </ul>
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" th:onclick="|movePage('/mypage-5?page=${pageInfo.prevPage}');|" aria-label="Next">Next<i
+              <li class="page-item"><a class="page-link" th:onclick="|movePage('/mypage-5?page=${pageInfo.nextPage}');|" aria-label="Next">Next<i
                     class="ci-arrow-right ms-2"></i></a></li>
             </ul>
           </nav> 
@@ -226,17 +226,6 @@
 	<script src="js/theme.min.js"></script>
 	<script type="text/javascript">
 		function movePage(pageUrl){
-			var searchValue = document.getElementById("searchValue"); // 갤럭시
-			var searchTypes = document.getElementsByName("searchType"); // title
-			var searchType = 'title';
-			if(searchValue.value.length > 0){
-				for(var i = 0; i <searchTypes.length; i++){
-					if(searchTypes[i].checked == true){
-						searchType = searchTypes[i].value;
-					}
-				}
-				pageUrl = pageUrl + '&searchType=' + searchType + '&searchValue=' + searchValue.value; 
-			}
 			location.href = encodeURI(pageUrl);	
 		}
 	</script>

@@ -203,25 +203,34 @@
               </tbody>
             </table>
           </div>
-          <!-- pagination -->
+          
+
+
+ 			<!-- pagination -->
           <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              <li class="page-item"><a class="page-link" th:onclick="|movePage('/mypage-6?page=${pageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
             </ul>
             <ul class="pagination">
               <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-              <li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">1<span
-                    class="visually-hidden">(current)</span></span></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">4</a></li>
-              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">5</a></li>
+              
+              <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+	                	<th:block th:if="${status.current == pageInfo.currentPage}">
+			                <li class="page-item d-none d-sm-block page" aria-current="page">
+			                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+			                </li>
+	                	</th:block>
+	                	<th:block th:if="${status.current != pageInfo.currentPage}">
+			                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|movePage('/mypage-6?page=${status.current}');|">[[${status.current}]]</a></li>
+	                	</th:block>
+	                </th:block>
             </ul>
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
+              <li class="page-item"><a class="page-link" th:onclick="|movePage('/mypage-6?page=${pageInfo.nextPage}');|" aria-label="Next">Next<i
                     class="ci-arrow-right ms-2"></i></a></li>
             </ul>
-          </nav>
+          </nav> 
+          
         </section>
       </div>
     </div>
@@ -244,6 +253,11 @@
 	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
+	<script type="text/javascript">
+		function movePage(pageUrl){
+			location.href = encodeURI(pageUrl);	
+		}
+	</script>
 </body>
 
 </html>

@@ -272,18 +272,23 @@ public class MypageService {
 	
 	
 	// mypage6
-	public List<Rental> getRentalList(PageInfo pageInfo,Map<String, Object> paramMap){
+	public List<Rental> getRentalList(PageInfo pageInfo,Map<String, String> paramMap){
 		paramMap.put("limit", "" + pageInfo.getListLimit());
 		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectRentalList(paramMap);
 	}
 	
-	public int getRentalCount(Map<String, Object> map) {
+	public int getRentalCount(Map<String, String> map) {
 		return mapper.selectRentalCount(map);
 	}
 	
 	public Rental findByRentalNo(int no) {
 		return mapper.selectRentalByNo(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyType(Rental rental) {
+		return mapper.updateToyType(rental);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)

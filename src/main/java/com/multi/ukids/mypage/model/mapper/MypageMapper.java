@@ -65,9 +65,10 @@ public interface MypageMapper {
 	int deleteBoard(int no);
 	
 	// mypage6 - 대여 내역 조회
-	List<Rental> selectRentalList(Map<String, Object> map);
-	int selectRentalCount(Map<String, Object> map);
+	List<Rental> selectRentalList(Map<String, String> map);
+	int selectRentalCount(Map<String, String> map);
 	Rental selectRentalByNo(int no);
+	int updateToyType(Rental rental);
 	int updateRental(Rental rental);
 	int deleteRental(int no);
 	

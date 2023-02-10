@@ -17,6 +17,7 @@ public class Rental {
 	private String toyImg;
 	private String toyPay;
 	private String price;
+	private String toyType;
 	private String status;    // 'Y' : 대여중, 'A' : 주문완료, 'N' : 반납완료, 'R' : 반납중, 'T' : 배송중
 	private Date startDate;
 	private Date endDate;

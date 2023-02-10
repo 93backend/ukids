@@ -324,6 +324,60 @@
 	
 	<!-- ===============================mypage6=============================== -->
 	
+	<select id="selectRentalList" resultType="Rental" parameterType="map">
+		SELECT
+			P.PAYNO, P.TOYNO, P.MEMBERNO, T.TOYNM1, T.TOYIMG, T.TOYPAY, T.TOYTYPE, 
+			P.PRICE, P.STATUS, P.STARTDATE, P.ENDDATE
+		FROM TOY T
+		LEFT OUTER JOIN PAY P ON (T.TOYNO = P.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (P.MEMBERNO = M.MEMBERNO)
+		WHERE P.MEMBERNO = #{memberNo}
+		ORDER BY P.TOYNO DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	
+	<select id="selectRentalCount" parameterType="map" resultType="int">
+		SELECT
+			COUNT(P.PAYNO)
+		FROM PAY P
+		LEFT OUTER JOIN TOY T ON (P.TOYNO = T.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (P.MEMBERNO = M.MEMBERNO)
+		WHERE 1=1
+		AND P.MEMBERNO = #{memberNo}
+	</select>
+	
+	<select id="selectRentalByNo" parameterType="int" resultType="Rental">
+		SELECT
+			P.PAYNO, P.TOYNO, P.MEMBERNO, T.TOYNM1, T.TOYIMG, T.TOYPAY, T.TOYTYPE, 
+			P.PRICE, P.STATUS, P.STARTDATE, P.ENDDATE
+		FROM TOY T
+		LEFT OUTER JOIN PAY P ON (T.TOYNO = P.TOYNO)
+		LEFT OUTER JOIN MEMBER M ON (P.MEMBERNO = M.MEMBERNO)
+		WHERE P.PAYNO = #{payNo}
+	</select>
+	
+	<update id="updateToyType" parameterType="Rental">
+		UPDATE TOY
+		SET
+			TOYTYPE=#{toyType},
+		WHERE
+			TOYNO = #{toyNo}
+	</update>
+	
+	<update id="updateRental" parameterType="Rental">
+		UPDATE PAY
+		SET
+			STATUS=#{status},
+		WHERE
+			PAYNO = #{payNo}
+	</update>
+	
+	<delete id="deletePay" parameterType="Rental">
+		DELETE FROM PAY WHERE PAYNO = #{payNo}
+	</delete>
+	
+	
+	<!-- ===============================mypage7=============================== -->
+	
 	<select id="selectCartList" resultType="Cart" parameterType="map">
 		SELECT
 			C.NO, T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE
@@ -333,6 +387,7 @@
 		WHERE C.MEMBERNO = #{memberNo}
 		ORDER BY C.TOYNO DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
+	
 	<select id="selectCartCount" parameterType="map" resultType="int">
 		SELECT
 			COUNT(C.NO)
