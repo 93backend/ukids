@@ -41,14 +41,17 @@ public class HomeController {
 		
 		Map<String, Object> param = new HashMap<>();
 		
-		if(loginMember == null) { // 기본값
-			param.put("city", "서울");
-			param.put("town", "강남구");
-		} else { // 사용자 주소
-			String[] addrArray = loginMember.getAddress().split(" ");
-			param.put("city", addrArray[0]);
-			param.put("town", addrArray[1]);
-		}
+		param.put("city", "서울");
+		param.put("town", "강남구");
+//		if(loginMember == null) { // 기본값
+//			param.put("city", "서울");
+//			param.put("town", "강남구");
+//		} 
+//		else { // 사용자 주소
+//			String[] addrArray = loginMember.getAddress().split(" ");
+//			param.put("city", addrArray[0]);
+//			param.put("town", addrArray[1]);
+//		}
 		String address = (String) param.get("city") + " " + (String) param.get("town");
 		
 		
