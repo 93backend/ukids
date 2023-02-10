@@ -231,7 +231,7 @@
 		SELECT
 			COUNT(no)
 		FROM N_CLAIM
-		WHERE nuNo = #{no}
+		WHERE nuNo = #{no} AND status = 'Y'
 	</select>
 	
 	<select id="selectNurseryWish" resultType="int" parameterType="NWish">

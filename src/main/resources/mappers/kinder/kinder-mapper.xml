@@ -214,7 +214,7 @@
 		SELECT
 			COUNT(no)
 		FROM K_CLAIM
-		WHERE kinNo = #{no}
+		WHERE kinNo = #{no} AND status = 'Y'
 	</select>
 	
 	<select id="selectKinderWish" resultType="int" parameterType="KWish">
