@@ -164,9 +164,9 @@
                   <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
                       href="account-single-ticket.html">[[${board.title}]]</a></td>
                   <td class="py-3 cgw9" th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
-                  <td class="py-3 cgw9"><a href="#"><span
-                        class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;<a href="#"><span
-                        class="badge bg-secondary m-0">삭제</span></a></td>
+                  <td class="py-3 cgw9">
+                  		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" id="btnUpdate">수정</button>&nbsp;&nbsp;
+                        <button type="button" class="badge bg-secondary m-0 cgw30" id="btnDelete">삭제</button></td>
                 </tr>
                 </th:block>
               </tbody>
@@ -225,9 +225,13 @@
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
 	<script type="text/javascript">
+		
+		
 		function movePage(pageUrl){
 			location.href = encodeURI(pageUrl);	
 		}
+		
+		
 	</script>
 </body>
 

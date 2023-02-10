@@ -165,7 +165,7 @@
 								<tr th:each="nclaim, stat : ${nlist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9">
-										<a class="nav-link-style-cgw fw-medium cgw25" href="account-single-ticket.html">[[${nclaim.title}]]</a>
+										<a class="nav-link-style-cgw fw-medium cgw25" th:onclick="nclaimView([[${nclaim.no}]]);">[[${nclaim.title}]]</a>
 									</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -174,13 +174,13 @@
 									</td>
 									<th:block th:if="${nclaim.confirm == 'N'}">
 									<td class="py-3 cgw9">
-										<a href="#"><span class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;
-										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="nclaimUpdate([[${nclaim.no}]]);">수정</button>&nbsp;&nbsp;
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="nclaimDelete([[${nclaim.knNo}]], [[${nclaim.no}]]);">삭제</button>
 									</td>
 									</th:block>
 									<th:block th:if="${nclaim.confirm == 'Y'}">
 									<td class="py-3 cgw9">
-										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="nclaimDelete([[${nclaim.knNo}]], [[${nclaim.no}]]);">삭제</button></a>
 									</td>
 									</th:block>
 								</tr>
@@ -240,7 +240,7 @@
 								<tr th:each="kclaim, stat : ${klist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9">
-										<a class="nav-link-style-cgw fw-medium cgw25" href="account-single-ticket.html">[[${kclaim.title}]]</a>
+										<a class="nav-link-style-cgw fw-medium cgw25" th:onclick="kclaimView([[${kclaim.no}]]);">[[${kclaim.title}]]</a>
 									</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kclaim.createDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -249,13 +249,13 @@
 									</td>
 									<th:block th:if="${kclaim.confirm == 'N'}">
 									<td class="py-3 cgw9">
-										<a href="#"><span class="badge-cgw3 bg-secondary-cgw1 m-0">수정</span></a>&nbsp;&nbsp;
-										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="kclaimUpdate([[${kclaim.no}]]);">수정</button>&nbsp;&nbsp;
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="kclaimDelete([[${kclaim.knNo}]], [[${kclaim.no}]]);">삭제</button>
 									</td>
 									</th:block>
 									<th:block th:if="${kclaim.confirm == 'Y'}">
 									<td class="py-3 cgw9">
-										<a href="#"><span class="badge bg-secondary m-0">삭제</span></a>
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="kclaimDelete([[${kclaim.knNo}]], [[${kclaim.no}]]);">삭제</button>
 									</td>
 									</th:block>
 								</tr>
@@ -326,6 +326,34 @@
 			pageUrl += '&nPage=' + nPage 
 			location.href = encodeURI(pageUrl);	
 		}
+		function nclaimUpdate(no) {
+    		location.href = "/claim-update?type=어린이집" + "&no=" + no;
+    	}
+		function kclaimUpdate(no) {
+    		location.href = "/claim-update?type=유치원" + "&no=" + no;
+    	}
+		function nclaimDelete(knNo, no) {
+    		var url = "/mypage-claim-delete?type=어린이집" + "&no=" + no + "&knNo=" + knNo;
+    		if(confirm("정말로 불편사항 신고글을 삭제 하시겠습니까?")) {
+    			location.replace(url);
+    		}
+    	}
+		function kclaimDelete(knNo, no) {
+    		var url = "/mypage-claim-delete?type=유치원" + "&no=" + no + "&knNo=" + knNo;
+    		if(confirm("정말로 불편사항 신고글을 삭제 하시겠습니까?")) {
+    			location.replace(url);
+    		}
+    	}
+		function nclaimView(no) {
+    		location.href = "/claim-view?type=어린이집" + "&no=" + no;
+    	}
+		function kclaimView(no) {
+    		location.href = "/claim-view?type=유치원" + "&no=" + no;
+    	}
+    	
+    	
+	    
+	    
 	</script>
 </body>
 

@@ -28,12 +28,15 @@ import com.multi.ukids.toy.model.vo.Cart;
 import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @SessionAttributes("loginMember")
 @Controller
 public class MypageController {
+	
+	final static private String savePath = "c:\\ukids\\";
 	
 	@Autowired
 	private MemberService memberService;
@@ -135,9 +138,6 @@ public class MypageController {
 			int no
 			) {
 		log.info("어린이집 신청 삭제 요청");
-		if (loginMember == null) {
-			return "/";
-		}
 		
 		int result = service.deleteNAdmission(no);
 		
@@ -255,6 +255,33 @@ public class MypageController {
 		return "mypage-4";
 	}
 	
+	@RequestMapping("/mypage-claim-delete")
+	public String claimDelete(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		String type = param.get("type");
+		int no = Integer.parseInt(param.get("no"));
+		int knNo = Integer.parseInt(param.get("knNo"));
+		
+		int result = 0;
+		
+		if(type.equals("어린이집")) {
+			result = service.deleteNurseryClaim(no, savePath);
+		} else {
+			result = service.deleteKinderClaim(no, savePath);
+		}
+		
+		if(result > 0) {
+			model.addAttribute("msg", "불편사항 신고글 삭제가 정상적으로 완료되었습니다.");
+		} else {
+			model.addAttribute("msg", "불편사항 신고글 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-4");
+		
+		return "common/msg";
+	}
+	
 	@GetMapping("/mypage-5")
 	public String mypageView5(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -279,6 +306,23 @@ public class MypageController {
 		model.addAttribute("pageInfo", pageInfo);
 		
 		return "mypage-5";
+	}
+	
+	@RequestMapping("/delete")
+	public String deleteBoard(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int boardNo
+			) {
+		log.info("게시글 삭제 요청 boardNo : " + boardNo);
+		int result = service.deleteBoard(boardNo, savePath);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-5");
+		return "common/msg";
 	}
 	
 	@GetMapping("/mypage-6")
