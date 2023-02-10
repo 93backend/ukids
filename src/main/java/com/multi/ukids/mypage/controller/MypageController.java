@@ -239,7 +239,7 @@ public class MypageController {
 		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 4);
 		List<Claim> nlist = service.getNurseryClaimList(npageInfo, param);
 		
-		System.out.println("nlist(불편사항) : " + nlist);
+//		System.out.println("nlist(불편사항) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nPageInfo", npageInfo);
 		
@@ -247,7 +247,7 @@ public class MypageController {
 		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 4);
 		List<Claim> klist = service.getKinderClaimList(kpageInfo, param);
 		
-		System.out.println("klist(불편사항) : " + klist);
+//		System.out.println("klist(불편사항) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
 		model.addAttribute("param", param);	
@@ -300,7 +300,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 8);
 		List<Board> list = service.getBoardList(pageInfo, param);
 
-		System.out.println("list : " + list);
+//		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);

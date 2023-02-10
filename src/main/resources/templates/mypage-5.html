@@ -162,7 +162,7 @@
                 <tr th:each="board, stat : ${list}">
                   <td class="py-3 cgw9">[[${board.boardNo}]]</td>
                   <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      href="account-single-ticket.html">[[${board.title}]]</a></td>
+                      th:onclick="boardView([[${board.boardNo}]]);">[[${board.title}]]</a></td>
                   <td class="py-3 cgw9" th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9">
                   		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="boardUpdate([[${board.boardNo}]]);">수정</button>&nbsp;&nbsp;
@@ -225,6 +225,10 @@
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
 	<script type="text/javascript">
+		function boardView(boardNo) {
+			location.href = "/board-view?&boardNo=" + boardNo;
+		}
+		
 		function boardUpdate(boardNo) {
 			location.href = "/board-update?" + "&boardNo=" + boardNo;
 		}
