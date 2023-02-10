@@ -50,11 +50,6 @@ public class MemberService {
 	@Transactional(rollbackFor = Exception.class)
 	public int save(Member member) {
 		int result = 0;
-		
-		if (member.getName() == null || member.getName().equals("") || (member.getName().length() < 1)) {
-			System.out.println("이름이 입력되지 않았거나 잘못된 형식입니다.");
-			return -1;
-		}
 
 		if(member.getMemberNo() == 0) { // 회원가입
 			String encodePW = pwEncoder.encode(member.getPassword());

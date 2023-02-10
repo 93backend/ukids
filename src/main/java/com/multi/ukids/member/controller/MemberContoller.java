@@ -112,15 +112,11 @@ public class MemberContoller {
 		if(result > 0) {
 			model.addObject("msg","회원가입에 성공하였습니다.");
 			model.addObject("location","/");
-		}else {
-			if (member.getName().equals("") || member.getName().equals(" ")) {
-				model.addObject("msg", "이름을 입력하지 않았거나 잘못된 형식을 입력하였습니다.");
-				model.addObject("location","/");
-			} else {
-				model.addObject("msg","회원가입에 실패하였습니다. 다시 확인 해주세요.");
-				model.addObject("location","/");
-			}
+		} else {
+			model.addObject("msg", "회원가입에 실패하였습니다. 다시 확인 해주세요.");
+			model.addObject("location", "/");
 		}
+		
 		model.setViewName("common/msg");
 		return model;
 	}

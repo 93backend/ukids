@@ -32,6 +32,8 @@
 
   <!--jquery-->
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="js/join.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- 폰트 -->
   <style>
@@ -93,7 +95,7 @@
               <div class="card-body">
                 <h2 class="h4 mb-3 ms-5 mt-2">회원가입</h2>
                 <hr>
-                <form class="needs-validation mt-3 ms-3" novalidate th:action="@{/member/enroll}" method="post">
+                <form class="needs-validation mt-3 ms-3" th:action="@{/member/enroll}" method="post" onsubmit="return submitCheck();">
                   <div class="product-details-cgw pb-3 cgw16 ms-5 mt-4 border-end">
                     <div class="col-sm-10">
                       <label class="form-label" for="account-fn">아이디</label><br>
@@ -111,63 +113,12 @@
                       <input class="form-control-cgw2" type="text" name="id" id="newId" placeholder="아이디 (4글자 이상)" th:value="${kakaoMap.email}" required>
                       </th:block>
                       <button class="btn btn-primary-cgw2 btn-sm mx-4" type="button" id="checkDuplicate" value="중복검사">중복확인</button>
-                      
-                      <!-- 회원가입 관련 스크립트 코드 -->
-                      <script type="text/javascript">
-                  	$(function() {
-                		$("#password2").blur((event) => {
-                			let pass1 = $("#password1").val();			
-                			let pass2 = $(event.target).val();
-                			
-                			if(pass1.trim() != pass2.trim()) {
-                				alert("비밀번호가 일치하지 않습니다.");
-                				
-                				$("#password1").val("");
-                				$(event.target).val("");
-                				$("#password1").focus();
-                			}
-                		});
-                    	
-                	    $("#enrollSubmit").on("click", () => {
-                	    	// TODO 전송하기 전에 각 영역에 유효성 검사로직을 추가하는 부분!
-                	    	//return false;
-                	    });
-                	    
-                	    // 아이디 중복을 확인하는 AJAX 코드
-                	    $("#checkDuplicate").on("click", () => {
-                	    	let id = $("#newId").val().trim();
-                	    	
-                	    	if(id.length < 4){
-                	    		alert("아이디는 최소 4글자입니다.")
-                	    		return;
-                	    	}
-                	    	
-                	    	$.ajax({
-                	    		type:"get",
-                	    		url:"[[@{/member/idCheck}]]",
-                	    		data:{id}, // 속성값이 키값과 같은 이름을 가질때 하나로만 key-value 채운다.
-                	    		success:
-                	    			(data)=>{ // validate key값
-                	    				console.log(data);
-                	    				if(data.validate === true){
-                	    					alert("이미 사용중인 아이디입니다.")
-                	    				} else{
-                	    					alert("사용 가능합니다.")
-                	    				}
-                	    			},
-                	    		error:
-                	    			(e)=>{
-                						console.log(e);	    				
-                	    			}
-                	    	});
-                	    });
-                	});
-                      </script>
                     </div>
+                    
                     <div class="col-sm-9">
                       <label class="form-label" for="name">이름</label>
                       <th:block th:if="${kakaoMap == null}">
-                      <input class="form-control-cgw1" type="text" name="name" id="name" required placeholder="이름을 입력해 주세요.">
+                      <input class="form-control-cgw1" type="text" name="name" id="name" placeholder="이름을 입력해 주세요.">
                       </th:block>
                       <th:block th:if="${kakaoMap != null}">
                       <input class="form-control-cgw1" type="text" name="name" id="name" th:value="${kakaoMap.nickname}" required>
@@ -177,22 +128,22 @@
                     <div class="col-sm-9">
                       <label class="form-label" for="account-pass">비밀번호</label>
                       <div class="password-toggle">
-                        <input class="form-control" type="password" name="password" id="password1" required>
+                        <input class="form-control" type="password" name="password" id="password1" placeholder="비밀번호는 4자 이상 20자 이하만 가능합니다.">
                       </div>
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="password2">비밀번호 확인</label>
                       <div class="password-toggle">
-                        <input class="form-control" type="password" id="password2" required>
+                        <input class="form-control" type="password" id="password2">
                       </div>
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-email">이메일</label>
-                      <input class="form-control-cgw1" type="email" name="email" id="account-email" placeholder="ukids@example.com" required>
+                      <input class="form-control-cgw1" type="text" name="email" id="account-email" placeholder="ukids@example.com">
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-phone">연락처</label>
-                      <input class="form-control-cgw1" type="text" name="phone" id="account-phone" placeholder="010-0000-0000" required>
+                      <input class="form-control-cgw1" type="text" name="phone" id="account-phone" placeholder="010-0000-0000">
                     </div>
                     <div class="col-sm-9">
                       <label class="form-label" for="account-address">주소</label>
@@ -205,31 +156,16 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <hr class="mt-4"> -->
                   <div class="row gx-4 gy-3 product-details cgw10 me-5 mt-2">
                   	<h2 class="h4">회원 유형을 선택해주세요</h2>
 					<div class="form-check form-check-inline d-lnline-block mt-0" style="margin-left: 10px; width: 150px;">
-					  <input class="form-check-input" type="radio" id="user" name="role" value="ROLE_USER">
+					  <input class="form-check-input" type="radio" id="user" name="role" value="ROLE_USER" checked>
 					  <label class="form-check-label" for="user">일반회원(학부모)</label>
 					</div>
 					<div class="form-check form-check-inline d-lnline-block w-25 mt-0" style="float: left;">
 					  <input class="form-check-input" type="radio" id="teacher" name="role" value="ROLE_T">
 					  <label class="form-check-label" for="teacher">선생님</label>
 					</div><hr>
-					 <!-- 자녀 나이 체크박스 제한 관련 스크립트 -->  
-                      <script type="text/javascript">
-                      $(document).ready(function(){ 
-                    	$("input[type='checkbox']").on("click", function(){ 
-                    		let count = $("input:checked[type='checkbox']").length;     
-                    		let limit = $("#account-childNum").val();
-                    			    if(count > limit){ 
-                    			    $(this).prop("checked" , false); 
-                    	                    //또는 this.checked=false;
-                    				alert("선택한 자녀의 수 만큼 체크가 가능합니다."); 
-                    			  }		 
-                    		}); 
-                    	}); 
-                      </script>
                     <h2 class="h4 mb-0">일반회원이신가요?</h2>
                     <p class="fs-sm text-muted mb-0">일반회원입력란입니다. (선택입력 사항입니다.)</p>
                     <br>
@@ -268,7 +204,7 @@
                     </div>
                     <div class="col-12 text-end mb-2">
                       <a class="kakaoEnroll d-inline-block w-50 mx-1" th:href="@{https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=4f6893c26b967b74677e6e11e11210b6&redirect_uri=http://localhost/member/kakaoEnroll}"><img th:src="@{/img/ukids/9.png}"></a>
-                      <button class="btn btn-primary-cgw1" type="submit"><i class="ci-user me-2 ms-n1"></i>회원가입</button>
+                      <button id="enrollSubmit" class="btn btn-primary-cgw1" type="submit"><i class="ci-user me-2 ms-n1"></i>회원가입</button>
                     </div>
                   </div>
                 </form>
@@ -356,6 +292,37 @@
         }
       }).open();
     }
+  </script>
+  <script type="text/javascript">
+	// 아이디 중복을 확인하는 AJAX 코드
+	$("#checkDuplicate").on("click", () => {
+		let id = $("#newId").val().trim();
+
+		if (id.length < 4) {
+			alert("아이디는 최소 4글자입니다.")
+			return;
+		}
+
+		$.ajax({
+			type: "get",
+			url: "[[@{/member/idCheck}]]",
+			data: { id }, // 속성값이 키값과 같은 이름을 가질때 하나로만 key-value 채운다.
+			success:
+				(data) => { // validate key값
+					console.log(data);
+					if (data.validate === true) {
+						alert("이미 사용중인 아이디입니다.")
+					} else {
+						alert("사용 가능합니다.")
+					}
+				},
+			error:
+				(e) => {
+					console.log(e);
+				}
+		});
+	});
+
   </script>
 </body>
 
