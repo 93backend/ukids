@@ -160,20 +160,19 @@
 			  
               <div class="col mb-2">
                 <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-buy.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
+                  <div class="card-img-top position-relative overflow-hidden"><img src="img/ukids/nursery.JPG" alt="Product image">
                     <!-- Wishlist button-->
                     <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
+                      style="margin: 12px;">
+                      <i class="ci-heart-filled"></i>
+                    </button>
                   </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
                     <div class="card-footer mt-n1 py-0 border-0 mb-3">
                       <div class="d-flex align-items-center position-relative py-3 mt-2">
-                      	<a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">[[${nwish.knName}]]</a></div>
+                      	<a class="nav-link-style fs-sm stretched-link" th:href="@{|/nursery-detail?&no=${nwish.knNo}&i=7|}">[[${nwish.knName}]]</a></div>
                         <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">[[${nwish.knAddr}]]</div>
                       </div>
-                    </a>
                   </article>
                 </div>
                 </th:block>
@@ -230,20 +229,17 @@
 			  
               <div class="col mb-2">
                 <article class="card h-100 border-0 shadow">
-                  <div class="card-img-top position-relative overflow-hidden"><a class="d-block"
-                      href="nft-single-buy.html"><img src="img/ukids/nursery.JPG" alt="Product image"></a>
+                  <div class="card-img-top position-relative overflow-hidden"><img src="img/ukids/nursery.JPG" alt="Product image">
                     <!-- Wishlist button-->
                     <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
                       style="margin: 12px;"><i class="ci-heart-filled"></i></button>
                   </div>
-                  <a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">
                     <div class="card-footer mt-n1 py-0 border-0 mb-3">
                       <div class="d-flex align-items-center position-relative py-3 mt-2">
-                      	<a class="nav-link-style fs-sm stretched-link" href="nft-vendor.html">[[${kwish.knName}]]</a></div>
+                      	<a class="nav-link-style fs-sm stretched-link" th:href="@{|/kinder-detail?&no=${kwish.knNo}&i=7|}">[[${kwish.knName}]]</a></div>
                         <i class="ci-location me-2 cgw16 fs-ms cgw27"></i><div class="fs-ms text-muted cgw24">[[${kwish.knAddr}]]</div>
                       </div>
-                    </a>
                   </article>
                 </div>
                 </th:block>
@@ -316,6 +312,13 @@
 			pageUrl += '&nPage=' + nPage 
 			location.href = encodeURI(pageUrl);	
 		}
+		function nurseryView(nuNo) {
+    		location.href = "/nursery-detail?&no=" + nuNo + "&i=4";
+    	}
+		function kinderView(kinNo) {
+    		location.href = "/kinder-detail?&no=" + kinNo + "&i=4";
+    	}
+		
 	</script>
 </body>
 

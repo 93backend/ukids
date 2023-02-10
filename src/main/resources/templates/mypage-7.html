@@ -166,11 +166,11 @@
 									<input class="form-check-input" type="checkbox" name="toyCheck"
 									id="subscribe_me" onclick="checkSelectAll()">&nbsp;&nbsp;
 									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
-									href="shop-single-v1.html" style="width: 10rem;"><img
+									th:href="@{|/toy-detail?no=${cart.toyNo}|}" style="width: 10rem;"><img
 										th:src="${cart.toyImg}" alt="Product" th:if="${cart.toyImg != null}"></a>
 									<div class="pt-2">
 										<h3 class="product-title fs-base mb-2">
-											<a href="shop-single-v1.html">[[${cart.toyNm1}]]</a>
+											<a th:href="@{|/toy-detail?no=${cart.toyNo}|}">[[${cart.toyNm1}]]</a>
 											<br><br>
 										</h3>
 										<div class="fs-sm">대여기간</div>
@@ -293,6 +293,8 @@
     	}
     	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
     }
+    
+   
   </script>
 </body>
 

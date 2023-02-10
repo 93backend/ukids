@@ -165,7 +165,7 @@
 								<tr th:each="nclaim, stat : ${nlist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9">
-										<a class="nav-link-style-cgw fw-medium cgw25" th:onclick="nclaimView([[${nclaim.no}]]);">[[${nclaim.title}]]</a>
+										<a class="nav-link-style-cgw fw-medium cgw25" th:href="@{|/claim-view?type=어린이집&no=${nclaim.no}|}">[[${nclaim.title}]]</a>
 									</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -240,7 +240,7 @@
 								<tr th:each="kclaim, stat : ${klist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9">
-										<a class="nav-link-style-cgw fw-medium cgw25" th:onclick="kclaimView([[${kclaim.no}]]);">[[${kclaim.title}]]</a>
+										<a class="nav-link-style-cgw fw-medium cgw25" th:href="@{|/claim-view?type=유치원&no=${kclaim.no}|}">[[${kclaim.title}]]</a>
 									</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kclaim.createDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -344,13 +344,8 @@
     			location.replace(url);
     		}
     	}
-		function nclaimView(no) {
-    		location.href = "/claim-view?type=어린이집" + "&no=" + no;
-    	}
-		function kclaimView(no) {
-    		location.href = "/claim-view?type=유치원" + "&no=" + no;
-    	}
-    	
+		
+		
     	
 	    
 	    

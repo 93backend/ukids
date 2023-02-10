@@ -171,9 +171,9 @@
 				</th:block>
 				<th:block th:if="${list != null}">
                 <tr th:each="rental, stat : ${list}">
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" th:src="${rental.toyImg}"></a>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4" th:href="@{|/toy-detail?no=${rental.toyNo}|}"><img class="cgw21" th:src="${rental.toyImg}"></a>
                   </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" href="#">[[${rental.toyNm1}]]</a></td>
+                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" th:href="@{|/toy-detail?no=${rental.toyNo}|}">[[${rental.toyNm1}]]</a></td>
                   <td class="py-3 cgw9 cgw22" th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9 cgw22">
 					<span th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></span><br>
@@ -257,6 +257,8 @@
 		function movePage(pageUrl){
 			location.href = encodeURI(pageUrl);	
 		}
+		
+		
 	</script>
 </body>
 
