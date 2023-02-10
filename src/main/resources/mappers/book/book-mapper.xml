@@ -20,11 +20,11 @@
 	SELECT no, ranking, bookname, authors, publisher, publication_year, class_nm, loan_count, bookImageURL, age
 	FROM BOOK
 	WHERE 1=1
-	<if test="searchType != null">
-			AND '${searchType}' LIKE '%${searchValue}%'
-		</if>
-	<if test="searchValue != null">
-		AND bookname LIKE '%${searchValue}%'
+	<if test="bookname != null">
+		AND bookname LIKE '%${bookname}%'
+	</if>
+	<if test="authors != null">
+		AND authors LIKE '%${authors}%'
 	</if>
 	<if test="age != null">
 		AND (
@@ -41,11 +41,11 @@
 	SELECT COUNT(no)
 	FROM BOOK
 			WHERE 1=1
-	<if test="searchType != null">
-			AND '${searchType}' LIKE '%${searchValue}%'
-		</if>
-	<if test="searchValue != null">
-		AND bookname LIKE '%${searchValue}%'
+	<if test="bookname != null">
+		AND bookname LIKE '%${bookname}%'
+	</if>
+	<if test="authors != null">
+		AND authors LIKE '%${authors}%'
 	</if>
 	<if test="age != null">
 		AND (

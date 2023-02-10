@@ -24,19 +24,22 @@ public class BookController {
 	private BookService bookService;
 	
 	   @GetMapping("/book")
-	      public String book(Model model,Integer page, @RequestParam(required=false) String searchValue,@RequestParam(required=false) List<String> searchType) {
+	      public String book(Model model,Integer page,
+	    		  @RequestParam(required=false) String searchValue,
+	    		  @RequestParam(required=false) String searchType,
+	    		  @RequestParam(required=false) List<String> age) {
 	       if(page == null) {
 	          page = 1;
 	       }
 	         Map<String, Object> searchMap = new HashMap<String, Object>(); 
 	         try {
+	        	 
 	            if(searchValue != null && searchValue.length() > 0) {
-	               searchMap.put("searchValue", searchValue); 
-	               searchMap.put("searchType", searchType); 
+	               searchMap.put(searchType, searchValue); 
 	            }
-	            if(searchType != null) {
-	               searchMap.put("searchType", searchType); 
-	            }
+	            if(age != null) {
+		               searchMap.put("age", age); 
+		            }
 	         } catch (Exception e) {}         
 	                  
 	         int bookCount = bookService.getBookCount(searchMap);
@@ -47,6 +50,7 @@ public class BookController {
 	         model.addAttribute("list", list);
 	         model.addAttribute("searchType", searchType);
 	         model.addAttribute("searchValue", searchValue);
+	         model.addAttribute("age", age);
 	         model.addAttribute("pageInfo", pageInfo);
 	         return "book";
 	         

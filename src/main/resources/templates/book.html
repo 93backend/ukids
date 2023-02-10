@@ -86,10 +86,10 @@
             <div style="width: 900px;">
               <div class="input-group">
               <div class="form-inline">
-                  <select class="form-select" name="searchType" id="searchType" onchange="cityChange()" style="border-radius: 5px; width: 200px; display: inline;">
-                    <option value=" " th:selected="${#strings.equals(param.searchType, ' ')}">전체</option>
-                    <option value="bookname" th:selected="${#strings.equals(param.searchType, 'bookname')}">제목</option>
-                    <option value="authors" th:selected="${#strings.equals(param.searchType, 'authors')}">저자</option>
+                  <select class="form-select" name="searchType" id="searchType" style="border-radius: 5px; width: 200px; display: inline;">
+                   <!--  <option value=" " th:selected="${#strings.equals(param.searchType, ' ')}">전체</option> -->
+                    <option value="bookname">제목</option>
+                    <option value="authors">저자</option>
                   </select>
               </div>
                <!--  <div class="dropdown" data-bs-toggle="select">
