@@ -165,8 +165,8 @@
                       href="account-single-ticket.html">[[${board.title}]]</a></td>
                   <td class="py-3 cgw9" th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9">
-                  		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" id="btnUpdate">수정</button>&nbsp;&nbsp;
-                        <button type="button" class="badge bg-secondary m-0 cgw30" id="btnDelete">삭제</button></td>
+                  		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="boardUpdate([[${board.boardNo}]]);">수정</button>&nbsp;&nbsp;
+                        <button type="button" class="badge bg-secondary m-0 cgw30" th:onclick="boardDelete([[${board.boardNo}]]);">삭제</button></td>
                 </tr>
                 </th:block>
               </tbody>
@@ -225,7 +225,16 @@
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
 	<script type="text/javascript">
+		function boardUpdate(boardNo) {
+			location.href = "/board-update?" + "&boardNo=" + boardNo;
+		}
 		
+		function boardDelete(boardNo) {
+			var url = "/mypage-board-delete?" + "&boardNo=" + boardNo;
+			if(confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
 		
 		function movePage(pageUrl){
 			location.href = encodeURI(pageUrl);	

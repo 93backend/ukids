@@ -308,22 +308,41 @@ public class MypageController {
 		return "mypage-5";
 	}
 	
-	@RequestMapping("/delete")
-	public String deleteBoard(Model model,  HttpSession session,
+	@RequestMapping("/mypage-board-delete")
+	public String boardDelete(Model model,  HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int boardNo
-			) {
-		log.info("게시글 삭제 요청 boardNo : " + boardNo);
+			@RequestParam Map<String, String> param
+	) {
+		int boardNo = Integer.parseInt(param.get("boardNo"));
+		
 		int result = service.deleteBoard(boardNo, savePath);
 		
 		if(result > 0) {
 			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
-		}else {
+		} else {
 			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
 		model.addAttribute("location", "/mypage-5");
+		
 		return "common/msg";
 	}
+	
+//	@RequestMapping("/delete")
+//	public String deleteBoard(Model model,  HttpSession session,
+//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+//			int boardNo
+//			) {
+//		log.info("게시글 삭제 요청 boardNo : " + boardNo);
+//		int result = service.deleteBoard(boardNo, savePath);
+//		
+//		if(result > 0) {
+//			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
+//		}else {
+//			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
+//		}
+//		model.addAttribute("location", "/mypage-5");
+//		return "common/msg";
+//	}
 	
 	@GetMapping("/mypage-6")
 	public String mypageView6(Model model,
