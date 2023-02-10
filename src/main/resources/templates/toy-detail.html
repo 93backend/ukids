@@ -94,7 +94,6 @@
               <!-- Product details-->
               <div class="col-lg-5 pt-4 pt-lg-0">
                 <div class="product-details ms-auto pb-3">
-                  <form id="payInfo" method="get">
                     <div> 
                       <ul class="toy-details">
                         <li>상품명</li>
@@ -116,19 +115,20 @@
                     </div>
                     <p class="rentdate">대여기간</p>
                     <!-- Date range -->
-                    
+                    <form id="payInfo" method="get">
                     <div class="mb-3" style="max-width: 30rem; margin-left: 35px; margin-right: 20px;">
                       <div class="input-group"><span class="input-group-text"><i class="ci-calendar"></i></span>
                         <input name="startDate" class="form-control date-picker" type="text" placeholder="대여시작일" id="start-date" onchange="changePickr()">
                         <input name="endDate" class="form-control date-picker" type="text" placeholder="대여반납일" id="end-date" onclick="clickPickr()">
-                        <input name="no" type="hidden" th:value="${toy.toyNo}">
+                        <input name="toyNo" type="hidden" th:value="${toy.toyNo}">
+                      	
                       </div>
                     </div>  
                     <div class="rentbtn">
                       <div class="n-add-cart-layer" style="width: 380px; height: 40px;">
                           <div class="add_cart"><div style="display: inline;">장바구니에 상품이 담겼습니다.</div><a th:href="@{/mypage-7}" class="cart">&nbsp;장바구니로 가기</a></div>
                       </div>
-                       <button type="submit" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93" th:if="${session.loginMember != null}"><i class="ci-cart"></i>&nbsp;장바구니</button>
+                       <button type="submit" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93" th:if="${session.loginMember != null}" th:onclick="addCart([[${session.loginMember.memberNo}]]);"><i class="ci-cart"></i>&nbsp;장바구니</button>
                        <a href="#signin-modal" data-bs-toggle="modal"><button type="button" class="btn btn-outline-primary rounded-pill" id="cartbtn" style="color:#fc6c93" th:if="${session.loginMember == null}" th:onclick="|alert('로그인을 해주세요.')|"><i class="ci-cart"></i>&nbsp;장바구니</button></a>
                        <button type="submit" class="btn btn-primary rounded-pill" id="rentbtn2" th:if="${session.loginMember != null}">₩ 대여하기</button>
                        <a href="#signin-modal" data-bs-toggle="modal"><button type="button" class="btn btn-primary rounded-pill" id="rentbtn2" th:if="${session.loginMember == null}" th:onclick="|alert('로그인을 해주세요.')|">₩ 대여하기</button></a>
@@ -394,7 +394,7 @@ if(type == null){
 	
 	$("#end-date").click(function(){
 		$(".flatpickr-calendar").hide();
-		alert("현재 장난감은 대여중입니다. 다음에 이용해 주세요ㅣ");
+		alert("현재 장난감은 대여중입니다. 다음에 이용해 주세요!");
 
 	});
 
@@ -441,6 +441,31 @@ function deleteReview(no, toyNo){
 	var url = "/toyReviewDel?no=";
 	var requestURL = url + no +"&toyNo=" + toyNo;
 	location.replace(requestURL);
+}
+function addCart(memberNo){
+	const param_password = $("<input type='hidden' value=" + memberNo + " name='memberNo' readonly>");
+	$("#payInfo").append(param_password);
+	var formArray = $("#payInfo").serializeArray();
+	
+	  var returnArray = {};	
+	
+	    for (var i = 0; i < formArray.length; i++){
+	        returnArray[formArray[i]['name']] = formArray[i]['value'];
+	    }
+	  console.log(formArray);
+	  console.log(returnArray);
+	$.ajax({
+		type : 'POST',
+		url : '/addCart',
+		dataType: 'text',
+		data : JSON.stringify(returnArray),
+		contentType:"application/json",
+		error: function(xhr, status, error){
+			alert("에러"+error);
+		},
+		success : function(aa){
+		}
+	});
 }
 
 </script>

@@ -15,7 +15,7 @@ public class Cart {
 	private int memberNo;
 	public String toyNm1;
 	public String toyImg;
-	private Date startdate;
+	private Date startDate;
 	private Date endDate;
 	private String toyPay;
 	private int realPay;

@@ -174,7 +174,7 @@
 											<br><br>
 										</h3>
 										<div class="fs-sm">대여기간</div>
-										<span class="fs-sm" th:text="${#dates.format(cart.startdate, 'yyyy-MM-dd ~')}"></span>
+										<span class="fs-sm" th:text="${#dates.format(cart.startDate, 'yyyy-MM-dd ~')}"></span>
 										<span class="fs-sm" th:text="|${#dates.format(cart.endDate, 'yyyy-MM-dd')} (${cart.date}일)|"></span>
 										<div class="fs-lg cgw3 pt-2">
 											<small>[[${cart.realPay}]]원</small>
@@ -230,7 +230,7 @@
 									<button class="btn btn-primary-cgw2 btn-sm mx-2" type="button"
 									th:onclick="|location.href='@{/toy-main}'|">상품계속보기</button>
 									<button class="btn btn-primary-cgw1 btn-sm mx-2" type="button" 
-									th:onclick="|location.href='@{/pay}'|">&nbsp;&nbsp;대여하기&nbsp;&nbsp;</button>
+									th:onclick="movePay()">&nbsp;&nbsp;대여하기&nbsp;&nbsp;</button>
 								</div>
 							</div>
 						</div>
@@ -280,6 +280,18 @@
       checkboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked
       })
+    }
+    function movePay(){
+    	var checkedCartNo = [1,2];
+    	var noToString = ''
+    	for(var i=0; i<checkedCartNo.length; i++){
+    		if(i!=0){
+    			noToString += ','+checkedCartNo[i]
+    		}else{
+    			noToString += checkedCartNo[i]
+    		}
+    	}
+    	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
     }
   </script>
 </body>

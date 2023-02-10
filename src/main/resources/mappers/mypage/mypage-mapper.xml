@@ -268,58 +268,6 @@
 		UPDATE K_CLAIM SET status = 'N' WHERE no = #{no}
 	</update>
 	
-	<!-- ===============================mypage5=============================== -->
-	
-	<select id="selectBoardList" resultType="Board" parameterType="map">
-		SELECT
-			B.BOARDNO, B.MEMBERNO, B.TITLE, B.CONTENT, B.TYPE, B.STATUS, B.CREATEDATE
-		FROM BOARD B
-		LEFT OUTER JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO)
-		WHERE B.MEMBERNO = #{memberNo}
-		ORDER BY B.BOARDNO DESC LIMIT ${limit} OFFSET ${offset}
-	</select>
-	
-	<select id="selectBoardCount" parameterType="map" resultType="int">
-		SELECT
-			COUNT(DISTINCT B.BOARDNO)
-		FROM BOARD B
-		LEFT OUTER JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO)
-		WHERE B.STATUS = 'Y'
-		AND B.MEMBERNO = #{memberNo}
-	</select>
-	
-	<select id="selectBoardByNo" parameterType="int" resultType="Rental">
-		SELECT  
-			B.BOARDNO, B.MEMBERNO, B.TITLE, B.CONTENT, B.TYPE, B.STATUS, B.CREATEDATE
-		FROM BOARD B
-		LEFT OUTER JOIN MEMBER M ON(B.MEMBERNO = M.MEMBERNO)
-		WHERE B.STATUS = 'Y'
-		AND B.BOARDNO = #{boardNo}
-	</select>
-	
-	<update id="updateReadCount" parameterType="map">
-		UPDATE BOARD SET READCOUNT=#{readCount} WHERE BOARDNO=#{boardNo}
-	</update>
-	
-	<update id="updateBoard" parameterType="Board">
-		UPDATE BOARD
-		SET
-			TITLE=#{title},
-			CONTENT=#{content},
-			<if test="originalFileName != null">
-				ORIGINALFILENAME=#{originalFileName},
-			</if>
-			<if test="renamedFileName != null">
-				RENAMEDFILENAME=#{renamedFileName},
-			</if>
-			MODIFYDATE = CURRENT_TIMESTAMP
-		WHERE
-			BOARDNO=#{boardNo}
-	</update>
-	
-	<update id="deleteBoard" parameterType="int">
-		UPDATE BOARD SET STATUS='N' WHERE BNO=#{bNo}
-	</update>
 	
 	
 	<!-- ===============================mypage6=============================== -->
@@ -399,9 +347,9 @@
 	
 	<insert id="insertCart" parameterType="Cart">
 		INSERT INTO CART(
-			NO, TOYNO, MEMBERNO, STARTDATE, ENDDATE
+			TOYNO, MEMBERNO, STARTDATE, ENDDATE
 		) VALUES (
-			0, #{no}, #{toyNo}, #{memberNo}, #{startDate}, #{endDate} 
+		  #{toyNo}, #{memberNo}, #{startDate}, #{endDate} 
 		)
 	</insert>
 	

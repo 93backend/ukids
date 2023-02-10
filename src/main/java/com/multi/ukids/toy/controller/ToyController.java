@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.member.model.vo.Member;
+import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.toy.model.service.ToyService;
 import com.multi.ukids.toy.model.vo.Cart;
 import com.multi.ukids.toy.model.vo.Pay;
@@ -46,6 +48,9 @@ public class ToyController {
    @Autowired
    private ToyService toyService;
    
+   @Autowired
+   private MypageService mypageService;
+   
    @GetMapping("/toy-main")
       public String toyMain(Model model,Integer page, @RequestParam(required=false) String searchValue,@RequestParam(required=false) List<String> searchType) {
        if(page == null) {
@@ -61,6 +66,7 @@ public class ToyController {
                searchMap.put("searchType", searchType); 
             }
          } catch (Exception e) {}         
+         System.out.println("맵 투스트링 : "+searchMap.toString());
                   
          int toyCount = toyService.getToyCount(searchMap);
          System.out.println("장난감갯수 : "+toyCount);
@@ -134,16 +140,24 @@ public class ToyController {
    }
 
    @GetMapping("/pay")
-   public String pay(Model model, @SessionAttribute(name = "loginMember", required = false) Member loginMember,
+   public String pay(Model model, @SessionAttribute(name = "loginMember") Member loginMember,
 		   @RequestParam(required=false)String startDate,@RequestParam(required=false)String endDate, 
-		   @RequestParam(required=false)int no, @RequestParam(required=false)boolean ListOrNot, 
-		   @RequestParam(required=false) List<Cart> cartList) {   
+		   @RequestParam(required=false)Integer toyNo, @RequestParam(required=false)boolean ListOrNot, 
+		   @RequestParam(required=false) List<Integer> CartNoList) {   
       
       if(ListOrNot == true) {
-         Toy toy = toyService.findByNo(no);
+         Toy toy = toyService.findByNo(toyNo);
          model.addAttribute("toy", toy);
          model.addAttribute("startDate", startDate);
          model.addAttribute("endDate", endDate);
+      }else {
+    	  List<Cart> toyList = new ArrayList<Cart>();
+    	  for (Integer integer : CartNoList) {
+    		  toyList.add(mypageService.findByNo(integer));
+    	  }
+    	  
+    	  System.out.println("List!!!!!!!!!!:::::"+CartNoList.toString());
+    	  model.addAttribute("toy", toyList);
       }
 //      String startDateList = "";
 //      for (Cart cart : cartList) {
@@ -161,12 +175,12 @@ public class ToyController {
    @ResponseBody
    @PostMapping(value = "/insertPayForm")
    public String insertPayForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, HttpSession session, @RequestBody Pay pay) {   
-//      System.out.println("이름 : " + pay.getName());
-//      System.out.println("주소 : " + pay.getAddress());
-//      System.out.println("주소2 : " + pay.getAddress2());
-//      System.out.println("회원번호 : " + pay.getMemberNo());
-//      System.out.println("가격 : " + pay.getPrice());
-//      System.out.println("장난감번호 : " + pay.getToyNo());
+      System.out.println("이름 : " + pay.getName());
+      System.out.println("주소 : " + pay.getAddress());
+      System.out.println("주소2 : " + pay.getAddress2());
+      System.out.println("회원번호 : " + pay.getMemberNo());
+      System.out.println("가격 : " + pay.getPrice());
+      System.out.println("장난감번호 : " + pay.getToyNo());
       session.setAttribute("" + payCount, pay);
       return ""+payCount++;
    }
@@ -196,6 +210,7 @@ public class ToyController {
       
       String payCountNo = payNoAry[1];
       Pay pay =  (Pay) session.getAttribute(""+payCountNo);
+      log.info(":::::::::::::::"+pay);
       toyService.insertPay(pay);
       toyService.updateToyType(pay.getToyNo());
       Pay pay2 = toyService.selectPay(pay.getPayNo());
@@ -206,9 +221,20 @@ public class ToyController {
    
    @GetMapping("/failPay")
    public String failPay(Model model,@SessionAttribute(name = "loginMember", required = false) Member loginMember, @RequestParam("payNo") int payNo) {      
-
+//	   log.info("결제실패 payNo : " + payNo);
+//	   toyService.deletePay(payNo);
+	      
 
       return "failPay";
+   }
+   
+   @ResponseBody
+   @PostMapping(value = "/addCart")
+   public String addCart(@SessionAttribute(name = "loginMember", required = false) Member loginMember, HttpSession session, @RequestBody Cart cart) {   
+      
+	   mypageService.saveCart(cart);
+	  
+      return "";
    }
    
    

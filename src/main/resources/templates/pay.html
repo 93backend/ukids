@@ -225,9 +225,16 @@
                       </div>
                       <input id="tp" name="price" type="hidden" >
                       <input id="memberNo" name="memberNo" type="hidden" th:value="${session.loginMember.memberNo}" >
-                      <input id="startDate" name="startDate" th:value="${startDate}" type="hidden" >
-                      <input id="endDate" name="endDate" th:value="${endDate}" type="hidden" >
-                      <input id="toyNo" name="toyNo" th:value="${toy.toyNo}" type="hidden" >
+					  <th:block th:each="toy:${toy}">
+					  	<th:block th:if="${startDate}!=null">
+                      		<input id="startDate" name="startDate" th:value="${startDate}" type="hidden" >
+                      		<input id="endDate" name="endDate" th:value="${endDate}" type="hidden" >
+                      		<input id="toyNo" name="toyNo" th:value="${toy.toyNo}" type="hidden" >
+                      	</th:block>
+                      	<th:block th:unless="${startDate}!=null">
+                      		
+                      	</th:block>
+					  </th:block>
 						</form> 
                       <h5 class="px-3 mt-4 fw-bold">주문자 동의</h5>
 							
@@ -274,19 +281,29 @@
                     
                     <!-- Product--> 
                     <!-- 장난감대여상세에서 바로 결제 할때 -->
-                   <th:block th:if="${toy != null}">   
+                   <th:block th:each="toy:${toy}">   
                     <div class="d-block d-sm-flex align-items-center py-4 border-bottom" >                    
                      <img class="rounded-3" th:src="${toy.toyImg}" style="width: 130px; height: 150px; margin-right: 10px;" alt="Product">
                       <div class="text-center text-sm-start">
                         <h3 class="h6 product-title mb-2 fw-bold"><a th:href="@{|/toy-detail?no=${toy.toyNo}|}">[[${toy.toyNm1}]]</a></h3>
-                        <div class="d-inline-block"><small>대여기간</small><br> 
+                        <div class="d-inline-block"><small>대여기간</small><br>
+                          <th:block th:if="${startDate != null}">
                           [[${startDate}]] ~ [[${endDate}]]<br>
-                          (<span class="day"></span>일)</div>
-                        <div class="form-inline pt-2 fw-bold price" style="color: #fc6c93;">
+                          (<span class="day"></span>일)
+                          </th:block>
+                          <th:block th:unless="${startDate != null}">
+                          [[${toy.startDate}]] ~ [[${toy.endDate}]]<br>
+                          (<span class="day" ></span>일)
+                          </th:block>
+                          
+                          </div>
+                        <div class="form-inline pt-2 fw-bold price" style="color: #fc6c93;" th:if="${startDate !=null}">
+                        </div>
+                        <div class="form-inline pt-2 fw-bold price" style="color: #fc6c93;" th:unless="${startDate !=null}" th:text="${toy.toyPay}+'원'">
                         </div>
                       </div>
                     </div>
-                    
+                    </th:block>    
                 
                     <div class="py-4 border-bottom fw-bold">
                       <span>총 대여금액</span><span class="pr price"></span><span> (1개)</span><br>
@@ -296,33 +313,7 @@
                     <div class="py-4 fw-bold">
                       <span>총 결제금액</span><span class="total"></span>
                     </div>
-                  </th:block>     
-                    
-                  <!-- 장바구니에서 결제 할때 -->
-                  <th:block th:if="${payList != null}" th:each="pl : ${payList}">   
-					<div class="d-block d-sm-flex align-items-center py-4 border-bottom">                  
-                     <img class="rounded-3" th:src="@{/img/ukids/toy1.JPG}" style="width: 130px; height: 150px; margin-right: 10px;" alt="Product">
-                      <div class="text-center text-sm-start">
-                        <h3 class="h6 product-title mb-2 fw-bold"><a th:href="@{/toy-detail}">페어리루비즈아트 18000 비즈놀이 비즈공예 유아장난감</a></h3>
-                        <div class="d-inline-block"><small>대여기간</small><br> 
-                          2023-01-01 ~ 2023-01-02<br>
-                          (1일)</div>
-                        <div class="form-inline pt-2 fw-bold" style="color: #fc6c93;">
-                          1600원
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="py-4 border-bottom fw-bold">
-                      <span>총 대여금액</span><span class="pr">1800원(1개)</span><br>
-                      <span>배송비</span><span class="pr">1000원</span>
-                    </div>
-
-                    <div class="py-4 fw-bold">
-                      <span>총 결제금액</span><span class="total">2800원</span>
-                    </div>
-                  </th:block>
-                    
+                   
                     <button class="btn btn-primary btn-shadow d-block w-100 mt-4 pay" type="submit" form="orderForm" id="payment-button">결제하기</button>                   
                   
                   </div>
@@ -358,7 +349,9 @@
 
 </body>
 </html>
+
 <script type="text/javascript" th:inline="javascript">
+//요청사항 직접입력
 $( document ).ready( function() {
     $( '.memo' ).keyup( function() {
     	var memo = $('.memo').val();
@@ -366,7 +359,7 @@ $( document ).ready( function() {
     }); 
 });
 
-
+//결제수단
 $(document).ready(function(){
 	$("#payment-button").click(function(){
 		if($('#copyphone1').val()!=''&&$('#copyphone2').val()!=''&&$('#copyphone3').val()!=''
@@ -378,24 +371,44 @@ $(document).ready(function(){
 		}
 	});
 });
+
+//대여기간 계산
 var start = new Date(/*[[${startDate}]]*/{});
 var end = new Date(/*[[${endDate}]]*/{});
 var result= end-start;
 var day = result / (1000*60*60*24) ;
-
 $('.day').html(day);
 
+//리스트 인지 아닌지
+var toyVali = /*[[${toy}]]*/{};
+console.log(toyVali.length)
+var toy;
+if(toyVali.length==undefined){
+	toy = [];
+	toy.push(/*[[${toy}]]*/{});
+}else{
+	toy= toyVali;
+}
 
-var toyPrice = /*[[${#strings.replace(toy.toyPay,'.0','')}]]*/{};
-var price = day * toyPrice;
-$('.price').html(price + "원");
-
+//장난감 가격
+var toyPrice = 0;
+console.log(toy);
+for(var i=0; i<toy.length; i++){
+	toyPrice += Number(toy[i].toyPay);
+}
+//일 X 가격
+if(toyVali.length==undefined){
+	var price = day * toyPrice;
+	$('.price').html(price + "원");
+}
+//(일X가격) + 1000
 var totalPrice = price + 1000;
 $('.total').html(totalPrice + "원");
 $('#tp').attr('value', totalPrice);
 
 
 //토스페이먼츠 결제
+//카드 계좌이체 선택
 var paymethod = '';
 	$("#cardbtn").click(function () {
 	 	paymethod='카드';
@@ -403,9 +416,21 @@ var paymethod = '';
 	$("#transfer").click(function () {
 		paymethod='계좌이체';
 	});
-var toyName = /*[[${toy.toyNm1}]]*/{};
+
+//토스페이에 나오는 장난감 이름
+var toyName = "";
+if(toyVali.length==undefined){
+	toyName = toy[0].toyNm1
+}else{
+	toyName = toy[0].toyNm1+'외'+ toy.length;
+}
 var cName = /*[[${session.loginMember.name}]]*/{};
 
+console.log(toyPrice);
+console.log(toyName);
+console.log(cName);
+
+//토스에 보낼 주문번호 uuid
 function uuidv4() {
   return 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -413,30 +438,42 @@ function uuidv4() {
   });
 }
 
-
+//토스페이 관련
 var clientKey = 'test_ck_OAQ92ymxN34D0MRbEBv3ajRKXvdk'
 var tossPayments = TossPayments(clientKey) // 클라이언트 키로 초기화하기
 
 function checkForm(){ 
+//입력 필수 항목
 	if(!$('#ex-check-1').is(":checked")){
-		alert('필수1');
+		alert('필수항목을 체크해 주세요.');
 		return false;
 	}else if(!$('#ex-check-2').is(":checked")){
-		alert('필수2');
+		alert('필수항목을 체크해 주세요.');
 		return false;
 	}else{
-		var cp1 = $('#copyphone1').val();
+		//전화번호 합치기
+		  var cp1 = $('#copyphone1').val();
 		  var cp2 = $('#copyphone2').val();
 		  var cp3 = $('#copyphone3').val();
 		  var totalcp = cp1+cp2+cp3;
 		  $('#phonetotal').val(totalcp);
-		  var vallii = $('#cardbtn').val();
+		  
+		  var vallii = $('#cardbtn').val();		  
 		  var listVar = $('input[name=method]').is(":checked");
 		  
-		  var formArray = $('#orderForm').serializeArray();
+		  //대여시작일 반납일 여러개
+		  /* var startDateList = ''; // 23-1-12, 24-3-12, 22-1-3, 
+		  for(tdasdfasfasd){
+			  startDateList+= toy[i].startDate
+		  }
+		  const param_password = $("<input type='hidden' value=" + startDateList + " name='startDate' readonly>");
+		  $("#orderForm").append(param_password); */
 		  
-		  var returnArray = {};
-
+		  
+		  //form -> successPay로 
+		  var formArray = $('#orderForm').serializeArray();
+		  var returnArray = {};	
+		
 		    for (var i = 0; i < formArray.length; i++){
 		        returnArray[formArray[i]['name']] = formArray[i]['value'];
 		    }
