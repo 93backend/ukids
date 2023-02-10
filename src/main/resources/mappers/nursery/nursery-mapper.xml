@@ -24,11 +24,16 @@
 			AND crname LIKE '%${search}%'
 		</if>
 		<if test="build != null">
-			AND (
-				<foreach collection="build" item="item" separator="or">
-					crtypename LIKE '%${item}%'
-				</foreach>
-			)
+			AND crtypename IN (
+		</if>
+			<if test="public != null">
+				'국공립', 
+			</if>
+			<if test="private != null">
+				'직장', '법인·단체등', '가정', '민간', '사회복지법인', '협동', 
+			</if>
+		<if test="build != null">
+			'')
 		</if>
 		<if test="city != null">
 			AND craddr LIKE '%${city}%'
@@ -109,11 +114,16 @@
 			AND crname LIKE '%${search}%'
 		</if>
 		<if test="build != null">
-			AND (
-				<foreach collection="build" item="item" separator="or">
-					crtypename LIKE '%${item}%'
-				</foreach>
-			)
+			AND crtypename IN (
+		</if>
+			<if test="public != null">
+				'국공립', 
+			</if>
+			<if test="private != null">
+				'직장', '법인·단체등', '가정', '민간', '사회복지법인', '협동', 
+			</if>
+		<if test="build != null">
+			'')
 		</if>
 		<if test="city != null">
 			AND craddr LIKE '%${city}%'

@@ -26,7 +26,7 @@ public class NurseryService {
 		return mapper.selectNurseryList(map);
 	}
 	
-	public int gettNurseryCount(Map<String, Object> map) {
+	public int getNurseryCount(Map<String, Object> map) {
 		return mapper.selectNurseryCount(map);
 	}
 	

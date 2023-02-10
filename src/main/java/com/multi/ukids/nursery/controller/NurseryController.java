@@ -37,13 +37,13 @@ public class NurseryController {
 	@Autowired
 	private NurseryService nurseryService;
 	
-	private static List<Integer> nurseryCompareNo = new ArrayList<>();
 	private static final int MAX_SIZE = 4;
 	
 	// 어린이집 검색
 	@GetMapping("/nursery-main")
 	public String nurseryMain(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare,
 			@RequestParam Map<String, Object> param,
 			@RequestParam(required = false) String[] build,
 			@RequestParam(required = false) String[] classroom,
@@ -55,7 +55,10 @@ public class NurseryController {
 		int page = 1;
 		try {
 			if(build != null) {
-				param.put("build", Arrays.asList(build));
+				param.put("build", "build");
+				for(int i = 0; i < build.length; i++) {
+					param.put(build[i], build[i]);
+				}
 			}
 			if(classroom != null) {
 				for(int i = 0; i < classroom.length; i++) {
@@ -80,7 +83,7 @@ public class NurseryController {
 			e.printStackTrace();
 		}
 		
-		int count = nurseryService.gettNurseryCount(param);
+		int count = nurseryService.getNurseryCount(param);
 		PageInfo pageInfo = new PageInfo(page, 5, count, 12);
 		List<Nursery> list =  nurseryService.getNurseryList(pageInfo, param);
 		
@@ -91,10 +94,16 @@ public class NurseryController {
 		String wish = Arrays.toString(wishNo);
 		log.info("찜 목록 : " + wish);
 		
-		String compare = null;
-		if(nurseryCompareNo != null) {
-			compare = nurseryCompareNo.toString();
+		if(session.getAttribute("nurseryCompare") == null) {
+			List<Integer> initCompare = new ArrayList<>();
+			session.setAttribute("nurseryCompare", initCompare);
 		}
+		
+		String compare = null;
+		if(nurseryCompare != null) {
+			compare = nurseryCompare.toString();
+		}
+		log.info("비교 목록 : " + compare);
 		
 		int[] img = new int[12];
 		
@@ -125,6 +134,7 @@ public class NurseryController {
 	@GetMapping("/nursery-detail")
 	public String nurseryDetail(Model model, HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare,
 		@RequestParam("no") int no, @RequestParam("i") int i
 	) {
 		log.info("어린이집 상세");
@@ -143,8 +153,8 @@ public class NurseryController {
 		}
 		
 		String compare = null;
-		if(nurseryCompareNo != null) {
-			compare = nurseryCompareNo.toString();
+		if(nurseryCompare != null) {
+			compare = nurseryCompare.toString();
 		}
 		log.info("비교 목록 : " + compare);
 		
@@ -295,21 +305,24 @@ public class NurseryController {
 	
 	// 비교 추가
 	@PostMapping("/nursery-addCompare")
-	public ResponseEntity<Map<String, Object>> addCompare(int no) {
+	public ResponseEntity<Map<String, Object>> addCompare(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare
+	) {
 		log.info("어린이집 비교 추가 : " + no );
 		
-		if(nurseryCompareNo.size() < MAX_SIZE) {
-			nurseryCompareNo.add(no);
+		if(nurseryCompare.size() < MAX_SIZE) {
+			nurseryCompare.add(no);
 		}
 		
 		boolean add;
-		if(nurseryCompareNo.contains(no) == true) {
+		if(nurseryCompare.contains(no) == true) {
 			add = true;
 		} else {
 			add = false;
 		}
-		log.info(nurseryCompareNo.toString());
-		System.out.println(add);
+		log.info(nurseryCompare.toString());
+		
+		model.addAttribute("nurseryCompare", nurseryCompare);
 		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("add", add);
@@ -319,20 +332,23 @@ public class NurseryController {
 	
 	// 비교 삭제
 	@PostMapping("/nursery-deleteCompare")
-	public ResponseEntity<Map<String, Object>> deleteCompare(int no) {
+	public ResponseEntity<Map<String, Object>> deleteCompare(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare
+	) {
 		log.info("어린이집 비교 삭제 : " + no );
 		
-		int index = nurseryCompareNo.indexOf(no);
-		nurseryCompareNo.remove(index);
+		int index = nurseryCompare.indexOf(no);
+		nurseryCompare.remove(index);
 		
 		boolean remove;
-		if(nurseryCompareNo.contains(no) == false) {
+		if(nurseryCompare.contains(no) == false) {
 			remove = true;
 		} else {
 			remove = false;
 		}
-		log.info(nurseryCompareNo.toString());
-		System.out.println(remove);
+		log.info(nurseryCompare.toString());
+		
+		model.addAttribute("nurseryCompare", nurseryCompare);
 		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("remove", remove);
@@ -340,20 +356,46 @@ public class NurseryController {
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
+	@GetMapping("/nursery-deleteCompare") 
+	public String deleteCompare2(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare
+	) {
+		log.info("어린이집 비교 삭제 : " + no );
+		
+		int index = nurseryCompare.indexOf(no);
+		nurseryCompare.remove(index);
+		
+		if(nurseryCompare.contains(no) == false) {
+			model.addAttribute("msg", "비교 목록에서 삭제되었습니다.");
+		} else {
+			model.addAttribute("msg", "삭제에 실패하였습니다.");
+		}
+		model.addAttribute("nurseryCompare", nurseryCompare);
+		model.addAttribute("location", "/compare-nursery");
+		
+		return "common/msg";
+		
+	}
+	
 	// 비교 화면
 	@GetMapping("/compare-nursery")
-	public String compareNursery(Model model) {
-		System.out.println(nurseryCompareNo);
+	public String compareNursery(Model model, HttpSession session,
+		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare
+	) {
+		log.info("어린이집 비교 화면");
+		log.info("비교 목록 : " + nurseryCompare.toString());
 		
 		List<Nursery> list = new ArrayList<>();
 		
-		if(nurseryCompareNo.size() > 0) {
-			for(int no : nurseryCompareNo) {
+		if(nurseryCompare.size() > 0) {
+			for(int no : nurseryCompare) {
 				Nursery nursery = nurseryService.findByNo(no);
 				list.add(nursery);
 			}
 		}
+		int count = list.size();
 		model.addAttribute("list", list);
+		model.addAttribute("count", count);
 		
 		return("compare-nursery");
 	}

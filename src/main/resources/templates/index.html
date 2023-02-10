@@ -26,6 +26,9 @@
     <link rel="stylesheet" media="screen" href="css/header.css">
     <link rel="stylesheet" media="screen" href="css/footer.css">
     <link rel="stylesheet" media="screen" href="css/index.css">
+    
+    <!--jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <!-- Chart.js Script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
@@ -50,17 +53,17 @@
         <div class="container py-1">
 
           <!-- 검색바 -->
-          <form action="" method="post" id="search-group" class="d-flex mb-5">
+          <div id="search-group" class="d-flex mb-5">
             <div class="input-group d-lg-flex flex-nowrap me-4">
-              <select class="form-select">
-                <option>어린이집</option>
-                <option>유치원</option>
+              <select class="form-select" id="searchType">
+                <option value="어린이집">어린이집</option>
+                <option value="유치원">유치원</option>
               </select>
               <i class="ci-search position-absolute translate-middle-y"></i>
-              <input class="form-control" type="text" placeholder="어린이집·유치원을 검색하세요...">
+              <input class="form-control" id="searchValue" type="text" placeholder="어린이집·유치원을 검색하세요.">
             </div>
-            <button type="button" id="search-btn" class="btn btn-primary btn-lg" data-scroll>검색하기</button>
-          </form>
+            <button type="button" id="search-btn" class="btn btn-primary btn-lg" data-scroll onclick="goSearch();">검색하기</button>
+          </div>
           
           <!-- 어린이집/유치원 추천 -->
           <div class="col-lg-5 col-md-8 offset-lg-7 col-sm-10">
@@ -71,121 +74,54 @@
             <!-- 어린이집 슬라이더 -->
             <div id="ns-silder" class="tns-carousel tns-nav-enabled mb-4 mx-n2">
               <div class="tns-carousel-inner" data-carousel-options="{&quot;controls&quot;: false}">
-                <!-- Carousel item-->
-                <div class="px-2">
-                  <img class="rounded-3" src="img/ukids/index/어린이집.png" alt="Nursery">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">대구광역시도시관리본부종합복지회관관리사무소한아름어린이집</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="nursery-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Carousel item-->
-                <div class="px-2">
-                  <img class="rounded-3" src="img/ukids/index/어린이집.png" alt="Nursery">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">서울시청직장인어린이집</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="nursery-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Carousel item-->
-                <div class="px-2">
-                  <img class="rounded-3" src="img/ukids/index/어린이집.png" alt="Nursery">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">서울시청직장인어린이집</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="nursery-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              	<!-- 어린이집 -->
+              	<th:block th:each="num : ${#numbers.sequence(1,3)}">
+	                <div class="px-2">
+	                  <img class="rounded-3" th:src="|img/어린이집/nursery${num}.JPG|" alt="Nursery">
+	                  <div class="position-relative">
+	                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
+	                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
+	                        <div class="row gx-5 align-items-center">
+	                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
+	                            <span class="h6 mb-0">[[${nursery[num].crname}]]</span>
+	                          </div>
+	                          <div class="col-sm-4 position-relative py-sm-3 py-2">
+	                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" th:href="|/nursery-detail?no=${nursery[num].no}&i=${num}|">더 알아보기</a></div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+              	</th:block>
               </div>
             </div>
 
             <!-- 유치원 슬라이더 -->
             <div id="kg-silder" class="d-none tns-carousel tns-nav-enabled mb-4 mx-n2">
               <div class="tns-carousel-inner" data-carousel-options="{&quot;controls&quot;: false}">
-                <!-- Carousel item-->
-                <div class="px-2"><img class="rounded-3" src="img/ukids/index/유치원.jpg" alt="Kindergarden">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">(재)천주교수원교구유지재단데레사유치원</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="kinder-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Carousel item-->
-                <div class="px-2"><img class="rounded-3" src="img/ukids/index/유치원.jpg" alt="Kindergarden">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">서울시청직장유치원</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="kinder-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- Carousel item-->
-                <div class="px-2"><img class="rounded-3" src="img/ukids/index/유치원.jpg" alt="Kindergarden">
-                  <div class="position-relative">
-                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
-                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
-                        <div class="row gx-5 align-items-center">
-                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
-                            <span class="h6 mb-0">서울시청직장유치원</span>
-                          </div>
-                          <div class="col-sm-4 position-relative py-sm-3 py-2">
-                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" href="kinder-detail.html">더 알아보기</a></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <!-- 유치원 -->
+                <th:block th:each="num : ${#numbers.sequence(1,3)}">
+	                <div class="px-2"><img class="rounded-3" th:src="|img/유치원/kinder${num}.JPG|" alt="Kindergarden">
+	                  <div class="position-relative">
+	                    <div class="position-absolute start-0 bottom-0 w-100 p-md-4 p-sm-4 p-3">
+	                      <div class="pt-sm-0 pt-2 px-sm-4 px-2 bg-white rounded shadow">
+	                        <div class="row gx-5 align-items-center">
+	                          <div class="col-sm-8 col-6 position-relative py-sm-3 py-2">
+	                            <span class="h6 mb-0">[[${kinder[num].kindername}]]</span>
+	                          </div>
+	                          <div class="col-sm-4 position-relative py-sm-3 py-2">
+	                            <div class="d-flex align-items-center h-100"><a class="btn btn-sm btn-dark w-100" th:href="|/kinder-detail?no=${kinder[num].kinNo}&i=${num}|">더 알아보기</a></div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </div>
+	                </div>
+                </th:block>
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -195,8 +131,8 @@
           <div class="row g-0">
             <span class="ps-1" style="font-weight: 700;">빠른 학교 찾기</span>
             <div class="d-flex align-items-center justify-content-between mb-sm-3 mb-2">
-              <h2 class="h3 mb-0"><span style="font-weight: 700;">서울시 강남구</span> 어린이집·유치원 찾기</h2>
-              <a class="btn btn-outline-accent ms-3" href="nursery-main.html">더 보기<i class="ci-arrow-right ms-2"></i></a>
+              <h2 class="h3 mb-0"><span style="font-weight: 700;">[[${address}]]</span> 어린이집·유치원 찾기</h2>
+              <a class="btn btn-outline-accent ms-3" href="/nursery-main">더 보기<i class="ci-arrow-right ms-2"></i></a>
             </div>
           </div>
 
@@ -250,7 +186,7 @@
           <div class="row g-0">
             <span class="ps-1" style="font-weight: 700;">한 눈에 보기</span>
             <div class="d-flex align-items-center justify-content-between mb-sm-3 mb-2">
-              <h2 class="h3 mb-0"><span style="font-weight: 700;">서울시 강남구</span> 어린이집·유치원 현황</h2>
+              <h2 class="h3 mb-0"><span style="font-weight: 700;">[[${address}]]</span> 어린이집·유치원 현황</h2>
               <a class="btn btn-outline-accent ms-3" href="nursery-main.html">더 보기<i class="ci-arrow-right ms-2"></i></a>
             </div>
           </div>
@@ -874,11 +810,6 @@
     <!-- 풋터 -->
 	<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 	 
-    <!-- Toolbar for handheld devices (NFT Marketplace)-->
-    <div class="handheld-toolbar">
-      <div class="d-table table-layout-fixed w-100"><a class="d-none handheld-toolbar-item" href="#vendor-sidebar" data-bs-toggle="offcanvas"><span class="handheld-toolbar-icon"><i class="ci-sign-in"></i></span><span class="handheld-toolbar-label">Sidebar</span></a><a class="d-table-cell handheld-toolbar-item" href="#signin-modal" data-bs-toggle="modal"><span class="handheld-toolbar-icon"><i class="ci-user"></i></span><span class="handheld-toolbar-label">Account</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="nft-connect-wallet.html"><span class="handheld-toolbar-icon"><i class="ci-wallet"></i></span><span class="handheld-toolbar-label text-nowrap">Connect wallet</span></a>
-      </div>
-    </div>
     <!-- Back To Top Button-->
     <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
     
@@ -891,5 +822,394 @@
     <!-- Main theme script-->
     <script src="js/theme.min.js"></script>
     <script src="js/index.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+    	 /* ========== 차트 ========== */
+    	 
+		 // 1. 해당 지역 어린이집/유치원 현황 그래프
+		 var nurseryCount = [[${nurseryCount}]];
+		 var kinderCount = [[${kinderCount}]];
+		 
+		 let pieChartData = {
+		     labels: ['어린이집', '유치원'],
+		     datasets: [{
+		         data: [nurseryCount, kinderCount],
+		         backgroundColor: ['#69b3fe',  '#42d697'],
+		         datalabels: {
+		           labels: {
+		             value: {
+		               formatter: function(value, ctx) {
+		                 var value = ctx.dataset.data[ctx.dataIndex];
+		                 return value > 0 ? Math.round(value / (ctx.dataset.data[0] + ctx.dataset.data[1]) * 100) + ' %' : null;
+		               },
+		               color: '#fff',
+		               font: {
+		                 size: 18
+		               }
+		             }
+		           }
+		         }
+		     }] 
+		 };
+		
+		 let pieChartDraw = function () {
+		     let ctx = document.getElementById('pieChartCanvas').getContext('2d');
+		     
+		     window.pieChart = new Chart(ctx, {
+		         type: 'pie',
+		         data: pieChartData,
+		         options: {
+		             responsive: false,
+		             legend: {
+		                 display: false
+		             },
+		             legendCallback: customLegend
+		         },
+		     });
+		 };
+		
+		
+		 var publicCnt = [[${publicCnt}]];
+		 var privateCnt = [[${privateCnt}]];
+		 // 2. 해당 지역 어린이집 국공립/사립 현황 그래프
+		 let barChartData1 = {
+		   labels: ['국공립', '사립'],
+		   datasets: [{
+		       data: [publicCnt[0], privateCnt[0]],
+		       backgroundColor: ['#f34770',  '#fea569'],
+		       datalabels: {
+		         labels: {
+		           display: false
+		         } 
+		       }
+		   }] 
+		 };
+		
+		 let barChartDraw1 = function () {
+		   let ctx = document.getElementById('barChartCanvas1').getContext('2d');
+		   
+		   window.barChart1 = new Chart(ctx, {
+		       type: 'bar',
+		       data: barChartData1,
+		       options: {
+		           responsive: false,
+		           legend: {
+		               display: false
+		           },
+		           scales: {
+		             xAxes: [{
+		               display: false,
+		               barPercentage: 0.4,
+		               
+		             }],
+		             yAxes: [{
+		               display: false,
+		               ticks: {
+		                 min: 0,
+		                 stepSize: 2,
+		                 fontSize: 14
+		               }
+		             }]
+		           },
+		           legendCallback: customLegend
+		       },
+		   });
+		 };
+		
+		
+		 // 3. 해당 지역의 유치원 국공립/사립 현황 그래프
+		 let barChartData2 = {
+		   labels: ['국공립', '사립'],
+		   datasets: [{
+		       data: [publicCnt[1], privateCnt[1]],
+		       backgroundColor: ['#ffd700',  '#81c147'],
+		       datalabels: {
+		         labels: {
+		           display: false
+		         } 
+		       }
+		   }] 
+		 };
+		
+		 let barChartDraw2 = function () {
+		   let ctx = document.getElementById('barChartCanvas2').getContext('2d');
+		   
+		   window.barChart2 = new Chart(ctx, {
+		       type: 'bar',
+		       data: barChartData2,
+		       options: {
+		           responsive: false,
+		           legend: {
+		               display: false
+		           },
+		           scales: {
+		             xAxes: [{
+		               display: false,
+		               barPercentage: 0.4,
+		               
+		             }],
+		             yAxes: [{
+		               display: false,
+		               ticks: {
+		                 min: 0,
+		                 stepSize: 2,
+		                 fontSize: 14
+		               }
+		             }]
+		           },
+		           legendCallback: customLegend
+		       },
+		   });
+		 };
+		
+		
+		 // 4. 주요 지역별 어린이집/유치원 현황 그래프
+		 var locationN = [[${locationNCnt}]];
+		 var locationK = [[${locationKCnt}]];
+		 let barChartData3 = {
+// 		   labels: ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '제주'],
+		   labels: ['서울', '인천', '경기', '강원', '충청', '전라', '경상'],
+		   datasets: [
+		     {
+		       label: '어린이집',
+// 		       data: [locationN[0], locationN[1], locationN[2], locationN[3], locationN[4], locationN[5], locationN[6], locationN[7]],
+		       data: [locationN[0], locationN[1], locationN[2], locationN[3], locationN[4], locationN[5], locationN[6]],
+		       backgroundColor: '#ffc0cb',
+		       datalabels: {
+		         labels: {
+		           display: false
+		         } 
+		       }
+		     },
+		     {
+		       label: '유치원',
+// 		       data: [locationK[0], locationK[1], locationK[2], locationK[3], locationK[4], locationK[5], locationK[6], locationK[7]],
+		       data: [locationK[0], locationK[1], locationK[2], locationK[3], locationK[4], locationK[5], locationK[6]],
+		       backgroundColor: '#8977ad',
+		       datalabels: {
+		         labels: {
+		           display: false
+		         } 
+		       }
+		     }
+		   ]  
+		 };
+		
+		 let barChartDraw3 = function () {
+		   let ctx = document.getElementById('barChartCanvas3').getContext('2d');
+		   
+		   window.barChart3 = new Chart(ctx, {
+		       type: 'horizontalBar',
+		       data: barChartData3,
+		       options: {
+		           indexAxis: 'y',
+		           responsive: true,
+		           legend: {
+		               display: false
+		           },
+		           scales: {
+		             xAxes: [{
+		               display: false,
+		               barPercentage: 0.5,
+		               ticks: {
+		                 beginAtZero: true
+		               }
+		             }],
+		             yAxes: [{
+		               display: true,
+		               ticks: {
+		                 min: 0,
+		                 stepSize: 2,
+		                 fontSize: 14
+		               }
+		             }]
+		           },
+		           legendCallback: customLegend2
+		       },
+		   });
+		 };
+		
+		
+		 // 범례 ver1
+		 let customLegend = function (chart) {
+		   let ul = document.createElement('ul');
+		   let color = chart.data.datasets[0].backgroundColor;
+		   let sum = chart.data.datasets[0].data[0] + chart.data.datasets[0].data[1];
+		
+		   chart.data.labels.forEach(function (label, index) {
+		       ul.innerHTML += 
+		         `<li>
+		           <div>
+		             <span class="circle" style="background-color: ${color[index]};"></span>
+		             <span>${label}</span>
+		           </div>
+		           <div>
+		             <span class="count">${chart.data.datasets[0].data[index]}개</span>
+		             <span>(${Math.round((chart.data.datasets[0].data[index] / sum) * 100)}%)</span>
+		           </div>
+		         </li>`;
+		   });
+		   return ul.outerHTML;
+		 };
+		
+		
+		 // 범례 ver2
+		 let customLegend2 = function (chart) {
+		   let ul = document.createElement('ul');
+		   let color = [chart.data.datasets[0].backgroundColor, chart.data.datasets[1].backgroundColor];
+		
+		   chart.data.datasets.forEach(function (label, index) {
+		       ul.innerHTML += 
+		         `<li>
+		           <div>
+		             <span class="circle" style="background-color: ${color[index]};"></span>
+		             <span>${label.label}</span>
+		           </div>
+		         </li>`;
+		   });
+		   return ul.outerHTML;
+		 };
+		 
+		 
+		 /* ========== 카카오 지도 ========== */
+		// 검색 결과
+		var searchList = [
+			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
+				  {
+				    kind: '어',
+				    type: [[${nursery[num].crtypename}]],
+				    name: [[${nursery[num].crname}]],
+				    address: [[${nursery[num].craddr}]],
+				    image: null,
+				  },
+				/*[/]*/
+			
+			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
+				  {
+				    kind: '유',
+				    type: [[${kinder[num].establish}]],
+				    name: [[${kinder[num].kindername}]],
+				    address: [[${kinder[num].addr}]],
+				    image: null,
+				  },
+			/*[/]*/
+		];
+
+
+		// 지도 생성
+		var mapContainer = document.getElementById('kakao-map') 
+		var mapOption = {
+		  center: new kakao.maps.LatLng(37.5666805, 126.9784147), // 지도 중심좌표
+		  level: 3 // 지도 확대 레벨
+		};   
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+
+		// 각 객체의 주소값을 convertToLatLng() 함수의 매개변수로 넘기기
+		searchList.forEach((item) => convertToLatLng(item.address));
+
+
+		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성
+		var bounds = new kakao.maps.LatLngBounds();
+
+
+		//주소를 좌표로 변환
+		count = 0;
+		function convertToLatLng(address) {
+
+		  //주소-좌표 변환 객체 생성
+		  var geocoder = new kakao.maps.services.Geocoder();
+
+		  //주소로 좌표 검색
+		  geocoder.addressSearch(address, function(result, status) {
+
+		    //정상적으로 검색이 완료됐으면
+		    if (status === kakao.maps.services.Status.OK) {
+
+		      // 좌표 생성
+		      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+		      //결과값으로 받은 위치를 마커로 표시
+		      var marker = new kakao.maps.Marker({
+		        position: coords,
+		        clickable: true,
+		      });
+		      marker.setMap(map);
+
+		      // 마커에 표시할 인포윈도우를 생성
+		      // <span class="tag">${searchList[count].kind}</span>  
+		      var infowindow = new kakao.maps.InfoWindow({
+		        content: 
+		          `<a class="marker-box" href="#">
+		            <span class="info-type">${searchList[count].type}</span>
+		            <div>
+		              <span class="info-name">${searchList[count].name}</span>
+		            </div>
+		            <span class="info-addr"><i class="ci-location"></i>${searchList[count].address}</span>
+		          </a>`,
+		        removable: true,
+		      });
+
+		      // 마커 클릭하면 인포뒤도우 표시
+		      kakao.maps.event.addListener(marker, 'click', function() {
+		        infowindow.open(map, marker);  
+		      });
+
+		      // 검색 결과에 맞게 지도 범위 재설정
+		      bounds.extend(coords);
+		      map.setBounds(bounds);
+
+		      count++;
+		    }    
+		  });
+		}
+
+		// 사이드바 목록 추가
+		const sidebar = document.querySelector('#school-list .overflow-auto');
+		const searchCount = document.querySelector('#school-list .product-title span');
+
+		searchCount.innerHTML = searchList.length;
+
+		searchList.forEach((item) => {
+		  let href = 'nursery-detail.html';
+		  let alt = 'Nursery';
+		  
+		  if (item.kind === '어') {
+		    href = 'nursery-detail.html';
+		    alt = 'Nursery';
+		  }
+		  if (item.kind === '유') {
+		    href = 'kinder-detail.html';
+		    alt = 'Kindergarden';
+		  }
+
+		  sidebar.innerHTML += 
+		  `<div class="card product-card product-list px-3 py-2">
+		    <span class="tag btn-wishlist btn-sm">${item.kind}</span>
+		    <div class="d-sm-flex align-items-center">
+		      <a class="product-list-thumb" href="${href}"><img src="img/ukids/index/어린이집.png" alt="${alt}"></a>
+		      <div class="card-body py-2">
+		        <div class="product-price"><span class="text-accent"><small>${item.type}</small></span></div>
+		        <h3 class="product-title fs-base mt-1 mb-2"><a href="${href}">${item.name}</a></h3>
+		        <span class="product-meta d-block fs-xs pb-1"><i class="ci-location me-1"></i>${item.address}</span>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="border-top pt-0 mt-0"></div>`
+		});
+		
+		// 빠른학교찾기에서 기관에 따른 태그 색상 변경
+		const schoolTagList = document.querySelectorAll('#school-list .tag');
+
+		window.addEventListener('load', () => {
+		  schoolTagList.forEach((item) => {
+		    if (item.textContent === '어') {
+		      item.classList.add('ns-tag');
+		    } else if (item.textContent === '유') {
+		      item.classList.add('kg-tag');
+		    }
+		  });
+		});
+    
+    </script>
   </body>
 </html>

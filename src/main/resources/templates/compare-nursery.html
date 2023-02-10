@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>유키즈 | 어린이집 비교</title>
+    <title>UKIDS | 어린이집 비교</title>
     <!-- SEO Meta Tags-->
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -66,7 +66,7 @@
 
             <table class="table table-bordered table-layout-fixed fs-sm" style="min-width: 45rem;">
 
-              <thead class=""> <!--navbar-sticky navbar-stuck-->
+              <thead class="navbar-sticky"> <!--navbar-sticky navbar-stuck-->
                 <tr class="border">
                   <th class="align-middle">
                     <select class="form-select" data-filter-trigger>
@@ -75,30 +75,33 @@
                     </select>
                     <div class="form-text">* 아래 테이블을 필터링할 기준을 선택하세요.</div>
                   </th>
-                  <td class="text-center">
-                    <button class="btn btn-sm d-block w-100 text-danger mb-2"><i class="ci-trash me-1"></i>삭제하기</button>
-                    <a class="d-inline-block mb-3" href="nursery-detail.html"><img class="rounded" src="img/ukids/index/어린이집.png"></a>
-                    <h3 class="product-title fs-sm"><a href="nursery-detail.html">대구광역시도시관리본부종합복지회관관리사무소한아름어린이집</a></h3>
-                    <a class="btn btn-primary btn-sm" href="nursery-detail.html">더 알아보기</a>
-                  </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm d-block w-100 text-danger mb-2"><i class="ci-trash me-1"></i>삭제하기</button>
-                    <a class="d-inline-block mb-3" href="nursery-detail.html"><img class="rounded" src="img/ukids/index/어린이집.png"></a>
-                    <h3 class="product-title fs-sm"><a href="nursery-detail.html">서울시청직장어린이집</a></h3>
-                    <a class="btn btn-primary btn-sm" href="nursery-detail.html">더 알아보기</a>
-                  </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm d-block w-100 text-danger mb-2"><i class="ci-trash me-1"></i>삭제하기</button>
-                    <a class="d-inline-block mb-3" href="nursery-detail.html"><img class="rounded" src="img/ukids/index/어린이집.png"></a>
-                    <h3 class="product-title fs-sm"><a href="nursery-detail.html">서울시청직장어린이집</a></h3>
-                    <a class="btn btn-primary btn-sm" href="nursery-detail.html">더 알아보기</a>
-                  </td>
-                  <td class="text-center">
-                    <button class="btn btn-sm d-block w-100 text-danger mb-2"><i class="ci-trash me-1"></i>삭제하기</button>
-                    <a class="d-inline-block mb-3" href="nursery-detail.html"><img class="rounded" src="img/ukids/index/어린이집.png"></a>
-                    <h3 class="product-title fs-sm"><a href="nursery-detail.html">서울시청직장어린이집</a></h3>
-                    <a class="btn btn-primary btn-sm" href="nursery-detail.html">더 알아보기</a>
-                  </td>
+                  
+                  <th:block th:if="${count == 0}">
+				  	<th:block th:each="num : ${#numbers.sequence(count+1,4)}">
+	                  <td class="text-center">
+	                  	<h4> - </h4>
+	                  </td>
+				  	</th:block>
+				  </th:block>
+                  
+                  <th:block th:unless="${count == 0}">
+                  	<th:block th:each="nursery, status : ${list}">
+	                  <td class="text-center">
+	                    <button class="btn btn-sm d-block w-100 text-danger mb-2" th:onclick="|deleteCompare(${nursery.no})|"><i class="ci-trash me-1"></i>삭제하기</button>
+	                    <a class="d-inline-block mb-3" th:href="|/nursery-detail?no=${nursery.no}&i=${status.index}|"><img class="rounded" th:src="|img/어린이집/nursery${status.index}.JPG|"></a>
+	                    <h3 class="product-title fs-sm"><a th:href="|/nursery-detail?no=${nursery.no}&i=${status.index}|">[[${nursery.crname}]]</a></h3>
+	                    <a class="btn btn-primary btn-sm" th:href="|/nursery-detail?no=${nursery.no}&i=${status.index}|">더 알아보기</a>
+	                  </td>
+                  	</th:block>
+                  	<th:block th:if="${count != 4}">
+				  		<th:block th:each="num : ${#numbers.sequence(count+1,4)}">
+					  		<td class="text-center align-middle">
+		                  		<h4> - </h4>
+		                  	</td>
+				  		</th:block>
+				  	</th:block>
+                  </th:block>
+                  
                 </tr>
               </thead>
 
@@ -153,5 +156,103 @@
     <!-- Main theme script-->
     <script src="js/theme.min.js"></script>
     <script src="js/compare-nursery.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+    	// 삭제
+    	function deleteCompare(no) {
+    		var url = "/nursery-deleteCompare?no=" + no;
+    		if(confirm("해당 어린이집을 목록에서 삭제하시겠습니까?")) {
+    			location.replace(url);
+    		}
+    	}
+    	
+    	/* ===== 카카오지도 ===== */
+    	// 검색 결과
+    	var searchList = [
+    		/*[# th:if="${count != 0}"]*/
+				/*[# th:each="nursery : ${list}"]*/
+					{
+		    			kind: '어',
+		        	    type: [[${nursery.crtypename}]],
+		        	    name: [[${nursery.crname}]],
+		        	    address: [[${nursery.craddr}]],
+		        	    image: null,
+						
+					},
+				
+				/*[/]*/
+			/*[/]*/
+    	];
+    	  
+    	  
+    	/* ========== 카카오 지도 ========== */
+    	// 지도 생성
+    	var mapContainer = document.getElementById('ns-kakaomap');
+    	var mapOption = {
+    	  center: new kakao.maps.LatLng(37.5666805, 126.9784147), // 지도 중심좌표
+    	  level: 3 // 지도 확대 레벨
+    	};   
+    	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+
+    	// 각 객체의 주소값을 convertToLatLng() 함수의 매개변수로 넘기기
+    	searchList.forEach((item) => convertToLatLng(item.address));
+
+
+    	// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성
+    	var bounds = new kakao.maps.LatLngBounds();
+
+
+    	//주소를 좌표로 변환
+    	count = 0;
+    	function convertToLatLng(address) {
+
+    	  //주소-좌표 변환 객체 생성
+    	  var geocoder = new kakao.maps.services.Geocoder();
+
+    	  //주소로 좌표 검색
+    	  geocoder.addressSearch(address, function(result, status) {
+
+    	    //정상적으로 검색이 완료됐으면
+    	    if (status === kakao.maps.services.Status.OK) {
+
+    	      // 좌표 생성
+    	      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+    	      //결과값으로 받은 위치를 마커로 표시
+    	      var marker = new kakao.maps.Marker({
+    	        position: coords,
+    	        clickable: true,
+    	      });
+    	      marker.setMap(map);
+
+    	      // 마커에 표시할 인포윈도우를 생성
+    	      // <span class="tag">${searchList[count].kind}</span>  
+    	      var infowindow = new kakao.maps.InfoWindow({
+    	        content: 
+    	          `<a id="marker-box" class="fw-bold text-dark">
+    	            <span id="info-type" class="mt-1 ms-1">${searchList[count].type}</span>
+    	            <div class="ms-1">
+    	              <span id="info-name">${searchList[count].name}</span>
+    	            </div>
+    	            <span id="info-addr" class="mb-1 ms-1"><i class="ci-location fw-bold"></i>${searchList[count].address}</span>
+    	          </a>`,
+    	        removable: true,
+    	      });
+
+    	      // 마커 클릭하면 인포뒤도우 표시
+    	      kakao.maps.event.addListener(marker, 'click', function() {
+    	        infowindow.open(map, marker);  
+    	      });
+
+    	      // 검색 결과에 맞게 지도 범위 재설정
+    	      bounds.extend(coords);
+    	      map.setBounds(bounds);
+
+    	      count++;
+    	    }    
+    	  });
+    	};
+    
+    </script>
   </body>
 </html>

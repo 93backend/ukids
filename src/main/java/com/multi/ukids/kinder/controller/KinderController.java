@@ -37,13 +37,13 @@ public class KinderController {
 	@Autowired
 	private KinderService kinderService;
 	
-	private static List<Integer> kinderCompareNo = new ArrayList<>();
 	private static final int MAX_SIZE = 4;
 	
 	// 유치원 검색
 	@GetMapping("/kinder-main")
 	public String kinderMain(Model model, HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare,
 		@RequestParam Map<String, Object> param,
 		@RequestParam(required = false) String[] build,
 		@RequestParam(required = false) String[] classroom,
@@ -97,9 +97,14 @@ public class KinderController {
 		String wish = Arrays.toString(wishNo);
 		log.info("찜 목록 : " + wish);
 		
+		if(session.getAttribute("kinderCompare") == null) {
+			List<Integer> initCompare = new ArrayList<>();
+			session.setAttribute("kinderCompare", initCompare);
+		}
+		
 		String compare = null;
-		if(kinderCompareNo != null) {
-			compare = kinderCompareNo.toString();
+		if(kinderCompare != null) {
+			compare = kinderCompare.toString();
 		}
 		log.info("비교 목록 : " + compare);
 		
@@ -130,6 +135,7 @@ public class KinderController {
 	@GetMapping("/kinder-detail")
 	public String kinderDetail(Model model, HttpSession session,
 		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare,
 		@RequestParam("no") int no, @RequestParam("i") int i
 	) {
 		log.info("유치원 상세보기");
@@ -148,8 +154,8 @@ public class KinderController {
 		}
 		
 		String compare = null;
-		if(kinderCompareNo != null) {
-			compare = kinderCompareNo.toString();
+		if(kinderCompare != null) {
+			compare = kinderCompare.toString();
 		}
 		log.info("비교 목록 : " + compare);
 		
@@ -303,21 +309,22 @@ public class KinderController {
 	
 	// 비교 추가
 	@PostMapping("/kinder-addCompare")
-	public ResponseEntity<Map<String, Object>> addCompare(int no) {
+	public ResponseEntity<Map<String, Object>> addCompare(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare
+	) {
 		log.info("유치원 비교 추가 : " + no );
 		
-		if(kinderCompareNo.size() < MAX_SIZE) {
-			kinderCompareNo.add(no);
+		if(kinderCompare.size() < MAX_SIZE) {
+			kinderCompare.add(no);
 		}
 		
 		boolean add;
-		if(kinderCompareNo.contains(no) == true) {
+		if(kinderCompare.contains(no) == true) {
 			add = true;
 		} else {
 			add = false;
 		}
-		log.info(kinderCompareNo.toString());
-		System.out.println(add);
+		log.info(kinderCompare.toString());
 		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("add", add);
@@ -327,20 +334,21 @@ public class KinderController {
 	
 	// 비교 삭제
 	@PostMapping("/kinder-deleteCompare")
-	public ResponseEntity<Map<String, Object>> deleteCompare(int no) {
+	public ResponseEntity<Map<String, Object>> deleteCompare(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare
+	) {
 		log.info("유치원 비교 삭제 : " + no );
 		
-		int index = kinderCompareNo.indexOf(no);
-		kinderCompareNo.remove(index);
+		int index = kinderCompare.indexOf(no);
+		kinderCompare.remove(index);
 		
 		boolean remove;
-		if(kinderCompareNo.contains(no) == false) {
+		if(kinderCompare.contains(no) == false) {
 			remove = true;
 		} else {
 			remove = false;
 		}
-		log.info(kinderCompareNo.toString());
-		System.out.println(remove);
+		log.info(kinderCompare.toString());
 		
 		Map<String,	Object> map = new HashMap<String, Object>();
 		map.put("remove", remove);
@@ -348,20 +356,44 @@ public class KinderController {
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
+	@GetMapping("/kinder-deleteCompare")
+	public String deleteCompare2(Model model, HttpSession session, int no,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare
+	) {
+		log.info("유치원 비교 삭제 : " + no );
+		
+		int index = kinderCompare.indexOf(no);
+		kinderCompare.remove(index);
+		
+		if(kinderCompare.contains(no) == false) {
+			model.addAttribute("msg", "비교 목록에서 삭제되었습니다.");
+		} else {
+			model.addAttribute("msg", "삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/compare-kinder");
+		
+		return "common/msg";
+	}
+	
 	// 비교 화면
 	@GetMapping("/compare-kinder")
-	public String compareKinder(Model model) {
-		System.out.println(kinderCompareNo.toString());
+	public String compareKinder(Model model, HttpSession session,
+		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare
+	) {
+		log.info("유치원 비교 화면");
+		log.info("비교 목록 : " + kinderCompare);
 		
 		List<Kinder> list = new ArrayList<Kinder>();
 		
-		if(kinderCompareNo.size() > 0) {
-			for(int no : kinderCompareNo) {
+		if(kinderCompare.size() > 0) {
+			for(int no : kinderCompare) {
 				Kinder kinder = kinderService.findByNo(no);
 				list.add(kinder);
 			}
 		}
+		int count = list.size();
 		model.addAttribute("list", list);
+		model.addAttribute("count", count);
 		
 		return "compare-kinder";
 	}
