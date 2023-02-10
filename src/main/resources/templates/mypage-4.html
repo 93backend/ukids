@@ -236,12 +236,12 @@
 									</tr>
 								</th:block>
 								<th:block th:if="${klist != null}">
-								<tr th:each="kclaim, stat : ${nlist}">
+								<tr th:each="kclaim, stat : ${klist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9">
 										<a class="nav-link-style-cgw fw-medium cgw25" href="account-single-ticket.html">[[${kclaim.title}]]</a>
 									</td>
-									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(kclaim.createDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
 										<span th:if="${kclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
 										<span th:if="${kclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>

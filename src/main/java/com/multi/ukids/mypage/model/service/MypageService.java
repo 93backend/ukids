@@ -62,22 +62,22 @@ public class MypageService {
 	
 	
 	// mypage3
-	public List<Wish> getNurseryWishList(PageInfo pageInfo, Map<String, Object> param) {
+	public List<Wish> getNurseryWishList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectNurseryWishList(param);
 	}
 	
-	public List<Wish> getKinderWishList(PageInfo pageInfo, Map<String, Object> param) {
+	public List<Wish> getKinderWishList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectKinderWishList(param);
 	}
 	
-	public int getNurseryWishCount(Map<String, Object> map) {
-		return mapper.selectNurseryWishCount(map);
+	public int getNurseryWishCount(Map<String, String> param) {
+		return mapper.selectNurseryWishCount(param);
 	}
-	public int getKinderWishCount(Map<String, Object> map) {
+	public int getKinderWishCount(Map<String, String> map) {
 		return mapper.selectKinderWishCount(map);
 	}
 
@@ -102,22 +102,22 @@ public class MypageService {
 		return mapper.selectKinderName(no);
 	}
 	
-	public List<Claim> getNurseryClaimList(PageInfo pageInfo, Map<String, Object> param) {
+	public List<Claim> getNurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectNurseryClaimList(param);
 	}
 	
-	public List<Claim> getKinderClaimList(PageInfo pageInfo, Map<String, Object> param) {
+	public List<Claim> getKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectKinderClaimList(param);
 	}
 	
-	public int getNurseryClaimCount(Map<String, Object> map) {
+	public int getNurseryClaimCount(Map<String, String> map) {
 		return mapper.selectNurseryClaimCount(map);
 	}
-	public int getKinderClaimCount(Map<String, Object> map) {
+	public int getKinderClaimCount(Map<String, String> map) {
 		return mapper.selectKinderClaimCount(map);
 	}
 	
@@ -208,13 +208,13 @@ public class MypageService {
 
 	
 	// mypage5
-	public List<Board> getBoardList(PageInfo pageInfo, Map<String, Object> param){
+	public List<Board> getBoardList(PageInfo pageInfo, Map<String, String> param){
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectBoardList(param);
 	}
 	
-	public int getBoardCount(Map<String, Object> param) {
+	public int getBoardCount(Map<String, String> param) {
 		return mapper.selectBoardCount(param);
 	}
 	

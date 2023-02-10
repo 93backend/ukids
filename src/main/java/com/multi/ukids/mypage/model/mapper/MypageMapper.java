@@ -27,20 +27,20 @@ public interface MypageMapper {
 	int deleteNAdmission(int no);
 	
 	// mypage3 - 찜
-	List<Wish> selectNurseryWishList(Map<String, Object> map);
-	int selectNurseryWishCount(Map<String, Object> map);
+	List<Wish> selectNurseryWishList(Map<String, String> map);
+	int selectNurseryWishCount(Map<String, String> map);
 	int updateNurseryWish(Wish wish);
 	int deleteNurseryWish(int no);
 	
-	List<Wish> selectKinderWishList(Map<String, Object> map);
-	int selectKinderWishCount(Map<String, Object> map);
+	List<Wish> selectKinderWishList(Map<String, String> map);
+	int selectKinderWishCount(Map<String, String> map);
 	int updateKinderWish(Wish wish);
 	int deleteKinderWish(int no);
 	
 	//mypage4 - 불편사항 신고목록
 	String selectNurseryName(int no);
-	List<Claim> selectNurseryClaimList(Map<String, Object> map);
-	int selectNurseryClaimCount(Map<String, Object> map);
+	List<Claim> selectNurseryClaimList(Map<String, String> map);
+	int selectNurseryClaimCount(Map<String, String> map);
 	Claim selectNurseryClaimByNo(int no);
 	int updateReadCountNursery(Claim claim);
 	int insertNurseryClaim(Claim claim);
@@ -48,17 +48,17 @@ public interface MypageMapper {
 	int deleteNurseryClaim(int no);
 	
 	String selectKinderName(int no);
-	List<Claim> selectKinderClaimList(Map<String, Object> map);
-	int selectKinderClaimCount(Map<String, Object> map);
+	List<Claim> selectKinderClaimList(Map<String, String> map);
+	int selectKinderClaimCount(Map<String, String> map);
 	Claim selectKinderClaimByNo(int no);
 	int updateReadCountKinder(Claim claim);
 	int insertKinderClaim(Claim claim);
 	int updateKinderClaim(Claim claim);
 	int deleteKinderClaim(int no);
 	
-	// mypage6 - 내가 쓴 게시글
-	List<Board> selectBoardList(Map<String, Object> map);
-	int selectBoardCount(Map<String, Object> map);
+	// mypage5 - 내가 쓴 게시글
+	List<Board> selectBoardList(Map<String, String> map);
+	int selectBoardCount(Map<String, String> map);
 	Board selectBoardByNo(int no);
 	int updateBoard(Board board);
 	int updateReadCount(Board board);

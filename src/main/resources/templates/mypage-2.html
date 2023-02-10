@@ -169,10 +169,14 @@
 										<span th:if="${nadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
 									</td>
 									<td class="py-3 cgw9">
-										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteNAdmission" th:if="${nadmission.status != 'Y'}" >
+										<th:block th:if="${nadmission.status != 'Y'}">
+										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:onclick="|deleteNAdmission(${nadmission.no});|">
 											<span>입소신청취소</span>
 										</button>
-										<span th:if="${nadmission.status == 'Y'}" class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
+										<th:block th:if="${nadmission.status == 'Y'}">
+										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
 									</td>
 								</tr>
 								<div id="nAdmissionListContent"></div>
@@ -288,10 +292,14 @@
 										<span th:if="${kadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
 									</td>
 									<td class="py-3 cgw9">
-										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:if="${kadmission.status != 'Y'}" >
+										<th:block th:if="${kadmission.status != 'Y'}">
+										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:onclick="|deleteKAdmission(${kadmission.no});|">
 											<span>입소신청취소</span>
 										</button>
-										<span th:if="${kadmission.status == 'Y'}" class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
+										<th:block th:if="${kadmission.status == 'Y'}">
+										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
 									</td>
 								</tr>
 								</th:block>
@@ -330,14 +338,17 @@
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
 	<script>
-		$(document).ready(() => {
-			$("#deleteKAdmission").on("click", (e) => {
-				if(confirm("정말로 입소신청을 취소 하시겠습니까?")) {
-					location.replace("/mypage-2");
-				}
-			});
-			
-		});
+		function deleteNAdmission(no){
+			var url = "/mypage-2/deleteNAdmission?no=";
+			var requestURL = url + no;
+			location.replace(requestURL);
+		}
+	
+		function deleteKAdmission(no){
+			var url = "/mypage-2/deleteKAdmission?no=";
+			var requestURL = url + no;
+			location.replace(requestURL);
+		}
 	</script>
 </body>
 
