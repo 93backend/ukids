@@ -68,8 +68,8 @@ public interface MypageMapper {
 	List<Rental> selectRentalList(Map<String, String> map);
 	int selectRentalCount(Map<String, String> map);
 	Rental selectRentalByNo(int no);
-	int updateToyType(Rental rental);
-	int updateRental(Rental rental);
+	int updateToyType(int no);
+	int updateRental(int no);
 	int deleteRental(int no);
 	
 	// mypage7 - 장바구니

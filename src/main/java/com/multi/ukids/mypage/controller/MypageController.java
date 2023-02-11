@@ -381,6 +381,46 @@ public class MypageController {
 		return "mypage-6";
 	}
 	
+	@RequestMapping("/mypage-rental-update")
+	public String rentalUpdate(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int payNo = Integer.parseInt(param.get("payNo"));
+		
+		int result = service.updateRental(payNo);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "반납처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "반납처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-6");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/mypage-rental-delete")
+	public String rentalDelete(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int payNo = Integer.parseInt(param.get("payNo"));
+		int toyNo = Integer.parseInt(param.get("toyNo"));
+		
+		int result = service.deleteRental(payNo);
+		int result2 = service.updateToyType(toyNo);
+		
+		if(result > 0 && result2 > 0) {
+			model.addAttribute("msg", "대여가 취소 되었습니다.");
+		} else {
+			model.addAttribute("msg", "대여취소에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-6");
+		
+		return "common/msg";
+	}
+	
 	@GetMapping("/mypage-7")
 	public String mypageView7(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 

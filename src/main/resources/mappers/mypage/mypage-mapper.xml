@@ -353,22 +353,14 @@
 	</select>
 	
 	<update id="updateToyType" parameterType="Rental">
-		UPDATE TOY
-		SET
-			TOYTYPE=#{toyType},
-		WHERE
-			TOYNO = #{toyNo}
+		UPDATE TOY SET TOYTYPE=NULL WHERE TOYNO = #{toyNo}
 	</update>
 	
 	<update id="updateRental" parameterType="Rental">
-		UPDATE PAY
-		SET
-			STATUS=#{status},
-		WHERE
-			PAYNO = #{payNo}
+		UPDATE PAY SET STATUS='R' WHERE PAYNO = #{payNo}
 	</update>
 	
-	<delete id="deletePay" parameterType="Rental">
+	<delete id="deleteRental" parameterType="int">
 		DELETE FROM PAY WHERE PAYNO = #{payNo}
 	</delete>
 	

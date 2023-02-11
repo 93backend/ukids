@@ -183,10 +183,12 @@
                   <td class="py-3 cgw9 cgw22">[[${rental.realPrice}]]</td>
                   <td class="py-3 cgw9 cgw22">
                   <th:block th:if="${rental.status == 'Y'}">
-                    <div class="">대여중</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">반납하기</span></a>
+                    <div class="">대여중</div>
+                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${rental.payNo}]]);">반납하기</button>
                   </th:block>
                   <th:block th:if="${rental.status == 'A'}">
-                    <div class="">주문완료</div><a href="#"><span class="badge-cgw1 bg-secondary-cgw1 m-0">대여취소</span></a>
+                    <div class="">주문완료</div>
+                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${rental.payNo}]], [[${rental.toyNo}]]);">대여취소</button>
                   </th:block>
                   <th:block th:if="${rental.status == 'N'}">
                     <div class="">반납완료</div>
@@ -258,7 +260,19 @@
 			location.href = encodeURI(pageUrl);	
 		}
 		
+		function rentalUpdate(payNo) {
+			var url = "/mypage-rental-update?&payNo=" + payNo;
+			if(confirm("정말로 반납을 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
 		
+		function rentalDelete(payNo, toyNo) {
+			var url = "/mypage-rental-delete?&payNo=" + payNo + "&toyNo=" + toyNo;
+			if(confirm("정말로 대여를 취소 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
 	</script>
 </body>
 

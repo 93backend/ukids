@@ -287,17 +287,17 @@ public class MypageService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int updateToyType(Rental rental) {
-		return mapper.updateToyType(rental);
+	public int updateToyType(int no) {
+		return mapper.updateToyType(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int updateRental(Rental rental) {
-		return mapper.updateRental(rental);
+	public int updateRental(int no) {
+		return mapper.updateRental(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteRental(int no, String rootPath) {
+	public int deleteRental(int no) {
 		return mapper.deleteRental(no);
 	}
 	
