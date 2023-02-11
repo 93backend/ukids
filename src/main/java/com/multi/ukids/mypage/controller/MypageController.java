@@ -214,6 +214,89 @@ public class MypageController {
 		return "mypage-3";
 	}
 	
+	@RequestMapping("/deleteNurseryWish")
+	public String deleteNurseryWish(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int no
+			) {
+		log.info("어린이집 신청 삭제 요청");
+		
+		int result = service.deleteNurseryWish(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "해당 어린이집이 찜목록에서 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "어린이집 찜목록 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-3");
+		
+		return "/common/msg";
+	}
+	
+	@RequestMapping("/deleteKinderWish")
+	public String deleteKinderWish(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int no
+			) {
+		log.info("유치원 신청 삭제 요청");
+		if (loginMember == null) {
+			return "/";
+		}
+		
+		int result = service.deleteKinderWish(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "해당 유치원이 찜목록에서 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "유치원 찜목록 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-3");
+		
+		return "/common/msg";
+	}
+	
+	@RequestMapping("/deleteAllNurseryWish")
+	public String deleteAllNurseryWish(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember
+			) {
+		log.info("어린이집 신청 삭제 요청");
+		
+		int result = service.deleteAllNurseryWish();
+		
+		if(result > 0) {
+			model.addAttribute("msg", "어린이집 찜목록이 전체 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "어린이집 찜목록 전체 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-3");
+		
+		return "/common/msg";
+	}
+	
+	@RequestMapping("/deleteAllKinderWish")
+	public String deleteAllKinderWish(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember
+			) {
+		log.info("유치원 신청 삭제 요청");
+		if (loginMember == null) {
+			return "/";
+		}
+		
+		int result = service.deleteAllKinderWish();
+		
+		if(result > 0) {
+			model.addAttribute("msg", "유치원이 찜목록이 전체 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "유치원 찜목록 전체 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-3");
+		
+		return "/common/msg";
+	}
+	
+	
+	
+	
 	@GetMapping("/mypage-4")
 	public String mypageView4(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -372,10 +455,12 @@ public class MypageController {
 			}
 			r.setRealPrice(p);
 		}
+		int num = list.size();
 		
 		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("num", num);
 		model.addAttribute("param", param);	
 
 		return "mypage-6";

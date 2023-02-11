@@ -163,8 +163,8 @@
                   <div class="card-img-top position-relative overflow-hidden"><img src="img/ukids/nursery.JPG" alt="Product image">
                     <!-- Wishlist button-->
                     <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;">
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="찜 목록 삭제"
+                      style="margin: 12px;" th:onclick="deleteNurseryWish([[${nwish.no}]]);">
                       <i class="ci-heart-filled"></i>
                     </button>
                   </div>
@@ -181,13 +181,13 @@
               
             </div>
             
-            <button class="btn btn-outline-danger"><i class="ci-trash me-2"></i>전체 삭제</button>
+            <button type="button" class="btn btn-outline-danger" th:onclick="deleteAllNurseryWish();"><i class="ci-trash me-2"></i>전체 삭제</button>
           </div>
           
           <!-- pagination -->
          <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
             <ul class="pagination" id="prev">
-              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              <li class="page-item"><button class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
             </ul>
             <ul class="pagination">
               <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
@@ -199,13 +199,13 @@
 			                </li>
 	                	</th:block>
 	                	<th:block th:if="${status.current != nPageInfo.currentPage}">
-			                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${status.current}');|">[[${status.current}]]</a></li>
+			                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${status.current}');|">[[${status.current}]]</button></li>
 	                	</th:block>
 	                </th:block>
             </ul>
             <ul class="pagination">
-              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${nPageInfo.nextPage}');|" aria-label="Next">Next<i
-                    class="ci-arrow-right ms-2"></i></a></li>
+              <li class="page-item"><button class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${nPageInfo.nextPage}');|" aria-label="Next">Next<i
+                    class="ci-arrow-right ms-2"></i></button></li>
             </ul>
           </nav>  
          
@@ -232,8 +232,8 @@
                   <div class="card-img-top position-relative overflow-hidden"><img src="img/ukids/nursery.JPG" alt="Product image">
                     <!-- Wishlist button-->
                     <button class="btn-wishlist-cgw1 btn-sm position-absolute top-0 end-0" type="button"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from favorites"
-                      style="margin: 12px;"><i class="ci-heart-filled"></i></button>
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="찜 목록 삭제"
+                      style="margin: 12px;" th:onclick="deleteKinderWish([[${kwish.no}]]);"><i class="ci-heart-filled"></i></button>
                   </div>
                     <div class="card-footer mt-n1 py-0 border-0 mb-3">
                       <div class="d-flex align-items-center position-relative py-3 mt-2">
@@ -248,7 +248,7 @@
               
             </div>
             
-            <button class="btn btn-outline-danger"><i class="ci-trash me-2"></i>전체 삭제</button>
+            <button type="buton" class="btn btn-outline-danger" th:onclick="deleteAllKinderWish();"><i class="ci-trash me-2"></i>전체 삭제</button>
           </div>
           
           
@@ -256,7 +256,7 @@
           <!-- pagination -->
           <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
             <ul class="pagination" id="prev">
-              <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-3?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+              <li class="page-item"><button class="page-link" th:onclick="|moveKPage('/mypage-3?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
             </ul>
             <ul class="pagination">
               <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
@@ -267,13 +267,13 @@
 			          </li>
 	            </th:block>
 	            <th:block th:if="${status.current != kPageInfo.currentPage}">
-			    	<li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveKPage('/mypage-3?kPage=${status.current}');|">[[${status.current}]]</a></li>
+			    	<li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveKPage('/mypage-3?kPage=${status.current}');|">[[${status.current}]]</button></li>
 	            </th:block>
 	           </th:block>
 	         </ul>
 	         <ul class="pagination">
-	           <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-3?page=${kPageInfo.prevPage}');|" aria-label="Next">Next<i
-	           class="ci-arrow-right ms-2"></i></a></li>
+	           <li class="page-item"><button class="page-link" th:onclick="|moveKPage('/mypage-3?page=${kPageInfo.prevPage}');|" aria-label="Next">Next<i
+	           class="ci-arrow-right ms-2"></i></button></li>
 	         </ul>
 	        </nav>  
           
@@ -313,6 +313,33 @@
 			location.href = encodeURI(pageUrl);	
 		}
 		
+		function deleteNurseryWish(no){
+			var url = "/deleteNurseryWish?no=" + no;
+			if(confirm("정말로 찜목록을 삭제 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
+	
+		function deleteKinderWish(no){
+			var url = "/deleteKinderWish?no=" + no;
+			if(confirm("정말로 찜목록을 삭제 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
+		
+		function deleteAllNurseryWish(){
+			var url = "/deleteAllNurseryWish";
+			if(confirm("정말로 어린이집 찜목록을 전체 삭제 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
+	
+		function deleteAllKinderWish(no){
+			var url = "/deleteAllKinderWish";
+			if(confirm("정말로 유치원 찜목록을 전체 삭제 하시겠습니까?")) {
+				location.replace(url);
+			}
+		}
 		
 	</script>
 </body>

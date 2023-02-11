@@ -83,13 +83,23 @@ public class MypageService {
 
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteNurseryWish(int no, String rootPath) {
+	public int deleteNurseryWish(int no) {
 		return mapper.deleteNurseryWish(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteKinderWish(int no, String rootPath) {
+	public int deleteKinderWish(int no) {
 		return mapper.deleteKinderWish(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteAllNurseryWish() {
+		return mapper.deleteAllNurseryWish();
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteAllKinderWish() {
+		return mapper.deleteAllKinderWish();
 	}
 	
 	

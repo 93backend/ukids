@@ -194,7 +194,7 @@
 		          <!-- pagination -->
 		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
 		            <ul class="pagination" id="prev">
-		              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+		              <li class="page-item"><button class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
 		            </ul>
 		            <ul class="pagination">
 		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
@@ -206,13 +206,13 @@
 					                </li>
 			                	</th:block>
 			                	<th:block th:if="${status.current != nPageInfo.currentPage}">
-					                <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${status.current}');|">[[${status.current}]]</a></li>
+					                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${status.current}');|">[[${status.current}]]</button></li>
 			                	</th:block>
 			                </th:block>
 		            </ul>
 		            <ul class="pagination">
-		              <li class="page-item"><a class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.nextPage}');|" aria-label="Next">Next<i
-		                    class="ci-arrow-right ms-2"></i></a></li>
+		              <li class="page-item"><button class="page-link" th:onclick="|moveNPage('/mypage-4?nPage=${nPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></button></li>
 		            </ul>
 		          </nav>  
 		          <br><br>
@@ -268,7 +268,7 @@
 					<!-- pagination -->
 		          <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
 		            <ul class="pagination" id="prev">
-		              <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+		              <li class="page-item"><button class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
 		            </ul>
 		            <ul class="pagination">
 		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
@@ -279,13 +279,13 @@
 					          </li>
 			            </th:block>
 			            <th:block th:if="${status.current != kPageInfo.currentPage}">
-					    	<li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|moveKPage('/mypage-4?kPage=${status.current}');|">[[${status.current}]]</a></li>
+					    	<li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveKPage('/mypage-4?kPage=${status.current}');|">[[${status.current}]]</button></li>
 			            </th:block>
 			           </th:block>
 			         </ul>
 			         <ul class="pagination">
-			           <li class="page-item"><a class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|" aria-label="Next">Next<i
-			           class="ci-arrow-right ms-2"></i></a></li>
+			           <li class="page-item"><button class="page-link" th:onclick="|moveKPage('/mypage-4?page=${kPageInfo.prevPage}');|" aria-label="Next">Next<i
+			           class="ci-arrow-right ms-2"></i></button></li>
 			         </ul>
 			        </nav>  
 			        

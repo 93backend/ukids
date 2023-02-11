@@ -31,11 +31,13 @@ public interface MypageMapper {
 	int selectNurseryWishCount(Map<String, String> map);
 	int updateNurseryWish(Wish wish);
 	int deleteNurseryWish(int no);
+	int deleteAllNurseryWish();
 	
 	List<Wish> selectKinderWishList(Map<String, String> map);
 	int selectKinderWishCount(Map<String, String> map);
 	int updateKinderWish(Wish wish);
 	int deleteKinderWish(int no);
+	int deleteAllKinderWish();
 	
 	//mypage4 - 불편사항 신고목록
 	String selectNurseryName(int no);

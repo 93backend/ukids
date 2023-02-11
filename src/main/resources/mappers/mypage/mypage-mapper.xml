@@ -81,18 +81,14 @@
 		AND W.memberNo = #{memberNo}
 	</select> 
 	
-	<delete id="deleteNurseryWish" parameterType="Wish">
+	<delete id="deleteNurseryWish" parameterType="int">
 		DELETE FROM N_WISH WHERE no = #{no}
 	</delete> 
 	
-	<resultMap type="Cart" id="CartResultMap">
-		<id 	property="no"			column="NO"/>
-		<result property="toyNo" 		column="TOYNO"/>
-		<result property="memberNo" 	column="MEMBERNO"/>
-		<result property="startDate" 	column="STARTDATE"/>
-		<result property="endDate" 		column="ENDDATE"/>
-						
-	</resultMap>
+	<delete id="deleteAllNurseryWish">
+		TRUNCATE TABLE N_WISH
+	</delete>
+	
 	
 	<!-- 유치원 -->
 	
@@ -116,8 +112,12 @@
 		AND W.memberNo = #{memberNo}
 	</select> 
 	
-	<delete id="deleteKinderWish" parameterType="Wish">
+	<delete id="deleteKinderWish" parameterType="int">
 		DELETE FROM K_WISH WHERE no = #{no}
+	</delete>
+	
+	<delete id="deleteAllKinderWish">
+		TRUNCATE TABLE K_WISH
 	</delete>
 	
 	
@@ -366,6 +366,15 @@
 	
 	
 	<!-- ===============================mypage7=============================== -->
+	
+	<resultMap type="Cart" id="CartResultMap">
+		<id 	property="no"			column="NO"/>
+		<result property="toyNo" 		column="TOYNO"/>
+		<result property="memberNo" 	column="MEMBERNO"/>
+		<result property="startDate" 	column="STARTDATE"/>
+		<result property="endDate" 		column="ENDDATE"/>
+						
+	</resultMap>
 	
 	<select id="selectCartList" resultType="Cart" parameterType="map">
 		SELECT
