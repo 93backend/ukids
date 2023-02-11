@@ -53,7 +53,7 @@
 		AND A.memberNo = #{memberNo}
 	</select> 
 	
-	<delete id="deleteKAdmission" parameterType="KAdmission">
+	<delete id="deleteKAdmission" parameterType="int">
 		DELETE FROM K_ADMISSION WHERE no = #{no}
 	</delete>
 	

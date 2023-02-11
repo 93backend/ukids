@@ -170,7 +170,7 @@
 									</td>
 									<td class="py-3 cgw9">
 										<th:block th:if="${nadmission.status != 'Y'}">
-										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:onclick="|deleteNAdmission(${nadmission.no});|">
+										<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteNAdmission([[${nadmission.no}]]);">
 											<span>입소신청취소</span>
 										</button>
 										</th:block>
@@ -293,7 +293,7 @@
 									</td>
 									<td class="py-3 cgw9">
 										<th:block th:if="${kadmission.status != 'Y'}">
-										<button class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" id="deleteKAdmission" th:onclick="|deleteKAdmission(${kadmission.no});|">
+										<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteKAdmission([[${kadmission.no}]]);">
 											<span>입소신청취소</span>
 										</button>
 										</th:block>
@@ -339,15 +339,17 @@
 	<script src="js/theme.min.js"></script>
 	<script>
 		function deleteNAdmission(no){
-			var url = "/mypage-2/deleteNAdmission?no=";
-			var requestURL = url + no;
-			location.replace(requestURL);
+			var url = "/deleteNAdmission?no=" + no;
+			if(confirm("정말로 취소를 하시겠습니까?")) {
+				location.replace(url);
+			}
 		}
 	
 		function deleteKAdmission(no){
-			var url = "/mypage-2/deleteKAdmission?no=";
-			var requestURL = url + no;
-			location.replace(requestURL);
+			var url = "/deleteKAdmission?no=" + no;
+			if(confirm("정말로 취소를 하시겠습니까?")) {
+				location.replace(url);
+			}
 		}
 		
 		
