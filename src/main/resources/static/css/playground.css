@@ -1,3 +1,4 @@
+/*
   .col-md-81 {
     flex: 0 0 auto;
     width: 960px;
@@ -80,3 +81,69 @@
     height: 434px; 
     width: 310px;
   }
+ */
+ 
+ 
+ 
+ /* 23.02.10 수정 */
+h3:hover {
+  color: #fc3066 !important;
+  transition: color .25s ease-in-out;
+}
+#pg-search .col-md-5 {
+  flex-grow: 1;
+}
+#pg-search .input-group {
+  position: relative;
+}
+#pg-search .input-group .btn-primary {
+  border-color: #FC6C93;
+  background-color: #FC6C93;
+}
+#pg-search .input-group .btn-primary:hover {
+  border-color: #fc3066;
+  background-color: #fc3066;
+}
+#pg-search .ci-search {
+  z-index: 100;
+  position: absolute;
+  top: 50%;
+  left: 3%;
+  transform: translateY(-50%);
+  color: gray;
+}
+
+.marker-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 250px;
+  height: auto;
+  padding: 10px;
+}
+.info-type {
+  font-size: 0.8125rem;
+  color: #5172df;
+}
+.marker-box div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* margin-bottom: 0.25rem; */
+}
+.info-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #504F4F;
+  margin: 0.125rem 0 0.25rem;
+}
+.info-addr {
+  font-size: 0.9375rem;
+  color: #7D879C;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.info-addr i {
+  margin-right: 0.25rem;
+}

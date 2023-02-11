@@ -60,7 +60,7 @@ public class HospitalController {
 	}
 	
 	@GetMapping("/hospital-main")
-	public String HospitalMain(Model model, @RequestParam Map<String, String> param) {
+	public String hospitalMain(Model model, @RequestParam Map<String, String> param) {
 		int page = 1;
 		
 		try {
@@ -99,7 +99,7 @@ public class HospitalController {
 	}
 	
 	@GetMapping("/hospital-detail")
-	public String HospitalDetail(Model model, 
+	public String hospitalDetail(Model model, 
 			@RequestParam("no") int no, 
 			@RequestParam("img") int imgIdx,
 			@RequestParam("type") String type

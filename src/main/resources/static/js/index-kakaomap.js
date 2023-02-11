@@ -2,8 +2,8 @@
 var searchList = [
   {
     type: '놀이공원',
-    name: '에버랜드',
-    address: '경기 용인시 처인구 포곡읍 에버랜드로 199',
+    name: '천왕 이펜하우스 8단지 아파트 803동 어린이집옆 놀이시설(설치장소는 어린이집, 관리는 아파트 관리사무소)',
+    address: '경기도 용인시 기흥구 흥덕중앙로105번길 40 (영덕동, 흥덕마을15단지 우남퍼스트빌리젠트)',
   },
   {
     type: '워터파크',
@@ -65,15 +65,12 @@ function convertToLatLng(address) {
       marker.setMap(map);
 
       // 마커에 표시할 인포윈도우를 생성
-      // <span class="tag">${searchList[count].kind}</span>  
       var infowindow = new kakao.maps.InfoWindow({
         content: 
-          `<a id="marker-box" href="#">
-            <span id="info-type">${searchList[count].type}</span>
-            <div>
-              <span id="info-name">${searchList[count].name}</span>
-            </div>
-            <span id="info-addr"><i class="ci-location"></i>${searchList[count].address}</span>
+          `<a class="marker-box" href="#">
+            <span class="info-type">${searchList[count].type}</span>
+            <div><span class="info-name">${searchList[count].name}</span></div>
+            <span class="info-addr text-truncate"><i class="ci-location"></i>${searchList[count].address}</span>
           </a>`,
         removable: true,
       });
@@ -94,35 +91,18 @@ function convertToLatLng(address) {
 
 
 /* ========== 사이드바 목록 ========== */
-const sidebar = document.querySelector('#school-list .overflow-auto');
-const searchCount = document.querySelector('#school-list .product-title span');
+const sidebar = document.querySelector('#pg-list .overflow-auto');
+const searchCount = document.querySelector('#pg-list .product-title span');
 
 searchCount.innerHTML = searchList.length;
 
 searchList.forEach((item) => {
   sidebar.innerHTML += 
-  `<div class="card product-card product-list px-1 py-2">
-    <div class="d-sm-flex align-items-center">
-      <div class="card-body py-2">
-        <div class="product-price"><span class="text-accent"><small>${item.type}</small></span></div>
-        <h3 class="product-title fs-base mt-1 mb-2"><a href="shop-single-v1.html">${item.name}</a></h3>
-        <span class="product-meta d-block fs-xs pb-1"><i class="ci-location me-1"></i>${item.address}</span>
-      </div>
+  `<div class="card product-card product-list">
+    <div class="card-body py-2">
+      <div class="product-price"><span class="text-accent"><small>${item.type}</small></span></div>
+      <h3 class="product-title fs-base mt-1 mb-2"><a href="shop-single-v1.html">${item.name}</a></h3>
+      <span class="product-meta d-block fs-xs pb-1 text-truncate"><i class="ci-location me-1"></i>${item.address}</span>
     </div>
-  </div>
-  <div class="border-top pt-0 mt-0"></div>`
-});
-
-
-// 빠른학교찾기에서 기관에 따른 태그 색상 변경
-const schoolTagList = document.querySelectorAll('#school-list .tag');
-
-window.addEventListener('load', () => {
-  schoolTagList.forEach((item) => {
-    if (item.textContent === '어') {
-      item.classList.add('ns-tag');
-    } else if (item.textContent === '유') {
-      item.classList.add('kg-tag');
-    }
-  });
+   </div><div class="border-top pt-0 mt-0"></div>`
 });
