@@ -142,7 +142,7 @@
               <!-- 카카오지도 나오는 곳 -->
               <div id="kakao-map" style="width:100%;height:100%;"></div>
               <!-- 어린이집/유치원 체크박스 -->
-              <form action="" method="get" id="school-check" class="d-flex position-absolute top-0 start-0 p-md-3 p-sm-3 p-3" style="z-index: 100;">
+              <div id="school-check" class="d-flex position-absolute top-0 start-0 p-md-3 p-sm-3 p-3" style="z-index: 100;">
                 <div class="pt-sm-0 pt-2 px-sm-0 px-2 bg-white rounded shadow">
                   <div class="d-flex" style="width: 200px;">
                     <!-- 어린이집 체크박스 -->
@@ -158,8 +158,8 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" id="checkbox-btn" class="btn btn-sm btn-dark ms-2 shadow"><i class="ci-search"></i></button>
-              </form>
+<!--                 <button type="submit" id="checkbox-btn" class="btn btn-sm btn-dark ms-2 shadow"><i class="ci-search"></i></button> -->
+              </div>
             </div>
 
             <!-- 목록 -->
@@ -245,6 +245,7 @@
             </div>
 
           </div>
+         </div>
       </section>
 
       <!-- 아동 관련 시설 -->
@@ -1070,29 +1071,59 @@
 		 };
 		 
 		 
-		 /* ========== 카카오 지도 ========== */
+		/* ========== 카카오 지도 ========== */
+		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+		var markers = [];
 		// 검색 결과
 		var searchList = [
 			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
 				  {
 				    kind: '어',
+				    no: [[${nursery[num].no}]],
 				    type: [[${nursery[num].crtypename}]],
 				    name: [[${nursery[num].crname}]],
 				    address: [[${nursery[num].craddr}]],
 				    image: null,
 				  },
-				/*[/]*/
-			
-			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
 				  {
 				    kind: '유',
+				    no: [[${kinder[num].kinNo}]],
 				    type: [[${kinder[num].establish}]],
 				    name: [[${kinder[num].kindername}]],
 				    address: [[${kinder[num].addr}]],
 				    image: null,
+					},
+			/*[/]*/
+			
+		];
+		 
+		 var nurseryList = [
+			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
+				  {
+				    kind: '어',
+				    no: [[${nursery[num].no}]],
+				    type: [[${nursery[num].crtypename}]],
+				    name: [[${nursery[num].crname}]],
+				    address: [[${nursery[num].craddr}]],
+				    image: null,
 				  },
 			/*[/]*/
-		];
+			 
+		 ];
+		 
+		 var kinderList = [
+			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
+				  {
+				    kind: '유',
+				    no: [[${kinder[num].kinNo}]],
+				    type: [[${kinder[num].establish}]],
+				    name: [[${kinder[num].kindername}]],
+				    address: [[${kinder[num].addr}]],
+				    image: null,
+					},
+			/*[/]*/
+			 
+		 ];
 
 
 		// 지도 생성
@@ -1105,46 +1136,57 @@
 
 
 		// 각 객체의 주소값을 convertToLatLng() 함수의 매개변수로 넘기기
-		searchList.forEach((item) => convertToLatLng(item.address));
+		searchList.forEach(convertToLatLng);
 
 
 		// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성
 		var bounds = new kakao.maps.LatLngBounds();
-
-
+		
 		//주소를 좌표로 변환
-		count = 0;
-		function convertToLatLng(address) {
+		function convertToLatLng(item, index) {
 
 		  //주소-좌표 변환 객체 생성
 		  var geocoder = new kakao.maps.services.Geocoder();
 
 		  //주소로 좌표 검색
-		  geocoder.addressSearch(address, function(result, status) {
+		  geocoder.addressSearch(item.address, function(result, status) {
 
 		    //정상적으로 검색이 완료됐으면
 		    if (status === kakao.maps.services.Status.OK) {
 
 		      // 좌표 생성
 		      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
+		      
+			  
 		      //결과값으로 받은 위치를 마커로 표시
 		      var marker = new kakao.maps.Marker({
 		        position: coords,
 		        clickable: true,
 		      });
-		      marker.setMap(map);
+		      
+		      // 마커 이미지 설정
+		      var markerImage = null;
+		      if(item.kind ==  '어') {
+		    	  markerImage = new kakao.maps.MarkerImage(
+		    			    'img/ukids/map/nursery-marker.svg', new kakao.maps.Size(31, 35), new kakao.maps.Point(13, 34));
+		      } else {
+		    	  markerImage = new kakao.maps.MarkerImage(
+		    			    'img/ukids/map/kinder-marker.svg', new kakao.maps.Size(31, 35), new kakao.maps.Point(13, 34));
+		      }
+		      
+		      marker.setImage(markerImage);
+// 		      marker.setMap(map);
 
 		      // 마커에 표시할 인포윈도우를 생성
 		      // <span class="tag">${searchList[count].kind}</span>  
 		      var infowindow = new kakao.maps.InfoWindow({
 		        content: 
-		          `<a class="marker-box" href="#">
-		            <span class="info-type">${searchList[count].type}</span>
+		          `<a class="marker-box">
+		            <span class="info-type">${item.type}</span>
 		            <div>
-		              <span class="info-name">${searchList[count].name}</span>
+		              <span class="info-name">${item.name}</span>
 		            </div>
-		            <span class="info-addr"><i class="ci-location"></i>${searchList[count].address}</span>
+		            <span class="info-addr"><i class="ci-location"></i>${item.address}</span>
 		          </a>`,
 		        removable: true,
 		      });
@@ -1157,10 +1199,30 @@
 		      // 검색 결과에 맞게 지도 범위 재설정
 		      bounds.extend(coords);
 		      map.setBounds(bounds);
-
-		      count++;
+		      
+		   	  // 생성된 마커를 배열에 추가합니다
+		      markers.push(marker);
+		      showMarkers();
 		    }    
 		  });
+		}
+		
+		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+		function setMarkers(map) {
+		    for (var i = 0; i < markers.length; i++) {
+		        markers[i].setMap(map);
+		    }            
+		}
+		
+		// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+		function showMarkers() {
+		    setMarkers(map)    
+		}
+
+		// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+		function hideMarkers() {
+		    setMarkers(null); 
+			markers = [];
 		}
 
 		// 사이드바 목록 추가
@@ -1169,45 +1231,83 @@
 
 		searchCount.innerHTML = searchList.length;
 
-		searchList.forEach((item) => {
-		  let href = 'nursery-detail.html';
-		  let alt = 'Nursery';
+		searchList.forEach(setSidebar);
+		
+		function setSidebar(item, index) {
+			let href = '';
+			let alt = '';
+			let src = '';
+			
+			var i = item.no % 30;
 		  
-		  if (item.kind === '어') {
-		    href = 'nursery-detail.html';
-		    alt = 'Nursery';
-		  }
-		  if (item.kind === '유') {
-		    href = 'kinder-detail.html';
-		    alt = 'Kindergarden';
-		  }
+			if (item.kind === '어') {
+		    	href = `/nursery-detail?no=${item.no}&i=${i}`;
+		    	alt = 'Nursery';
+		    	src = `img/어린이집/nursery${i}.JPG`;
+		  	}
+		  	if (item.kind === '유') {
+		    	href = `/kinder-detail?no=${item.no}&i=${i}`;
+		    	alt = 'Kindergarden';
+		    	src = `img/유치원/kinder${i}.JPG`;
+		  	}
 
-		  sidebar.innerHTML += 
-		  `<div class="card product-card product-list px-3 py-2">
-		    <span class="tag btn-wishlist btn-sm">${item.kind}</span>
-		    <div class="d-sm-flex align-items-center">
-		      <a class="product-list-thumb" href="${href}"><img src="img/ukids/index/어린이집.png" alt="${alt}"></a>
-		      <div class="card-body py-2">
-		        <div class="product-price"><span class="text-accent"><small>${item.type}</small></span></div>
-		        <h3 class="product-title fs-base mt-1 mb-2"><a href="${href}">${item.name}</a></h3>
-		        <span class="product-meta d-block fs-xs pb-1"><i class="ci-location me-1"></i>${item.address}</span>
-		      </div>
-		    </div>
-		  </div>
-		  <div class="border-top pt-0 mt-0"></div>`
-		});
+		  	sidebar.innerHTML += 
+		  		`<div class="card product-card product-list px-3 py-2">
+		    		<span class="tag btn-wishlist btn-sm">${item.kind}</span>
+		    		<div class="d-sm-flex align-items-center">
+		      			<a class="product-list-thumb" href="${href}"><img src="${src}" alt="${alt}"></a>
+		      			<div class="card-body py-2">
+		        			<div class="product-price"><span class="text-accent"><small>${item.type}</small></span></div>
+		        			<h3 class="product-title fs-base mt-1 mb-2"><a href="${href}">${item.name}</a></h3>
+		        			<span class="product-meta d-block fs-xs pb-1"><i class="ci-location me-1"></i>${item.address}</span>
+		      			</div>
+		    		</div>
+		  		</div>
+		  		<div class="border-top pt-0 mt-0"></div>`
+		}
 		
 		// 빠른학교찾기에서 기관에 따른 태그 색상 변경
-		const schoolTagList = document.querySelectorAll('#school-list .tag');
+		var schoolTagList = document.querySelectorAll('#school-list .tag');
 
 		window.addEventListener('load', () => {
-		  schoolTagList.forEach((item) => {
-		    if (item.textContent === '어') {
+		  schoolTagList.forEach(tagColor);
+		});
+		
+		// 태그 색상 변경 함수
+		function tagColor(item) {
+			if (item.textContent === '어') {
 		      item.classList.add('ns-tag');
 		    } else if (item.textContent === '유') {
 		      item.classList.add('kg-tag');
 		    }
-		  });
+		};
+		
+		
+		// 체크 박스
+		
+		$('.form-check-input').click(function() {
+			let nsIschecked = $('#ns-check').is(':checked');
+			let kgIschecked = $('#kg-check').is(':checked');
+			hideMarkers();
+			schoolTagList = document.querySelectorAll('#school-list .tag'); // 안됨
+			var showList = [];
+			if(nsIschecked && kgIschecked) {
+				showList = searchList;
+			} else {
+				if(nsIschecked && !kgIschecked) {
+					showList = nurseryList;
+					
+				} else if(!nsIschecked && kgIschecked) {
+					showList = kinderList;
+				} else {
+					showList = [];
+				}
+			}
+			showList.forEach(convertToLatLng);
+			searchCount.innerHTML = showList.length;
+			sidebar.innerHTML = '';
+			showList.forEach(setSidebar);
+			schoolTagList.forEach(tagColor); // 안됨
 		});
     
     </script>
