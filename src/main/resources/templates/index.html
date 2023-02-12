@@ -967,12 +967,10 @@
 		 var locationN = [[${locationNCnt}]];
 		 var locationK = [[${locationKCnt}]];
 		 let barChartData3 = {
-// 		   labels: ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '제주'],
 		   labels: ['서울', '인천', '경기', '강원', '충청', '전라', '경상'],
 		   datasets: [
 		     {
 		       label: '어린이집',
-// 		       data: [locationN[0], locationN[1], locationN[2], locationN[3], locationN[4], locationN[5], locationN[6], locationN[7]],
 		       data: [locationN[0], locationN[1], locationN[2], locationN[3], locationN[4], locationN[5], locationN[6]],
 		       backgroundColor: '#ffc0cb',
 		       datalabels: {
@@ -983,7 +981,6 @@
 		     },
 		     {
 		       label: '유치원',
-// 		       data: [locationK[0], locationK[1], locationK[2], locationK[3], locationK[4], locationK[5], locationK[6], locationK[7]],
 		       data: [locationK[0], locationK[1], locationK[2], locationK[3], locationK[4], locationK[5], locationK[6]],
 		       backgroundColor: '#8977ad',
 		       datalabels: {
@@ -1178,7 +1175,6 @@
 // 		      marker.setMap(map);
 
 		      // 마커에 표시할 인포윈도우를 생성
-		      // <span class="tag">${searchList[count].kind}</span>  
 		      var infowindow = new kakao.maps.InfoWindow({
 		        content: 
 		          `<a class="marker-box">
@@ -1237,6 +1233,7 @@
 			let href = '';
 			let alt = '';
 			let src = '';
+			let tag = '';
 			
 			var i = item.no % 30;
 		  
@@ -1244,16 +1241,18 @@
 		    	href = `/nursery-detail?no=${item.no}&i=${i}`;
 		    	alt = 'Nursery';
 		    	src = `img/어린이집/nursery${i}.JPG`;
+		    	tag = 'ns-tag';
 		  	}
 		  	if (item.kind === '유') {
 		    	href = `/kinder-detail?no=${item.no}&i=${i}`;
 		    	alt = 'Kindergarden';
 		    	src = `img/유치원/kinder${i}.JPG`;
+		    	tag = 'kg-tag';
 		  	}
 
 		  	sidebar.innerHTML += 
 		  		`<div class="card product-card product-list px-3 py-2">
-		    		<span class="tag btn-wishlist btn-sm">${item.kind}</span>
+		    		<span class="tag ${tag} btn-wishlist btn-sm">${item.kind}</span>
 		    		<div class="d-sm-flex align-items-center">
 		      			<a class="product-list-thumb" href="${href}"><img src="${src}" alt="${alt}"></a>
 		      			<div class="card-body py-2">
@@ -1266,30 +1265,12 @@
 		  		<div class="border-top pt-0 mt-0"></div>`
 		}
 		
-		// 빠른학교찾기에서 기관에 따른 태그 색상 변경
-		var schoolTagList = document.querySelectorAll('#school-list .tag');
-
-		window.addEventListener('load', () => {
-		  schoolTagList.forEach(tagColor);
-		});
-		
-		// 태그 색상 변경 함수
-		function tagColor(item) {
-			if (item.textContent === '어') {
-		      item.classList.add('ns-tag');
-		    } else if (item.textContent === '유') {
-		      item.classList.add('kg-tag');
-		    }
-		};
-		
-		
 		// 체크 박스
 		
 		$('.form-check-input').click(function() {
 			let nsIschecked = $('#ns-check').is(':checked');
 			let kgIschecked = $('#kg-check').is(':checked');
 			hideMarkers();
-			schoolTagList = document.querySelectorAll('#school-list .tag'); // 안됨
 			var showList = [];
 			if(nsIschecked && kgIschecked) {
 				showList = searchList;
@@ -1307,7 +1288,6 @@
 			searchCount.innerHTML = showList.length;
 			sidebar.innerHTML = '';
 			showList.forEach(setSidebar);
-			schoolTagList.forEach(tagColor); // 안됨
 		});
     
     </script>

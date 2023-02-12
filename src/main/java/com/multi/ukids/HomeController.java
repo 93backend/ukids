@@ -1,10 +1,6 @@
 package com.multi.ukids;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,17 +37,15 @@ public class HomeController {
 		
 		Map<String, Object> param = new HashMap<>();
 		
-		param.put("city", "서울");
-		param.put("town", "강남구");
-//		if(loginMember == null) { // 기본값
-//			param.put("city", "서울");
-//			param.put("town", "강남구");
-//		} 
-//		else { // 사용자 주소
-//			String[] addrArray = loginMember.getAddress().split(" ");
-//			param.put("city", addrArray[0]);
-//			param.put("town", addrArray[1]);
-//		}
+		if(loginMember == null) { // 기본값
+			param.put("city", "서울");
+			param.put("town", "강남구");
+		} 
+		else { // 사용자 주소
+			String[] addrArray = loginMember.getAddress().split(" ");
+			param.put("city", addrArray[0]);
+			param.put("town", addrArray[1]);
+		}
 		String address = (String) param.get("city") + " " + (String) param.get("town");
 		
 		
@@ -82,7 +76,6 @@ public class HomeController {
 		}
 		
 		// 지역별 어린이집 / 유치원
-//		String[] location = {"서울", "부산", "대구", "인천", "광주", "대전", "울산", "제주"};
 		String[] location = {"서울", "인천", "경기", "강원", "충청", "전라", "경상"};
 		int[] locationNCnt = new int[location.length];
 		int[] locationKCnt = new int[location.length];
