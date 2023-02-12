@@ -1,6 +1,5 @@
 package com.multi.ukids.mypage.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.multi.ukids.board.model.vo.Board;
-import com.multi.ukids.claim.model.service.ClaimService;
 import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.vo.KAdmission;
@@ -40,9 +38,6 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
-	
-	@Autowired
-	private ClaimService claimService;
 	
 	@Autowired
 	private MypageService service;
@@ -74,16 +69,38 @@ public class MypageController {
 	}
 
 	@GetMapping("/mypage")
-	public String mypageView() {
+	public String mypageView(Model model, 
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
+			@RequestParam Map<String, String> param) {
+		if (loginMember == null) {
+			return "/login";
+		}
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		
 		log.info("회원 정보 페이지 요청");
+		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
+		
+		
 		return "mypage";
 	}
 	
 	@GetMapping("/mypage-2")
 	public String mypageView2( Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
-			@RequestParam Map<String, Object> param) {
-		
+			@RequestParam Map<String, String> param) {
+
 		if (loginMember == null) {
 			return "/login";
 		}
@@ -115,6 +132,19 @@ public class MypageController {
 		System.out.println("klist(입소신청) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("pageInfo", kpageInfo);
+		
+		int admissionCount = ncount + kcount;
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
 		
 
 		return "mypage-2";
@@ -210,6 +240,19 @@ public class MypageController {
 		System.out.println("klist(찜) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
+		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = ncount + kcount;
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
 
 		return "mypage-3";
 	}
@@ -335,6 +378,19 @@ public class MypageController {
 		model.addAttribute("kPageInfo", kpageInfo);
 		model.addAttribute("param", param);	
 		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = ncount + kcount;
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
+		
 		return "mypage-4";
 	}
 	
@@ -345,7 +401,6 @@ public class MypageController {
 	) {
 		String type = param.get("type");
 		int no = Integer.parseInt(param.get("no"));
-		int knNo = Integer.parseInt(param.get("knNo"));
 		
 		int result = 0;
 		
@@ -387,6 +442,18 @@ public class MypageController {
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
+		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
 		
 		return "mypage-5";
 	}
@@ -462,6 +529,19 @@ public class MypageController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("num", num);
 		model.addAttribute("param", param);	
+		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
 
 		return "mypage-6";
 	}
@@ -509,7 +589,7 @@ public class MypageController {
 	@GetMapping("/mypage-7")
 	public String mypageView7(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
-			@RequestParam Map<String, Object> param) {
+			@RequestParam Map<String, String> param) {
 		int page = 1;
 		if (loginMember == null) {
 			return "/";
@@ -523,7 +603,7 @@ public class MypageController {
 		
 		int pay = 0;
 		for (Cart c : list) {
-			int p = (Integer.parseInt(c.getToyPay()) / 10);
+			int p = ((Integer.parseInt(c.getToyPay()) / 1000) * 100);
 			if (c.getStartDate() != null || c.getEndDate() != null) {
 			long sec = (c.getEndDate().getTime() - c.getStartDate().getTime()) / 1000;
 			int date = (int)(sec / (24*60*60));
@@ -545,10 +625,62 @@ public class MypageController {
 		model.addAttribute("param", param);	
 		
 		
+		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
+		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
+		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
+		int boardCount = service.getBoardCount(param);
+		int rentalCount = service.getRentalCount(param);
+		int cartCount = service.getCartCount(param);
+		model.addAttribute("admissionCount", admissionCount);
+		model.addAttribute("wishCount", wishCount);
+		model.addAttribute("claimCount", claimCount);
+		model.addAttribute("boardCount", boardCount);
+		model.addAttribute("rentalCount", rentalCount);
+		model.addAttribute("cartCount", cartCount);
+		
+		
 		return "mypage-7";
 	}
 	
+	@RequestMapping("/deleteCart")
+	public String deleteCart(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int no
+			) {
+		log.info("장바구니 삭제 요청");
+		if (loginMember == null) {
+			return "/";
+		}
+		
+		int result = service.deleteCart(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "장바구니 삭제가 정상적으로 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "장바구니 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-7");
+		
+		return "/common/msg";
+	}
 	
+	@RequestMapping("/deleteAllCart")
+	public String deleteAllCart(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember
+			) {
+		log.info("장바구니 전체 삭제 요청");
+		
+		int result = service.deleteAllCart();
+		
+		if(result > 0) {
+			model.addAttribute("msg", "장바구니 목록이 전체 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "장바구니 목록 전체 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-7");
+		
+		return "/common/msg";
+	}
 	
 
 }

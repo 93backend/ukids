@@ -423,11 +423,13 @@
 			NO = #{no}
 	</update>
 	
-	<delete id="deleteCart" parameterType="Cart">
+	<delete id="deleteCart" parameterType="int">
 		DELETE FROM CART WHERE NO = #{no}
 	</delete>
 	
-	
+	<delete id="deleteAllCart">
+		TRUNCATE TABLE CART
+	</delete>
 	
 	
 </mapper>

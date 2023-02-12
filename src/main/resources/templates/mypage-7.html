@@ -111,27 +111,27 @@
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소
-										신청 조회<span class="fs-sm text-muted ms-auto">1</span></a></li>
+										신청 조회<span class="fs-sm text-muted ms-auto">[[${admissionCount}]]</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
-										class="fs-sm text-muted ms-auto">3</span></a></li>
+										class="fs-sm text-muted ms-auto">[[${wishCount}]]</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
-										신고 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
+										신고 조회<span class="fs-sm text-muted ms-auto">[[${claimCount}]]</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가
-										쓴 게시글<span class="fs-sm text-muted ms-auto">3</span></a></li>
+										쓴 게시글<span class="fs-sm text-muted ms-auto">[[${boardCount}]]</span></a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여
-										내역 조회<span class="fs-sm text-muted ms-auto">3</span></a></li>
+										내역 조회<span class="fs-sm text-muted ms-auto">[[${rentalCount}]]</span></a></li>
 								<li class="border-bottom mb-0">
 									<div class="cgw3 d-flex align-items-center px-4 py-3">
 										<i class="ci-cart opacity-60 me-2"></i>장바구니<span
-											class="fs-sm text-muted ms-auto">3</span>
+											class="fs-sm text-muted ms-auto">[[${cartCount}]]</span>
 									</div>
 								</li>
 								<li class="border-bottom mb-0">
@@ -182,7 +182,7 @@
 									</div>
 								</label>
 								<div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
-									<button class="btn btn-primary-cgw2 btn-sm" type="button">
+									<button class="btn btn-primary-cgw2 btn-sm" type="button" th:onclick="deleteCart([[${cart.no}]]);">
 										<i class="ci-trash me-2"></i>삭제
 									</button>
 								</div>
@@ -197,7 +197,7 @@
 									<label class=""> <input class="form-check-input cgw12"
 										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
 										선택&nbsp;
-										<button class="btn btn-primary-cgw2 btn-sm" type="button">
+										<button class="btn btn-primary-cgw2 btn-sm" type="button" th:onclick="deleteAllCart();">
 											<i class="ci-trash me-2"></i>전체 삭제
 										</button>
 									</label> <span class="cgw10"> <span class="mx-1 cgw11">총
@@ -213,7 +213,7 @@
 									<label class=""> <input class="form-check-input cgw12"
 										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
 										선택&nbsp;
-										<button class="btn btn-primary-cgw2 btn-sm" type="button">
+										<button class="btn btn-primary-cgw2 btn-sm" type="button" th:onclick="deleteAllCart();">
 											<i class="ci-trash me-2"></i>전체 삭제
 										</button>
 									</label> <span class="cgw10"> <span class="mx-1 cgw11">총
@@ -293,6 +293,20 @@
     	}
     	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
     }
+    
+    function deleteCart(no){
+		var url = "/deleteCart?no=" + no;
+		if(confirm("정말로 삭제를 하시겠습니까?")) {
+			location.replace(url);
+		}
+	}
+    
+    function deleteAllCart(){
+		var url = "/deleteAllCart";
+		if(confirm("정말로 장바구니 항목을 전체 삭제 하시겠습니까?")) {
+			location.replace(url);
+		}
+	}
     
    
   </script>

@@ -27,13 +27,13 @@ public class MypageService {
 	private MypageMapper mapper;
 	
 	// mypage2
-	public List<KAdmission> getKAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
+	public List<KAdmission> getKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectKAdmissionList(map);
 	}
 	
-	public int getKAdmissionCount(Map<String, Object> map) {
+	public int getKAdmissionCount(Map<String, String> map) {
 		return mapper.selectKAdmissionCount(map);
 	}
 	
@@ -42,13 +42,13 @@ public class MypageService {
 		return mapper.deleteKAdmission(no);
 	}
 	
-	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, Object> map) {
+	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectNAdmissionList(map);
 	}
 	
-	public int getNAdmissionCount(Map<String, Object> map) {
+	public int getNAdmissionCount(Map<String, String> map) {
 		return mapper.selectNAdmissionCount(map);
 	}
 	
@@ -318,13 +318,13 @@ public class MypageService {
 	
 	
 	// mypage7
-	public List<Cart> getCartList(PageInfo pageInfo,Map<String, Object> paramMap){
+	public List<Cart> getCartList(PageInfo pageInfo,Map<String, String> paramMap){
 		paramMap.put("limit", "" + pageInfo.getListLimit());
 		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectCartList(paramMap);
 	}
 	
-	public int getCartCount(Map<String, Object> map) {
+	public int getCartCount(Map<String, String> map) {
 		return mapper.selectCartCount(map);
 	}
 	
@@ -345,8 +345,13 @@ public class MypageService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public int deleteCart(int no, String rootPath) {
+	public int deleteCart(int no) {
 		return mapper.deleteCart(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteAllCart() {
+		return mapper.deleteAllCart();
 	}
 	
 }

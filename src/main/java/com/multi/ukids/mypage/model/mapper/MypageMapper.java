@@ -18,12 +18,12 @@ import com.multi.ukids.wish.model.vo.Wish;
 public interface MypageMapper {
 	
 	// mypage2 - 입소 신청 조회
-	List<KAdmission> selectKAdmissionList(Map<String, Object> map);
-	int selectKAdmissionCount(Map<String, Object> map);
+	List<KAdmission> selectKAdmissionList(Map<String, String> map);
+	int selectKAdmissionCount(Map<String, String> map);
 	int deleteKAdmission(int no);
 	
-	List<NAdmission> selectNAdmissionList(Map<String, Object> map);
-	int selectNAdmissionCount(Map<String, Object> map);
+	List<NAdmission> selectNAdmissionList(Map<String, String> map);
+	int selectNAdmissionCount(Map<String, String> map);
 	int deleteNAdmission(int no);
 	
 	// mypage3 - 찜
@@ -75,10 +75,11 @@ public interface MypageMapper {
 	int deleteRental(int no);
 	
 	// mypage7 - 장바구니
-	List<Cart> selectCartList(Map<String, Object> map);
-	int selectCartCount(Map<String, Object> map);
+	List<Cart> selectCartList(Map<String, String> map);
+	int selectCartCount(Map<String, String> map);
 	Cart selectCartByNo(int no);
 	int insertCart(Cart cart);
 	int updateCart(Cart cart);
 	int deleteCart(int no);
+	int deleteAllCart();
 }
