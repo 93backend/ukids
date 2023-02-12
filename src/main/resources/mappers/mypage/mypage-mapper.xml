@@ -332,6 +332,14 @@
 		ORDER BY P.TOYNO DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
+	<select id="selectRentalList2" resultType="pay" parameterType="int"> <!-- 변경 -->
+		SELECT
+			*
+		FROM PAY
+		WHERE MEMBERNO = #{memberNo}
+		ORDER BY PAYNO DESC;
+	</select>
+	
 	<select id="selectRentalCount" parameterType="map" resultType="int">
 		SELECT
 			COUNT(P.PAYNO)

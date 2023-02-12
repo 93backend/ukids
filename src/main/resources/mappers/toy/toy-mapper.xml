@@ -132,9 +132,11 @@
       #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2})
       
    </insert>
+   
    <update id="updateToyType" parameterType="int">
    	   UPDATE TOY SET TOYTYPE = '대여중' WHERE TOYNO = #{toyNo}
    </update>
+   
    
    <select id="selectPay" parameterType="int" resultType="Pay">
       SELECT * FROM PAY WHERE PAYNO = #{payNo};      
@@ -149,4 +151,9 @@
 		FROM PAY
 		WHERE TOYNO = #{toyNo}
    </select>
+   
+   
+   <delete id="deleteCart" parameterType="Cart">
+		DELETE FROM CART WHERE NO = #{no}
+	</delete>
 </mapper>

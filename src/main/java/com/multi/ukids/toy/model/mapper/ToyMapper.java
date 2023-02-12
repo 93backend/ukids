@@ -24,6 +24,7 @@ public interface ToyMapper {
 	Pay selectPay (int payNo);
 	List<Pay> selectPayDate (int toyNo);
 	int deletePay(int payNo);
-	int updateToyType(int toyNo);
+	void updateToyType(int toyNo);
+	int deleteCart(int no);
 	
 }

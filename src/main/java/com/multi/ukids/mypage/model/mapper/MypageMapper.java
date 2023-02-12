@@ -10,6 +10,7 @@ import com.multi.ukids.claim.model.vo.Claim;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Pay;
 import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
@@ -68,6 +69,7 @@ public interface MypageMapper {
 	
 	// mypage6 - 대여 내역 조회
 	List<Rental> selectRentalList(Map<String, String> map);
+	List<Pay> selectRentalList2(int memberNo); //변경
 	int selectRentalCount(Map<String, String> map);
 	Rental selectRentalByNo(int no);
 	int updateToyType(int no);

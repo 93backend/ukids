@@ -23,6 +23,7 @@ import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Pay;
 import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
@@ -494,6 +495,7 @@ public class MypageController {
 //		return "common/msg";
 //	}
 	
+	
 	@GetMapping("/mypage-6")
 	public String mypageView6(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -503,32 +505,38 @@ public class MypageController {
 		}
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
-		int page = 1;
-		try {
-			page = Integer.parseInt(param.get("page"));
-		} catch (Exception e) {}
-		
-		int count = service.getRentalCount(param);
-		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
-		List<Rental> list = service.getRentalList(pageInfo, param);
-		
-		for (Rental r : list) {
-			int p = (Integer.parseInt(r.getToyPay()) / 10);
-			if (r.getStartDate() != null || r.getEndDate() != null) {
-				long sec = (r.getEndDate().getTime() - r.getStartDate().getTime()) / 1000;
-				int date = (int)(sec / (24*60*60));
-				r.setDate(date);
-				p *= date;
-			}
-			r.setRealPrice(p);
-		}
-		int num = list.size();
-		
-		System.out.println("list : " + list);
-		model.addAttribute("list", list);
-		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("num", num);
-		model.addAttribute("param", param);	
+		//추가부분
+		List<Pay> palist = service.getRentalList2(2);	      
+	    log.info("sssssssssssssssssss" + palist);	      
+	    model.addAttribute("paylist", palist);
+	    
+	    
+//		int page = 1;
+//		try {
+//			page = Integer.parseInt(param.get("page"));
+//		} catch (Exception e) {}
+//		
+//		int count = service.getRentalCount(param);
+//		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
+//		List<Rental> list = service.getRentalList(pageInfo, param);
+//		
+//		for (Rental r : list) {
+//			int p = (Integer.parseInt(r.getToyPay()) / 10);
+//			if (r.getStartDate() != null || r.getEndDate() != null) {
+//				long sec = (r.getEndDate().getTime() - r.getStartDate().getTime()) / 1000;
+//				int date = (int)(sec / (24*60*60));
+//				r.setDate(date);
+//				p *= date;
+//			}
+//			r.setRealPrice(p);
+//		}
+//		int num = list.size();
+//		
+//		System.out.println("list : " + list);
+//		model.addAttribute("list", list);
+//		model.addAttribute("pageInfo", pageInfo);
+//		model.addAttribute("num", num);
+//		model.addAttribute("param", param);	
 		
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);

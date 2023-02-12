@@ -3,6 +3,7 @@ package com.multi.ukids.mypage.model.service;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,15 +18,19 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.vo.KAdmission;
 import com.multi.ukids.mypage.model.mapper.MypageMapper;
 import com.multi.ukids.nursery.model.vo.NAdmission;
+import com.multi.ukids.toy.model.mapper.ToyMapper;
 import com.multi.ukids.toy.model.vo.Cart;
+import com.multi.ukids.toy.model.vo.Pay;
 import com.multi.ukids.toy.model.vo.Rental;
+import com.multi.ukids.toy.model.vo.Toy;
 import com.multi.ukids.wish.model.vo.Wish;
 
 @Service
 public class MypageService {
 	@Autowired
 	private MypageMapper mapper;
-	
+	@Autowired
+	private ToyMapper toyMapper;
 	// mypage2
 	public List<KAdmission> getKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
@@ -287,7 +292,38 @@ public class MypageService {
 		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectRentalList(paramMap);
 	}
-	
+	// mypage6 바뀐다음 예)
+	public List<Pay> getRentalList2(int memberNo){
+		List<Pay> payList = new ArrayList<Pay>();
+		payList = mapper.selectRentalList2(memberNo);
+		
+		int cnt = 1;
+		for (Pay pay : payList) {
+			String toyNoListSt = pay.getToyNo(); // ex) 1303,1302,1304
+			String startDateSt = pay.getStartDate(); // ex) 23-1-2,23-1-3,23-1-4
+			String endDateSt = pay.getEndDate(); // ex) 23-1-5,23-1-6,23-1-6
+			String[] toyNoEach = toyNoListSt.split(",");
+			String[] startDateEach = startDateSt.split(",");
+			String[] endDateEach = endDateSt.split(",");
+			List<Toy> toyList = new ArrayList<Toy>();
+			List<String> startDateList = new ArrayList<String>();
+			List<String> endDateList = new ArrayList<String>();
+			List<Integer> cntList = new ArrayList<Integer>();
+			for(int i=0; i<toyNoEach.length; i++){
+				toyList.add(toyMapper.selectToyByNo(Integer.parseInt(toyNoEach[i])));
+				startDateList.add(startDateEach[i]);
+				endDateList.add(endDateEach[i]);
+				cntList.add(cnt);
+				cnt++;
+			}
+			pay.setToyList(toyList);
+			pay.setStartDateList(startDateList);
+			pay.setEndDateList(endDateList);
+			pay.setCntList(cntList);
+		}
+
+		return payList;
+	}
 	public int getRentalCount(Map<String, String> map) {
 		return mapper.selectRentalCount(map);
 	}

@@ -164,43 +164,31 @@
                 </tr>
               </thead>
               <tbody>
-              	<th:block th:if="${list == null}">
+              	<th:block th:if="${paylist == null}">
 					<tr>
 						<td colspan="5">조회된 대여내역이 없습니다.</td>
 					</tr>
 				</th:block>
-				<th:block th:if="${list != null}">
-                <tr th:each="rental, stat : ${list}">
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4" th:href="@{|/toy-detail?no=${rental.toyNo}|}"><img class="cgw21" th:src="${rental.toyImg}"></a>
-                  </td>
-                  <td class="py-3 cgw9 cgw22"><a class="cgw4 cgw29" th:href="@{|/toy-detail?no=${rental.toyNo}|}">[[${rental.toyNm1}]]</a></td>
-                  <td class="py-3 cgw9 cgw22" th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></td>
-                  <td class="py-3 cgw9 cgw22">
-					<span th:text="${#dates.format(rental.startDate, 'yyyy-MM-dd')}"></span><br>
-					<span th:text="${#dates.format(rental.endDate, '~yyyy-MM-dd')}"></span><br>
-				  </td>
-                  <td class="py-3 cgw9 cgw22">[[${rental.payNo}]]</td>
-                  <td class="py-3 cgw9 cgw22">[[${rental.realPrice}]]</td>
-                  <td class="py-3 cgw9 cgw22">
-                  <th:block th:if="${rental.status == 'Y'}">
-                    <div class="">대여중</div>
-                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${rental.payNo}]]);">반납하기</button>
-                  </th:block>
-                  <th:block th:if="${rental.status == 'A'}">
-                    <div class="">주문완료</div>
-                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${rental.payNo}]], [[${rental.toyNo}]]);">대여취소</button>
-                  </th:block>
-                  <th:block th:if="${rental.status == 'N'}">
-                    <div class="">반납완료</div>
-                  </th:block>
-                  <th:block th:if="${rental.status == 'R'}">
-                    <div class="">반납중</div>
-                  </th:block>
-                  <th:block th:if="${rental.status == 'T'}">
-                    <div class="">배송중</div>
-                  </th:block>
-                  </td>
-                </tr>
+				<th:block th:each="pay,payState:${paylist}" th:with="cnt=0">
+					<input type="hidden" th:value="${pay.toyList.size}" th:id="cntToyPay+${payState.index}">
+					<th:block th:each="toyEach,toyEachState:${pay.toyList}">
+	                <tr th:id="forPaging+${pay.cntList[toyEachState.index]}"  class="tr hidden">	                
+	                	<input th:value="${pay.cntList[toyEachState.index]}" type="hidden">
+	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" th:src="${toyEach.toyImg}"></a>
+	                  </td>
+	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#" style="display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
+	                  [[${toyEach.toyNm1}]]</a></td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]<br>~[[${pay.endDateList[toyEachState.index]}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.payNo}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.price}]]</td>
+	                  <td class="py-3 cgw9 cgw22">
+		     		  
+		     		  <!-- 대여상태 -->
+		     		  
+	                  </td>
+	                </tr>
+	                </th:block>
                 </th:block>
               </tbody>
             </table>
@@ -211,28 +199,18 @@
  			<!-- pagination -->
           <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
             <ul class="pagination">
-              <li class="page-item"><button class="page-link" th:onclick="|movePage('/mypage-6?page=${pageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+            </ul>
+            <ul class="pagination" id="innerTable">
+<!--               <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+              <li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">1</span></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li> -->
             </ul>
             <ul class="pagination">
-              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-              
-              <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-	                	<th:block th:if="${status.current == pageInfo.currentPage}">
-			                <li class="page-item d-none d-sm-block page" aria-current="page">
-			                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
-			                </li>
-	                	</th:block>
-	                	<th:block th:if="${status.current != pageInfo.currentPage}">
-			                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movePage('/mypage-6?page=${status.current}');|">[[${status.current}]]</button></li>
-	                	</th:block>
-	                </th:block>
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
+                    class="ci-arrow-right ms-2"></i></a></li>
             </ul>
-            <ul class="pagination">
-              <li class="page-item"><button class="page-link" th:onclick="|movePage('/mypage-6?page=${pageInfo.nextPage}');|" aria-label="Next">Next<i
-                    class="ci-arrow-right ms-2"></i></button></li>
-            </ul>
-          </nav> 
-          
+          </nav>
         </section>
       </div>
     </div>
@@ -255,7 +233,74 @@
 	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" th:inline="javascript">
+	
+	//페이징
+	var payList =  /*[[${paylist}]]*/{};
+	console.log(payList);
+	var totalCount = 0;
+	for(var i=0; i<payList.length; i++){
+		totalCount += Number($('#cntToyPay'+i).val());
+	}
+	var currentPage = 1;
+
+	$(document).ready(function(){
+		var tag = "";
+		if(totalCount <=6){
+			tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
+
+		}else{
+			console.log(totalCount/6);
+			for(i=1; i<(totalCount/6)+1; i++){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}
+				
+			}
+		}
+		
+		$("#innerTable").append(tag);
+	});
+
+
+	function movePage(page){
+		
+		$("#innerTable").empty();
+		currentPage = page;
+		var offset = (currentPage * 6)-5;
+		console.log(offset);
+		var tag = "";
+		for(i=1; i<(totalCount/6)+1; i++){
+			if(i<=5){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}	
+			}
+		}
+		$("#innerTable").append(tag);
+		
+
+		$('.tr').attr('class','tr hidden');
+		for(var i=offset; i<=offset+5; i++){
+			$('#forPaging'+i).removeClass('hidden')
+		}
+	}
+
+	var offset = (currentPage * 6)-5;
+
+	$('.tr').attr('class','tr hidden');
+	for(var i=1; i<=offset+5; i++){
+		$('#forPaging'+i).removeClass('hidden')
+	}
+	
+	
+<!--------------------------------------------------------------------- -->
+	
+	
 		function movePage(pageUrl){
 			location.href = encodeURI(pageUrl);	
 		}
@@ -274,6 +319,11 @@
 			}
 		}
 	</script>
+<style>
+.hidden{
+	display: none;
+}
+</style>
 </body>
 
 </html>

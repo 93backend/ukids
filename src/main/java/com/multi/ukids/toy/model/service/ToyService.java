@@ -57,10 +57,10 @@ public class ToyService {
 	public void insertPay(Pay pay) {
 		mapper.insertPay(pay);
 	}
-	public int updateToyType(int toyNo) {
-		return mapper.updateToyType(toyNo);
+	public void updateToyType(int toyNo) {
+		mapper.updateToyType(toyNo);
 	}
-	
+
 	public Pay selectPay(int payNo) {
 		return mapper.selectPay(payNo);
 	}
@@ -75,4 +75,8 @@ public class ToyService {
 		
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteCart(int no) {
+		return mapper.deleteCart(no);
+	}
 }

@@ -34,6 +34,7 @@ import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.toy.model.service.ToyService;
 import com.multi.ukids.toy.model.vo.Cart;
 import com.multi.ukids.toy.model.vo.Pay;
+import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.toy.model.vo.T_Review;
 import com.multi.ukids.toy.model.vo.Toy;
 
@@ -66,7 +67,6 @@ public class ToyController {
                searchMap.put("searchType", searchType); 
             }
          } catch (Exception e) {}         
-         System.out.println("맵 투스트링 : "+searchMap.toString());
                   
          int toyCount = toyService.getToyCount(searchMap);
          System.out.println("장난감갯수 : "+toyCount);
@@ -87,6 +87,8 @@ public class ToyController {
    @GetMapping("/toy-detail")
    public String toyDetail(Model model, @RequestParam("no") int no) {      
       Toy toy = toyService.findByNo(no);
+     
+      
       List<T_Review> reviewList = toyService.selectToyReviewByNo(no);
       String tcm = toy.getToyCategoryM();
 
@@ -138,12 +140,12 @@ public class ToyController {
       model.addAttribute("location", "/toy-detail?no=" + toyNo);
       return "/common/msg";
    }
-
+   
    @GetMapping("/pay")
    public String pay(Model model, @SessionAttribute(name = "loginMember") Member loginMember,
 		   @RequestParam(required=false)String startDate,@RequestParam(required=false)String endDate, 
 		   @RequestParam(required=false)Integer toyNo, @RequestParam(required=false)boolean ListOrNot, 
-		   @RequestParam(required=false) List<Integer> CartNoList) {   
+		   @RequestParam(required=false) List<Integer> CartNoList,HttpSession session) {   
       
       if(ListOrNot == true) {
          Toy toy = toyService.findByNo(toyNo);
@@ -152,20 +154,39 @@ public class ToyController {
          model.addAttribute("endDate", endDate);
       }else {
     	  List<Cart> toyList = new ArrayList<Cart>();
+    	  List<Integer> cartNoList = new ArrayList<Integer>();
     	  for (Integer integer : CartNoList) {
-    		  toyList.add(mypageService.findByNo(integer));
+    		  toyList.add(mypageService.findByNo(integer));		
+    		  cartNoList.add(mypageService.findByNo(integer).getNo());
     	  }
+    	  session.setAttribute("cartNoList", cartNoList);
+    	  int pay = 0;
     	  
-    	  System.out.println("List!!!!!!!!!!:::::"+CartNoList.toString());
+    		  for (Cart c : toyList) {
+    			  System.out.println(c.getToyPay());
+    			  int p = (Integer.parseInt(c.getToyPay()) / 10);
+    			  int t = Math.round(p / 100) * 100;
+    			  if (c.getStartDate() != null || c.getEndDate() != null) {
+    				  long sec = (c.getEndDate().getTime() - c.getStartDate().getTime()) / 1000;
+    				  int date = (int)(sec / (24*60*60));
+    				  c.setDate(date);
+    				  t *= date;
+    			  }
+    			  c.setRealPay(t);
+    			  pay += t;
+
+    		  }
+
+    		
+    		int totalPay = pay + 1000;
+    		
+    		System.out.println("List!!!!!!!!!!:::::"+CartNoList.toString());
+
+    	  model.addAttribute("pay", pay);
+    	  model.addAttribute("totalPay", totalPay);
     	  model.addAttribute("toy", toyList);
       }
-//      String startDateList = "";
-//      for (Cart cart : cartList) {
-//    	  startDateList+=cart.getStartdate();
-//      }
-//      model.addAttribute("startDate", startDateList);
-
-      
+     
       return "pay";
    }
 
@@ -181,7 +202,11 @@ public class ToyController {
       System.out.println("회원번호 : " + pay.getMemberNo());
       System.out.println("가격 : " + pay.getPrice());
       System.out.println("장난감번호 : " + pay.getToyNo());
+//      System.out.println("장난감번호그룹 : " + pay.getToyNoGroup());
+//      System.out.println("장난감시작일그룹 : " + pay.getStartDateGroup());
+//      System.out.println("장난감반납일그룹 : " + pay.getEndDateGroup());
       session.setAttribute("" + payCount, pay);
+      
       return ""+payCount++;
    }
    
@@ -209,10 +234,23 @@ public class ToyController {
       String[] payNoAry = orderId.split("-");
       
       String payCountNo = payNoAry[1];
-      Pay pay =  (Pay) session.getAttribute(""+payCountNo);
+      Pay pay =  (Pay) session.getAttribute(""+payCountNo);      
       log.info(":::::::::::::::"+pay);
       toyService.insertPay(pay);
-      toyService.updateToyType(pay.getToyNo());
+      
+      List<Integer> cartNoList = (List<Integer>) session.getAttribute("cartNoList");
+      
+      if(cartNoList != null) {
+    	  for (Integer integer : cartNoList) {
+        	  log.info(":::::::::::::::::::::::::::::!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+ integer);
+        	  toyService.deleteCart(integer);
+          }
+      }
+      
+      String[] toyNoAry = pay.getToyNo().split(",");
+      for (String toyNolist : toyNoAry) {
+    	  toyService.updateToyType(Integer.parseInt(toyNolist));
+      }
       Pay pay2 = toyService.selectPay(pay.getPayNo());
       model.addAttribute("pay", pay2);
       model.addAttribute("date", new Date());
@@ -236,6 +274,7 @@ public class ToyController {
 	  
       return "";
    }
+   
    
    
  
