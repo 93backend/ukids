@@ -14,10 +14,11 @@
 	<result property="loan_count" column="loan_count"/>
 	<result property="bookImageURL" column="bookImageURL"/>
 	<result property="age" column="age"/>
+	<result property="detail" column="detail"/>
 </resultMap>
 
 <select id="selectBookList" resultMap="BookListResultMap" parameterType="map">
-	SELECT no, ranking, bookname, authors, publisher, publication_year, class_nm, loan_count, bookImageURL, age
+	SELECT no, ranking, bookname, authors, publisher, publication_year, class_nm, loan_count, bookImageURL, age, detail
 	FROM BOOK
 	WHERE 1=1
 	<if test="bookname != null">

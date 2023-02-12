@@ -17,5 +17,6 @@ public class Book {
 	private String class_nm;  		// 분류     
 	private int loan_count;  		// 대출 건수  
 	private String bookImageURL;  	// 이미지    
-	private int age;  				// 연령     
+	private int age;  				// 연령  
+	private String detail;			// 도서 내용
 }
