@@ -160,7 +160,7 @@
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9"><a
 										class="nav-link-style-cgw fw-medium cgw26"
-										th:href="@{|/nursery-detail?&no=${nadmission.nuNo}&i=7|}">[[${nadmission.crname}]]</a></td>
+										th:href="@{|/nursery-detail?&no=${nadmission.nuNo}&i=${stat.index}|}">[[${nadmission.crname}]]</a></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.enrollDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.hopeDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -283,7 +283,7 @@
 								<tr th:each="kadmission, stat : ${klist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw26"
-										th:href="@{|/kinder-detail?&no=${kadmission.kinNo}&i=7|}">[[${kadmission.kinderName}]]</a></td>
+										th:href="@{|/kinder-detail?&no=${kadmission.kinNo}&i=${stat.count}|}">[[${kadmission.kinderName}]]</a></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.enrollDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.hopeDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
