@@ -33,19 +33,27 @@ function submitCheck() {
 	let password = $("#password1").val();
 	let email = $("#account-email").val();
 	let phone = $("#account-phone").val();
+	let postCode = $("#addressPostcode").val();
+	let address = $("#addressBasic").val();
 	var regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
 	let regExp2 = /(01[016789])([1-9]{1}[0-9]{2,3})([0-9]{4})$/;
 	if (name == "") {
-		swal("이름을 입력해 주세요");
+		swal("이름을 입력해 주세요.");
 		return false;
 	} else if (password == "") {
-		swal(" 비밀번호를 입력해 주세요");
+		swal(" 비밀번호를 입력해 주세요.");
 		return false;
 	} else if (email == "") {
-		swal("이메일을 입력해 주세요");
+		swal("이메일을 입력해 주세요.");
 		return false;
 	} else if (phone == "") {
-		swal("연락처를 입력해 주세요");
+		swal("연락처를 입력해 주세요.");
+		return false;
+	} else if (postCode == "") {
+		swal("우편번호를 입력해 주세요.");
+		return false;
+	} else if (address == "") {
+		swal("주소를 입력해 주세요.");
 		return false;
 	}
 	
@@ -60,7 +68,12 @@ function submitCheck() {
 	}
 	
 	if(regExp2.test(phone)) {
-		swal("연락처는 -을 넣어서 입력해 주세요");
+		swal("연락처는 -을 넣어서 입력해 주세요.");
+		return false;
+	}
+	
+	if(postCode.length != 5) {
+		swal("우편번호가 올바르지 않습니다.")
 		return false;
 	}
 	
