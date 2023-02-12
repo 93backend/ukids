@@ -115,7 +115,7 @@
                           var geocoder = new kakao.maps.services.Geocoder();
                           
                           // 주소로 좌표를 검색합니다
-                          var addr = /*[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]*/;
+                          var addr = /*[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]*/{};
                           geocoder.addressSearch(addr, function(result, status) {
                           
                               // 정상적으로 검색이 완료됐으면 
@@ -129,7 +129,7 @@
                                     position: coords
                                 });
                         
-                                var name = /*[[${welfare.fcltNm}]]*/;
+                                var name = /*[[${welfare.fcltNm}]]*/{};
                                 var content = `<div class="info-title">${name}</div>`;
 
                                 // 커스텀 오버레이가 표시될 위치입니다 

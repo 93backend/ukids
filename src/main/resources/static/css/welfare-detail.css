@@ -244,6 +244,10 @@
   margin-bottom: 0;
 } 
 /* 23.02.06 이미지 수정 */
-.wfImg{
+.wfImg {
   object-fit: cover;
+}
+/* 23.02.12 근처시설 이미지 수정 */
+.near {
+	object-fit: cover;
 }

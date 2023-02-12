@@ -220,10 +220,10 @@
                         var geocoder = new kakao.maps.services.Geocoder();
                         
                         // 주소로 좌표를 검색합니다
-                        var type = /*[[${type}]]*/;
+                        var type = /*[[${type}]]*/{};
                         var addr = "";
-                        /*[# th:block th:if="${type == 'hp'}"]*/ addr = /*[[${hospital.hpAddr}]]*/; /*[/]*/
-                        /*[# th:block th:if="${type == 'nc'}"]*/ addr = /*[[${nightcare.hpAddr}]]*/; /*[/]*/
+                        /*[# th:block th:if="${type == 'hp'}"]*/ addr = /*[[${hospital.hpAddr}]]*/{}; /*[/]*/
+                        /*[# th:block th:if="${type == 'nc'}"]*/ addr = /*[[${nightcare.hpAddr}]]*/{}; /*[/]*/
                         geocoder.addressSearch(addr, function(result, status) {
                         
                             // 정상적으로 검색이 완료됐으면 
@@ -238,8 +238,8 @@
                               });
                               
                               var name = "";
-                              /*[# th:block th:if="${type == 'hp'}"]*/ name = /*[[${hospital.hpName}]]*/; /*[/]*/
-                              /*[# th:block th:if="${type == 'nc'}"]*/ name = /*[[${nightcare.hpName}]]*/; /*[/]*/
+                              /*[# th:block th:if="${type == 'hp'}"]*/ name = /*[[${hospital.hpName}]]*/{}; /*[/]*/
+                              /*[# th:block th:if="${type == 'nc'}"]*/ name = /*[[${nightcare.hpName}]]*/{}; /*[/]*/
                               var content = `<div class="info-title">${name}</div>`;
 
                               // 커스텀 오버레이가 표시될 위치입니다 

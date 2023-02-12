@@ -65,7 +65,7 @@
       <header th:fragment="header" th:replace="~{common :: header}"></header>
       
       <!-- Page Title -->
-      <section class="bg-position-top-center bg-repeat-0 bg-size-cover py-5" style="background-image: url('img/ukids/놀이시설.jpg'); height: 300px;">
+      <section class="bg-position-center bg-size-cover py-5" style="background-image: url('img/ukids/놀이시설.jpg'); height: 300px;">
         <div class="pt-0 pb-5">
           <div class="container pt-0  pt-lg-0">
             <div class="mb-3 mb-lg-0 pt-lg-0">
@@ -95,7 +95,8 @@
             <div class="bg-light rounded-3 p-4">
               <div class="d-flex align-items-center p-0">
                 <div class="col-md-2 me-2">
-                    <select class="form-select" id="type" name="type">
+               		 <h3 class="fs-base m-0 me-3">분류</h3>
+                   <select class="form-select" id="type" name="type">
                     <option value="" th:selected="${#strings.equals(param.type, '')}">전체</option>
                     <option value="유원시설" th:selected="${#strings.equals(param.type, '유원시설')}">유원시설</option>
                     <option value="키즈카페" th:selected="${#strings.equals(param.type, '키즈카페')}">키즈카페</option>
@@ -104,6 +105,7 @@
                   </select>
                 </div>
                 <div class="col-md-2 me-2">
+                	<h3 class="fs-base m-0 ms-2 me-3">지역</h3>
                   <select class="form-select" id="city" name="city" onchange="cityChange()">
                     <option value=" " th:selected="${#strings.equals(param.city, ' ')}">전체</option>
 	                  <option value="서울" th:selected="${#strings.equals(param.city, '서울')}">서울특별시</option>
@@ -130,7 +132,7 @@
                     <option>전체</option>
                   </select>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 ms-3">
                   <div class="input-group d-none d-lg-flex">
                     <i class="ci-search"></i>
                     <input type="text" class="form-control rounded ps-5 me-2" id="searchValue" name="searchValue" th:value="${param.searchValue}" placeholder="놀이시설을 검색하세요.">
@@ -199,10 +201,10 @@
 			var searchList = [
 				/*[# th:each="item : ${list}"]*/
 			  {
-					no: /*[[${item.NO}]]*/,
-			    type: /*[[${item.divM}]]*/,
-			    name: /*[[${item.pgName}]]*/,
-			    address: /*[[${item.pgAddr1} + ' ' + ${item.pgAddr2}]]*/,
+					no: /*[[${item.NO}]]*/{},
+			    type: /*[[${item.divM}]]*/{},
+			    name: /*[[${item.pgName}]]*/{},
+			    address: /*[[${item.pgAddr1} + ' ' + ${item.pgAddr2}]]*/{},
 			  },
 			  /*[/]*/
 			];

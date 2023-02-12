@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,19 +26,20 @@ public class WelfareController {
 	private WelfareService welfareService;
 	
 	//이미지 랜덤 인덱스 생성
-	public int[] setRandomImgIdx(int start, int term) {
-		int[] idx = new int[9];
-		idx[0] = start;
-		for(int i=0; i<idx.length; i++) {
-			if (i == 0) continue;
-			idx[i] = idx[i-1] + term;
-			
-			if (idx[i] % 21 != 0) {
-				idx[i] %= 21;
-			} else {
-				idx[i] = start + 1; 
+	public int[] createRdImgIdx(int length, int range, int imgIdx) {
+		Random rd = new Random();
+		int[] idx = new int[length];
+		
+		for (int i=0; i<idx.length; i++) {
+			idx[i] = rd.nextInt(range) + 1;
+			for (int j=0; j<i; j++) {
+				if (idx[i] == idx[j] || idx[i] == imgIdx) {
+					i--;
+					break;
+				}
 			}
 		}
+		
 		return idx;
 	}
 	
@@ -55,7 +57,7 @@ public class WelfareController {
 		List<Welfare> list = welfareService.getWelfareList(pageInfo, param);
 		
 		//아동복지시설 랜덤 이미지
-		int[] imgIdx = setRandomImgIdx(page, 2);
+		int[] imgIdx = createRdImgIdx(9, 20, 0);
 		
 		model.addAttribute("count", count);
 		model.addAttribute("list", list);
@@ -63,9 +65,9 @@ public class WelfareController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("imgIdx", imgIdx);
 		
-//		log.info("param : " + param.toString());
-//		log.info("welfareCount : " + Integer.toString(welfareCount));
-//		log.info(Arrays.toString(imgIdx));
+		log.info("param : " + param.toString());
+		log.info("count : " + Integer.toString(count));
+		log.info(Arrays.toString(imgIdx));
 		
 		return "welfare-main";
 	}
@@ -93,7 +95,7 @@ public class WelfareController {
 		Collections.shuffle(nearWelfareList);
 		
 		//근처아동복지시설 랜덤 이미지
-		int[] nearWfImgIdx = setRandomImgIdx(imgIdx, 3);
+		int[] nearWfImgIdx = createRdImgIdx(9, 20, imgIdx);
 		
 		model.addAttribute("welfare", welfare);
 		model.addAttribute("imgIdx", imgIdx);
@@ -102,18 +104,7 @@ public class WelfareController {
 		model.addAttribute("nearWelfareList", nearWelfareList);
 		model.addAttribute("nearWfImgIdx", nearWfImgIdx);
 		
-//		for (Welfare data : nearWelfareList) {
-//			log.info(data.toString());
-//			log.info("\n");
-//		}
-		
 		return "welfare-detail";
 	}
-
-	
-//	@GetMapping("/error")
-//	public String error() {
-//		return "common/error";
-//	}
 	
 }

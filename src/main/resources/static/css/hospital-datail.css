@@ -293,3 +293,7 @@
 .wfImg {
 	object-fit: cover;
 }
+/* 23.02.12 근처시설 이미지 수정 */
+.near {
+	object-fit: cover;
+}

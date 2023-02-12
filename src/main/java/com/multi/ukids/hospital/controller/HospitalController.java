@@ -27,14 +27,14 @@ public class HospitalController {
 	private HospitalService hospitalService;
 	
 	//이미지 랜덤 인덱스 생성
-	public int[] createRdImgIdx(int length, int count) {
+	public int[] createRdImgIdx(int length, int range, int imgIdx) {
 		Random rd = new Random();
 		int[] idx = new int[length];
 		
 		for (int i=0; i<idx.length; i++) {
-			idx[i] = rd.nextInt(count) + 1;
+			idx[i] = rd.nextInt(range) + 1;
 			for (int j=0; j<i; j++) {
-				if (idx[i] == idx[j]) {
+				if (idx[i] == idx[j] || idx[i] == imgIdx) {
 					i--;
 					break;
 				}
@@ -75,8 +75,8 @@ public class HospitalController {
 		List<NightCare> ncList = hospitalService.getNightCareList(pageInfo2, param);  //야간진료
 		
 		//병원 랜덤 이미지
-		int[] hpImgIdx = createRdImgIdx(9, 18);
-		int[] ncImgIdx = createRdImgIdx(12, 12);
+		int[] hpImgIdx = createRdImgIdx(9, 18, 0);
+		int[] ncImgIdx = createRdImgIdx(12, 12, 0);
 		
 		//일반병원 진료시간 형식 변경
 		for (Hospital item : hpList) {
@@ -147,8 +147,8 @@ public class HospitalController {
 		Collections.shuffle(nearNightCareList);
 		
 		//근처어린이병원 랜덤이미지
-		int[] nearHpImgIdx = createRdImgIdx(9, 18);
-		int[] nearNcImgIdx = createRdImgIdx(3, 12);
+		int[] nearHpImgIdx = createRdImgIdx(9, 18, imgIdx);
+		int[] nearNcImgIdx = createRdImgIdx(3, 12, imgIdx);
 		
 		model.addAttribute("type", type);
 		model.addAttribute("hospital", hospital);
