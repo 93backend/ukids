@@ -24,6 +24,7 @@ public class Pay {
 	private String method;	          //결제수단      
 	private String startDate;		  //대여기간(시작)  
 	private String endDate;	          //대여기간(반납)  
+	private String status;
 	
 	List<Integer> CartNoList;
 	private List<Toy> toyList;
@@ -33,7 +34,7 @@ public class Pay {
 
 	
 	public Pay(int memberNo, String toyNo, String price, String name, String phone, String postCode, String address,
-			String address2, String request, String method, String startDate, String endDate) {
+			String address2, String request, String method, String startDate, String endDate, String status) {
 		super();
 		this.memberNo = memberNo;
 		this.toyNo = toyNo;
@@ -47,6 +48,7 @@ public class Pay {
 		this.method = method;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.status = status;
 	}
 	
 }
