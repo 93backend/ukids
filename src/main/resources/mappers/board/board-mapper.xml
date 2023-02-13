@@ -7,6 +7,7 @@
 	<resultMap type="Board" id="boardListResultMap">
 		<id property="boardNo" 				column="boardNo"/>
 		<result property="memberNo" 		column="memberNo"/>
+		<result property="id" 				column="id"/>
 		<result property="title" 			column="title"/>
 		<result property="content" 			column="content"/>
 		<result property="good" 			column="good"/>
@@ -19,10 +20,11 @@
 		<result property="modifyDate" 		column="modifyDate"/>
 	</resultMap>
 
-	<resultMap type="B_REPLY" id="boardReplyResultMap">
+	<resultMap type="B_Reply" id="boardReplyResultMap">
 		<id 	property="replyNo"		column="bReplyNo"/>
 		<result property="boardNo" 		column="boardNo"/>
 		<result property="memberNo" 	column="memberNo"/>
+		<result property="id" 			column="id"/>
 		<result property="content" 		column="content"/>
 		<result property="status" 		column="STATUS"/>
 		<result property="createDate" 	column="createDate"/>
@@ -30,9 +32,9 @@
 	</resultMap>
 	
 	<resultMap type="Good" id="boardGoodResult">
-	<id property="goodNo" 		column="goodNo"/>
-	<result property="boardNo" 	column="boardNo"/>
-	<result property="memberNo" column="memberNo"/>
+		<id property="goodNo" 		column="goodNo"/>
+		<result property="boardNo" 	column="boardNo"/>
+		<result property="memberNo" column="memberNo"/>
 	</resultMap>
 	
 	<resultMap type="Board" id="boardDetailResultMap" extends="boardListResultMap">
@@ -40,7 +42,7 @@
 	</resultMap>
 	
 	<!--  전체 게시글 수 조회(자유게시판) -->
-	<select id="selectCommunityCount" resultType="int" parameterType="map">
+	<select id="selectBoardCount" resultType="int" parameterType="map">
 		SELECT
 			COUNT(*)
 		FROM BOARD B
@@ -52,81 +54,84 @@
 		</if>	
 	</select>
 	
-	<!-- 전체 게시글 수 조회(공지사항)  -->
-		<select id="selectNoticeCount" resultType="int" parameterType="map">
-		SELECT
-			COUNT(*)
-		FROM BOARD B
-		LEFT OUTER JOIN MEMBER M ON B.memberNo = M.memberNo
-		WHERE B.STATUS = 'Y'
-		AND B.type = '공지사항'
-		<if test="title != null">
-			AND B.title LIKE '${title}'
-		</if>	
-	</select>
-	
-	
 	<!-- 게시판 전체 리스트 조회 -->
 	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="map">
-		SELECT B.boardNo, B.memberNo, B.title, B.content, B.good, B.type, B.originalFileName, 
+		SELECT B.boardNo, M1.id, B.memberNo, B.title, B.content, B.good, B.type, B.originalFileName, 
 			   B.renamedFileName, B.readcount, B.STATUS, B.createDate, B.modifyDate
 		FROM BOARD B
 		LEFT OUTER JOIN MEMBER M1 ON B.memberNo = M1.memberNo
-		LEFT OUTER JOIN REPLY R ON R.boardNo = B.boardNo
+		LEFT OUTER JOIN B_REPLY R ON R.boardNo = B.boardNo
 		LEFT OUTER JOIN MEMBER M2 ON R.memberNo = M2.memberNo
 		WHERE B.STATUS = 'Y'
 		<if test="title != null">
 			AND B.title LIKE '%${title}%'
 		</if>
-			
-	</select>
-	
-	
-	
-	
-	
-	
-	<!-- mypage -->
-	<select id="selectBoardCount4" resultType="int" parameterType="map">
-		SELECT  
-			COUNT(*)
-		FROM BOARD B JOIN MEMBER M ON(B.memberNo = M.memberNo) 
-		WHERE B.STATUS = 'Y'
-		AND M.memberNo LIKE B.memberNo
-		<if test="writer != null">
-			AND M.id LIKE '%${writer}%' 
-		</if>		
-		<if test="title != null">
-			AND B.title LIKE '%${title}%' 
-		</if>		
-		<if test="content != null">
-			AND B.content LIKE '%${content}%' 
-		</if>		
-		<if test="memberNo != null">
-			AND B.memberNo = #{memberNo}
-		</if>	
-	</select>
-	
-	<select id="selectBoardList4" resultMap="boardListResultMap" parameterType="map">
-		SELECT  
-			 ROW_NUMBER() OVER(ORDER BY B.boardNo ASC) as no,B.boardNo, B.type,B.title, M.id, B.createDate, B.originalFileName, B.readcount, B.good, B.STATUS
-		FROM MEMBER M LEFT OUTER JOIN BOARD B ON(B.memberNo = M.memberNo) 
-		WHERE B.STATUS = 'Y'
-		AND M.memberNo LIKE B.memberNo
-		<if test="writer != null">
-			AND M.id LIKE '%${writer}%' 
-		</if>		
-		<if test="title != null">
-			AND B.title LIKE '%${title}%' 
-		</if>		
-		<if test="content != null">
-			AND B.content LIKE '%${content}%' 
-		</if>		
-		<if test="memberNo != null">
-			AND B.memberNo = #{memberNo}
-		</if>		
 		ORDER BY B.boardNo DESC LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
-
+	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
+		SELECT  
+			B.boardNo, B.memberNo, B.title, M1.id, B.readcount, B.type, B.originalFileName, B.renamedFileName, 
+			B.content, B.createDate, B.modifyDate,
+			R.bReplyNo AS R_bReplyNo, 
+		    R.boardNo AS R_boardNo,
+		    R.content  AS R_content, 
+		    M1.id  AS R_id, 
+		    R.createDate  AS R_createDate, 
+		    R.modifyDate  AS R_modifyDate
+		FROM BOARD B
+		JOIN MEMBER M ON(B.memberNo = M.memberNo)
+		LEFT OUTER JOIN B_REPLY R ON (B.boardNo = R.boardNo)
+		LEFT OUTER JOIN MEMBER M1 ON (R.memberNo = M1.memberNo)
+		WHERE B.STATUS = 'Y' AND B.boardNo = #{boardNo}
+	</select>
+	
+	<insert id="insertBoard" parameterType="board">
+		INSERT INTO BOARD(
+			boardNo, memberNo, title, content, originalFileName, renamedFileName,
+			readcount, STATUS, createDate, modifyDate, TYPE
+		) VALUES (
+			0, #{memberNo}, #{title}, #{content}, 
+			#{originalFileName}, #{renamedFileName},
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT		
+		)
+	</insert>
+	
+	<!--  <insert id="insertReply" parameterType="reply">
+		INSERT INTO REPLY(
+				replyNo, boardNo, memberNo, 
+				content, STATUS, createDate, modifyDate) 
+			VALUES(
+				0, #{boardNo}, #{memberNo}, #{content}, 
+				DEFAULT, DEFAULT, DEFAULT
+			)
+	</insert>-->
+	
+	<update id="updateReadCount" parameterType="map">
+		UPDATE BOARD SET readcount=#{readcount} WHERE boardNo=#{boardNo}
+	</update>
+	
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+		SET
+			title=#{title},
+			content=#{content},
+			<if test="originalFileName != null">
+				originalFileName=#{originalFileName},
+			</if>
+			<if test="renamedFileName != null">
+				renamedFileName=#{renamedFileName},
+			</if>
+			modifyDate = CURRENT_TIMESTAMP
+		WHERE
+			boardNo=#{boardNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE BOARD SET STATUS='N' WHERE boardNo=#{boardNo}
+	</update>
+	
+	<!--  <delete id="deleteReply" parameterType="int">
+		DELETE FROM REPLY WHERE replyNo=#{replyNo}
+	</delete>-->
 </mapper>

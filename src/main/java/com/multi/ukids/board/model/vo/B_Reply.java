@@ -13,6 +13,7 @@ public class B_Reply {
 	private int replyNo;
 	private int boardNo;
 	private int memberNo;
+	private String id;
 	private String content;
 	private String status;
 	private Date createDate;
