@@ -187,11 +187,11 @@
 		     		  
 		     		   <th:block th:if="${pay.status == 'Y'}">
 	                    <div class="">대여중</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${rental.payNo}]]);">반납하기</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">반납하기</button>
 	                  </th:block>
 	                  <th:block th:if="${pay.status == 'A'}">
 	                    <div class="">주문완료</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${rental.payNo}]], [[${rental.toyNo}]]);">대여취소</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">대여취소</button>
 	                  </th:block>
 	                  <th:block th:if="${pay.status == 'N'}">
 	                    <div class="">반납완료</div>

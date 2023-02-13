@@ -229,13 +229,15 @@
                       		<input id="startDate" name="startDate" th:value="${startDate}" type="hidden" >
                       		<input id="endDate" name="endDate" th:value="${endDate}" type="hidden" >
                       		<input id="toyNo" name="toyNo" th:value="${toy.toyNo}" type="hidden" >
+                      		<input id="status" name="status" th:value="A" type="hidden" >
                       	</th:block>
                       	<th:block th:unless="${startDate}!=null">
                       		<input id="totalprice" name="price" th:value="${totalPay}" type="hidden">
                       		<input id="toyNoGroup" name="toyNo" type="hidden" >
                       		<input id="toyStartDateGroup" name="startDate" type="hidden" >
                       		<input id="toyEndDateGroup" name="endDate" type="hidden" >
-                      
+                      		<input id="toyStatusGroup" name="status" th:value="A" type="hidden" >
+
                       	</th:block>
 						</form> 
                       <h5 class="px-3 mt-4 fw-bold">주문자 동의</h5>
@@ -452,6 +454,7 @@ if(toyVali.length==undefined){
 	$('#toyNoGroup').val(toyNoGroup);
 	$('#toyStartDateGroup').val(toyStartDateGroup);
 	$('#toyEndDateGroup').val(toyEndDateGroup);
+
 	var totalPrice = $('#totalprice').val();
 } 
 console.log("총금액(토스페이용)::" + totalPrice);

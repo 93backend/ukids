@@ -30,6 +30,7 @@ public class Pay {
 	private List<Toy> toyList;
 	private List<String> startDateList;
 	private List<String> endDateList;
+	private List<String> statusList;
 	private List<Integer> cntList;
 
 	

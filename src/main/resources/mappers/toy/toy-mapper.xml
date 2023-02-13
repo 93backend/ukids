@@ -44,6 +44,7 @@
       <result property="startDate"    column="STARTDATE"/>
       <result property="endDate"    column="ENDDATE"/>
       <result property="address2"    column="ADDRESS2"/>
+      <result property="status"    column="STATUS"/>
    </resultMap>
  
  
@@ -127,9 +128,9 @@
    <insert id="insertPay" parameterType="Pay" useGeneratedKeys="true"  keyProperty="payNo" keyColumn="PAYNO">
       INSERT INTO PAY (
          MEMBERNO, TOYNO, PRICE, NAME, PHONE, POSTCODE, 
-         ADDRESS, REQUEST, METHOD, STARTDATE, ENDDATE, ADDRESS2) 
+         ADDRESS, REQUEST, METHOD, STARTDATE, ENDDATE, ADDRESS2,STATUS) 
       VALUES(#{memberNo},#{toyNo},#{price},#{name},#{phone},
-      #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2})
+      #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2},#{status})
       
    </insert>
    
