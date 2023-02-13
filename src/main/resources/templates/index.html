@@ -827,8 +827,8 @@
     	 /* ========== 차트 ========== */
     	 
 		 // 1. 해당 지역 어린이집/유치원 현황 그래프
-		 var nurseryCount = [[${nurseryCount}]];
-		 var kinderCount = [[${kinderCount}]];
+		 var nurseryCount = /*[[${nurseryCount}]]*/{};
+		 var kinderCount = /*[[${kinderCount}]]*/{};
 		 
 		 let pieChartData = {
 		     labels: ['어린이집', '유치원'],
@@ -869,8 +869,8 @@
 		 };
 		
 		
-		 var publicCnt = [[${publicCnt}]];
-		 var privateCnt = [[${privateCnt}]];
+		 var publicCnt = /*[[${publicCnt}]]*/{};
+		 var privateCnt = /*[[${privateCnt}]]*/{};
 		 // 2. 해당 지역 어린이집 국공립/사립 현황 그래프
 		 let barChartData1 = {
 		   labels: ['국공립', '사립'],
@@ -964,8 +964,8 @@
 		
 		
 		 // 4. 주요 지역별 어린이집/유치원 현황 그래프
-		 var locationN = [[${locationNCnt}]];
-		 var locationK = [[${locationKCnt}]];
+		 var locationN = /*[[${locationNCnt}]]*/{};
+		 var locationK = /*[[${locationKCnt}]]*/{};
 		 let barChartData3 = {
 		   labels: ['서울', '인천', '경기', '강원', '충청', '전라', '경상'],
 		   datasets: [
@@ -1076,18 +1076,18 @@
 			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
 				  {
 				    kind: '어',
-				    no: [[${nursery[num].no}]],
-				    type: [[${nursery[num].crtypename}]],
-				    name: [[${nursery[num].crname}]],
-				    address: [[${nursery[num].craddr}]],
+				    no: /*[[${nursery[num].no}]]*/{},
+				    type: /*[[${nursery[num].crtypename}]]*/{},
+				    name: /*[[${nursery[num].crname}]]*/{},
+				    address: /*[[${nursery[num].craddr}]]*/{},
 				    image: null,
 				  },
 				  {
 				    kind: '유',
-				    no: [[${kinder[num].kinNo}]],
-				    type: [[${kinder[num].establish}]],
-				    name: [[${kinder[num].kindername}]],
-				    address: [[${kinder[num].addr}]],
+				    no: /*[[${kinder[num].kinNo}]]*/{},
+				    type: /*[[${kinder[num].establish}]]*/{},
+				    name: /*[[${kinder[num].kindername}]]*/{},
+				    address: /*[[${kinder[num].addr}]]*/{},
 				    image: null,
 					},
 			/*[/]*/
@@ -1098,10 +1098,10 @@
 			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
 				  {
 				    kind: '어',
-				    no: [[${nursery[num].no}]],
-				    type: [[${nursery[num].crtypename}]],
-				    name: [[${nursery[num].crname}]],
-				    address: [[${nursery[num].craddr}]],
+				    no: /*[[${nursery[num].no}]]*/{},
+				    type: /*[[${nursery[num].crtypename}]]*/{},
+				    name: /*[[${nursery[num].crname}]]*/{},
+				    address: /*[[${nursery[num].craddr}]]*/{},
 				    image: null,
 				  },
 			/*[/]*/
@@ -1112,10 +1112,10 @@
 			/*[# th:each="num : ${#numbers.sequence(1,25)}"]*/
 				  {
 				    kind: '유',
-				    no: [[${kinder[num].kinNo}]],
-				    type: [[${kinder[num].establish}]],
-				    name: [[${kinder[num].kindername}]],
-				    address: [[${kinder[num].addr}]],
+				    no: /*[[${kinder[num].kinNo}]]*/{},
+				    type: /*[[${kinder[num].establish}]]*/{},
+				    name: /*[[${kinder[num].kindername}]]*/{},
+				    address: /*[[${kinder[num].addr}]]*/{},
 				    image: null,
 					},
 			/*[/]*/
