@@ -46,7 +46,8 @@ public class MypageController {
 	@PostMapping("/member/update")
 	public String update(Model model, 
 			@ModelAttribute Member updateMember, // request에서 온 값
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember // 세션 값
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
+			String password
 			) {
 		log.info("update 요청, updateMember : " + updateMember);
 		if(loginMember == null) {
@@ -57,8 +58,9 @@ public class MypageController {
 		
 		updateMember.setMemberNo(loginMember.getMemberNo());
 		int result = memberService.save(updateMember);
+		int result2 = memberService.updatePwd(loginMember, password);
 		
-		if(result > 0) {
+		if(result > 0 && result2 > 0) {
 			model.addAttribute("loginMember", memberService.findById(loginMember.getId())); // DB에서 있는 값을 다시 세션에 넣어주는 코드
 			model.addAttribute("msg", "회원정보를 수정하였습니다.");
 			model.addAttribute("location", "/mypage");

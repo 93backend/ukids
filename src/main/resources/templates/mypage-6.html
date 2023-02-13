@@ -162,7 +162,6 @@
                   <th class="cgw8 cgw9">주문번호</th>
                   <th class="cgw8 cgw9">대여금액</th>
                   <th class="cgw8 cgw9">대여상태</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -186,7 +185,23 @@
 	                  <td class="py-3 cgw9 cgw22">[[${pay.price}]]</td>
 	                  <td class="py-3 cgw9 cgw22">
 		     		  
-		     		  <!-- 대여상태 -->
+		     		   <th:block th:if="${pay.status == 'Y'}">
+	                    <div class="">대여중</div>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${rental.payNo}]]);">반납하기</button>
+	                  </th:block>
+	                  <th:block th:if="${pay.status == 'A'}">
+	                    <div class="">주문완료</div>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${rental.payNo}]], [[${rental.toyNo}]]);">대여취소</button>
+	                  </th:block>
+	                  <th:block th:if="${pay.status == 'N'}">
+	                    <div class="">반납완료</div>
+	                  </th:block>
+	                  <th:block th:if="${pay.status == 'R'}">
+	                    <div class="">반납중</div>
+	                  </th:block>
+	                  <th:block th:if="${pay.status == 'T'}">
+	                    <div class="">배송중</div>
+	                  </th:block>
 		     		  
 	                  </td>
 	                </tr>
@@ -309,7 +324,7 @@ for(var i=1; i<=offset+5; i++){
 	
 	/* function movePage(pageUrl){
 		location.href = encodeURI(pageUrl);	
-	}
+	} */
 	
 	function rentalUpdate(payNo) {
 		var url = "/mypage-rental-update?&payNo=" + payNo;
@@ -323,7 +338,7 @@ for(var i=1; i<=offset+5; i++){
 		if(confirm("정말로 대여를 취소 하시겠습니까?")) {
 			location.replace(url);
 		}
-	} */
+	} 
 </script>
 <style>
 .hidden{
