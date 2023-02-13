@@ -157,4 +157,11 @@
    <delete id="deleteCart" parameterType="Cart">
 		DELETE FROM CART WHERE NO = #{no}
 	</delete>
+	
+   <select id="selectRcmToy" resultType="Toy" parameterType="Toy">
+      SELECT
+      DISTINCT TOYNO, TOYCD, TOYNM1, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, TOYCATEGORYM,TOYTYPE
+      FROM TOY 
+      ORDER BY RAND() LIMIT 20;
+   </select>
 </mapper>

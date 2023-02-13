@@ -79,4 +79,8 @@ public class ToyService {
 	public int deleteCart(int no) {
 		return mapper.deleteCart(no);
 	}
+	
+	public List<Toy> selectRcmToy() {
+		return mapper.selectRcmToy();
+	}
 }

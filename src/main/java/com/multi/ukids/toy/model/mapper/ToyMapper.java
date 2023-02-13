@@ -26,5 +26,6 @@ public interface ToyMapper {
 	int deletePay(int payNo);
 	void updateToyType(int toyNo);
 	int deleteCart(int no);
+	List<Toy> selectRcmToy();
 	
 }

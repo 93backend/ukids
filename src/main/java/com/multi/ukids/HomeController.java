@@ -17,6 +17,8 @@ import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.Nursery;
+import com.multi.ukids.toy.model.service.ToyService;
+import com.multi.ukids.toy.model.vo.Toy;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,6 +33,9 @@ public class HomeController {
 	private KinderService kinderService;
 	@Autowired
 	private NurseryService nurseryService;
+	@Autowired
+	private ToyService toyService;
+	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session, @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
@@ -97,6 +102,11 @@ public class HomeController {
 		model.addAttribute("privateCnt", privateCnt);
 		model.addAttribute("locationNCnt", locationNCnt);
 		model.addAttribute("locationKCnt", locationKCnt);
+		
+		//추천 장난감
+		
+		List<Toy> rcmToy = toyService.selectRcmToy();		
+		model.addAttribute("rcmToy", rcmToy);
 		
 		return "index";
 	}
