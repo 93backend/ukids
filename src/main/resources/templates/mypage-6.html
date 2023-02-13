@@ -56,7 +56,7 @@
 	<!-- 로그인 모달 관련  -->
 	<div th:fragment="modal" th:replace="~{common :: modal}"></div>
 
-	<main class="page-wrapper" style="height: 2260px;">
+	<main class="page-wrapper" style="height: auto;">
 		<!-- 헤더!!!!!! -->
 		<header th:fragment="header" th:replace="~{common :: header}"></header>
 
@@ -155,16 +155,18 @@
             <table class="table table-hover mb-0">
               <thead>
                 <tr>
-                  <th class="cgw8 cgw9" colspan="2">상품정보</th>
+                  <th></th>
+                  <th class="cgw8 cgw9">상품정보</th>
                   <th class="cgw8 cgw9">대여일자</th>
                   <th class="cgw8 cgw9">대여기간</th>
                   <th class="cgw8 cgw9">주문번호</th>
                   <th class="cgw8 cgw9">대여금액</th>
                   <th class="cgw8 cgw9">대여상태</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-              	<th:block th:if="${paylist == null}">
+				<th:block th:if="${paylist == null}">
 					<tr>
 						<td colspan="5">조회된 대여내역이 없습니다.</td>
 					</tr>
@@ -190,6 +192,7 @@
 	                </tr>
 	                </th:block>
                 </th:block>
+                
               </tbody>
             </table>
           </div>
@@ -233,97 +236,97 @@
 	<script src="vendor/flatpickr/dist/plugins/rangePlugin.js"></script>
 	<!-- Main theme script-->
 	<script src="js/theme.min.js"></script>
-	<script type="text/javascript" th:inline="javascript">
+</body>
+
+</html>
+<script type="text/javascript" th:inline="javascript">
 	
 	//페이징
-	var payList =  /*[[${paylist}]]*/{};
-	console.log(payList);
-	var totalCount = 0;
-	for(var i=0; i<payList.length; i++){
-		totalCount += Number($('#cntToyPay'+i).val());
-	}
-	var currentPage = 1;
+var payList =  /*[[${paylist}]]*/{};
+console.log(payList);
+var totalCount = 0;
+for(var i=0; i<payList.length; i++){
+	totalCount += Number($('#cntToyPay'+i).val());
+}
+var currentPage = 1;
 
-	$(document).ready(function(){
-		var tag = "";
-		if(totalCount <=6){
-			tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
+$(document).ready(function(){
+	var tag = "";
+	if(totalCount <=6){
+		tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
 
-		}else{
-			console.log(totalCount/6);
-			for(i=1; i<(totalCount/6)+1; i++){
-				if(i==currentPage){
-					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
-				}else{
-					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
-				}
-				
-			}
-		}
-		
-		$("#innerTable").append(tag);
-	});
-
-
-	function movePage(page){
-		
-		$("#innerTable").empty();
-		currentPage = page;
-		var offset = (currentPage * 6)-5;
-		console.log(offset);
-		var tag = "";
+	}else{
+		console.log(totalCount/6);
 		for(i=1; i<(totalCount/6)+1; i++){
-			if(i<=5){
-				if(i==currentPage){
-					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
-				}else{
-					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
-				}	
+			if(i==currentPage){
+				tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+			}else{
+				tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
 			}
+			
 		}
-		$("#innerTable").append(tag);
-		
-
-		$('.tr').attr('class','tr hidden');
-		for(var i=offset; i<=offset+5; i++){
-			$('#forPaging'+i).removeClass('hidden')
-		}
-	}
-
-	var offset = (currentPage * 6)-5;
-
-	$('.tr').attr('class','tr hidden');
-	for(var i=1; i<=offset+5; i++){
-		$('#forPaging'+i).removeClass('hidden')
 	}
 	
+	$("#innerTable").append(tag);
+});
+
+
+function movePage(page){
+	
+	$("#innerTable").empty();
+	currentPage = page;
+	var offset = (currentPage * 6)-5;
+	console.log(offset);
+	var tag = "";
+	for(i=1; i<(totalCount/6)+1; i++){
+		if(i<=5){
+			if(i==currentPage){
+				tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+			}else{
+				tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+			}	
+		}
+	}
+	$("#innerTable").append(tag);
+	
+
+	$('.tr').attr('class','tr hidden');
+	for(var i=offset; i<=offset+5; i++){
+		$('#forPaging'+i).removeClass('hidden')
+	}
+}
+
+var offset = (currentPage * 6)-5;
+
+$('.tr').attr('class','tr hidden');
+for(var i=1; i<=offset+5; i++){
+	$('#forPaging'+i).removeClass('hidden')
+}
+
 	
 <!--------------------------------------------------------------------- -->
 	
 	
-		function movePage(pageUrl){
-			location.href = encodeURI(pageUrl);	
+	/* function movePage(pageUrl){
+		location.href = encodeURI(pageUrl);	
+	}
+	
+	function rentalUpdate(payNo) {
+		var url = "/mypage-rental-update?&payNo=" + payNo;
+		if(confirm("정말로 반납을 하시겠습니까?")) {
+			location.replace(url);
 		}
-		
-		function rentalUpdate(payNo) {
-			var url = "/mypage-rental-update?&payNo=" + payNo;
-			if(confirm("정말로 반납을 하시겠습니까?")) {
-				location.replace(url);
-			}
+	}
+	
+	function rentalDelete(payNo, toyNo) {
+		var url = "/mypage-rental-delete?&payNo=" + payNo + "&toyNo=" + toyNo;
+		if(confirm("정말로 대여를 취소 하시겠습니까?")) {
+			location.replace(url);
 		}
-		
-		function rentalDelete(payNo, toyNo) {
-			var url = "/mypage-rental-delete?&payNo=" + payNo + "&toyNo=" + toyNo;
-			if(confirm("정말로 대여를 취소 하시겠습니까?")) {
-				location.replace(url);
-			}
-		}
-	</script>
+	} */
+</script>
 <style>
 .hidden{
 	display: none;
 }
 </style>
-</body>
-
-</html>

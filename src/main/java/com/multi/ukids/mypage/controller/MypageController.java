@@ -506,7 +506,9 @@ public class MypageController {
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
 		//추가부분
-		List<Pay> palist = service.getRentalList2(2);	      
+		
+		int mno = loginMember.getMemberNo();
+		List<Pay> palist = service.getRentalList2(mno);
 	    log.info("sssssssssssssssssss" + palist);	      
 	    model.addAttribute("paylist", palist);
 	    
