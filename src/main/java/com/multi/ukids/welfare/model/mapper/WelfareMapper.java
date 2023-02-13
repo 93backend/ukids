@@ -9,6 +9,7 @@ import com.multi.ukids.welfare.model.vo.Welfare;
 
 @Mapper
 public interface WelfareMapper {
+	List<Welfare> selectMainWelfareList(Map<String, Object> map);
 	List<Welfare> selectWelfareList(Map<String, String> map);
 	int selectWelfareCount(Map<String, String> map);	
 	Welfare selectWelfareByNo(int no);

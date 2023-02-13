@@ -2,6 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.multi.ukids.playground.model.mapper.PlaygroundMapper">
+
+	<select id="selectMainPlaygroundList" resultType="Playground" parameterType="map">
+		SELECT
+			NO, pgid, divL, divM, pgName, pgAddr1, pgAddr2, 
+			bName, tel, post, url, lat, lon, water, dc
+		FROM PLAYGROUND
+		WHERE 1 = 1
+		<if test="city != null">
+			AND pgAddr1 LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND pgAddr1 LIKE '%${town}%'
+		</if>
+		ORDER BY NO DESC LIMIT 5
+	</select>
 	
 	<select id="selectPlaygroundList" resultType="Playground" parameterType="map">
 		SELECT

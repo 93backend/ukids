@@ -9,5 +9,6 @@ import com.multi.ukids.playground.model.vo.Playground;
 
 @Mapper
 public interface PlaygroundMapper {
+	List<Playground> selectMainPlaygroundList(Map<String, Object> map);
 	List<Playground> selectPlaygroundList(Map<String, String> map);
 }

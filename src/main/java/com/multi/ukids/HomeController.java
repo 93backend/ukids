@@ -1,6 +1,10 @@
 package com.multi.ukids;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +16,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.multi.ukids.common.util.PageInfo;
+import com.multi.ukids.hospital.model.service.HospitalService;
+import com.multi.ukids.hospital.model.vo.Hospital;
 import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.Nursery;
+import com.multi.ukids.playground.model.service.PlaygroundService;
+import com.multi.ukids.playground.model.vo.Playground;
 import com.multi.ukids.toy.model.service.ToyService;
 import com.multi.ukids.toy.model.vo.Toy;
+import com.multi.ukids.welfare.model.service.WelfareService;
+import com.multi.ukids.welfare.model.vo.Welfare;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -35,7 +45,27 @@ public class HomeController {
 	private NurseryService nurseryService;
 	@Autowired
 	private ToyService toyService;
+	@Autowired
+	private PlaygroundService playgroundService;
+	@Autowired
+	private WelfareService welfareService;
+	@Autowired
+	private HospitalService hospitalService;
 	
+	public int[] createRdImgIdx() {
+		Random rd = new Random();
+		int[] idx = new int[5];
+		for (int i=0; i<idx.length; i++) {
+			idx[i] = rd.nextInt(5) + 1;
+			for (int j=0; j<i; j++) {
+				if (idx[i] == idx[j]) {
+					i--;
+					break;
+				}
+			}
+		}
+		return idx;
+	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session, @SessionAttribute(name = "loginMember", required = false) Member loginMember) {
@@ -61,6 +91,13 @@ public class HomeController {
 		int kinderCount = kinderService.getKinderCount(param);
 		pageInfo = new PageInfo(1, 1, kinderCount, kinderCount);
 		List<Kinder> kinder = kinderService.getKinderList(pageInfo, param);
+		
+		//아동관련시설
+		int[] imgIdx = createRdImgIdx();
+		List<Playground> playground = playgroundService.getMainPlaygroundList(param);
+		List<Welfare> welfare = welfareService.getMainWelfareList(param);
+		List<Hospital> hospital = hospitalService.getMainHospitalList(param);
+		
 		
 		// 국공립 / 사립
 		int[] publicCnt = new int[2];
@@ -102,6 +139,10 @@ public class HomeController {
 		model.addAttribute("privateCnt", privateCnt);
 		model.addAttribute("locationNCnt", locationNCnt);
 		model.addAttribute("locationKCnt", locationKCnt);
+		model.addAttribute("imgIdx", imgIdx);
+		model.addAttribute("playground", playground);
+		model.addAttribute("welfare", welfare);
+		model.addAttribute("hospital", hospital);
 		
 		//추천 장난감
 		

@@ -254,8 +254,8 @@
           <div class="row g-0">
             <span class="ps-1" style="font-weight: 700;">주변 시설 둘러보기</span>
             <div class="d-flex align-items-center justify-content-between mb-sm-3 mb-2">
-              <h2 class="h3 mb-0"><span style="font-weight: 700;">서울시 강남구</span> 아동 관련 시설 추천</h2>
-              <a class="btn btn-outline-accent ms-3" href="welfare-main.html">더 보기<i class="ci-arrow-right ms-2"></i></a>
+              <h2 class="h3 mb-0"><span style="font-weight: 700;">[[${address}]]</span> 아동 관련 시설 추천</h2>
+              <a class="btn btn-outline-accent ms-3" th:href="@{/welfare-main}">더 보기<i class="ci-arrow-right ms-2"></i></a>
             </div>
           </div>
 
@@ -274,52 +274,21 @@
 
                   <!-- 기관 목록 -->
                   <div class="d-flex justify-content-center" style="gap: 2rem;">
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="playground.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="playground.html"></a>
-                          <img src="img/ukids/index/놀이시설.jpg" alt="Playground">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="playground.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="playground.html"></a>
-                          <img src="img/ukids/index/놀이시설.jpg" alt="Playground">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="playground.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="playground.html"></a>
-                          <img src="img/ukids/index/놀이시설.jpg" alt="Playground">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="playground.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="playground.html"></a>
-                          <img src="img/ukids/index/놀이시설.jpg" alt="Playground">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="playground.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="playground.html"></a>
-                          <img src="img/ukids/index/놀이시설.jpg" alt="Playground">
-                        </div>
-                      </div>
-                    </div>
+                   	<th:block th:each="pg, status : ${playground}">
+                    	<div class="col-sm-auto">
+	                      <div class="card product-card-alt">
+	                        <div class="product-thumb border border-5">
+	                          <div class="product-card-actions">
+	                          	<a class="btn btn-light btn-icon btn-shadow fs-base mx-2" th:href="@{/playground}"><i class="ci-add me-2"></i>더 보기</a>
+	                          </div>
+	                          <a class="product-thumb-overlay" th:href="@{/playground}"></a>
+	                          <img th:src="|img/ukids/facility/playground/pg${imgIdx[status.index]}.png|" alt="Playground">
+	                        </div>
+	                      </div>
+	                    </div>
+                    </th:block>
                   </div>
+                  
                 </div>
               </div>
 
@@ -336,54 +305,22 @@
 
                   <!-- 기관 목록 -->
                   <div class="d-flex justify-content-center" style="gap: 2rem;">
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="welfare-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="welfare-detail.html"></a>
-                          <img src="img/ukids/index/복지시설.jpg" alt="Welfare">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="welfare-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="welfare-detail.html"></a>
-                          <img src="img/ukids/index/복지시설.jpg" alt="Welfare">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="welfare-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="welfare-detail.html"></a>
-                          <img src="img/ukids/index/복지시설.jpg" alt="Welfare">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="welfare-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="welfare-detail.html"></a>
-                          <img src="img/ukids/index/복지시설.jpg" alt="Welfare">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="welfare-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="welfare-detail.html"></a>
-                          <img src="img/ukids/index/복지시설.jpg" alt="Welfare">
-                        </div>
-                      </div>
-                    </div>
-
-                    
+	                  <th:block th:each="wf, status : ${welfare}">
+                    	<div class="col-sm-auto">
+	                      <div class="card product-card-alt">
+	                        <div class="product-thumb border border-5">
+	                          <div class="product-card-actions">
+	                          	<a class="btn btn-light btn-icon btn-shadow fs-base mx-2" th:href="@{|/welfare-detail?no=${wf.cwNo}&img=${imgIdx[status.index]}|}">
+	                          	<i class="ci-add me-2"></i>더 보기</a>
+	                          </div>
+	                          <a class="product-thumb-overlay" th:href="@{|/welfare-detail?no=${wf.cwNo}&img=${imgIdx[status.index]}|}"></a>
+	                          <img th:src="|img/ukids/facility/welfare/wf${imgIdx[status.index]}.jpg|" alt="Welfare">
+	                        </div>
+	                      </div>
+	                    </div>
+                    </th:block> 
                   </div>
+                  
                 </div>
               </div>
 
@@ -400,54 +337,22 @@
 
                   <!-- 기관 목록 -->
                   <div class="d-flex justify-content-center" style="gap: 2rem;">
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="hospital-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="hospital-detail.html"></a>
-                          <img src="img/ukids/index/의료시설.jpg" alt="Hospital">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="hospital-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="hospital-detail.html"></a>
-                          <img src="img/ukids/index/의료시설.jpg" alt="Hospital">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="hospital-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="hospital-detail.html"></a>
-                          <img src="img/ukids/index/의료시설.jpg" alt="Hospital">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="hospital-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="hospital-detail.html"></a>
-                          <img src="img/ukids/index/의료시설.jpg" alt="Hospital">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-sm-auto">
-                      <div class="card product-card-alt">
-                        <div class="product-thumb border border-5">
-                          <div class="product-card-actions"><a class="btn btn-light btn-icon btn-shadow fs-base mx-2" href="hospital-detail.html"><i class="ci-add me-2"></i>더 보기</a></div>
-                          <a class="product-thumb-overlay" href="hospital-detail.html"></a>
-                          <img src="img/ukids/index/의료시설.jpg" alt="Hospital">
-                        </div>
-                      </div>
-                    </div>
-
-                    
+                    <th:block th:each="hp, status : ${hospital}">
+                  		<div class="col-sm-auto">
+	                      <div class="card product-card-alt">
+	                        <div class="product-thumb border border-5">
+	                          <div class="product-card-actions">
+	                          	<a class="btn btn-light btn-icon btn-shadow fs-base mx-2" th:href="@{|/hospital-detail?no=${hp.no}&img=${imgIdx[status.index]}&type=hp|}">
+	                          	<i class="ci-add me-2"></i>더 보기</a>
+	                          </div>
+	                          <a class="product-thumb-overlay" th:href="@{|/hospital-detail?no=${hp.no}&img=${imgIdx[status.index]}&type=hp|}"></a>
+	                          <img th:src="|img/ukids/facility/hospital/hp${imgIdx[status.index]}.jpg|" alt="Hospital">
+	                        </div>
+	                      </div>
+	                    </div>
+                  	</th:block>
                   </div>
+                  
                 </div>
               </div>
 

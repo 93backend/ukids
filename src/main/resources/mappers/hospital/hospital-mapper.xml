@@ -2,7 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.multi.ukids.hospital.model.mapper.HospitalMapper">
-
+	
+	<select id="selectMainHospitalList" resultType="Hospital" parameterType="map">
+		SELECT
+		no, hpid, hpAddr, divName, hpName, tel, erTel, er,
+		time1c, time2c, time3c, time4c, time5c, time6c, time7c, time8c, 
+		time1s, time2s, time3s, time4s, time5s, time6s, time7s, time8s,
+		post1, post2, lon, lat 
+		FROM HOSPITAL
+		WHERE 1 = 1
+		<if test="city != null">
+			AND hpAddr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND hpAddr LIKE '%${town}%'
+		</if>
+		ORDER BY no DESC LIMIT 5
+	</select>
+	
+	
 
 	<select id="selectHospitalList" resultType="Hospital" parameterType="map">
 		SELECT

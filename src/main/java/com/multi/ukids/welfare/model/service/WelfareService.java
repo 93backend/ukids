@@ -16,6 +16,10 @@ public class WelfareService {
 	@Autowired
 	private WelfareMapper mapper;
 	
+	public List<Welfare> getMainWelfareList(Map<String, Object> param) {
+		return mapper.selectMainWelfareList(param);
+	}
+	
 	public List<Welfare> getWelfareList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));

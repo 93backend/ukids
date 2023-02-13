@@ -10,6 +10,8 @@ import com.multi.ukids.hospital.model.vo.NightCare;
 
 @Mapper
 public interface HospitalMapper {
+	List<Hospital> selectMainHospitalList(Map<String, Object> map);
+	
 	List<Hospital> selectHospitalList(Map<String, String> map);
 	List<NightCare> selectNightCareList(Map<String, String> map);
 	

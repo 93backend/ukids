@@ -16,6 +16,10 @@ public class HospitalService {
 	@Autowired
 	private HospitalMapper mapper;
 	
+	public List<Hospital> getMainHospitalList(Map<String, Object> param) {
+		return mapper.selectMainHospitalList(param);
+	}
+	
 	public List<Hospital> getHospitalList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));

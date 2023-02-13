@@ -3,6 +3,22 @@
 
 <mapper namespace="com.multi.ukids.welfare.model.mapper.WelfareMapper">
 
+	<select id="selectMainWelfareList" resultType="Welfare" parameterType="map">
+		SELECT
+			cwNo, fcltCd, fcltNm, fcltEngNm, rprsNm, homepageAddr,
+			fcltMailAddr, fcltZipcd, fcltAddr, fcltDtl_1Addr,
+			fcltTelNo, faxNo, estbDe, cprNm, cfbNm
+		FROM WELFARE
+		WHERE 1 = 1
+		<if test="city != null">
+			AND fcltAddr LIKE '%${city}%'
+		</if>
+		<if test="town != null">
+			AND fcltAddr LIKE '%${town}%'
+		</if>
+		ORDER BY cwNo DESC LIMIT 5
+	</select>
+
 	<select id="selectWelfareList" resultType="Welfare" parameterType="map">
 		SELECT
 			cwNo, fcltCd, fcltNm, fcltEngNm, rprsNm, homepageAddr,

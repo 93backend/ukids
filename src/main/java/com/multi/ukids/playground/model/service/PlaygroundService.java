@@ -14,6 +14,10 @@ public class PlaygroundService {
 	@Autowired
 	private PlaygroundMapper mapper;
 	
+	public List<Playground> getMainPlaygroundList(Map<String, Object> param) {
+		return mapper.selectMainPlaygroundList(param);
+	}
+	
 	public List<Playground> getPlaygroundList(Map<String, String> param) {
 		return mapper.selectPlaygroundList(param);
 	}
