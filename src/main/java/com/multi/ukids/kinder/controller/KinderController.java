@@ -383,6 +383,12 @@ public class KinderController {
 		log.info("유치원 비교 화면");
 		log.info("비교 목록 : " + kinderCompare);
 		
+		if(session.getAttribute("kinderCompare") == null) {
+			List<Integer> initCompare = new ArrayList<>();
+			session.setAttribute("kinderCompare", initCompare);
+			kinderCompare = initCompare;
+		}
+		
 		List<Kinder> list = new ArrayList<Kinder>();
 		
 		if(kinderCompare.size() > 0) {

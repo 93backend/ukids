@@ -150,7 +150,7 @@
     	}
     	
     	function claimDelete(type, no) {
-    		var url = "/claim-delete?type=" + type + "&no=" + no + "&knNo=" + [[${claim.knNo}]];
+    		var url = "/claim-delete?type=" + type + "&no=" + no + "&knNo=" + /*[[${claim.knNo}]]*/{};
     		if(confirm("정말로 불편사항 신고글을 삭제 하시겠습니까?")) {
     			location.replace(url);
     		}

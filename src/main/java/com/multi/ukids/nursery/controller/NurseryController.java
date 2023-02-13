@@ -385,6 +385,12 @@ public class NurseryController {
 		log.info("어린이집 비교 화면");
 		log.info("비교 목록 : " + nurseryCompare.toString());
 		
+		if(session.getAttribute("nurseryCompare") == null) {
+			List<Integer> initCompare = new ArrayList<>();
+			session.setAttribute("nurseryCompare", initCompare);
+			nurseryCompare = initCompare;
+		}
+		
 		List<Nursery> list = new ArrayList<>();
 		
 		if(nurseryCompare.size() > 0) {

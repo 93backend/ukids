@@ -577,9 +577,9 @@
     <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
        
 	    $(document).ready(function() {
-	   		const memberId = [[${session.loginMember.id}]];
+	   		const memberId = /*[[${session.loginMember.id}]]*/{};
 	   		var role = '';
-	   		if([[${session.loginMember.role}]] =='ROLE_USER') {
+	   		if(/*[[${session.loginMember.role}]]*/{} =='ROLE_USER') {
 	   			role = '학부모';
 	   		} else {
 	   			role = '선생님';
@@ -655,8 +655,8 @@
 	        
 	        /* 찜 관련, 비교 관련 */
 	        
-	        var no = [[${kinder.kinNo}]];
-	        var memberNo = [[${session.loginMember.memberNo}]];
+	        var no = /*[[${kinder.kinNo}]]*/{};
+	        var memberNo = /*[[${session.loginMember.memberNo}]]*/{};
 			
 	        var isHeartChecked = null;
 	        $('#wishButton').click(function() {
@@ -728,8 +728,8 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-var addr = [[${kinder.addr}]];
-var kname = [[${kinder.kindername}]];
+var addr = /*[[${kinder.addr}]]*/{};
+var kname = /*[[${kinder.kindername}]]*/{};
 
 // 주소로 좌표를 검색합니다
 geocoder.addressSearch(addr, function(result, status) {
@@ -759,11 +759,11 @@ geocoder.addressSearch(addr, function(result, status) {
 
 /* 첫번째 그래프(총 학급수) */
 
-var class3 = [[${kinder.clcnt3}]];
-var class4 = [[${kinder.clcnt4}]];
-var class5 = [[${kinder.clcnt5}]];
-var class6 = [[${kinder.mixclcnt}]];
-var class7 = [[${kinder.shclcnt}]];
+var class3 = /*[[${kinder.clcnt3}]]*/{};
+var class4 = /*[[${kinder.clcnt4}]]*/{};
+var class5 = /*[[${kinder.clcnt5}]]*/{};
+var class6 = /*[[${kinder.mixclcnt}]]*/{};
+var class7 = /*[[${kinder.shclcnt}]]*/{};
 
 
 let pieChartData = {
@@ -833,11 +833,11 @@ let customLegend = function (chart) {
 
 /* 두번째 그래프(총 아동수) */
 
-var child3 = [[${kinder.ppcnt3}]];
-var child4 = [[${kinder.ppcnt4}]];
-var child5 = [[${kinder.ppcnt5}]];
-var child6 = [[${kinder.mixppcnt}]];
-var child7 = [[${kinder.shppcnt}]];
+var child3 = /*[[${kinder.ppcnt3}]]*/{};
+var child4 = /*[[${kinder.ppcnt4}]]*/{};
+var child5 = /*[[${kinder.ppcnt5}]]*/{};
+var child6 = /*[[${kinder.mixppcnt}]]*/{};
+var child7 = /*[[${kinder.shppcnt}]]*/{};
 
 let pieChartData2 = {
   labels: ['만 3세반', '만 4세반', '만 5세반', '혼합학급', '특수학급'],
@@ -905,9 +905,9 @@ let customLegend2 = function (chart) {
 /* 
 세번째 막대 그래프(교사당/학급당 아동수)
 */
-var childTot = [[${kinder.ppcnt3}]] + [[${kinder.ppcnt4}]] + [[${kinder.ppcnt5}]] + [[${kinder.mixppcnt}]] + [[${kinder.shppcnt}]];
-var teacherTot = [[${kinder.hdst_thcnt}]] + [[${kinder.asps_thcnt}]] + [[${kinder.gnrl_thcnt}]] + [[${kinder.spcn_thcnt}]] + [[${kinder.shcnt_thcnt}]];
-var classTot = [[${kinder.clcnt3}]] + [[${kinder.clcnt4}]] + [[${kinder.clcnt5}]] + [[${kinder.mixclcnt}]] + [[${kinder.shclcnt}]];
+var childTot = /* [[${kinder.ppcnt3}]]*/{} + /* [[${kinder.ppcnt4}]]*/{} + /* [[${kinder.ppcnt5}]]*/{} + /* [[${kinder.mixppcnt}]]*/{} + /* [[${kinder.shppcnt}]]*/{};
+var teacherTot = /* [[${kinder.hdst_thcnt}]]*/{} + /* [[${kinder.asps_thcnt}]]*/{} + /* [[${kinder.gnrl_thcnt}]]*/{} + /* [[${kinder.spcn_thcnt}]]*/{} + /* [[${kinder.shcnt_thcnt}]]*/{};
+var classTot = /* [[${kinder.clcnt3}]]*/{} + /* [[${kinder.clcnt4}]]*/{} + /* [[${kinder.clcnt5}]]*/{} + /* [[${kinder.mixclcnt}]]*/{} + /* [[${kinder.shclcnt}]]*/{};
 
 var avg1 = Math.round(childTot / teacherTot);
 var avg2 = Math.round(childTot / classTot);
@@ -968,13 +968,13 @@ let customLegend3 = function (chart) {
 
 /* 4번째 그래프(교사현황) */
 
-var teacher1 = [[${kinder.hdst_tchr_qacnt}]];
-var teacher2 = [[${kinder.rgth_gd1_qacnt}]];
-var teacher3 = [[${kinder.rgth_gd2_qacnt}]];
-var teacher4 = [[${kinder.asth_qacnt}]];
-var teacher5 = [[${kinder.spcn_thcnt}]];
-var teacher6 = [[${kinder.ntcnt}]];
-var teacher7 = [[${kinder.ntrt_thcnt}]];
+var teacher1 = /* [[${kinder.hdst_tchr_qacnt}]]*/{};
+var teacher2 = /* [[${kinder.rgth_gd1_qacnt}]]*/{};
+var teacher3 = /* [[${kinder.rgth_gd2_qacnt}]]*/{};
+var teacher4 = /* [[${kinder.asth_qacnt}]]*/{};
+var teacher5 = /* [[${kinder.spcn_thcnt}]]*/{};
+var teacher6 = /* [[${kinder.ntcnt}]]*/{};
+var teacher7 = /* [[${kinder.ntrt_thcnt}]]*/{};
 
 let pieChartData4 = {
   labels: ['수석교사', '정교사1급', '정교사2급', '준교사', '특수교사', '보건교사', '영양교사'],
@@ -1046,11 +1046,11 @@ let customLegend4 = function (chart) {
 
 /* 5번째 그래프(현 기관 근속 연수) */
 
-var year1 = [[${kinder.yy1_undr_thcnt}]];
-var year2 = [[${kinder.yy1_abv_yy2_undr_thcnt}]];
-var year3 = [[${kinder.yy2_abv_yy4_undr_thcnt}]];
-var year4 = [[${kinder.yy4_abv_yy6_undr_thcnt}]];
-var year5 = [[${kinder.yy6_abv_thcnt}]];
+var year1 = /*[[${kinder.yy1_undr_thcnt}]]*/{};
+var year2 = /*[[${kinder.yy1_abv_yy2_undr_thcnt}]]*/{};
+var year3 = /*[[${kinder.yy2_abv_yy4_undr_thcnt}]]*/{};
+var year4 = /*[[${kinder.yy4_abv_yy6_undr_thcnt}]]*/{};
+var year5 = /*[[${kinder.yy6_abv_thcnt}]]*/{};
 
 
 let pieChartData5 = {
@@ -1118,7 +1118,7 @@ let customLegend5 = function (chart) {
 };
 
 // 비교 버튼
-var no = [[${kinder.kinNo}]];
+var no = /*[[${kinder.kinNo}]]*/{};
 var isCompareChecked = null;
 $('#compareButton').click(function() {
 	if($('#compareButton').val() == "false") {
@@ -1177,7 +1177,7 @@ $('#compareButton').click(function() {
 
 // 리뷰 삭제
 function deleteReview(no) {
-	var url = "/kinder-deleteReview?no=" + no + "&kinNo=" + [[${kinder.kinNo}]] + "&i=" + [[${i}]];
+	var url = "/kinder-deleteReview?no=" + no + "&kinNo=" + /*[[${kinder.kinNo}]]*/{} + "&i=" + /*[[${i}]]*/{};
 	if(confirm("댓글을 삭제 하시겠습니까?")) {
 		location.replace(url);
 	}

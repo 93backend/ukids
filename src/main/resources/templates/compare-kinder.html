@@ -184,9 +184,9 @@
     			/*[# th:each="kinder : ${list}"]*/
     				{
 		    			kind: '유',
-		        	    type: [[${kinder.establish}]],
-		        	    name: [[${kinder.kindername}]],
-		        	    address: [[${kinder.addr}]],
+		        	    type: /*[[${kinder.establish}]]*/{},
+		        	    name: /*[[${kinder.kindername}]]*/{},
+		        	    address: /*[[${kinder.addr}]]*/{},
 		        	    image: null,
     					
     				},
@@ -205,7 +205,7 @@
 
 
     	// 각 객체의 주소값을 convertToLatLng() 함수의 매개변수로 넘기기
-    	searchList.forEach((item) => convertToLatLng(item.address));
+    	searchList.forEach(convertToLatLng);
 
 
     	// 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성
@@ -213,14 +213,13 @@
 
 
     	//주소를 좌표로 변환
-    	count = 0;
-    	function convertToLatLng(address) {
+    	function convertToLatLng(item) {
 
     	  //주소-좌표 변환 객체 생성
     	  var geocoder = new kakao.maps.services.Geocoder();
 
     	  //주소로 좌표 검색
-    	  geocoder.addressSearch(address, function(result, status) {
+    	  geocoder.addressSearch(item.address, function(result, status) {
 
     	    //정상적으로 검색이 완료됐으면
     	    if (status === kakao.maps.services.Status.OK) {
@@ -236,15 +235,14 @@
     	      marker.setMap(map);
 
     	      // 마커에 표시할 인포윈도우를 생성
-    	      // <span class="tag">${searchList[count].kind}</span>  
     	      var infowindow = new kakao.maps.InfoWindow({
     	        content: 
     	          `<a id="marker-box" class="fw-bold text-dark">
-    	            <span id="info-type" class="mt-1 ms-1">${searchList[count].type}</span>
+    	            <span id="info-type" class="mt-1 ms-1">${item.type}</span>
     	            <div class="ms-1">
-    	              <span id="info-name">${searchList[count].name}</span>
+    	              <span id="info-name">${item.name}</span>
     	            </div>
-    	            <span id="info-addr" class="mb-1 ms-1"><i class="ci-location fw-bold"></i>${searchList[count].address}</span>
+    	            <span id="info-addr" class="mb-1 ms-1"><i class="ci-location fw-bold"></i>${item.address}</span>
     	          </a>`,
     	        removable: true,
     	      });
@@ -258,7 +256,6 @@
     	      bounds.extend(coords);
     	      map.setBounds(bounds);
 
-    	      count++;
     	    }    
     	  });
     	};

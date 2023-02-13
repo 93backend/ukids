@@ -555,7 +555,7 @@
     <script th:src="@{/js/theme.min.js}"></script>
     
     <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
-    	var memberNo = [[${session.loginMember.memberNo}]];
+    	var memberNo = /*[[${session.loginMember.memberNo}]]*/{};
 	    function onClickHeart(id) {
 			var no = id;
 			id = '#heart' + id;

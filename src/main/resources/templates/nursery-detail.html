@@ -511,9 +511,9 @@
     <script type="text/javascript" th:inline="javascript" th:if="${session.loginMember != null}">
       
        	$(document).ready(function() {
-       		const memberId = [[${session.loginMember.id}]];
+       		const memberId = /*[[${session.loginMember.id}]]*/{};
        		var role = '';
-       		if([[${session.loginMember.role}]] =='ROLE_USER') {
+       		if(/*[[${session.loginMember.role}]]*/{} =='ROLE_USER') {
        			role = '학부모';
        		} else {
        			role = '선생님';
@@ -588,8 +588,8 @@
             
 			/* 찜 */
 	        
-	        var no = [[${nursery.no}]];
-	        var memberNo = [[${session.loginMember.memberNo}]];
+	        var no = /*[[${nursery.no}]]*/{};
+	        var memberNo = /*[[${session.loginMember.memberNo}]]*/{};
 			
 	        var isHeartChecked = null;
 	        $('#wishButton').click(function() {
@@ -663,8 +663,8 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 // 주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-var addr = [[${nursery.craddr}]];
-var nname = [[${nursery.crname}]];
+var addr = /*[[${nursery.craddr}]]*/{};
+var nname = /*[[${nursery.crname}]]*/{};
 
 // 주소로 좌표를 검색합니다
 geocoder.addressSearch(addr, function(result, status) {
@@ -696,12 +696,12 @@ geocoder.addressSearch(addr, function(result, status) {
 
   /* 첫번째 그래프(총 학급수) */
   
-var class0 = [[${nursery.class_cnt_00}]];
-var class1 = [[${nursery.class_cnt_01}]];
-var class2 = [[${nursery.class_cnt_02}]];
-var class3 = [[${nursery.class_cnt_03}]];
-var class4 = [[${nursery.class_cnt_04}]];
-var class5 = [[${nursery.class_cnt_05}]];
+var class0 = /*[[${nursery.class_cnt_00}]]*/{};
+var class1 = /*[[${nursery.class_cnt_01}]]*/{};
+var class2 = /*[[${nursery.class_cnt_02}]]*/{};
+var class3 = /*[[${nursery.class_cnt_03}]]*/{};
+var class4 = /*[[${nursery.class_cnt_04}]]*/{};
+var class5 = /*[[${nursery.class_cnt_05}]]*/{};
 let pieChartData = {
     labels: ['만 0세반', '만 1세반', '만 2세반', '만 3세반', '만 4세반', '만 5세반'],
     datasets: [{
@@ -768,12 +768,12 @@ let customLegend = function (chart) {
 
 /* 두번째 그래프(총 아동수) */
  
-var child0 = [[${nursery.child_cnt_00}]];
-var child1 = [[${nursery.child_cnt_01}]];
-var child2 = [[${nursery.child_cnt_02}]];
-var child3 = [[${nursery.child_cnt_03}]];
-var child4 = [[${nursery.child_cnt_04}]];
-var child5 = [[${nursery.child_cnt_05}]];
+var child0 = /*[[${nursery.child_cnt_00}]]*/{};
+var child1 = /*[[${nursery.child_cnt_01}]]*/{};
+var child2 = /*[[${nursery.child_cnt_02}]]*/{};
+var child3 = /*[[${nursery.child_cnt_03}]]*/{};
+var child4 = /*[[${nursery.child_cnt_04}]]*/{};
+var child5 = /*[[${nursery.child_cnt_05}]]*/{};
 let pieChartData2 = {
   labels: ['만 0세반', '만 1세반', '만 2세반', '만 3세반', '만 4세반', '만 5세반'],
   datasets: [{
@@ -841,9 +841,9 @@ let customLegend2 = function (chart) {
 세번째 막대 그래프(교사당/학급당 아동수)
 */
 
-var childTot = [[${nursery.child_cnt_tot}]]
-var teacherTot = [[${nursery.em_cnt_tot}]]
-var classTot = [[${nursery.class_cnt_tot}]]
+var childTot = /*[[${nursery.child_cnt_tot}]]*/{};
+var teacherTot = /*[[${nursery.em_cnt_tot}]]*/{};
+var classTot = /*[[${nursery.class_cnt_tot}]]*/{};
 
 var avg1 = Math.round(childTot / teacherTot);
 var avg2 = Math.round(childTot / classTot);
@@ -903,13 +903,13 @@ let customLegend3 = function (chart) {
 };
 
 /* 4번째 그래프(교사현황) */
-var superior = [[${nursery.em_cnt_a1}]];
-var care = [[${nursery.em_cnt_a2}]];
-var special = [[${nursery.em_cnt_a3}]];
-var cure = [[${nursery.em_cnt_a4}]];
-var nutrition = [[${nursery.em_cnt_a5}]];
-var nurse = [[${nursery.em_cnt_a6}]];
-var food = [[${nursery.em_cnt_a7}]];
+var superior = /*[[${nursery.em_cnt_a1}]]*/{};
+var care = /*[[${nursery.em_cnt_a2}]]*/{};
+var special = /*[[${nursery.em_cnt_a3}]]*/{};
+var cure = /*[[${nursery.em_cnt_a4}]]*/{};
+var nutrition = /*[[${nursery.em_cnt_a5}]]*/{};
+var nurse = /*[[${nursery.em_cnt_a6}]]*/{};
+var food = /*[[${nursery.em_cnt_a7}]]*/{};
 let pieChartData4 = {
   labels: ['원장', '보육교사', '특수교사', '치료교사', '영양사', '간호사', '조리원'],
   datasets: [{
@@ -993,9 +993,9 @@ let customLegend4 = function (chart) {
 /* 
 5번째 막대 그래프(시설 현황)
 */
-var classroom = [[${nursery.nrtrroomcnt}]];
-var play = [[${nursery.plgrdco}]];
-var cctv = [[${nursery.cctvinstlcnt}]];
+var classroom = /*[[${nursery.nrtrroomcnt}]]*/{};
+var play = /*[[${nursery.plgrdco}]]*/{};
+var cctv = /*[[${nursery.cctvinstlcnt}]]*/{};
 let barChartData2 = {
   labels: ['보육실수', '놀이터수', 'CCTV수'],
   datasets: [{
@@ -1064,7 +1064,7 @@ let customLegend5 = function (chart) {
 };
 
 //비교 버튼
-var no = [[${nursery.no}]];
+var no = /*[[${nursery.no}]]*/{};
 var isCompareChecked = null;
 $('#compareButton').click(function() {
 	if($('#compareButton').val() == "false") {
@@ -1123,7 +1123,7 @@ $('#compareButton').click(function() {
 
 // 리뷰 삭제
 function deleteReview(no) {
-	var url = "/nursery-deleteReview?no=" + no + "&nuNo=" + [[${nursery.no}]] + "&i=" + [[${i}]];
+	var url = "/nursery-deleteReview?no=" + no + "&nuNo=" + /*[[${nursery.no}]]*/{} + "&i=" + /*[[${i}]]*/{};
 	if(confirm("댓글을 삭제 하시겠습니까?")) {
 		location.replace(url);
 	}
