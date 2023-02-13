@@ -474,7 +474,7 @@ var toyName = "";
 if(toyVali.length==undefined){
 	toyName = toy[0].toyNm1
 }else{
-	toyName = toy[0].toyNm1+' 외 '+ (toy.length-1);
+	toyName = toy[0].toyNm1.substr(0,18)+'...' + ' 외 '+ (toy.length-1);
 }
 var cName = /*[[${session.loginMember.name}]]*/{};
 
