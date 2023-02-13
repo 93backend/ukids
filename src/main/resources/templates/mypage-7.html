@@ -163,8 +163,8 @@
 							<th:block th:each="cart, stat : ${list}">
 							<div class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
 								<label class="d-block d-sm-flex align-items-start text-center text-sm-start">
-									<input class="form-check-input" type="checkbox" name="toyCheck"
-									id="subscribe_me" onclick="checkSelectAll()">&nbsp;&nbsp;
+									<input class="form-check-input" type="checkbox" name="toyCheck" th:value="${cart.no}" 
+									id="toyCheck" onclick="checkSelectAll()">&nbsp;&nbsp;
 									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
 									th:href="@{|/toy-detail?no=${cart.toyNo}|}" style="width: 10rem;"><img
 										th:src="${cart.toyImg}" alt="Product" th:if="${cart.toyImg != null}"></a>
@@ -282,7 +282,14 @@
       })
     }
     function movePay(){
-    	var checkedCartNo = [1,2];
+    	var obj_length = document.getElementsByName("toyCheck").length;
+    	var checkedCartNo = [];
+    	
+    	for (var i = 0; i < obj_length; i++) {
+    		if (document.getElementsByName("toyCheck")[i].checked == true) {
+    			checkedCartNo.push(document.getElementsByName("toyCheck")[i].value);
+    		}
+    	}
     	var noToString = ''
     	for(var i=0; i<checkedCartNo.length; i++){
     		if(i!=0){
