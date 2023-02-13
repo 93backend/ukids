@@ -144,18 +144,17 @@
 					</div>
 			<!-- 어린이집 찜content -->
 			<div class="pt-2 px-4 ps-lg-0 pe-xl-5 ms-5">
-			
-            <!-- Items grid-->
-            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
-            <h5 class="v-line ps-2">어린이집 찜 목록</h5> <br>
-              <!-- Product-->
-              <div></div><div></div>
-              <th:block th:if="${nlist == null}">
+			<h5 class="v-line ps-2">어린이집 찜 목록</h5> <br>
+			<th:block th:if="${nlist.size == 0}">
 				<tr>
 					<div>조회된 찜 목록이 없습니다.</div>
 				</tr>
 			  </th:block>
-			  <th:block th:if="${nlist != null}">
+			
+			<th:block th:if="${nlist.size != 0}">
+            <!-- Items grid-->
+            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
+              <!-- Product-->
 			  <th:block th:each="nwish, stat : ${nlist}">
 			  
               <div class="col mb-2">
@@ -176,15 +175,16 @@
                   </article>
                 </div>
                 </th:block>
-              
-                </th:block>
-              
             </div>
             
             <button type="button" class="btn btn-outline-danger" th:onclick="deleteAllNurseryWish();"><i class="ci-trash me-2"></i>전체 삭제</button>
+            </th:block>
           </div>
           
+          <br>
+          
           <!-- pagination -->
+          <th:block th:if="${nlist.size != 0}">
          <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
             <ul class="pagination" id="prev">
               <li class="page-item"><button class="page-link" th:onclick="|moveNPage('/mypage-3?nPage=${nPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
@@ -208,23 +208,22 @@
                     class="ci-arrow-right ms-2"></i></button></li>
             </ul>
           </nav>  
-         
+         </th:block>
           <br><br>
           
           <!-- 유치원 찜content -->
 			<div class="pt-2 px-4 ps-lg-0 pe-xl-5 ms-5">
-			
-            <!-- Items grid-->
-            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
-            <h5 class="v-line ps-2">유치원 찜 목록</h5> <br>
-              <!-- Product-->
-              <div></div><div></div>
-              <th:block th:if="${klist == null}">
+			 <h5 class="v-line ps-2">유치원 찜 목록</h5> <br>
+			 <th:block th:if="${klist.size == 0}">
 				<tr>
 					<div>조회된 찜 목록이 없습니다.</div>
 				</tr>
 			  </th:block>
-			  <th:block th:if="${klist != null}">
+            <!-- Items grid-->
+            <th:block th:if="${klist.size != 0}">
+            <div class="row row-cols-md-3 row-cols-sm-2 row-cols-1 gy-sm-4 gy-3 gx-3 mb-4">
+            
+              <!-- Product-->
 			  <th:block th:each="kwish, stat : ${klist}">
 			  
               <div class="col mb-2">
@@ -244,16 +243,17 @@
                 </div>
                 </th:block>
               
-                </th:block>
               
             </div>
             
             <button type="button" class="btn btn-outline-danger" th:onclick="deleteAllKinderWish();"><i class="ci-trash me-2"></i>전체 삭제</button>
+            </th:block>
           </div>
           
-          
+          <br>
           
           <!-- pagination -->
+          <th:block th:if="${klist.size != 0}">
           <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
             <ul class="pagination" id="prev">
               <li class="page-item"><button class="page-link" th:onclick="|moveKPage('/mypage-3?page=${kPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
@@ -276,7 +276,7 @@
 	           class="ci-arrow-right ms-2"></i></button></li>
 	         </ul>
 	        </nav>  
-          
+          </th:block>
           
         </section>
       </div>

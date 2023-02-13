@@ -153,12 +153,12 @@
                 </tr>
               </thead>
               <tbody>
-              <th:block th:if="${list == null}">
+              <th:block th:if="${list.size == 0}">
 					<tr>
-						<td colspan="5">조회된 게시글이 없습니다.</td>
+						<td colspan="5" class="cgw9">조회된 게시글이 없습니다.</td>
 					</tr>
 				</th:block>
-				<th:block th:if="${list != null}">
+				<th:block th:if="${list.size != 0}">
                 <tr th:each="board, stat : ${list}">
                   <td class="py-3 cgw9">[[${board.boardNo}]]</td>
                   <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
@@ -176,6 +176,7 @@
           
           
           <!-- pagination -->
+          <th:block th:if="${list.size != 0}">
           <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
             <ul class="pagination">
               <li class="page-item"><button class="page-link" th:onclick="|movePage('/mypage-5?page=${pageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
@@ -199,6 +200,7 @@
                     class="ci-arrow-right ms-2"></i></button></li>
             </ul>
           </nav> 
+          </th:block>
         </section>
       </div>
     </div>

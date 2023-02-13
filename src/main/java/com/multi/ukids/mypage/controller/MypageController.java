@@ -312,7 +312,7 @@ public class MypageController {
 		if(result > 0) {
 			model.addAttribute("msg", "어린이집 찜목록이 전체 삭제되었습니다.");
 		}else {
-			model.addAttribute("msg", "어린이집 찜목록 전체 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "어린이집 찜목록이 전체 삭제되었습니다.");
 		}
 		model.addAttribute("location", "/mypage-3");
 		
@@ -333,7 +333,7 @@ public class MypageController {
 		if(result > 0) {
 			model.addAttribute("msg", "유치원이 찜목록이 전체 삭제되었습니다.");
 		}else {
-			model.addAttribute("msg", "유치원 찜목록 전체 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "유치원이 찜목록이 전체 삭제되었습니다.");
 		}
 		model.addAttribute("location", "/mypage-3");
 		
@@ -687,7 +687,7 @@ public class MypageController {
 		if(result > 0) {
 			model.addAttribute("msg", "장바구니 목록이 전체 삭제되었습니다.");
 		}else {
-			model.addAttribute("msg", "장바구니 목록 전체 삭제에 실패하였습니다.");
+			model.addAttribute("msg", "장바구니 목록이 전체 삭제되었습니다.");
 		}
 		model.addAttribute("location", "/mypage-7");
 		

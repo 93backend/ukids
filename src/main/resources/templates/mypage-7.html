@@ -154,12 +154,17 @@
 					<!-- Profile form-->
 					<form>
 						<div class="row gx-4 gy-3">
+						<h5 class="v-line ps-2">장바구니 목록</h5> <br>
 							<!-- Wishlist-->
 							<!-- Item-->
-							<th:block th:if="${list == null}">
+							<th:block th:if="${list.size == 0}">
+							<br>
+							<br>
+								<h3>장바구니에 아무것도 없습니다.. ㅠㅠ</h3>
+								
 								<hr>
 							</th:block>
-							<th:block th:if="${list != null}">
+							<th:block th:if="${list.size != 0}">
 							<th:block th:each="cart, stat : ${list}">
 							<div class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
 								<label class="d-block d-sm-flex align-items-start text-center text-sm-start">
@@ -193,7 +198,7 @@
 
 							<div class="col-12 mt-lg-3 ">
 								<div>
-								<th:block th:if="${count == 0}">
+								<th:block th:if="${list.size == 0}">
 									<label class=""> <input class="form-check-input cgw12"
 										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
 										선택&nbsp;
@@ -209,7 +214,7 @@
 											대여 금액</span> <span class="mx-1 cgw3"><b>0원</b></span>
 									</span>
 								</th:block>
-								<th:block th:if="${count != 0}">
+								<th:block th:if="${list.size != 0}">
 									<label class=""> <input class="form-check-input cgw12"
 										type="checkbox" name="selectall" onclick="selectAll(this)">&nbsp;&nbsp;전체
 										선택&nbsp;

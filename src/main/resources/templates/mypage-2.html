@@ -146,16 +146,15 @@
 									<th class="cgw8 cgw9">신청일자</th>
 									<th class="cgw8 cgw9">입소희망 예정일</th>
 									<th class="cgw8 cgw9">신청 상태</th>
-									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<th:block th:if="${nlist == null}">
+								<th:block th:if="${nlist.size == 0}">
 									<tr>
-										<td colspan="5">조회된 신청이 없습니다.</td>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
 									</tr>
 								</th:block>
-								<th:block th:if="${nlist != null}">
+								<th:block th:if="${nlist.size != 0}">
 								<tr th:each="nadmission, stat : ${nlist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9"><a
@@ -270,16 +269,16 @@
 									<th class="cgw8 cgw9">신청일자</th>
 									<th class="cgw8 cgw9">입소희망 예정일</th>
 									<th class="cgw8 cgw9s">신청 상태</th>
-									<th></th>
+									
 								</tr>
 							</thead>
 							<tbody>
-								<th:block th:if="${klist == null}">
+								<th:block th:if="${klist.size == 0}">
 									<tr>
-										<td colspan="5">조회된 신청이 없습니다.</td>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
 									</tr>
 								</th:block>
-								<th:block th:if="${klist != null}">
+								<th:block th:if="${klist.size != 0}">
 								<tr th:each="kadmission, stat : ${klist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
 									<td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw26"
