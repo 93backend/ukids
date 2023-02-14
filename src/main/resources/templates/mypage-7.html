@@ -243,22 +243,43 @@
 							<th:block th:each="cart, stat : ${list}">
 							<div class="d-sm-flex justify-content-between mt-lg-3 mb-3 pb-3 pb-sm-4 border-bottom">
 								<label class="d-block d-sm-flex align-items-start text-center text-sm-start">
+								<th:block th:if="${cart.toyType != '대여중'}">
 									<input class="form-check-input" type="checkbox" name="toyCheck" th:value="${cart.no}" 
 									id="toyCheck" onclick="checkSelectAll()">&nbsp;&nbsp;
+									</th:block>
+									<th:block th:if="${cart.toyType == '대여중'}">
+									<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+									</th:block>
+									<th:block th:if="${cart.toyType != '대여중'}">
 									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
 									th:href="@{|/toy-detail?no=${cart.toyNo}|}" style="width: 10rem;"><img
 										th:src="${cart.toyImg}" alt="Product" th:if="${cart.toyImg != null}"></a>
+									</th:block>
+									<th:block th:if="${cart.toyType == '대여중'}">
+									<a class="d-block flex-shrink-0 mx-auto me-sm-4"
+									th:href="@{|/toy-detail?no=${cart.toyNo}|}" style="width: 10rem;"><img
+										th:src="${cart.toyImg}" alt="Product" th:if="${cart.toyImg != null}"></a>
+									</th:block>
 									<div class="pt-2">
 										<h3 class="product-title fs-base mb-2">
 											<a th:href="@{|/toy-detail?no=${cart.toyNo}|}">[[${cart.toyNm1}]]</a>
 											<br><br>
 										</h3>
+										<th:block th:if="${cart.toyType != '대여중'}">
 										<div class="fs-sm">대여기간</div>
 										<span class="fs-sm" th:text="${#dates.format(cart.startDate, 'yyyy-MM-dd ~')}"></span>
 										<span class="fs-sm" th:text="|${#dates.format(cart.endDate, 'yyyy-MM-dd')} (${cart.date}일)|"></span>
 										<div class="fs-lg cgw3 pt-2">
 											<small>[[${cart.realPay}]]원</small>
 										</div>
+										</th:block>
+										<th:block th:if="${cart.toyType == '대여중'}">
+										<br>
+										<h3>대여중인 상품입니다.</h3>
+										<div class="fs-lg cgw3 pt-2">
+											<small></small>
+										</div>
+										</th:block>
 									</div>
 								</label>
 								<div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">

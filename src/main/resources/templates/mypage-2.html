@@ -128,6 +128,10 @@
 				 <th:block th:if="${session.loginMember.role == 'ROLE_T'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                     <li class="border-bottom mb-0">
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>입소 신청
+                    조회<span class="fs-sm text-muted ms-auto"></span></div>
+                </li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
                       class="fs-sm text-muted ms-auto"></span></a></li>
@@ -186,6 +190,7 @@
 					</div>
 					<!-- 어린이집 입소 신청 목록-->
 					<!-- <form id="enroll-container" action="/member/update" method="post"> -->
+					<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 					<div class="table-responsive fs-md mb-4">
 						<h5 class="v-line ps-2">어린이집 입소 신청 목록</h5>
 						<br>
@@ -365,7 +370,91 @@
 						<button class="btn btn-primary-cgw2" data-bs-toggle="modal"
 							data-bs-target="#open-ticket">더보기</button>
 					</div>
-					<!-- </form> -->
+					</th:block>
+
+
+
+
+
+
+					<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+					<div class="table-responsive fs-md mb-4">
+						<h5 class="v-line ps-2">입소 신청 목록</h5>
+						<br>
+						<table class="table table-hover mb-0" id="addNList">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9">신청일자</th>
+									<th class="cgw8 cgw9">입소희망 예정일</th>
+									<th class="cgw8 cgw9">신청 상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${tnlist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${tnlist.size != 0}">
+								<tr th:each="nadmission, stat : ${tnlist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9"><a
+										class="nav-link-style-cgw fw-medium cgw26"
+										th:href="@{|/nursery-detail?&no=${nadmission.nuNo}&i=${stat.index}|}">[[${nadmission.crname}]]</a></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.enrollDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.hopeDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nadmission.status == 'Y'}" class="badge bg-success m-0">입소확정</span>
+										<span th:if="${nadmission.status == 'N'}" class="badge bg-danger m-0">신청실패</span>
+										<span th:if="${nadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
+									</td>
+									<td class="py-3 cgw9">
+										<th:block th:if="${nadmission.status != 'Y'}">
+										<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteNAdmission([[${nadmission.no}]]);">
+											<span>입소신청취소</span>
+										</button>
+										</th:block>
+										<th:block th:if="${nadmission.status == 'Y'}">
+										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
+									</td>
+								</tr>
+								 <th:block th:if="${tnlist.size != 0}">
+						         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+						            <ul class="pagination" id="prev">
+						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+						            </ul>
+						            <ul class="pagination">
+						              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+						              
+						              <th:block th:each="num, status : ${#numbers.sequence(tnPageInfo.startPage, tnPageInfo.endPage)}">
+							                	<th:block th:if="${status.current == tnPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block page" aria-current="page">
+									                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+									                </li>
+							                	</th:block>
+							                	<th:block th:if="${status.current != tnPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${status.current}');|">[[${status.current}]]</button></li>
+							                	</th:block>
+							                </th:block>
+						            </ul>
+						            <ul class="pagination">
+						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.nextPage}');|" aria-label="Next">Next<i
+						                    class="ci-arrow-right ms-2"></i></button></li>
+						            </ul>
+						          </nav>  
+						          <br>
+						          </th:block>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					</th:block>
+
+
+
 				</section>
 			</div>
 		</div>
@@ -407,7 +496,25 @@
 			}
 		}
 		
+		function updateTNurseryAdmissionY(no) {
+    		var url = "/updateTNurseryAdmissionY?no=" + no;
+			if(confirm("정말로 입소를 수락하시겠습니까?")) {
+				location.replace(url);
+			}
+    	}
 		
+		function updateTNurseryAdmissionN(no) {
+    		var url = "/updateTNurseryAdmissionN?no=" + no;
+			if(confirm("정말로 입소를 거절하시겠습니까?")) {
+				location.replace(url);
+			}
+    	}
+		
+		tnPage = '[[${tnPageInfo.currentPage}]]';
+		function movetNPage(pageUrl){
+			pageUrl += '&tnPage=' + tnPage 
+			location.href = encodeURI(pageUrl);	
+		}
 	</script>
 </body>
 

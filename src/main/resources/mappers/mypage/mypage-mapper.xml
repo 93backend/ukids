@@ -18,12 +18,13 @@
 		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
-	<select id="selectAllNAdmissionList" resultType="NAdmission" parameterType="map">
+	<select id="selectTNAdmissionList" resultType="NAdmission" parameterType="map">
 		SELECT
 			A.nuNo, N.crname, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
 		FROM NURSERY N 
 		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
 		LEFT OUTER JOIN MEMBER M ON (N.stcode = M.fieldCd)
+		WHERE N.stcode = M.fieldCd
 		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
@@ -37,9 +38,26 @@
 		AND A.memberNo = #{memberNo}
 	</select> 
 	
+	<select id="selectTNAdmissionCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (N.stcode = M.fieldCd)
+		WHERE 1=1
+		AND N.stcode = M.fieldCd
+	</select> 
+	
 	<delete id="deleteNAdmission" parameterType="int">
 		DELETE FROM N_ADMISSION WHERE no = #{no}
 	</delete>
+	
+	<update id="updateTNurseryAdmissionY" parameterType="int">
+		UPDATE N_ADMISSION SET STATUS = 'Y' WHERE no = #{no}
+	</update>
+	<update id="updateTNurseryAdmissionN" parameterType="int">
+		UPDATE N_ADMISSION SET STATUS = 'N' WHERE no = #{no}
+	</update>
 	
 	<!-- 유치원 -->
  	<select id="selectKAdmissionList" resultType="KAdmission" parameterType="map">
@@ -481,7 +499,7 @@
 	
 	<select id="selectCartList" resultType="Cart" parameterType="map">
 		SELECT
-			C.NO, T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE
+			C.NO, T.TOYNM1, T.TOYIMG, T.TOYPAY, C.TOYNO, C.MEMBERNO, C.STARTDATE, C.ENDDATE, T.TOYTYPE
 		FROM TOY T
 		LEFT OUTER JOIN CART C ON (T.TOYNO = C.TOYNO)
 		LEFT OUTER JOIN MEMBER M ON (C.MEMBERNO = M.MEMBERNO)

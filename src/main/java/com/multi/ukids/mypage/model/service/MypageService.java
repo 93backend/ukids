@@ -53,13 +53,33 @@ public class MypageService {
 		return mapper.selectNAdmissionList(map);
 	}
 	
+	public List<NAdmission> getTNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
+		map.put("limit", ""+pageInfo.getListLimit());
+		map.put("offset", ""+(pageInfo.getStartList() - 1));
+		return mapper.selectTNAdmissionList(map);
+	}
+	
 	public int getNAdmissionCount(Map<String, String> map) {
 		return mapper.selectNAdmissionCount(map);
+	}
+	
+	public int getTNAdmissionCount(Map<String, String> map) {
+		return mapper.selectTNAdmissionCount(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteNAdmission(int no) {
 		return mapper.deleteNAdmission(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTNurseryAdmissionY(int no) {
+		return mapper.updateTNurseryAdmissionY(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTNurseryAdmissionN(int no) {
+		return mapper.updateTNurseryAdmissionN(no);
 	}
 	
 	

@@ -125,32 +125,49 @@ public class MypageController {
 		}
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		
-		int page = 1;
+		int nPage = 1;
+		int kPage = 1;
+		int tnPage = 1;
+		int tkPage = 1;
 		try {
-			if(param.get("page") != null) {
-				page = Integer.parseInt((String) param.get("page"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			nPage = Integer.parseInt(param.get("nPage"));
+		} catch (Exception e) {}
+		try {
+			kPage = Integer.parseInt(param.get("kPage"));
+		} catch (Exception e) {}
+		try {
+			tnPage = Integer.parseInt(param.get("tnPage"));
+		} catch (Exception e) {}
+		try {
+			tkPage = Integer.parseInt(param.get("tkPage"));
+		} catch (Exception e) {}
 		
 		// nursery
 		int ncount = service.getNAdmissionCount(param);
-		PageInfo npageInfo = new PageInfo(page, 1, ncount, 4);
+		PageInfo npageInfo = new PageInfo(nPage, 1, ncount, 4);
 		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
 		
 		System.out.println("nlist(입소신청) : " + nlist);
 		model.addAttribute("nlist", nlist);
-		model.addAttribute("pageInfo", npageInfo);
+		model.addAttribute("npageInfo", npageInfo);
 		
 		// kinder
 		int kcount = service.getKAdmissionCount(param);
-		PageInfo kpageInfo = new PageInfo(page, 1, kcount, 4);
+		PageInfo kpageInfo = new PageInfo(kPage, 1, kcount, 4);
 		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
 		
 		System.out.println("klist(입소신청) : " + klist);
 		model.addAttribute("klist", klist);
-		model.addAttribute("pageInfo", kpageInfo);
+		model.addAttribute("kpageInfo", kpageInfo);
+		
+		// nurseryTeacher
+		int tncount = service.getTNAdmissionCount(param);
+		PageInfo tnPageInfo = new PageInfo(tnPage, 5, tncount, 8);
+		List<NAdmission> tnlist = service.getTNAdmissionList(tnPageInfo, param);
+		
+		System.out.println("tnlist(입소신청) : " + tnlist);
+		model.addAttribute("tnlist", tnlist);
+		model.addAttribute("tnPageInfo", tnPageInfo);
 		
 		int admissionCount = ncount + kcount;
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
@@ -220,6 +237,44 @@ public class MypageController {
 		model.addAttribute("location", "/mypage-2");
 		
 		return "/common/msg";
+	}
+	
+	@RequestMapping("/updateTNurseryAdmissionY")
+	public String updateTNurseryAdmissionY(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int no = Integer.parseInt(param.get("no"));
+		
+		int result = service.updateTNurseryAdmissionY(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "입소확정처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소확정처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-2");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/updateTNurseryAdmissionN")
+	public String updateTNurseryAdmissionN(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int no = Integer.parseInt(param.get("no"));
+		
+		int result = service.updateTNurseryAdmissionN(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "입소거절처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소거절처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-2");
+		
+		return "common/msg";
 	}
 		
 	@GetMapping("/mypage-3")
@@ -420,7 +475,7 @@ public class MypageController {
 		
 		System.out.println("tklist(불편사항) : " + tklist);
 		model.addAttribute("tklist", tklist);
-		model.addAttribute("tkpageInfo", tkpageInfo);
+		model.addAttribute("tkPageInfo", tkpageInfo);
 		
 		model.addAttribute("param", param);	
 		

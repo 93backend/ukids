@@ -25,8 +25,12 @@ public interface MypageMapper {
 	int deleteKAdmission(int no);
 	
 	List<NAdmission> selectNAdmissionList(Map<String, String> map);
+	List<NAdmission> selectTNAdmissionList(Map<String, String> map);
 	int selectNAdmissionCount(Map<String, String> map);
+	int selectTNAdmissionCount(Map<String, String> map);
 	int deleteNAdmission(int no);
+	int updateTNurseryAdmissionY(int no);
+	int updateTNurseryAdmissionN(int no);
 	
 	// mypage3 - 찜
 	List<Wish> selectNurseryWishList(Map<String, String> map);

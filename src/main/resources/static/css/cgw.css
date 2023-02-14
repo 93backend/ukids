@@ -308,6 +308,11 @@
     margin-right: 2rem !important;
     margin-left: 2rem !important;
   }
+  
+  .cgw32 {
+  	filter: blur(5px);
+    -webkit-filter: blur(5px);
+  }
 
   .btn-primary-cgw1 {
     color: rgb(255, 255, 255);
