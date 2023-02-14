@@ -173,6 +173,16 @@ body {
     object-fit: cover;
     border-radius: 50%;
 }
+#welfare .facility-name h3 {
+	width: 185px;
+	margin-top: 1rem;
+	margin-bottom: 0;
+	color: #fff;
+	text-align: center;
+	overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 
 /* 공지사항, 주요뉴스 */

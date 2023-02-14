@@ -23,6 +23,7 @@ import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.Nursery;
+import com.multi.ukids.playground.controller.PlaygroundController;
 import com.multi.ukids.playground.model.service.PlaygroundService;
 import com.multi.ukids.playground.model.vo.Playground;
 import com.multi.ukids.toy.model.service.ToyService;
@@ -31,10 +32,11 @@ import com.multi.ukids.welfare.model.service.WelfareService;
 import com.multi.ukids.welfare.model.vo.Welfare;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 
 
-
+@Slf4j
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -76,6 +78,7 @@ public class HomeController {
 			String[] addrArray = loginMember.getAddress().split(" ");
 			param.put("city", addrArray[0]);
 			param.put("town", addrArray[1]);
+			log.info(addrArray[0] + " " + addrArray[1]);
 		} 
 		else { // 기본값
 			param.put("city", "서울");

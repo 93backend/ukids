@@ -24,11 +24,17 @@ public class PlaygroundController {
 	@GetMapping("/playground")
 	public String playground(Model model, @RequestParam Map<String, String> param) {
 		List<Playground> list = playgroundService.getPlaygroundList(param);
+		Playground playground = new Playground();
+		if (param.containsKey("no")) {
+			playground = playgroundService.findByNo(Integer.parseInt(param.get("no")));
+		}
 		
 		model.addAttribute("list", list);
+		model.addAttribute("playground", playground);
 		
 		log.info(param.toString());
 		log.info("list : " + Integer.toString(list.size()));
+		log.info("playground : " + playground.toString());
 		
 		return "playground";
 	}

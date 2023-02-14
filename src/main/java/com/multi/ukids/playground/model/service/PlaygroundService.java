@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.multi.ukids.playground.model.mapper.PlaygroundMapper;
 import com.multi.ukids.playground.model.vo.Playground;
+import com.multi.ukids.welfare.model.vo.Welfare;
 
 @Service
 public class PlaygroundService {
@@ -20,6 +21,10 @@ public class PlaygroundService {
 	
 	public List<Playground> getPlaygroundList(Map<String, String> param) {
 		return mapper.selectPlaygroundList(param);
+	}
+	
+	public Playground findByNo(int no) {
+		return mapper.selectPlaygroundByNo(no);
 	}
 	
 }

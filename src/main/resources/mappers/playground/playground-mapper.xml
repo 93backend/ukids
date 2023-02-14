@@ -9,6 +9,7 @@
 			bName, tel, post, url, lat, lon, water, dc
 		FROM PLAYGROUND
 		WHERE 1 = 1
+			AND CHAR_LENGTH(SUBSTRING_INDEX(pgAddr1, ' ', 1)) &lt; 3
 		<if test="city != null">
 			AND pgAddr1 LIKE '%${city}%'
 		</if>
@@ -37,6 +38,14 @@
 			AND pgAddr1 LIKE '%${town}%'
 		</if>
 		ORDER BY divM DESC LIMIT 100 OFFSET 0
+	</select>
+	
+	<select id="selectPlaygroundByNo" resultType="Playground" parameterType="int">
+		SELECT
+			NO, pgid, divL, divM, pgName, pgAddr1, pgAddr2, 
+			bName, tel, post, url, lat, lon, water, dc
+		FROM PLAYGROUND
+		WHERE NO = #{NO}
 	</select>
 
 </mapper>
