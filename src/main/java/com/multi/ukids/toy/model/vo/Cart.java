@@ -20,4 +20,5 @@ public class Cart {
 	private String toyPay;
 	private int realPay;
 	private int date;
+	private String toyType;
 }

@@ -177,7 +177,7 @@
 								</li>
 								</th:block>
 								
-								<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
+								<th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
@@ -365,6 +365,7 @@
     	var obj_length = document.getElementsByName("toyCheck").length;
     	var checkedCartNo = [];
     	
+    	if(obj_length != 0) {
     	for (var i = 0; i < obj_length; i++) {
     		if (document.getElementsByName("toyCheck")[i].checked == true) {
     			checkedCartNo.push(document.getElementsByName("toyCheck")[i].value);
@@ -379,6 +380,9 @@
     		}
     	}
     	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
+    	} else {
+    		alert('상품을 선택해주세요!!');
+    	}
     }
     
     function deleteCart(no){
