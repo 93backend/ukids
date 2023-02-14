@@ -97,7 +97,7 @@
     <!-- 게시판-->
     <div class="container-sm ps-0 pe-0  rounded ">
       <div class="m-3 pt-3 pb-2 shadow-lg">
-        <form action="/update" method="post">
+        <form action="/community/update" method="post" enctype="multipart/form-data">
           <table class="table " style="border-color: white;">
             <thead>
               <tr>
@@ -135,7 +135,7 @@
             </thead>
           </table>
           <div class="container-sm text-center mb-4">
-            <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="등 록">
+            <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="수 정">
             <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" href="/community" role="button">목록으로</a>
           </div>
         </form>

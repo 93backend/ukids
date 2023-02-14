@@ -101,9 +101,12 @@
               <tr>
                 <th class="col2-1 align-middle text-center">구분</th>
                 <th class="col-5 text-center">
-                  <select class="form-select" id="select-input">
-                    <option>자유게시판</option>
-                    <option>공지사항</option>
+                  <select name="type"  class="form-select" id="select-input" th:if="${(session.loginMember.role =='admin')}">
+                    <option value="freeboard">자유게시판</option>
+                    <option value="notice">공지사항</option>
+                  </select>
+                  <select name="type"  class="form-select" id="select-input" th:if="${(session.loginMember.role != 'admin')}">
+                    <option value="freeboard">자유게시판</option>
                   </select>
                 </th>
               </tr>
