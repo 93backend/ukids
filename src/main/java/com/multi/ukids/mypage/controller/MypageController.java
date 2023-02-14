@@ -706,9 +706,10 @@ public class MypageController {
 	) {
 		int toyNo = Integer.parseInt(param.get("toyNo"));
 		
+		int result2 = service.updateToyType(toyNo);
 		int result = service.updateToyStatusN(toyNo);
 		
-		if(result > 0) {
+		if(result > 0 && result2 > 0) {
 			model.addAttribute("msg", "반납완료처리가 정상적으로 진행되었습니다.");
 		} else {
 			model.addAttribute("msg", "반납완료처리 진행에 실패하였습니다.");

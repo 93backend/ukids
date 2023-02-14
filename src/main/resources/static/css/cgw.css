@@ -282,12 +282,12 @@
   }
 
   .cgw28 {
-    width: 400px;
+    width: 280px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
     display: block;
-    padding-left: 4.5rem;
+    padding-left: 4rem;
   }
 
   .cgw29 {

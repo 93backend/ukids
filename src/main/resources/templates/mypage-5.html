@@ -204,6 +204,7 @@
                 <tr>
                   <th class="cgw8 cgw9">번호</th>
                   <th class="cgw8 cgw9">제목</th>
+                  <th class="cgw8 cgw9">유형</th>
                   <th class="cgw8 cgw9">작성일</th>
                   <th class="cgw8 cgw9"></th>
                 </tr>
@@ -216,13 +217,21 @@
 				</th:block>
 				<th:block th:if="${list.size != 0}">
                 <tr th:each="board, stat : ${list}">
-                  <td class="py-3 cgw9">[[${board.boardNo}]]</td>
+                  <td class="py-3 cgw9" th:text="|${stat.count}|"></td>
                   <td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw28"
-                      th:onclick="boardView([[${board.boardNo}]]);">[[${board.title}]]</a></td>
+                      th:href="@{|/community/view-community?no=${board.boardNo}&type=${board.type}|}">[[${board.title}]]</a>
+                  </td>
+                  <th:block th:if="${board.type == 'freeboard'}">
+                  <td class="py-3 cgw9">자유게시판</td>
+                  </th:block>
+                  <th:block th:if="${board.type == 'notice'}">
+                  <td class="py-3 cgw9">공지사항</td>
+                  </th:block>
                   <td class="py-3 cgw9" th:text="${#dates.format(board.createDate, 'yyyy-MM-dd')}"></td>
                   <td class="py-3 cgw9">
-                  		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="boardUpdate([[${board.boardNo}]]);">수정</button>&nbsp;&nbsp;
-                        <button type="button" class="badge bg-secondary m-0 cgw30" th:onclick="boardDelete([[${board.boardNo}]]);">삭제</button></td>
+                  		<button type="button" class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="boardUpdate([[${board.boardNo}]], [[${board.type}]]);">수정</button>&nbsp;&nbsp;
+                        <button type="button" class="badge bg-secondary m-0 cgw30" th:onclick="boardDelete([[${board.boardNo}]]);">삭제</button>
+                   </td>
                 </tr>
                 </th:block>
               </tbody>
@@ -287,8 +296,8 @@
 			location.href = "/board-view?&boardNo=" + boardNo;
 		}
 		
-		function boardUpdate(boardNo) {
-			location.href = "/board-update?" + "&boardNo=" + boardNo;
+		function boardUpdate(boardNo, boardType) {
+			location.href = "/community/update?no=" + boardNo + "&type=" + boardType;
 		}
 		
 		function boardDelete(boardNo) {

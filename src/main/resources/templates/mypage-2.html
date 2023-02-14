@@ -229,7 +229,7 @@
 										</th:block>
 									</td>
 								</tr>
-								<div id="nAdmissionListContent"></div>
+								
 								</th:block>
 							</tbody>
 						</table>
@@ -239,7 +239,6 @@
 						<script type="text/javascript">
 						
 						function getNAdmissionList(){
-
 							  var startNum = $("#nListBody tr").length
 							  var limit = 4;
 							  var addListHtml="";
@@ -251,10 +250,12 @@
 							    dataType:'json',
 							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
 							    success : function(data) {
+						            alert('ttt');
+
 							    	if(data.code==1){
 							            var nAdmission = data.nlist;
-							            var timehtml = "";
-
+							            var timehtml = $("#nListBody").html();
+										
 							            var max = nAdmission.length-startNum;
 							            var min = max-limit;
 							            if(min<=0){
@@ -262,6 +263,7 @@
 							              $("#addBtn").hide();
 							            }
 							            var i = 1;
+							            alert('ttt');
 					
 							            //alert("nAdmission.length: "+nAdmission.length+" /max :"+max+" /min: "+ min);
 
@@ -294,6 +296,8 @@
 							            }//for
 							            i = 0;
 							            alert("result : " + timehtml);
+							            $("#nListBody").html(timehtml);
+							            
 							        }else{
 							          alert(data.code);
 							        }
