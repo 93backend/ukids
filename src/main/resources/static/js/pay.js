@@ -54,8 +54,11 @@ $(document).ready(function() {
     var result = $('#validationCustom03 option:selected').val();
     if (result == '1') {
       $('.memo').show();
-    } else {
+    } else if(result == $('.memo').val()){
+	  $('.memo').show();
+	}else{
       $('.memo').hide();
+		
     }
   }); 
 }); 
