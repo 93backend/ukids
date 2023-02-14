@@ -13,6 +13,7 @@ public class Claim {
 	private int no;
 	private int knNo;
 	private int memberNo;
+	private String knName;
 	private String id;
 	private String title;
 	private String content;
