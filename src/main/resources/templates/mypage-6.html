@@ -422,70 +422,139 @@
 
 </html>
 <script type="text/javascript" th:inline="javascript">
-	
+if(/*[[${session.loginMember.role != 'ROLE_ADMIN'}]]*/{} == true){
 	//페이징
-var payList =  /*[[${paylist}]]*/{};
-console.log(payList);
-var totalCount = 0;
-for(var i=0; i<payList.length; i++){
-	totalCount += Number($('#cntToyPay'+i).val());
-}
-var currentPage = 1;
-
-$(document).ready(function(){
-	var tag = "";
-	if(totalCount <=6){
-		tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
-
-	}else{
-		console.log(totalCount/6);
-		for(i=1; i<(totalCount/6)+1; i++){
-			if(i==currentPage){
-				tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
-			}else{
-				tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+	var payList =  /*[[${paylist}]]*/{};
+	console.log(payList);
+	var totalCount = 0;
+	for(var i=0; i<payList.length; i++){
+		totalCount += Number($('#cntToyPay'+i).val());
+	}
+	var currentPage = 1;
+	
+	$(document).ready(function(){
+		var tag = "";
+		if(totalCount <=6){
+			tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
+	
+		}else{
+			console.log(totalCount/6);
+			for(i=1; i<(totalCount/6)+1; i++){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}
+				
 			}
-			
+		}
+		
+		$("#innerTable").append(tag);
+	});
+	
+	
+	function movePage(page){
+		
+		$("#innerTable").empty();
+		currentPage = page;
+		var offset = (currentPage * 6)-5;
+		console.log(offset);
+		var tag = "";
+		for(i=1; i<(totalCount/6)+1; i++){
+			if(i<=5){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}	
+			}
+		}
+		$("#innerTable").append(tag);
+		
+	
+		$('.tr').attr('class','tr hidden');
+		for(var i=offset; i<=offset+5; i++){
+			$('#forPaging'+i).removeClass('hidden')
 		}
 	}
 	
-	$("#innerTable").append(tag);
-});
-
-
-function movePage(page){
-	
-	$("#innerTable").empty();
-	currentPage = page;
 	var offset = (currentPage * 6)-5;
-	console.log(offset);
-	var tag = "";
-	for(i=1; i<(totalCount/6)+1; i++){
-		if(i<=5){
-			if(i==currentPage){
-				tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
-			}else{
-				tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
-			}	
-		}
-	}
-	$("#innerTable").append(tag);
 	
-
 	$('.tr').attr('class','tr hidden');
-	for(var i=offset; i<=offset+5; i++){
+	for(var i=1; i<=offset+5; i++){
 		$('#forPaging'+i).removeClass('hidden')
 	}
-}
 
-var offset = (currentPage * 6)-5;
 
-$('.tr').attr('class','tr hidden');
-for(var i=1; i<=offset+5; i++){
-	$('#forPaging'+i).removeClass('hidden')
-}
+}else{
+//어드민 페이징
 
+	var adminList =  /*[[${adminlist}]]*/{};
+	console.log(adminList);
+	var totalCount = 0;
+	for(var i=0; i<adminList.length; i++){
+		totalCount += Number($('#cntToyPay'+i).val());
+	}
+	var currentPage = 1;
 	
+	$(document).ready(function(){
+		var tag = "";
+		if(totalCount <=6){
+			tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">'+1+'</span></li>';
+	
+		}else{
+			console.log(totalCount/6);
+			for(i=1; i<(totalCount/6)+1; i++){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}
+				
+			}
+		}
+		
+		$("#innerTable").append(tag);
+	});
+	
+	
+	function movePage(page){
+		
+		$("#innerTable").empty();
+		currentPage = page;
+		var offset = (currentPage * 6)-5;
+		console.log(offset);
+		var tag = "";
+		for(i=1; i<(totalCount/6)+1; i++){
+			if(i<=5){
+				if(i==currentPage){
+					tag += '<li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link" onclick="movePage('+i+')">'+i+'</span></li>';
+				}else{
+					tag += '<li class="page-item d-none d-sm-block"><a class="page-link" href="#" onclick="movePage('+i+')">'+i+'</a></li>';
+				}	
+			}
+		}
+		$("#innerTable").append(tag);
+		
+	
+		$('.tr').attr('class','tr hidden');
+		for(var i=offset; i<=offset+5; i++){
+			$('#forPaging'+i).removeClass('hidden')
+		}
+		
+	}
+	
+	var offset = (currentPage * 6)-5;
+	
+	$('.tr').attr('class','tr hidden');
+	for(var i=1; i<=offset+5; i++){
+		$('#forPaging'+i).removeClass('hidden')
+	}
+	
+}
+
+
+
 <!--------------------------------------------------------------------- -->
 	
 	
