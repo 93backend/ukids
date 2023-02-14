@@ -185,21 +185,21 @@
 	                  <td class="py-3 cgw9 cgw22">[[${pay.price}]]</td>
 	                  <td class="py-3 cgw9 cgw22">
 		     		  
-		     		   <th:block th:if="${pay.status == 'Y'}">
+		     		   <th:block th:if="${toyEach.status == 'Y'}">
 	                    <div class="">대여중</div>
 	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">반납하기</button>
 	                  </th:block>
-	                  <th:block th:if="${pay.status == 'A'}">
+	                  <th:block th:if="${toyEach.status == 'A'}">
 	                    <div class="">주문완료</div>
 	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">대여취소</button>
 	                  </th:block>
-	                  <th:block th:if="${pay.status == 'N'}">
+	                  <th:block th:if="${toyEach.status == 'N'}">
 	                    <div class="">반납완료</div>
 	                  </th:block>
-	                  <th:block th:if="${pay.status == 'R'}">
+	                  <th:block th:if="${toyEach.status == 'R'}">
 	                    <div class="">반납중</div>
 	                  </th:block>
-	                  <th:block th:if="${pay.status == 'T'}">
+	                  <th:block th:if="${toyEach.status == 'T'}">
 	                    <div class="">배송중</div>
 	                  </th:block>
 		     		  
