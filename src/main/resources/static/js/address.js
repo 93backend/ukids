@@ -101,11 +101,11 @@ function cityChange() {
         town_list = daejeon;
     } else if(selected_city == '울산') {
         town_list = ulsan;
-    } else if(selected_city == '세종특별') {
+    } else if(selected_city == '세종특별' || selected_city == '세종') {
         town_list = sejong;
-    } else if(selected_city == '경기도') {
+    } else if(selected_city == '경기도' || selected_city == '경기') {
         town_list = gyeonggi;
-    } else if(selected_city == '강원도') {
+    } else if(selected_city == '강원도' || selected_city == '강원') {
         town_list = gangwon;
     } else if(selected_city == '충청북도') {
         town_list = chungbuk;

@@ -12,5 +12,4 @@ import com.multi.ukids.welfare.model.vo.Welfare;
 public interface PlaygroundMapper {
 	List<Playground> selectMainPlaygroundList(Map<String, Object> map);
 	List<Playground> selectPlaygroundList(Map<String, String> map);
-	Playground selectPlaygroundByNo(int no);
 }

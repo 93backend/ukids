@@ -23,8 +23,4 @@ public class PlaygroundService {
 		return mapper.selectPlaygroundList(param);
 	}
 	
-	public Playground findByNo(int no) {
-		return mapper.selectPlaygroundByNo(no);
-	}
-	
 }
