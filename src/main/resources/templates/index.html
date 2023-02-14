@@ -279,12 +279,13 @@
 	                      <div class="card product-card-alt">
 	                        <div class="product-thumb border border-5">
 	                          <div class="product-card-actions">
-	                          	<a class="btn btn-light btn-icon btn-shadow fs-base mx-2" th:href="@{/playground}"><i class="ci-add me-2"></i>더 보기</a>
+	                          	<a class="btn btn-light btn-icon btn-shadow fs-base mx-2" th:href="@{|/playground?type=${pg.divM}&city=${#strings.arraySplit(pg.pgAddr1, ' ')[0]}&town=${#strings.arraySplit(pg.pgAddr1, ' ')[1]}&searchValue=${pg.pgName}|}"><i class="ci-add me-2"></i>더 보기</a>
 	                          </div>
-	                          <a class="product-thumb-overlay" th:href="@{/playground}"></a>
+	                          <a class="product-thumb-overlay" th:href="@{|/playground?type=${pg.divM}&city=${#strings.arraySplit(pg.pgAddr1, ' ')[0]}&town=${#strings.arraySplit(pg.pgAddr1, ' ')[1]}&searchValue=${pg.pgName}|}"></a>
 	                          <img th:src="|img/ukids/facility/playground/pg${imgIdx[status.index]}.png|" alt="Playground">
 	                        </div>
 	                      </div>
+	                      <a class="facility-name" th:href="@{|/playground?type=${pg.divM}&city=${#strings.arraySplit(pg.pgAddr1, ' ')[0]}&town=${#strings.arraySplit(pg.pgAddr1, ' ')[1]}&searchValue=${pg.pgName}|}"><h3 class="h6">[[${pg.pgName}]]</h3></a>
 	                    </div>
                     </th:block>
                   </div>
@@ -317,6 +318,7 @@
 	                          <img th:src="|img/ukids/facility/welfare/wf${imgIdx[status.index]}.jpg|" alt="Welfare">
 	                        </div>
 	                      </div>
+	                      <a class="facility-name" th:href="@{|/welfare-detail?no=${wf.cwNo}&img=${imgIdx[status.index]}|}"><h3 class="h6">[[${wf.fcltNm}]]</h3></a>
 	                    </div>
                     </th:block> 
                   </div>
@@ -349,6 +351,7 @@
 	                          <img th:src="|img/ukids/facility/hospital/hp${imgIdx[status.index]}.jpg|" alt="Hospital">
 	                        </div>
 	                      </div>
+	                      <a class="facility-name" th:href="@{|/hospital-detail?no=${hp.no}&img=${imgIdx[status.index]}&type=hp|}"><h3 class="h6">[[${hp.hpName}]]</h3></a>
 	                    </div>
                   	</th:block>
                   </div>
@@ -1087,6 +1090,12 @@
 			sidebar.innerHTML = '';
 			showList.forEach(setSidebar);
 		});
+		
+		
+		//아동관련시설
+		function createParam() {
+			return "param";
+		}
     
     </script>
   </body>
