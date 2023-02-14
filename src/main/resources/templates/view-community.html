@@ -95,6 +95,7 @@
         			<div class="p-3">
         				<div class="mt-3 mb-3">
                   			<h3>[[${board.title}]]</h3>
+                  			<div th:text="${board.id}"></div>
                 		</div>
                 		<span class="mamamoo">조회</span><span class="ms-1 me-1">[[${board.readcount}]]</span>
                 		<span class="ms-2">[[${#dates.format(board.createDate ,'yyyy/MM/dd')}]]</span>
@@ -127,25 +128,14 @@
         		<div class="mt-2 box4">
         			<div>[[${board.content}]]</div>
         		</div>
-        		<div class="text-end mt-3" th:if="${(session.loginMember.role == 'ROLE_ADMIN')}">
+        		<div class="text-end mt-3" th:if="${session.loginMember != null&&(session.loginMember.id == board.id)}">
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
-        		<!--  <div class="text-end mt-3" th:if="${type='notice'}">
-        			<div th:if="${session.loginMember.role != null}">
-        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
-        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
-        				<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
-        			</div>
+        		<div class="text-end mt-3">
+        			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
-        		<div class="text-end mt-3" th:if="${type='freeboard'}">
-        			<div th:if="${session.loginMember != null}">
-        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
-        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
-        				<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
-        			</div>
-        		</div>-->
         		<br>
         		<div class="container-sm mt-3 mb-2">
         			<table>
@@ -171,7 +161,7 @@
           	</form>
             <br>
             <div style="text-align: center" >
-            	<a class="bbtn2 btn-outline-ppink " href="/community/freeboard">글목록</a>
+            	<a class="bbtn2 btn-outline-ppink " th:href="|/community/${type}|">글목록</a>
             </div>
             <br>
     	</div>
