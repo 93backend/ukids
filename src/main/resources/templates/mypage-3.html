@@ -105,6 +105,7 @@
 								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
 							</div>
 							<ul class="list-unstyled mb-0">
+				<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
@@ -131,6 +132,61 @@
                       class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
                   </div>
                 </li>
+                </th:block>
+                
+                <th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                </th:block>
+                
+                <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-heart opacity-60 me-2"></i>찜<span
+                      class="fs-sm text-muted ms-auto"></span></div>
+                </li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                </th:block>
               </ul>
 						</div>
 					</div>

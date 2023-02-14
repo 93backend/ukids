@@ -90,6 +90,7 @@ public class BoardService {
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteBoard(int no, String rootPath) {
 		Board board = mapper.selectBoardByNo(no);
+		System.out.println(board);
 		deleteFile(rootPath + "\\" + board.getRenamedFileName());
 		return mapper.deleteBoard(no);
 	}

@@ -110,6 +110,8 @@ public class MypageController {
 		model.addAttribute("cartCount", cartCount);
 		
 		
+		
+		
 		return "mypage";
 	}
 	
@@ -369,12 +371,20 @@ public class MypageController {
 		
 		int nPage = 1;
 		int kPage = 1;
+		int tnPage = 1;
+		int tkPage = 1;
 		
 		try {
 			nPage = Integer.parseInt(param.get("nPage"));
 		} catch (Exception e) {}
 		try {
 			kPage = Integer.parseInt(param.get("kPage"));
+		} catch (Exception e) {}
+		try {
+			tnPage = Integer.parseInt(param.get("tnPage"));
+		} catch (Exception e) {}
+		try {
+			tkPage = Integer.parseInt(param.get("tkPage"));
 		} catch (Exception e) {}
 		
 		// nursery
@@ -393,6 +403,25 @@ public class MypageController {
 //		System.out.println("klist(불편사항) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
+		
+		// nursery-teacher
+		int tncount = service.getTNurseryClaimCount(param);
+		PageInfo tnpageInfo = new PageInfo(tnPage, 5, tncount, 8);
+		List<Claim> tnlist = service.getTNurseryClaimList(tnpageInfo, param);
+		
+		System.out.println("tnlist(불편사항) : " + tnlist);
+		model.addAttribute("tnlist", tnlist);
+		model.addAttribute("tnPageInfo", tnpageInfo);
+		
+		// kinder-teacher
+		int tkcount = service.getTKinderClaimCount(param);
+		PageInfo tkpageInfo = new PageInfo(tkPage, 5, tkcount, 8);
+		List<Claim> tklist = service.getTKinderClaimList(tkpageInfo, param);
+		
+		System.out.println("tklist(불편사항) : " + tklist);
+		model.addAttribute("tklist", tklist);
+		model.addAttribute("tkpageInfo", tkpageInfo);
+		
 		model.addAttribute("param", param);	
 		
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
@@ -435,6 +464,44 @@ public class MypageController {
 		model.addAttribute("location", "/mypage-4");
 		
 		return "common/msg";
+	}
+	
+	@RequestMapping("/updateTNurseryWish")
+	public String tnclaimUpdate(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int no
+			) {
+		log.info("claim 확인");
+		
+		int result = service.updateTNurseryClaim(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "해당 불편사항이 확인 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "해당 불편사항이 확인에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-4");
+		
+		return "/common/msg";
+	}
+	
+	@RequestMapping("/updateTKinderClaim")
+	public String tkclaimUpdate(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int no
+			) {
+		log.info("claim 확인");
+		
+		int result = service.updateTKinderClaim(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "해당 불편사항이 확인 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "해당 불편사항이 확인에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-4");
+		
+		return "/common/msg";
 	}
 	
 	@GetMapping("/mypage-5")
@@ -528,6 +595,9 @@ public class MypageController {
 	    log.info("sssssssssssssssssss" + palist);	      
 	    model.addAttribute("paylist", palist);
 	    
+	    List<Pay> adminlist = service.getRentalList3();
+	    model.addAttribute("adminlist", adminlist);
+	    System.out.println(adminlist);
 	    
 //		int page = 1;
 //		try {
@@ -577,9 +647,9 @@ public class MypageController {
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, String> param
 	) {
-		int payNo = Integer.parseInt(param.get("payNo"));
+		int toyNo = Integer.parseInt(param.get("toyNo"));
 		
-		int result = service.updateRental(payNo);
+		int result = service.updateRental(toyNo);
 		
 		if(result > 0) {
 			model.addAttribute("msg", "반납처리가 정상적으로 진행되었습니다.");
@@ -591,16 +661,72 @@ public class MypageController {
 		return "common/msg";
 	}
 	
+	@RequestMapping("/mypage-status-t")
+	public String updateToyStatusT(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int toyNo = Integer.parseInt(param.get("toyNo"));
+		
+		int result = service.updateToyStatusT(toyNo);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "배송중처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "배송중처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-6");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/mypage-status-y")
+	public String updateToyStatusY(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int toyNo = Integer.parseInt(param.get("toyNo"));
+		
+		int result = service.updateToyStatusY(toyNo);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "대여중처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "대여중처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-6");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/mypage-status-n")
+	public String updateToyStatusN(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int toyNo = Integer.parseInt(param.get("toyNo"));
+		
+		int result = service.updateToyStatusN(toyNo);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "반납완료처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "반납완료처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-6");
+		
+		return "common/msg";
+	}
+	
 	@RequestMapping("/mypage-rental-delete")
 	public String rentalDelete(Model model,  HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@RequestParam Map<String, String> param
 	) {
-		int payNo = Integer.parseInt(param.get("payNo"));
 		int toyNo = Integer.parseInt(param.get("toyNo"));
 		
-		int result = service.deleteRental(payNo);
-		int result2 = service.updateToyType(toyNo);
+		int result = service.updateToyType(toyNo);
+		int result2 = service.updateToyStatus(toyNo);
 		
 		if(result > 0 && result2 > 0) {
 			model.addAttribute("msg", "대여가 취소 되었습니다.");

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>UKIDS | 자유게시판</title>
+    <title>UKIDS | 커뮤니티</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -54,9 +54,12 @@
           </div>
           <div class="row justify-content-center pt-4 pb-4">
             <div class="col-lg-8">
-              <h1 class="text-light text-center">자유게시판</h1>
-             
-              
+            	<th:block th:if="${type == 'freeboard'}">
+	              <h1 class="text-light text-center">자유게시판</h1>
+            	</th:block>            	
+            	<th:block th:if="${type == 'notice'}">
+	              <h1 class="text-light text-center">공지사항</h1>
+            	</th:block>
             </div>
           </div>
         </div>
@@ -72,8 +75,15 @@
       <div class="container py-3 ">
         <div class="row justify-content-center">
           <div class="col-xl-7 col-lg-8 col-md-10 text-center">
-        <a class="bbtn2 btn-outline-ppink d-inline-block me-2 mb-3" href="/community/notice" >공지사항</a>
-        <a class="btn bbtn3 bbtn-primary d-inline-block ms-2 mb-3" href="/community/freeboard" >자유게시판</a>
+          
+          <th:block th:if="${type == 'freeboard'}">
+		        <a class="bbtn2 btn-outline-ppink d-inline-block me-2 mb-3" href="/community/notice" >공지사항</a>
+		        <a class="btn bbtn3 bbtn-primary d-inline-block ms-2 mb-3" href="/community/freeboard" >자유게시판</a>
+          </th:block>            	
+           	<th:block th:if="${type == 'notice'}">
+		        <a class="btn bbtn3 bbtn-primary d-inline-block ms-2 mb-3" href="/community/notice" >공지사항</a>
+		        <a class="bbtn2 btn-outline-ppink d-inline-block me-2 mb-3" href="/community/freeboard" >자유게시판</a>
+           	</th:block>
       </div>
       </div>
     </div>
@@ -117,7 +127,7 @@
     		<th th:text="${board.boardNo}" style="text-align: center"></th>
     		<th scope=""  class="text-center"></th>
     		<td>
-    			<a th:href="|/community/view-community?no=${board.boardNo}|" style="color: black;">
+    			<a th:href="|/community/view-community?no=${board.boardNo}&type=${type}|" style="color: black;">
     				[[${board.title}]]		
     			</a>
     		</td>    		

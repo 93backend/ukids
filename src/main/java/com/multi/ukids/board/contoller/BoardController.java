@@ -44,11 +44,17 @@ public class BoardController {
 	
 	final static private String savePath = "c:\\bbs\\";
 	
+	@GetMapping("/each")
+	public String each(Model model, String type, Map<String, String> paramMap) {
+		list(model, type, paramMap);
+		return "basic/each";
+	}
+	
 	@GetMapping("/community/{type}")
 	public String list(Model model,
 			@PathVariable("type") String type,
 			@RequestParam Map<String, String> paramMap) {
-		System.out.println("type : " + type);
+		
 		int page = 1;
 
 		// 탐색할 맵을 선언
@@ -61,6 +67,7 @@ public class BoardController {
 			}else {
 				paramMap.put("searchType", "all");
 			}
+			searchMap.put("type", type);
 			page = Integer.parseInt(paramMap.get("page"));
 		} catch (Exception e) {}
 		
@@ -69,6 +76,7 @@ public class BoardController {
 		List<Board> list = service.getBoardList(pageInfo, searchMap);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("type", type);
 		model.addAttribute("paramMap", paramMap);
 		model.addAttribute("pageInfo", pageInfo);
 		
@@ -78,11 +86,12 @@ public class BoardController {
 	
 //	@RequestMapping("/board/view")
 	@GetMapping("/community/view-community")
-	public String view(Model model, @RequestParam("no") int no) {
+	public String view(Model model, @RequestParam("no") int no, @RequestParam("type") String type) {
 		Board board = service.findByNo(no);
 		if(board == null) {
 			return "redirect:error";
 		}
+		model.addAttribute("type", type);
 		model.addAttribute("board", board);
 		model.addAttribute("replyList", board.getReplies());
 		return "view-community";
@@ -103,9 +112,10 @@ public class BoardController {
 	public String writeBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Board board,
+			@RequestParam Map<String, String> param,
 			@RequestParam("upfile") MultipartFile upfile
 			) {
-		
+		String type = param.get("type");
 		board.setMemberNo(loginMember.getMemberNo());
 		board.setId(loginMember.getId());
 		
@@ -123,12 +133,24 @@ public class BoardController {
 		int result = service.saveBoard(board);
 
 		if(result > 0) {
-			model.addAttribute("msg", "게시글이 등록 되었습니다.");
-			model.addAttribute("location", "/community/freeboard");
-		}else {
-			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
-			model.addAttribute("location", "/community/freeboard");
+			if(type.equals("freeboard")) {
+				model.addAttribute("msg", "게시글이 등록 되었습니다.");
+				model.addAttribute("location", "/community/freeboard");
+			} else if(type.equals("notice")) {
+				model.addAttribute("msg", "게시글이 등록 되었습니다.");
+				model.addAttribute("location", "/community/notice");
+			}
+		} else {
+			if(type.equals("freeboard")) {
+				model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+				model.addAttribute("location", "/community/freeboard");
+			} else if(type.equals("notice")) {
+				model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
+				model.addAttribute("location", "/community/notice");
+			}
 		}
+		
+		model.addAttribute("type", type);
 		
 		return "common/msg";
 	}
@@ -155,17 +177,28 @@ public class BoardController {
 	@RequestMapping("/community/delete")
 	public String deleteBoard(Model model,  HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			int boardNo
+			int boardNo,
+			@RequestParam Map<String, String> param
 			) {
-
+		String type = param.get("type");
 		int result = service.deleteBoard(boardNo, savePath);
+	
+		
+		if(type.equals("freeboard")) {
+			model.addAttribute("location", "/community/freeboard?type=freeboard");
+		} else {
+			model.addAttribute("location", "/community/notice?type=notice");
+		}
 		
 		if(result > 0) {
 			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
 		}else {
 			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
-		model.addAttribute("location", "community");
+//		
+//		model.addAttribute("location", "/community/freeboard?type=freeboard");
+//		model.addAttribute("location", "/community/notice?type=notice");
+		
 		return "common/msg";
 	}
 //	
@@ -190,9 +223,11 @@ public class BoardController {
 	@GetMapping("/community/update")
 	public String updateView(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@RequestParam("no") int no
+			@RequestParam("no") int no, @RequestParam Map<String, String> param
 			) {
+		String type = param.get("type");
 		Board board = service.findByNo(no);
+		
 		model.addAttribute("board",board);
 		return "update";
 	}
@@ -202,8 +237,16 @@ public class BoardController {
 	public String updateBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
 			@ModelAttribute Board board,
-			@RequestParam("reloadFile") MultipartFile reloadFile
+			@RequestParam Map<String, String> param,
+			@RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
 			) {
+		String type = param.get("type");
+		
+		if(type.equals("freeboard")) {
+			model.addAttribute("location", "/community/freeboard?type=freeboard");
+		} else {
+			model.addAttribute("location", "/community/notice?type=notice");
+		}
 		
 		board.setMemberNo(loginMember.getMemberNo());
 		
@@ -223,13 +266,17 @@ public class BoardController {
 		}
 
 		int result = service.saveBoard(board);
-
+		
+		if(type.equals("freeboard")) {
+			model.addAttribute("location", "/community/freeboard?type=freeboard");
+		} else {
+			model.addAttribute("location", "/community/notice?type=notice");
+		}
+		
 		if(result > 0) {
-			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-			model.addAttribute("location", "/community/freeboard");
+			model.addAttribute("msg", "게시글 수정이 정상적으로 완료되었습니다.");
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-			model.addAttribute("location", "/community/freeboard");
 		}
 		
 		return "common/msg";
