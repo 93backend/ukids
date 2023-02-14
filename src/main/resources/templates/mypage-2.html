@@ -97,6 +97,7 @@
 								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
 							</div>
 							<ul class="list-unstyled mb-0">
+				 <th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
                 <li class="border-bottom mb-0">
@@ -123,6 +124,56 @@
                       class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
                   </div>
                 </li>
+                 </th:block>
+				 <th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto">]</span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                 </th:block>
+                  <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                <li class="border-bottom mb-0">
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>입소 신청
+                    조회<span class="fs-sm text-muted ms-auto"></span></div>
+                </li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                 </th:block>
               </ul>
 						</div>
 					</div>
@@ -138,7 +189,7 @@
 					<div class="table-responsive fs-md mb-4">
 						<h5 class="v-line ps-2">어린이집 입소 신청 목록</h5>
 						<br>
-						<table class="table table-hover mb-0">
+						<table class="table table-hover mb-0" id="addNList">
 							<thead>
 								<tr>
 									<th class="cgw8 cgw9">번호</th>
@@ -148,7 +199,7 @@
 									<th class="cgw8 cgw9">신청 상태</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="nListBody">
 								<th:block th:if="${nlist.size == 0}">
 									<tr>
 										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
@@ -184,64 +235,65 @@
 						</table>
 					</div>
 					<div class="text-end">
-						<button class="btn btn-primary-cgw2" data-bs-toggle="modal"
-							 onclick="getNAdmissionList()">더보기</button>
+						<button class="btn btn-primary-cgw2" onclick="getNAdmissionList()" id="addBtn">더보기</button>
 						<script type="text/javascript">
+						
 						function getNAdmissionList(){
-							  id = $('#timeline_moimId').val();
 
-							  var callLength = $('.postHeader').length; //시작 인덱스
-							  var limit = 3; // 더보기 누를때마다 나타낼 카드수
+							  var startNum = $("#nListBody tr").length
+							  var limit = 4;
+							  var addListHtml="";
+							  console.log("startNum", startNum);
 
 							  $.ajax({
-							    url: '/moimDetail/moimTodoList/boardTimelineMore/'+id,
+							    url: "/mypage-2",
 							    contentType: "application/json; charset=utf-8",
 							    dataType:'json',
 							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
-							    success:function(data){
-							      	if(data.code==1){
-							            var board = data.boardList;
-							            var planTitle = data.planTitle
+							    success : function(data) {
+							    	if(data.code==1){
+							            var nAdmission = data.nlist;
 							            var timehtml = "";
 
-							            var max = board.length-callLength;
+							            var max = nAdmission.length-startNum;
 							            var min = max-limit;
 							            if(min<=0){
 							              min= 0;
-							              $("#moreBtn").hide();
-							              $("#endMark").show();
+							              $("#addBtn").hide();
 							            }
-
-							            //alert("board.length: "+board.length+" /max :"+max+" /min: "+ min);
+							            var i = 1;
+					
+							            //alert("nAdmission.length: "+nAdmission.length+" /max :"+max+" /min: "+ min);
 
 							            for(var i=max-1; i>=min; i--){
-							                  timehtml+="<div class='card gedf-card postCard' style='width: 950px; height: auto;'>";
-							                  timehtml+='<div class="card-header postHeader">'
-							                  timehtml+='<div class="d-flex justify-content-between align-items-center">'
-							                  timehtml+='<div class="d-flex justify-content-between align-items-center">'
-							                  timehtml+='<div class="mr-2">'
-							                  timehtml+='<img class="rounded-circle" width="45" src="https://picsum.photos/50/50">'
-							                  timehtml+='</div>'
-							                  timehtml+='<div class="ml-2">'
-							                  timehtml+='<div class="h5 m-0">'+board[i].people.name+'</div>'
-							                  timehtml+='<div class="h7 text-muted">Miracles Lee Cross</div>'
-							                  timehtml+='</div>'
-							                  timehtml+='</div>'
-							                  timehtml+='</div>'
-							                  timehtml+='</div>'
-							                  timehtml+='<div class="card-body">'
-							                  timehtml+='<div class="text-muted h7 mb-2"><i class="fa fa-clock-o"></i>'+board[i].createDate+'</div>'
-							                  timehtml+='<a class="card-link" href="#">'
-							                  timehtml+='<h5 class="card-title">'+board[i].toDoWriteList.toDoWrite.plan_title+'</h5>'
-							                  timehtml+='<h6 class="card-title">'+board[i].title+'</h6></a>'
-							                  timehtml+='<p class="card-text">'+board[i].memo+'</p></div>'
-							                  timehtml+='<div class="card-footer"><a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a><a href="#" class="card-link">'
-							                  timehtml+='<i class="fa fa-mail-forward"></i> Share</a></div>'
-							                  timehtml+='<input type="hidden" id="timeline_moimId" th:value="'+board[i].moim.id+'"/>'
-							                  timehtml+='</div>'
+							                  timehtml+="<td class='py-3 cgw9' th:text='|" + i + "|''></td>";
+							                  timehtml+='<td class="py-3 cgw9">'
+							                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" th:href="@{|/nursery-detail?&no=' + nAdmission[i].nuNo + '&i=' + i + '|}">' + nAdmission[i].crName + '</a>'
+							                  timehtml+='</td>'
+							                  timehtml+='<td class="py-3 cgw9" th:text="' + nAdmission[i].enrollDate + '"></td>'
+							                  timehtml+='<td class="py-3 cgw9" th:text="' + nAdmission[i].hopeDate + '"></td>'
+							                  timehtml+='<td class="py-3 cgw9">'
+							                  if (nAdmission[i].status == 'Y') {
+							                	  timehtml+='<span class="badge bg-success m-0">입소확정</span>'
+							                  } else if (nAdmission[i].status == 'N') {
+							                	  timehtml+='<span class="badge bg-danger m-0">신청실패</span>'
+							                  } else if (nAdmission[i].status == 'W') {
+							                	  timehtml+='<span class="badge bg-info m-0">대기중</span>'
+							                  }
+							                  timehtml+='</td>'
+							                  timehtml+='<td class="py-3 cgw9">'
+							                  if (nAdmission[i].status != 'Y') {
+							                	  timehtml+='<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteNAdmission(' + nAdmission[i].no + ');">'
+								                  timehtml+='<span>입소신청취소</span>'
+								                  timehtml+='</button>'
+							                  } else if (nAdmission[i].status == 'Y') {
+							                	  timehtml+='<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>'
+							                  }
+							                  timehtml+='</td>'
+							                  i++;
 							            }//for
+							            i = 0;
 							            alert("result : " + timehtml);
-							            $("#postWrapper .postCard:last").after(timehtml);
 							        }else{
 							          alert(data.code);
 							        }

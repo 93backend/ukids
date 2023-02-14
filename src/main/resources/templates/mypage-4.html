@@ -105,6 +105,7 @@
 								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
 							</div>
 							<ul class="list-unstyled mb-0">
+				<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
@@ -131,6 +132,60 @@
                       class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
                   </div>
                 </li>
+                </th:block>
+				<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+				 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                    <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고
+                    조회<span class="fs-sm text-muted ms-auto"></span></div>
+                </li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                </th:block>
+                <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고
+                    조회<span class="fs-sm text-muted ms-auto"></span></div>
+                </li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가 쓴 게시글<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
+                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+                      class="fs-sm text-muted ms-auto"></span></a></li>
+                <li class="border-bottom mb-0">
+                  <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
+                      class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
+                  </div>
+                </li>
+                </th:block>
               </ul>
 						</div>
 					</div>
@@ -143,6 +198,7 @@
 						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">불편사항 신고 조회</h6>
 					</div>
 					<!-- 어린이집 불편사항신고조회 목록-->
+					<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 					<div class="table-responsive fs-md mb-4">
 					<h5 class="v-line ps-2">어린이집 불편사항 신고 조회 목록</h5> <br>
 						<table class="table table-hover mb-0">
@@ -217,9 +273,11 @@
 		            </ul>
 		          </nav>  
 		          </th:block>
+		          </th:block>
 		          <br><br>
 					
 					<!-- 유치원 불편사항신고조회 목록-->
+					<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 					<div class="table-responsive fs-md mb-4">
 					<h5 class="v-line ps-2">유치원 불편사항 신고 조회 목록</h5> <br>
 						<table class="table table-hover mb-0">
@@ -292,7 +350,182 @@
 			         </ul>
 			        </nav>  
 			        </th:block>
+			        </th:block>
 			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        <!-- 어린이집 선생님 불편사항 신고 조회 -->
+					<th:block th:if="${session.loginMember.role == 'ROLE_T'} and ${session.loginMember.field == '어린이집'}">
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">불편사항 신고 조회 목록</h5> <br>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">제목</th>
+									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9">작성일</th>
+									<th class="cgw8 cgw9">신고접수상태</th>
+									<th class="cgw8 cgw9"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${tnlist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${tnlist.size != 0}">
+								<tr th:each="nclaim, stat : ${tnlist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium" th:href="@{|/claim-view?type=어린이집&no=${nclaim.no}|}">[[${nclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9">
+										<a class="cgw4" th:href="@{|/nursery-detail?no=${nclaim.knNo}&i=20|}">[[${nclaim.knName}]]</a>
+									</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${nclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${nclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="tnclaimUpdate([[${nclaim.no}]]);">확인</button>&nbsp;&nbsp;
+									</td>
+									</th:block>
+									<th:block th:if="${nclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+									</td>
+									</th:block>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					
+					<br>
+ 
+		          <!-- pagination -->
+		          <th:block th:if="${tnlist.size != 0}">
+		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              
+		              <th:block th:each="num, status : ${#numbers.sequence(tnPageInfo.startPage, tnPageInfo.endPage)}">
+			                	<th:block th:if="${status.current == tnPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block page" aria-current="page">
+					                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					                </li>
+			                	</th:block>
+			                	<th:block th:if="${status.current != tnPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${status.current}');|">[[${status.current}]]</button></li>
+			                	</th:block>
+			                </th:block>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></button></li>
+		            </ul>
+		          </nav>  
+		          <br>
+		          </th:block>
+		          </th:block>
+		          
+		          <!-- 유치원 선생님 불편사항 신고 조회 -->
+					<th:block th:if="${session.loginMember.role == 'ROLE_T'} and ${session.loginMember.field == '유치원'}">
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">불편사항 신고 조회 목록</h5> <br>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">제목</th>
+									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9">작성일</th>
+									<th class="cgw8 cgw9">신고접수상태</th>
+									<th class="cgw8 cgw9"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${tklist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${tklist.size != 0}">
+								<tr th:each="nclaim, stat : ${tklist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium" th:href="@{|/claim-view?type=어린이집&no=${nclaim.no}|}">[[${nclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9">
+										<a class="cgw4" th:href="@{|/nursery-detail?no=${nclaim.knNo}&i=20|}">[[${nclaim.knName}]]</a>
+									</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${nclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${nclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="tkclaimUpdate([[${nclaim.no}]]);">확인</button>&nbsp;&nbsp;
+									</td>
+									</th:block>
+									<th:block th:if="${nclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+									</td>
+									</th:block>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					
+					<br>
+ 
+		          <!-- pagination -->
+		          <th:block th:if="${tklist.size != 0}">
+		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              
+		              <th:block th:each="num, status : ${#numbers.sequence(tnPageInfo.startPage, tnPageInfo.endPage)}">
+			                	<th:block th:if="${status.current == tnPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block page" aria-current="page">
+					                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					                </li>
+			                	</th:block>
+			                	<th:block th:if="${status.current != tnPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${status.current}');|">[[${status.current}]]</button></li>
+			                	</th:block>
+			                </th:block>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></button></li>
+		            </ul>
+		          </nav>  
+		          <br>
+		          </th:block>
+		          </th:block>
+		          
+		        
+		          
+		          
 				</section>
 			</div>
 		</div>
@@ -321,12 +554,20 @@
 	<script type="text/javascript">
 		nPage = '[[${nPageInfo.currentPage}]]'; 
 	    kPage = '[[${kPageInfo.currentPage}]]';
-		function moveNPage(pageUrl){
-			pageUrl += '&kPage=' + kPage 
+	    function moveNPage(pageUrl){
+			pageUrl += '&nPage=' + nPage 
 			location.href = encodeURI(pageUrl);	
 		}
 		function moveKPage(pageUrl){
-			pageUrl += '&nPage=' + nPage 
+			pageUrl += '&kPage=' + kPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		function movetNPage(pageUrl){
+			pageUrl += '&tnPage=' + tnPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		function movetKPage(pageUrl){
+			pageUrl += '&tkPage=' + tkPage 
 			location.href = encodeURI(pageUrl);	
 		}
 		function nclaimUpdate(no) {
@@ -334,6 +575,18 @@
     	}
 		function kclaimUpdate(no) {
     		location.href = "/claim-update?type=유치원" + "&no=" + no;
+    	}
+		function tnclaimUpdate(no) {
+    		var url = "/updateTNurseryWish?no=" + no;
+			if(confirm("정말로 확인하셨습니까?")) {
+				location.replace(url);
+			}
+    	}
+		function tkclaimUpdate(no) {
+    		var url = "/updateTKinderClaim?no=" + no;
+			if(confirm("정말로 확인하셨습니까?")) {
+				location.replace(url);
+			}
     	}
 		function nclaimDelete(knNo, no) {
     		var url = "/mypage-claim-delete?type=어린이집" + "&no=" + no + "&knNo=" + knNo;

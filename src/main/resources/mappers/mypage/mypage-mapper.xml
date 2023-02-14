@@ -18,6 +18,15 @@
 		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
+	<select id="selectAllNAdmissionList" resultType="NAdmission" parameterType="map">
+		SELECT
+			A.nuNo, N.crname, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM NURSERY N 
+		LEFT OUTER JOIN N_ADMISSION A ON (N.no = A.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (N.stcode = M.fieldCd)
+		ORDER BY A.nuNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	
 	<select id="selectNAdmissionCount" resultType="int" parameterType="map">
 		SELECT
 			COUNT(*)
@@ -40,6 +49,14 @@
 		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
 		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
 		where A.memberNo = #{memberNo}
+		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+	</select>
+	
+	<select id="selectAllKAdmissionList" resultType="KAdmission" parameterType="map">
+		SELECT
+			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
+		FROM KINDER K
+		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
 		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
@@ -153,6 +170,7 @@
 		WHERE C.STATUS = 'Y' AND C.memberNo = #{memberNo}
 	</select>
 	
+	
 	<select id="selectNurseryClaimByNo" resultType="Claim" parameterType="int">
 		SELECT 
 			C.no, C.nuNo AS 'knNo', C.memberNo, M.id, C.title, C.content, 
@@ -193,6 +211,7 @@
 			modifyDate = CURRENT_TIMESTAMP
 		WHERE no = #{no}
 	</update>
+	
 	
 	<update id="deleteNurseryClaim" parameterType="int">
 		UPDATE N_CLAIM SET status = 'N' WHERE no = #{no}
@@ -268,6 +287,59 @@
 		UPDATE K_CLAIM SET status = 'N' WHERE no = #{no}
 	</update>
 	
+	
+	
+	
+	<select id="selectTNurseryClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.nuNo AS 'knNo', N.crname AS 'knName', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM NURSERY N
+		LEFT OUTER JOIN N_CLAIM C ON (N.no = C.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (N.stcode = M.fieldCd)
+		WHERE C.STATUS = 'Y' AND N.stcode = M.fieldCd
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectTKinderClaimList" resultType="Claim" parameterType="map">
+		SELECT 
+			C.no, C.kinNo AS 'knNo', K.kindername AS 'knName', C.memberNo, M.id, C.title, C.content, 
+			C.originalFileName, C.renamedFileName, C.readCount, 
+			C.confirm, C.status, C.createDate, C.modifyDate
+		FROM KINDER K
+		LEFT OUTER JOIN K_CLAIM C ON (K.kinNo = C.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (K.kinderCode = M.fieldCd)
+		WHERE C.STATUS = 'Y' AND K.kinderCode = M.fieldCd
+		ORDER BY C.no DESC LIMIT ${limit} OFFSET ${offset}
+	</select>
+	
+	<select id="selectTNurseryClaimCount" resultType="int" parameterType="map">
+		SELECT 
+			COUNT(C.no)
+		FROM NURSERY N
+		LEFT OUTER JOIN N_CLAIM C ON (N.no = C.nuNo)
+		LEFT OUTER JOIN MEMBER M ON (N.stcode = M.fieldCd)
+		WHERE C.STATUS = 'Y' AND N.stcode = M.fieldCd
+	</select>
+	
+	<select id="selectTKinderClaimCount" resultType="int" parameterType="map">
+		SELECT 
+			COUNT(C.no)
+		FROM KINDER K
+		LEFT OUTER JOIN K_CLAIM C ON (K.kinNo = C.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (K.kinderCode = M.fieldCd)
+		WHERE C.STATUS = 'Y' AND K.kinderCode = M.fieldCd
+	</select>
+	
+	<update id="updateTNurseryClaim" parameterType="int">
+		UPDATE N_CLAIM SET confirm = 'Y' WHERE no = #{no}
+	</update>
+	
+	<update id="updateTKinderClaim" parameterType="int">
+		UPDATE K_CLAIM SET confirm = 'Y' WHERE no = #{no}
+	</update>
+	
 	<!-- ===============================mypage5=============================== -->
 	
 	<select id="selectBoardList" resultType="Board" parameterType="map">
@@ -340,6 +412,13 @@
 		ORDER BY PAYNO DESC;
 	</select>
 	
+	<select id="selectRentalList3" resultType="pay" parameterType="int"> <!-- 변경 -->
+		SELECT
+			*
+		FROM PAY
+		ORDER BY PAYNO DESC;
+	</select>
+	
 	<select id="selectRentalCount" parameterType="map" resultType="int">
 		SELECT
 			COUNT(P.PAYNO)
@@ -360,12 +439,28 @@
 		WHERE P.PAYNO = #{payNo}
 	</select>
 	
-	<update id="updateToyType" parameterType="Rental">
+	<update id="updateToyType" parameterType="int">
 		UPDATE TOY SET TOYTYPE=NULL WHERE TOYNO = #{toyNo}
 	</update>
 	
-	<update id="updateRental" parameterType="Rental">
-		UPDATE PAY SET STATUS='R' WHERE PAYNO = #{payNo}
+	<update id="updateToyStatus" parameterType="int">
+		UPDATE TOY SET STATUS = 'C' WHERE TOYNO = #{toyNo}
+	</update>
+	
+	<update id="updateRental" parameterType="int">
+		UPDATE TOY SET STATUS='R' WHERE TOYNO = #{toyNo}
+	</update>
+	
+	<update id="updateToyStatusT" parameterType="int">
+		UPDATE TOY SET STATUS='T' WHERE TOYNO = #{toyNo}
+	</update>
+	
+	<update id="updateToyStatusY" parameterType="int">
+		UPDATE TOY SET STATUS='Y' WHERE TOYNO = #{toyNo}
+	</update>
+	
+	<update id="updateToyStatusN" parameterType="int">
+		UPDATE TOY SET STATUS='N' WHERE TOYNO = #{toyNo}
 	</update>
 	
 	<delete id="deleteRental" parameterType="int">

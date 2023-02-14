@@ -104,6 +104,7 @@
 								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
 							</div>
 							<ul class="list-unstyled mb-0">
+							<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
@@ -140,6 +141,81 @@
 											class="ci-sign-out me-2"></i>로그아웃</a>
 									</div>
 								</li>
+								</th:block>
+								
+								<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
+										수정</a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소
+										신청 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
+										신고 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가
+										쓴 게시글<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0">
+									<div class="cgw3 d-flex align-items-center px-4 py-3">
+										<i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+											class="fs-sm text-muted ms-auto"></span>
+									</div>
+								</li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+										class="fs-sm text-muted ms-auto">[[${cartCount}]]</span></a></li>
+								<li class="border-bottom mb-0">
+									<div class="nav-link-style d-flex align-items-center px-4 py-2">
+										<a class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i
+											class="ci-sign-out me-2"></i>로그아웃</a>
+									</div>
+								</li>
+								</th:block>
+								
+								<th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
+										수정</a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소
+										신청 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
+										class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
+										신고 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가
+										쓴 게시글<span class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0">
+									<div class="cgw3 d-flex align-items-center px-4 py-3">
+										<i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
+											class="fs-sm text-muted ms-auto"></span>
+									</div>
+								</li>
+								<li class="border-bottom mb-0"><a
+									class="nav-link-style d-flex align-items-center px-4 py-3"
+									th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
+										class="fs-sm text-muted ms-auto"></span></a></li>
+								<li class="border-bottom mb-0">
+									<div class="nav-link-style d-flex align-items-center px-4 py-2">
+										<a class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i
+											class="ci-sign-out me-2"></i>로그아웃</a>
+									</div>
+								</li>
+								</th:block>
 							</ul>
 						</div>
 					</div>
@@ -150,7 +226,7 @@
 					<div class="d-none d-lg-flex justify-content-between align-items-center pb-4 cgw7 mb-lg-3">
 						<h6 class="fs-change cgw4 mb-0 fw-bold" style="color: #fc6c93;">대여 내역 조회</h6>
 					</div>
-					
+			<th:block th:if="${session.loginMember.role != 'ROLE_ADMIN'}">		
           <div class="table-responsive fs-md mb-4">
             <table class="table table-hover mb-0">
               <thead>
@@ -187,11 +263,11 @@
 		     		  
 		     		   <th:block th:if="${toyEach.status == 'Y'}">
 	                    <div class="">대여중</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">반납하기</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${toyEach.toyNo}]]);">반납하기</button>
 	                  </th:block>
 	                  <th:block th:if="${toyEach.status == 'A'}">
 	                    <div class="">주문완료</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">대여취소</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${toyEach.toyNo}]]);">대여취소</button>
 	                  </th:block>
 	                  <th:block th:if="${toyEach.status == 'N'}">
 	                    <div class="">반납완료</div>
@@ -201,6 +277,9 @@
 	                  </th:block>
 	                  <th:block th:if="${toyEach.status == 'T'}">
 	                    <div class="">배송중</div>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'C'}">
+	                    <div class="">대여취소</div>
 	                  </th:block>
 		     		  
 	                  </td>
@@ -229,6 +308,94 @@
                     class="ci-arrow-right ms-2"></i></a></li>
             </ul>
           </nav>
+          </th:block>
+          
+          
+          <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">		
+          <div class="table-responsive fs-md mb-4">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="cgw8 cgw9">상품정보</th>
+                  <th class="cgw8 cgw9">대여일자</th>
+                  <th class="cgw8 cgw9">대여기간</th>
+                  <th class="cgw8 cgw9">주문번호</th>
+                  <th class="cgw8 cgw9">대여금액</th>
+                  <th class="cgw8 cgw9">대여상태</th>
+                </tr>
+              </thead>
+              <tbody>
+				<th:block th:if="${adminlist == null}">
+					<tr>
+						<td colspan="5">조회된 대여내역이 없습니다.</td>
+					</tr>
+				</th:block>
+				<th:block th:each="pay,payState:${adminlist}" th:with="cnt=0">
+					<input type="hidden" th:value="${pay.toyList.size}" th:id="cntToyPay+${payState.index}">
+					<th:block th:each="toyEach,toyEachState:${pay.toyList}">
+	                <tr th:id="forPaging+${pay.cntList[toyEachState.index]}"  class="tr hidden">	                
+	                	<input th:value="${pay.cntList[toyEachState.index]}" type="hidden">
+	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" th:src="${toyEach.toyImg}"></a>
+	                  </td>
+	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#" style="display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
+	                  [[${toyEach.toyNm1}]]</a></td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]<br>~[[${pay.endDateList[toyEachState.index]}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.payNo}]]</td>
+	                  <td class="py-3 cgw9 cgw22">[[${pay.price}]]</td>
+	                  <td class="py-3 cgw9 cgw22">
+		     		  
+		     		   <th:block th:if="${toyEach.status == 'Y'}">
+	                    <div class="">대여중</div>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'A'}">
+	                    <div class="">주문완료</div>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="updateToyStatusT([[${toyEach.toyNo}]]);">배송중</button>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'N'}">
+	                    <div class="">반납완료</div>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'R'}">
+	                    <div class="">반납중</div>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="updateToyStatusN([[${toyEach.toyNo}]]);">반납완료</button>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'T'}">
+	                    <div class="">배송중</div>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="updateToyStatusY([[${toyEach.toyNo}]]);">배송완료</button>
+	                  </th:block>
+	                  <th:block th:if="${toyEach.status == 'C'}">
+	                    <div class="">대여취소</div>
+	                  </th:block>
+		     		  
+	                  </td>
+	                </tr>
+	                </th:block>
+                </th:block>
+                
+              </tbody>
+            </table>
+          </div>
+          
+
+
+ 			<!-- pagination -->
+          <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+            </ul>
+            <ul class="pagination" id="innerTable">
+<!--               <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+              <li class="page-item page d-none d-sm-block" aria-current="page"><span class="page-link">1</span></li>
+              <li class="page-item d-none d-sm-block"><a class="page-link" href="#">2</a></li> -->
+            </ul>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#" aria-label="Next">Next<i
+                    class="ci-arrow-right ms-2"></i></a></li>
+            </ul>
+          </nav>
+          </th:block>
+          
         </section>
       </div>
     </div>
@@ -326,20 +493,45 @@ for(var i=1; i<=offset+5; i++){
 		location.href = encodeURI(pageUrl);	
 	} */
 	
-	function rentalUpdate(payNo) {
-		var url = "/mypage-rental-update?&payNo=" + payNo;
+	function rentalUpdate(toyNo) {
+		var url = "/mypage-rental-update?&toyNo=" + toyNo;
 		if(confirm("정말로 반납을 하시겠습니까?")) {
 			location.replace(url);
 		}
 	}
 	
-	function rentalDelete(payNo, toyNo) {
-		var url = "/mypage-rental-delete?&payNo=" + payNo + "&toyNo=" + toyNo;
+	function rentalDelete(toyNo) {
+		var url = "/mypage-rental-delete?&toyNo=" + toyNo;
 		if(confirm("정말로 대여를 취소 하시겠습니까?")) {
 			location.replace(url);
 		}
+	}
+	
+	function updateToyStatusT(toyNo) {
+		var url = "/mypage-status-t?&toyNo=" + toyNo;
+		if(confirm("정말로 배송중 처리 하시겠습니까?")) {
+			location.replace(url);
+		}
 	} 
+	
+	function updateToyStatusY(toyNo) {
+		var url = "/mypage-status-y?&toyNo=" + toyNo;
+		if(confirm("정말로 대여중 처리 하시겠습니까?")) {
+			location.replace(url);
+		}
+	} 
+	
+	function updateToyStatusN(toyNo) {
+		var url = "/mypage-status-n?&toyNo=" + toyNo;
+		if(confirm("정말로 반납완료 처리 하시겠습니까?")) {
+			location.replace(url);
+		}
+	} 
+	
+	
+	
 </script>
+
 <style>
 .hidden{
 	display: none;

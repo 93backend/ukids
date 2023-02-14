@@ -129,11 +129,29 @@ public class MypageService {
 		return mapper.selectKinderClaimList(param);
 	}
 	
+	public List<Claim> getTNurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectTNurseryClaimList(param);
+	}
+	
+	public List<Claim> getTKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectTKinderClaimList(param);
+	}
+	
 	public int getNurseryClaimCount(Map<String, String> map) {
 		return mapper.selectNurseryClaimCount(map);
 	}
 	public int getKinderClaimCount(Map<String, String> map) {
 		return mapper.selectKinderClaimCount(map);
+	}
+	public int getTNurseryClaimCount(Map<String, String> map) {
+		return mapper.selectTNurseryClaimCount(map);
+	}
+	public int getTKinderClaimCount(Map<String, String> map) {
+		return mapper.selectTKinderClaimCount(map);
 	}
 	
 	public String saveClaimFile(MultipartFile file, String savePath) {
@@ -219,6 +237,16 @@ public class MypageService {
 		Claim claim = mapper.selectKinderClaimByNo(no);
 		deleteClaimFile(rootPath + "\\" + claim.getRenamedFileName());
 		return mapper.deleteKinderClaim(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTNurseryClaim(int no) {
+		return mapper.updateTNurseryClaim(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTKinderClaim(int no) {
+		return mapper.updateTKinderClaim(no);
 	}
 
 	
@@ -324,6 +352,38 @@ public class MypageService {
 
 		return payList;
 	}
+	
+	public List<Pay> getRentalList3(){
+		List<Pay> payList = new ArrayList<Pay>();
+		payList = mapper.selectRentalList3();
+		
+		int cnt = 1;
+		for (Pay pay : payList) {
+			String toyNoListSt = pay.getToyNo(); // ex) 1303,1302,1304
+			String startDateSt = pay.getStartDate(); // ex) 23-1-2,23-1-3,23-1-4
+			String endDateSt = pay.getEndDate(); // ex) 23-1-5,23-1-6,23-1-6
+			String[] toyNoEach = toyNoListSt.split(",");
+			String[] startDateEach = startDateSt.split(",");
+			String[] endDateEach = endDateSt.split(",");
+			List<Toy> toyList = new ArrayList<Toy>();
+			List<String> startDateList = new ArrayList<String>();
+			List<String> endDateList = new ArrayList<String>();
+			List<Integer> cntList = new ArrayList<Integer>();
+			for(int i=0; i<toyNoEach.length; i++){
+				toyList.add(toyMapper.selectToyByNo(Integer.parseInt(toyNoEach[i])));
+				startDateList.add(startDateEach[i]);
+				endDateList.add(endDateEach[i]);
+				cntList.add(cnt);
+				cnt++;
+			}
+			pay.setToyList(toyList);
+			pay.setStartDateList(startDateList);
+			pay.setEndDateList(endDateList);
+			pay.setCntList(cntList);
+		}
+
+		return payList;
+	}
 	public int getRentalCount(Map<String, String> map) {
 		return mapper.selectRentalCount(map);
 	}
@@ -335,6 +395,26 @@ public class MypageService {
 	@Transactional(rollbackFor = Exception.class)
 	public int updateToyType(int no) {
 		return mapper.updateToyType(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyStatus(int no) {
+		return mapper.updateToyStatus(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyStatusT(int no) {
+		return mapper.updateToyStatusT(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyStatusY(int no) {
+		return mapper.updateToyStatusY(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyStatusN(int no) {
+		return mapper.updateToyStatusN(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
