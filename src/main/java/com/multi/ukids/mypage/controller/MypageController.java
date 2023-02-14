@@ -70,6 +70,20 @@ public class MypageController {
 		}
 		return "common/msg";
 	}
+	
+	@RequestMapping("/member/delete")
+	public String delete(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) {
+		int result = memberService.delete(loginMember.getMemberNo());
+		if(result > 0) {
+			model.addAttribute("msg", "회원탈퇴에 성공하였습니다.");
+			model.addAttribute("location","/logout");
+		}else {
+			model.addAttribute("msg", "회원탈퇴에 실패하였습니다.");
+			model.addAttribute("location","/member/view");
+		}
+		return  "/common/msg";
+	}
 
 	@GetMapping("/mypage")
 	public String mypageView(Model model, 

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Board {
 	private int boardNo;				// 게시판번호
 	private int memberNo;				// 회원번호
+	private String id;					// 아이디
 	private String title;				// 제목
 	private String content;				// 내용
 	private int good;					// 추천수

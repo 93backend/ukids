@@ -24,10 +24,10 @@
     <link rel="stylesheet" media="screen" href="vendor/lightgallery.js/dist/css/lightgallery.min.css"/>
     
     <!-- Main Theme Styles + Bootstrap-->
-    <link rel="stylesheet" media="screen" href="css/theme.min.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/write-comm.css">
+    <link rel="stylesheet" media="screen" href="/css/theme.min.css">
+    <link rel="stylesheet" media="screen" href="/css/header.css">
+    <link rel="stylesheet" media="screen" href="/css/footer.css">
+    <link rel="stylesheet" media="screen" href="/css/write-comm.css">
 
     <!--해당 페이지 css-->
 
@@ -55,156 +55,16 @@
   <body class="handheld-toolbar-enabled">
 
     <!-- 로그인 모달 관련  -->
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
-              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div th:fragment="modal" th:replace="~{common :: modal}"></div>
 
     <main class="page-wrapper">
 
       <!-- 헤더!!!!!! -->
-      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-
-          <!-- Brand -->
-          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
-            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
-          </a>
-
-          <!-- Toolbar -->
-          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-
-            <!-- 로그인 전!!!!!!!! -->
-
-            <a href="#signin-modal" data-bs-toggle="modal">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-locked"></i>
-                <span>로그인</span>
-              </button>
-            </a>
-            <a href="join.html">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-user me-2"></i>
-                <span class="jointext">회원가입</span>
-              </button>
-            </a>
-
-            <!-- 로그인 후!!!!!!!!!!!! -->
-
-            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
-            </a>
-            
-            <a class="navbar-tool ms-3" href="index.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
-              </div>
-            </a> -->
-
-            <a class="navbar-tool ms-3" href="mypage3.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="navbar-tool-icon ci-cart"></i>
-              </div>
-            </a>
-            
-          </div>
-
-          <!-- 메뉴 -->
-          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-            <hr class="d-lg-none my-3">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
-                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
-
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
-                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <header th:fragment="header" th:replace="~{common :: header}"></header>
 
 
     <!-- 대문-->
-    <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
+    <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(/img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
       <div class="container position-relative zindex-5 mb-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
           <nav aria-label="breadcrumb">
@@ -226,7 +86,7 @@
 
     <!-- 구분선 이미지-->
     <div class="container-sm mt-4 mb-3">
-      <img src="./img/ukids/notice/1.png">
+      <img src="/img/ukids/notice/1.png">
     </div>
 
     <div class="container-sm mb-4">
@@ -237,7 +97,7 @@
     <!-- 게시판-->
     <div class="container-sm ps-0 pe-0  rounded ">
       <div class="m-3 pt-3 pb-2 shadow-lg">
-        <form action="#" method="#">
+        <form action="/update" method="post">
           <table class="table " style="border-color: white;">
             <thead>
               <tr>
@@ -251,29 +111,32 @@
               </tr>
               <tr>
                 <th class="col2-1 align-middle text-center">작성자</th>
-                <th class="col-5 text-center"><input class="form-control" type="text" name="writerId" value="홍길동"
-                    readonly></th>
+                <th class="col-5 text-center">
+                <input class="form-control" type="text" name="id" value="${board.id}" readonly>
+                </th>
               </tr>
               <tr>
                 <th class="col2-1 align-middle text-center">제목</th>
-                <th class="col-5 text-center"><input class="form-control" type="text" id="text-input"
-                    placeholder="제목을 입력해 주세요"></th>
+                <th class="col-5 text-center">
+                <input class="form-control" type="text" name="title" id="text-input" placeholder="제목을 입력해 주세요" value="${board.title}">
+                </th>
               </tr>
               <tr>
                 <th class=" align-middle text-center">첨부파일</th>
-                <th class="col-5 text-center"><input class="form-control" type="file" id="file-input"></th>
+                <th class="col-5 text-center"><input class="form-control" type="file" name="upfile" id="file-input"></th>
+                
               </tr>
               <tr>
                 <th class=" align-middle text-center">내용</th>
-                <td class="col-5 text-center"><textarea class="form-control hei" id="textarea-input" rows="5"
-                    placeholder="내용을 입력해 주세요."></textarea></td>
+                <td class="col-5 text-center">
+                <textarea class="form-control hei" id="textarea-input" rows="5" placeholder="내용을 입력해 주세요.">[[${board.content}]]</textarea>
+                </td>
               </tr>
             </thead>
-
           </table>
           <div class="container-sm text-center mb-4">
             <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="등 록">
-            <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" href="community.html" role="button">목록으로</a>
+            <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" href="/community" role="button">목록으로</a>
           </div>
         </form>
       </div>
@@ -287,90 +150,24 @@
   </main>
 
   <!-- 푸터!!!!!!!!!!-->
-  <!-- Footer-->
-  <footer class="footer pt-5" id="footercolor" >
-    <div class="px-lg-3 pt-2 pb-4" id="footercolor">
-      <div class="mx-auto px-3" style="max-width: 80rem;">
-        <div class="row">
-          <div class="col-xl-2 col-lg-3 col-sm-4 pb-2 mb-4">
-            <div class="mt-n1"><a class="d-inline-block align-middle" href="index.html"><img class="d-block mb-4" src="img/ukids/logo.jpg" width="117" alt="Cartzilla"></a></div>
-          </div>
-          <div class="col-xl-3 col-lg-4 col-sm-4">
-            <div class="widget widget-links widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">카테고리</h3>
-              <ul class="widget-list">
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="kinder-main.html">어린이집/유치원</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="welfare-main.html">아동관련시설</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="toy-main.html">장난감대여</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="book.html">추천도서</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="news.html">주요뉴스</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="community.html">커뮤니티</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-xl-3 col-lg-4 col-sm-4">
-            <div class="widget widget-links widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">유키즈</h3>
-              <ul class="widget-list">
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">02-123-4567</a></li>
-                <li class="widget-list-item"><a class="widget-list-link" id="cate" href="#">ukids05@multi.com</a></li>
-              </ul>
-            </div>
-            <div class="widget widget-light pb-2 mb-4">
-              <h3 class="widget-title text-dark" id="cate2">팔로우</h3><a class="btn-social bs-dark bs-twitter me-2 mb-2" href="#"><i class="ci-twitter"></i></a><a class="btn-social bs-dark bs-facebook me-2 mb-2" href="#"><i class="ci-facebook"></i></a><a class="btn-social bs-dark bs-instagram me-2 mb-2" href="#"><i class="ci-instagram"></i></a><a class="btn-social bs-dark bs-youtube me-2 mb-2" href="#"><i class="ci-youtube"></i></a>
-            </div>
-          </div>
-          <div class="col-xl-4 col-sm-8">
-            <div class="widget pb-2 mb-4">
-              <h3 class="widget-title text-dark pb-1" id="cate2">구독하기</h3>
-              <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-                <div class="input-group flex-nowrap"><i class="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
-                  <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="이메일을 입력해주세요." required>
-                  <button class="btn btn-primary" type="submit" name="subscribe" id="sub">구 &nbsp&nbsp독</button>
-                </div>
-                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                  <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
-                </div>
-                <div class="form-text text-dark opacity-50" >유키즈의 소식을 구독해보세요.</div>
-                <div class="subscription-status"></div>
-              </form>
-            </div>
-            <div class="widget pb-2 mb-4">
-              <h3 class="widget-title text-dark pb-1" id="cate2">다운로드</h3>
-              <div class="d-flex flex-wrap">
-                <div class="me-2 mb-2"><a class="btn-market btn-apple" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">App Store</span></a></div>
-                <div class="mb-2"><a class="btn-market btn-google" href="#" role="button"><span class="btn-market-subtitle">Download on the</span><span class="btn-market-title">Google Play</span></a></div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
+	 
+    <!-- Toolbar for handheld devices (NFT Marketplace)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100"><a class="d-none handheld-toolbar-item" href="#vendor-sidebar" data-bs-toggle="offcanvas"><span class="handheld-toolbar-icon"><i class="ci-sign-in"></i></span><span class="handheld-toolbar-label">Sidebar</span></a><a class="d-table-cell handheld-toolbar-item" href="#signin-modal" data-bs-toggle="modal"><span class="handheld-toolbar-icon"><i class="ci-user"></i></span><span class="handheld-toolbar-label">Account</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="nft-connect-wallet.html"><span class="handheld-toolbar-icon"><i class="ci-wallet"></i></span><span class="handheld-toolbar-label text-nowrap">Connect wallet</span></a>
       </div>
     </div>
-    <div class="px-lg-3 py-3" id="footerunder">
-      <div class="d-sm-flex justify-content-between align-items-center mx-auto px-3" style="max-width: 80rem;">
-        <div class="fs-xs text-light opacity-50 text-center text-sm-start py-3">© All rights reserved. Made by <a class="text-light" href="index.html" target="_blank" rel="noopener">ukids</a></div>
-        <div class="py-3"><img class="d-block mx-auto mx-sm-start" src="img/cards-alt.png" width="187" alt="Payment methods"></div>
-      </div>
-    </div>
-  </footer>
-  
-  
-  <!-- Toolbar for handheld devices (Default)-->
-  <div class="handheld-toolbar">
-    <div class="d-table table-layout-fixed w-100"><a class="d-table-cell handheld-toolbar-item" href="account-wishlist.html"><span class="handheld-toolbar-icon"><i class="ci-heart"></i></span><span class="handheld-toolbar-label">Wishlist</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="shop-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">4</span></span><span class="handheld-toolbar-label">$265.00</span></a></div>
-  </div>
-  <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
-  <!-- Vendor scrits: js libraries and plugins-->
-  <script src="vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/simplebar/dist/simplebar.min.js"></script>
-  <script src="vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-  <script src="vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-  <script src="vendor/drift-zoom/dist/Drift.min.js"></script>
-  <script src="vendor/lightgallery.js/dist/js/lightgallery.min.js"></script>
-  <script src="vendor/lg-video.js/dist/lg-video.min.js"></script>
-  
-  <!-- Main theme script-->
-  <script src="js/theme.min.js"></script>
+    <!-- Back To Top Button-->
+    <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
+    
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/simplebar/dist/simplebar.min.js"></script>
+    <script src="/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+    <script src="/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="/vendor/chartist/dist/chartist.min.js"></script>
+    <!-- Main theme script-->
+    <script src="js/theme.min.js"></script>
+    <script src="js/index.js"></script>
   </body>
-  </html>
+</html>
