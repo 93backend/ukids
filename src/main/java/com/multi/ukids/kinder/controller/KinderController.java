@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.kinder.model.service.KinderService;
 import com.multi.ukids.kinder.model.vo.KAdmission;
@@ -376,6 +378,7 @@ public class KinderController {
 	}
 	
 	// 비교 화면
+	@SuppressWarnings("unchecked")
 	@GetMapping("/compare-kinder")
 	public String compareKinder(Model model, HttpSession session,
 		@SessionAttribute(name = "kinderCompare", required = false) List<Integer> kinderCompare
@@ -390,15 +393,487 @@ public class KinderController {
 		}
 		
 		List<Kinder> list = new ArrayList<Kinder>();
-		
+		int[] claim = new int[kinderCompare.size()];
 		if(kinderCompare.size() > 0) {
-			for(int no : kinderCompare) {
-				Kinder kinder = kinderService.findByNo(no);
+			for(int i = 0; i < kinderCompare.size(); i++) {
+				Kinder kinder = kinderService.findByNo(kinderCompare.get(i));
 				list.add(kinder);
+				claim[i] = kinderService.getClaimCount(kinderCompare.get(i));
 			}
 		}
+		
+		
+		@SuppressWarnings("rawtypes")
+		List<List> infoList = new  ArrayList<>();
+		if(list.size() > 0) {
+			List<Object> l = new ArrayList<>();
+// ======================================= 요약 정보 =======================================
+			// 설립일
+			l.add("설립일");
+			for(Kinder k : list) {
+				l.add(k.getEdate());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 개원일
+			l.add("개원일"); 
+			for(Kinder k : list) {
+				l.add(k.getOdate());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 대표자명
+			l.add("대표자명");
+			for(Kinder k : list) {
+				l.add(k.getRppnname());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 원장명
+			l.add("원장명");
+			for(Kinder k : list) {
+				l.add(k.getLdgrname());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 설립유형
+			l.add("설립유형");
+			for(Kinder k : list) {
+				l.add(k.getEstablish());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 관할 행정기관
+			l.add("관할 행정기관");
+			for(Kinder k : list) {
+				l.add(k.getOfficeedu());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 운영기관
+			l.add("운영기관");
+			for(Kinder k : list) {
+				l.add(k.getSubofficeedu());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 전화번호
+			l.add("전화번호");
+			for(Kinder k : list) {
+				l.add(k.getTelno());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 홈페이지
+			l.add("홈페이지");
+			for(Kinder k : list) {
+				l.add(k.getHpaddr());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 주소
+			l.add("주소");
+			for(Kinder k : list) {
+				l.add(k.getAddr());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 불편사항신고 이력
+			l.add("불편사항신고 이력");
+			for(int n : claim) {
+				l.add(n + " 건");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 제공 서비스 =======================================
+			// 특수학급
+			l.add("특수학급");
+			for(Kinder k : list) {
+				if(k.getShclcnt() != 0) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 방과후 활동
+			l.add("방과후 활동");
+			for(Kinder k : list) {
+				if(k.getAfsc_pros_lsn_dcnt() != 0) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 통학 차량
+			l.add("통학 차량");
+			for(Kinder k : list) {
+				if(k.getVhcl_oprn_yn().equals("Y")) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 급식
+			l.add("급식");
+			for(Kinder k : list) {
+				if(k.getMas_mspl_dclr_yn().equals("Y")) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 체육장
+			l.add("체육장");
+			for(Kinder k : list) {
+				if(k.getPhgrindrarea().equals("㎡") && k.getPhgrindrarea().equals("0㎡")) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// CCTV
+			l.add("CCTV");
+			for(Kinder k : list) {
+				if(k.getCctv_ist_yn().equals("Y")) {
+					l.add("설치");
+				} else {
+					l.add("미설치");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 위생관리 및 안전점검 =======================================
+			// 정기소독관리 대상
+			l.add("정기소독관리 대상");
+			for(Kinder k : list) {
+				if(k.getFxtm_dsnf_trgt_yn().equals("Y")) {
+					l.add("대상");
+				} else {
+					l.add("비대상");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 놀이시설안전검사 대상
+			l.add("놀이시설안전검사 대상");
+			for(Kinder k : list) {
+				if(k.getPlyg_ck_yn().equals("Y")) {
+					l.add("대상");
+				} else {
+					l.add("비대상");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 소방대피훈련 시행 기관
+			l.add("소방대피훈련 시행 기관");
+			for(Kinder k : list) {
+				if(k.getFire_avd_yn().equals("Y")) {
+					l.add("시행");
+				} else {
+					l.add("미시행");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 소방안전점검 완료
+			l.add("소방안전점검 완료");
+			for(Kinder k : list) {
+				if(k.getFire_safe_yn().equals("Y")) {
+					l.add("완료");
+				} else {
+					l.add("미완료");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 가스점검 완료
+			l.add("가스점검 완료");
+			for(Kinder k : list) {
+				if(k.getGas_ck_yn().equals("Y")) {
+					l.add("완료");
+				} else {
+					l.add("미완료");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 전기설비점검 완료
+			l.add("전기설비점검 완료");
+			for(Kinder k : list) {
+				if(k.getElect_ck_yn().equals("Y")) {
+					l.add("완료");
+				} else {
+					l.add("미완료");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 학급 현황 =======================================
+			// 특수 학급
+			l.add("특수 학급");
+			for(Kinder k : list) {
+				l.add(k.getShclcnt() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 혼합 학급
+			l.add("혼합 학급");
+			for(Kinder k : list) {
+				l.add(k.getMixclcnt() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 3세 학급
+			l.add("만 3세 학급");
+			for(Kinder k : list) {
+				l.add(k.getClcnt3() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 4세 학급
+			l.add("만 4세 학급");
+			for(Kinder k : list) {
+				l.add(k.getClcnt4() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 5세 학급
+			l.add("만 5세 학급");
+			for(Kinder k : list) {
+				l.add(k.getClcnt5() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 아동 현황 =======================================
+			// 특수 아동
+			l.add("특수 아동");
+			for(Kinder k : list) {
+				l.add(k.getShppcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 혼합
+			l.add("혼합");
+			for(Kinder k : list) {
+				l.add(k.getMixppcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 3세 아동
+			l.add("만 3세 아동");
+			for(Kinder k : list) {
+				l.add(k.getPpcnt3() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 4세 아동
+			l.add("만 4세 아동");
+			for(Kinder k : list) {
+				l.add(k.getPpcnt4() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 5세 아동
+			l.add("만 5세 아동");
+			for(Kinder k : list) {
+				l.add(k.getPpcnt5() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 모집 정원 현황 =======================================
+			// 특수 학급 정원
+			l.add("특수 학급 정원");
+			for(Kinder k : list) {
+				l.add(k.getSpcnfpcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 혼합 학급 정원
+			l.add("혼합 학급 정원");
+			for(Kinder k : list) {
+				l.add(k.getMixfpcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 3세 학급 정원
+			l.add("만 3세 학급 정원");
+			for(Kinder k : list) {
+				l.add(k.getAg3fpcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 4세 학급 정원
+			l.add("만 4세 학급 정원");
+			for(Kinder k : list) {
+				l.add(k.getAg4fpcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 5세 학급 정원
+			l.add("만 5세 학급 정원");
+			for(Kinder k : list) {
+				l.add(k.getAg5fpcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 교직원 현황 =======================================
+			// 원장
+			l.add("원장");
+			for(Kinder k : list) {
+				l.add(k.getDrcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 원감
+			l.add("원감");
+			for(Kinder k : list) {
+				l.add(k.getAdcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 수석교사
+			l.add("수석교사");
+			for(Kinder k : list) {
+				l.add(k.getHdst_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 보직교사
+			l.add("보직교사");
+			for(Kinder k : list) {
+				l.add(k.getAsps_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 일반교사
+			l.add("일반교사");
+			for(Kinder k : list) {
+				l.add(k.getGnrl_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 특수교사
+			l.add("특수교사");
+			for(Kinder k : list) {
+				l.add(k.getSpcn_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 보건교사
+			l.add("보건교사");
+			for(Kinder k : list) {
+				l.add(k.getNtcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 영양교사
+			l.add("영양교사");
+			for(Kinder k : list) {
+				l.add(k.getNtrt_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 기간제교사
+			l.add("기간제교사");
+			for(Kinder k : list) {
+				l.add(k.getShcnt_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 교사자격 현황 =======================================
+			// 수석교사
+			l.add("수석교사");
+			for(Kinder k : list) {
+				l.add(k.getHdst_tchr_qacnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 정교사 1급
+			l.add("정교사 1급");
+			for(Kinder k : list) {
+				l.add(k.getRgth_gd1_qacnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 정교사 2급
+			l.add("정교사 2급");
+			for(Kinder k : list) {
+				l.add(k.getRgth_gd2_qacnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 준교사
+			l.add("준교사");
+			for(Kinder k : list) {
+				l.add(k.getAsth_qacnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 근속연수 현황 =======================================
+			// 1년 미만 교사
+			l.add("1년 미만 교사");
+			for(Kinder k : list) {
+				l.add(k.getYy1_undr_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 1년 이상 ~ 2년 미만 교사
+			l.add("1년 이상 ~ 2년 미만 교사");
+			for(Kinder k : list) {
+				l.add(k.getYy1_abv_yy2_undr_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 2년 이상 ~ 4년 미만 교사
+			l.add("2년 이상 ~ 4년 미만 교사");
+			for(Kinder k : list) {
+				l.add(k.getYy2_abv_yy4_undr_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 4년 이상 ~ 6년 미만 교사
+			l.add("4년 이상 ~ 6년 미만 교사");
+			for(Kinder k : list) {
+				l.add(k.getYy4_abv_yy6_undr_thcnt() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 6년 이상 교사
+			l.add("6년 이상 교사");
+			for(Kinder k : list) {
+				l.add(k.getYy6_abv_thcnt() + " 명");
+			}
+			infoList.add(l);
+		}
+		
+		for(@SuppressWarnings("rawtypes") List l : infoList) {
+			if(l.size() < 5) {
+				for(int i = l.size(); i < 5; i++) {
+					l.add("-");
+				}
+			}
+		}
+		
+		log.info("정보 목록 : " + infoList);
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String info = gson.toJson(infoList);
+		
+		
 		int count = list.size();
 		model.addAttribute("list", list);
+		model.addAttribute("info", info);
 		model.addAttribute("count", count);
 		
 		return "compare-kinder";

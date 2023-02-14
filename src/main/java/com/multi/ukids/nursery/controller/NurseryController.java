@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
@@ -378,12 +380,13 @@ public class NurseryController {
 	}
 	
 	// 비교 화면
+	@SuppressWarnings("unchecked")
 	@GetMapping("/compare-nursery")
 	public String compareNursery(Model model, HttpSession session,
 		@SessionAttribute(name = "nurseryCompare", required = false) List<Integer> nurseryCompare
 	) {
 		log.info("어린이집 비교 화면");
-		log.info("비교 목록 : " + nurseryCompare.toString());
+		log.info("비교 목록 : " + nurseryCompare);
 		
 		if(session.getAttribute("nurseryCompare") == null) {
 			List<Integer> initCompare = new ArrayList<>();
@@ -392,15 +395,382 @@ public class NurseryController {
 		}
 		
 		List<Nursery> list = new ArrayList<>();
-		
+		int[] claim = new int[nurseryCompare.size()];
 		if(nurseryCompare.size() > 0) {
-			for(int no : nurseryCompare) {
-				Nursery nursery = nurseryService.findByNo(no);
+			for(int i = 0; i < nurseryCompare.size(); i++) {
+				Nursery nursery = nurseryService.findByNo(nurseryCompare.get(i));
 				list.add(nursery);
+				claim[i] = nurseryService.getClaimCount(nurseryCompare.get(i));
 			}
 		}
+		
+		@SuppressWarnings("rawtypes")
+		List<List> infoList = new  ArrayList<>();
+		
+		if(list.size() > 0) {
+			List<Object> l = new ArrayList<>();
+// ======================================= 요약 정보 =======================================
+			// 설립일
+			l.add("설립일");
+			for(Nursery n : list) {
+				l.add(n.getCrcnfmdt());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 개원일
+			l.add("개원일");
+			for(Nursery n : list) {
+				l.add(n.getCrcnfmdt());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 대표자명
+			l.add("대표자명");
+			for(Nursery n : list) {
+				l.add(n.getCrrepname());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 설립유형
+			l.add("설립유형");
+			for(Nursery n : list) {
+				l.add(n.getCrtypename());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 전화번호
+			l.add("전화번호");
+			for(Nursery n : list) {
+				l.add(n.getCrtelno());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 홈페이지
+			l.add("홈페이지");
+			for(Nursery n : list) {
+				l.add(n.getCrhome());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 주소
+			l.add("주소");
+			for(Nursery n : list) {
+				l.add(n.getCraddr());
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 불편사항신고 이력
+			l.add("불편사항신고 이력");
+			for(int c : claim) {
+				l.add(c + " 건");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 제공 서비스 =======================================
+			// 특수학급
+			l.add("특수학급");
+			for(Nursery n : list) {
+				if(n.getClass_cnt_sp() != 0) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 방과후 활동
+			l.add("방과후 활동");
+			for(Nursery n : list) {
+				if(n.getCrspec().contains("방과후")) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 통학 차량
+			l.add("통학 차량");
+			for(Nursery n : list) {
+				if(n.getCrcargbname().equals("운영")) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 급식
+			l.add("급식");
+			for(Nursery n : list) {
+				if(n.getEm_cnt_a7() != 0) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 체육장
+			l.add("체육장");
+			for(Nursery n : list) {
+				if(n.getPlgrdco() != 0) {
+					l.add("운영");
+				} else {
+					l.add("미운영");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// CCTV
+			l.add("CCTV");
+			for(Nursery n : list) {
+				if(n.getCctvinstlcnt() != 0) {
+					l.add("설치");
+				} else {
+					l.add("미설치");
+				}
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 학급 현황 =======================================
+			// 특수 학급
+			l.add("특수 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_sp() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 영아 혼합 학급
+			l.add("영아 혼합 학급 (만 0세~2세)");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_m2() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 유아 혼합 학급
+			l.add("유아 혼합 학급 (만 3세~5세)");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_m5() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 0세 학급
+			l.add("만 0세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_00() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 1세 학급
+			l.add("만 1세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_01() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 2세 학급
+			l.add("만 2세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_02() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 3세 학급
+			l.add("만 3세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_03() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 4세 학급
+			l.add("만 4세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_04() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 5세 학급
+			l.add("만 5세 학급");
+			for(Nursery n : list) {
+				l.add(n.getClass_cnt_05() + " 개");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 아동 현황 =======================================
+			// 특수 아동
+			l.add("특수 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_sp() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 영아 혼합 아동
+			l.add("영아 혼합 (만 0세~2세)");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_m2() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 유아 혼합 아동
+			l.add("유아 혼합 (만 3세~5세)");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_m5() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 0세 아동
+			l.add("만 0세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_00() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 1세 아동
+			l.add("만 1세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_01() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 2세 아동
+			l.add("만 2세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_02() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 3세 아동
+			l.add("만 3세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_03() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 4세 아동
+			l.add("만 4세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_04() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 만 5세 아동
+			l.add("만 5세 아동");
+			for(Nursery n : list) {
+				l.add(n.getChild_cnt_05() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 교직원 현황 =======================================
+			// 원장
+			l.add("원장");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a1() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 보육교사
+			l.add("보육교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a2() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 특수교사
+			l.add("특수교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a3() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 치료교사
+			l.add("치료교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a4() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 영양사
+			l.add("영양사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a5() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 간호사
+			l.add("간호사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a6() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 간호조무사
+			l.add("간호조무사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a10() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 조리원
+			l.add("조리원");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_a7() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+// ======================================= 근속연수 현황 =======================================
+			// 1년 미만 교사
+			l.add("1년 미만 교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_0y() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 1년 이상 ~ 2년 미만 교사
+			l.add("1년 이상 ~ 2년 미만 교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_1y() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 2년 이상 ~ 4년 미만 교사
+			l.add("2년 이상 ~ 4년 미만 교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_2y() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 4년 이상 ~ 6년 미만 교사
+			l.add("4년 이상 ~ 6년 미만 교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_4y() + " 명");
+			}
+			infoList.add(l);
+			l = new ArrayList<>();
+			// 6년 이상 교사
+			l.add("6년 이상 교사");
+			for(Nursery n : list) {
+				l.add(n.getEm_cnt_6y() + " 명");
+			}
+			infoList.add(l);
+		}
+		
+		for(@SuppressWarnings("rawtypes") List l : infoList) {
+			if(l.size() < 5) {
+				for(int i = l.size(); i < 5; i++) {
+					l.add("-");
+				}
+			}
+		}
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String info = gson.toJson(infoList);
+		
+		log.info("어린이집 비교 정보 목록 : " + infoList);
+		
 		int count = list.size();
 		model.addAttribute("list", list);
+		model.addAttribute("info", info);
 		model.addAttribute("count", count);
 		
 		return("compare-nursery");

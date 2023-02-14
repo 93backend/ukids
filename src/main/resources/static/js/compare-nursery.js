@@ -13,7 +13,25 @@ const nsItemTitle = [
 // [['설립일', 2022-12-12,2022-3-3,3,4,] ['#제공서비'] []]
 
 // 빈 row 생성
-function createRow() {
+function createRow(info) {
+  const tr = document.createElement('tr');
+  const th = document.createElement('th');
+  
+  th.innerHTML = '-'
+  tr.className = 'compare-item-list';
+  tr.appendChild(th);
+  
+  for (let i=0; i<4; i++) {
+    const td = document.createElement('td');
+    td.innerHTML = info[i+1];
+    td.className = 'item' + (i+1);
+    tr.appendChild(td);
+  };
+  
+  return tr;
+};
+
+function createRow2() {
   const tr = document.createElement('tr');
   const th = document.createElement('th');
   
@@ -29,14 +47,25 @@ function createRow() {
   };
   
   return tr;
-};
+}
 
 // 테이블 세팅
-function tableSetting(cat, itemData) {
+function tableSetting(cat, itemData, nsItems) {
   for (let i=0; i<cat.length; i++) {
     for (let j=0; j<itemData[i].length; j++) {
-      const row = createRow();
-      cat[i].appendChild(row);
+		flag = 1;
+		for(let k=0; k<nsItems.length; k++) {
+			if(itemData[i][j] == nsItems[k][0]) {
+				const row = createRow(nsItems[k]);
+				cat[i].appendChild(row);
+				flag = 0;
+			  	break;
+			}
+		}
+		if(flag == 1) {
+		  const row = createRow2();
+		  cat[i].appendChild(row);
+	  }
     };
   };
 };
@@ -52,22 +81,6 @@ function handleItemTitle(cat, itemData) {
   };
 
 };
-
-function showItemData() {
-  $(".item1").html('data1');
-  $(".item2").html('data2');
-  // $(".item3").html('item3');
-  // $(".item4").html('item4');
-}
-
-$(document).ready(function(){
-  tableSetting(nsCat, nsItemTitle);
-  handleItemTitle(nsCat, nsItemTitle);
-  showItemData();
-});
-
-
-
 
 
 /* ===== 테이블 필터링 기준 변경에 따른 카테고리 컨트롤 ===== */

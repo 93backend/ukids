@@ -71,6 +71,6 @@ public class Kinder {
 	private String plyg_ck_yn; 			// VARCHAR(100), -- 놀이시설 안전검사 대상여부
 	private String cctv_ist_yn; 		// VARCHAR(100), -- CCTV 설치여부
 	private int cctv_ist_total; 		// INT, -- CCTV 총 설치수
-	private int afsc_pros_lsn_dcnt; 	// INT
+	private int afsc_pros_lsn_dcnt; 	// INT	
 
 }

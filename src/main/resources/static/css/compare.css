@@ -106,6 +106,10 @@ thead td h3 {
     height: 35px;
 }
 
+td {
+    word-wrap: break-word;
+}
+
 .compare-table .btn-primary {
     color: #fff !important;
     border-color: var(--clr-pink-1);

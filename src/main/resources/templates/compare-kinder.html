@@ -177,6 +177,13 @@
     		}
     	}
     	
+    	kgItems = /*[(${info})]*/{};
+    	
+    	console.log(kgItems);
+    	
+		tableSetting(kgCat, kgItemTitle, kgItems);
+		handleItemTitle(kgCat, kgItemTitle);
+    	
     	/* ========== 카카오 지도 ========== */
     	// 검색 결과
     	var searchList = [
@@ -190,11 +197,10 @@
 		        	    image: null,
     					
     				},
-    				
     			/*[/]*/
     		/*[/]*/
     	];
-
+		
     	// 지도 생성
     	var mapContainer = document.getElementById('kg-kakaomap');
     	var mapOption = {
