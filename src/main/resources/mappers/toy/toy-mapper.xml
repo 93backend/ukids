@@ -91,7 +91,7 @@
    <select id="selectToyByNo" resultType="Toy" parameterType="int">
       SELECT
          TOYNO, TOYCD, TOYNM1, TOYNM2, REPLACE(TOYEX,'""','"') AS TOYEX, TOYSEARCH, TRUNCATE(TOYPAY/10,-2) as TOYPAY, TOYIMG, 
-            TOYCATEGORYB, TOYCATEGORYM, TOYCATEGORYS, TOYTYPE
+            TOYCATEGORYB, TOYCATEGORYM, TOYCATEGORYS, TOYTYPE, STATUS
       FROM TOY
       WHERE TOYNO = #{no}
    </select>
