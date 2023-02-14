@@ -80,19 +80,19 @@ public class BoardService {
 		return board; 
 	}
 //	
-//	public void deleteFile(String filePath) {
-//		File file = new File(filePath);
-//		if(file.exists()) {
-//			file.delete();
-//		}
-//	}
+	public void deleteFile(String filePath) {
+		File file = new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
 //	
-//	@Transactional(rollbackFor = Exception.class)
-//	public int deleteBoard(int no, String rootPath) {
-//		Board board = mapper.selectBoardByNo(no);
-//		deleteFile(rootPath + "\\" + board.getRenamedFileName());
-//		return mapper.deleteBoard(no);
-//	}
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteBoard(int no, String rootPath) {
+		Board board = mapper.selectBoardByNo(no);
+		deleteFile(rootPath + "\\" + board.getRenamedFileName());
+		return mapper.deleteBoard(no);
+	}
 //	
 //	@Transactional(rollbackFor = Exception.class)
 //	public int deleteReply(int no) {

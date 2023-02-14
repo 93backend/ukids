@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>유키즈 | 자유게시판</title>
+    <title>UKIDS | 자유게시판</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -67,15 +67,15 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-              <li class="breadcrumb-item"><a class="text-nowrap" href="notice.html">공지사항</a></li>
+              <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="notice.html">자유게시판</a></li>
               <li class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">상세보기</li>
             </ol>
           </nav>
         </div>
         <div class="row justify-content-center pt-4 pb-4">
           <div class="col-lg-8">
-            <h1 class="text-light text-center">공지사항</h1>
+            <h1 class="text-light text-center">자유게시판</h1>
           </div>
         </div>
       </div>
@@ -92,23 +92,48 @@
     		<!--  상세보기-->
         	<div class="container-sm">
         		<div class="row">
-        			<div class=" p-3">
+        			<div class="p-3">
         				<div class="mt-3 mb-3">
                   			<h3>[[${board.title}]]</h3>
                 		</div>
-                		<span class="mamamoo">조회</span><span class="ms-1 me-1">[[${board.readcount}]]</span><br>
-                		<span class="ms-2">[[${#dates.format(board.createDate)}]]</span>
+                		<span class="mamamoo">조회</span><span class="ms-1 me-1">[[${board.readcount}]]</span>
+                		<span class="ms-2">[[${#dates.format(board.createDate ,'yyyy/MM/dd')}]]</span>
         			</div>
         			<hr class="ta">
+        		</div>
+        		<div style="text-align: right; margin: 20px">
+        			
+        			<th:block th:if="${board.originalFileName != null}">
+						<a th:href="|javascript:fileDownload('${board.originalFileName}','${board.renamedFileName}')|" style="color: black;">
+							<img src="/images/file.png" width="20" height="20"/>
+							[[${board.originalFileName}]]				
+						</a>
+						<img alt="" style="width: 300px" th:src="|/board/file/${board.renamedFileName}|">
+						<script>
+							function fileDownload(oriname, rename) {
+								const url = "/board/fileDown";
+							
+								let oName = encodeURIComponent(oriname);
+								let rName = encodeURIComponent(rename);
+							
+								location.assign(url + "?oriname=" + oName + "&rename=" + rName);
+							}
+						</script>	
+					</th:block>
+					<th:block th:if="${board.originalFileName == null}">
+						<span> - </span>
+					</th:block>
         		</div>
         		<div class="mt-2 box4">
         			<span class="container-sm">[[${board.content}]]</span>
         		</div>
-        		<div class="text-end mt-3">
+        		<div class="text-end mt-3" th:if="${session.loginMember != null}">
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
-        			<a class="bbtn2 btn-outline-ppink " href="notice.html">글목록</a>
+        		</div>
+        		<div class="text-end mt-3" th:if="${session.loginMember == null}">
+        			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
         		<br>
         		<div class="container-sm mt-3 mb-2">
@@ -134,7 +159,10 @@
               </table>
           	</form>
             <br>
-            
+            <div style="text-align: center">
+            	<a class="bbtn2 btn-outline-ppink " href="notice.html">글목록</a>
+            </div>
+            <br>
     	</div>
     </div>
     <br><br>
@@ -168,3 +196,23 @@
     <script src="js/index.js"></script>
   </body>
 </html>
+
+<script>
+	$(document).ready(() => {
+		$("#btnUpdate").on("click", (e) => {
+			location.href = "/community/update?no=[[${board.boardNo}]]";
+		});
+		
+		$("#btnDelete").on("click", (e) => {
+			if(confirm("정말로 게시글을 삭제 하시겠습니까?")) {
+				location.replace("/community/delete?boardNo=[[${board.boardNo}]]");
+			}
+		});
+	});
+	
+	function deleteReply(replyNo, boardNo){
+		var url = "/replyDel?replyNo=";
+		var requestURL = url + replyNo +"&boardNo=" + boardNo;
+		location.replace(requestURL);
+	}
+</script>

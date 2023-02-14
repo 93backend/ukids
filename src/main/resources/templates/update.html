@@ -55,156 +55,16 @@
   <body class="handheld-toolbar-enabled">
 
     <!-- 로그인 모달 관련  -->
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header bg-secondary">
-            <ul class="nav nav-tabs card-header-tabs" role="tablist">
-              <li class="nav-item"><a class="nav-link fw-medium active logincolor" href="#signin-tab" data-bs-toggle="tab" role="tab" aria-selected="true"><i class="ci-user me-2 mt-n1"></i>일반회원 로그인</a></li>
-              <li class="nav-item"><a class="nav-link fw-medium logincolor" href="#signup-tab" data-bs-toggle="tab" role="tab" aria-selected="false"><i class="ci-book me-2 mt-n1"></i>선생님 로그인</a></li>
-            </ul>
-            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body tab-content py-4">
-            <form class="needs-validation tab-pane fade show active" autocomplete="off" novalidate id="signin-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/8.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-            <form class="needs-validation tab-pane fade" autocomplete="off" novalidate id="signup-tab">
-              <div class="mb-3">
-                <label class="form-label" for="si-email">아이디</label>
-                <input class="form-control" type="email" id="si-email" placeholder="아이디를 입력해주세요." required>
-              </div>
-              <div class="mb-3">
-                <label class="form-label" for="si-password">비밀번호</label>
-                <div class="password-toggle">
-                  <input class="form-control" type="password" id="si-password" required>
-                  <label class="password-toggle-btn" aria-label="Show/hide password">
-                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"></span>
-                  </label>
-                </div>
-              </div>
-              <div class="mb-3 d-flex flex-wrap justify-content-between">
-                <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="si-remember">
-                  <label class="form-check-label" for="si-remember">아이디를 기억하시겠습니까?</label>
-                </div><a class="fs-sm login" href="#">비밀번호 찾기</a>
-              </div>
-              <a href="#"><img class="cgw16 cgw17 cgw18" src="img/ukids/9.png"></a>
-              <button class="btn btn-login btn-shadow d-block cgw17 cgw10" type="submit">로그인</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div th:fragment="modal" th:replace="~{common :: modal}"></div>
 
     <main class="page-wrapper">
 
       <!-- 헤더!!!!!! -->
-      <header class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-
-          <!-- Brand -->
-          <a class="navbar-brand d-none d-lg-block order-lg-1" href="index.html">
-            <img width="65" src="img/ukids/logo.jpg" alt="ukids"/>
-          </a>
-
-          <!-- Toolbar -->
-          <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-
-            <!-- 로그인 전!!!!!!!! -->
-
-            <a href="#signin-modal" data-bs-toggle="modal">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-locked"></i>
-                <span>로그인</span>
-              </button>
-            </a>
-            <a href="join.html">
-              <button type="button" class="btn btn-primary rounded-pill" id="sign">
-                <i class="ci-user me-2"></i>
-                <span class="jointext">회원가입</span>
-              </button>
-            </a>
-
-            <!-- 로그인 후!!!!!!!!!!!! -->
-
-            <!-- <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="mypage.html">
-              <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-              <div class="navbar-tool-text ms-n3"><small>안녕하세요,유키즈님</small><p class="mypg">마이페이지</p></div>
-            </a>
-            
-            <a class="navbar-tool ms-3" href="index.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="ci-unlocked" style="font-size: large; padding-top: 13px;"></i>
-              </div>
-            </a> -->
-
-            <a class="navbar-tool ms-3" href="mypage3.html">
-              <div class="navbar-tool-icon-box bg-secondary">
-                <i class="navbar-tool-icon ci-cart"></i>
-              </div>
-            </a>
-            
-          </div>
-
-          <!-- 메뉴 -->
-          <div class="collapse navbar-collapse me-auto order-lg-2" id="navbarCollapse">
-            <hr class="d-lg-none my-3">
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav1">어린이집/유치원</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="nursery-main.html" >어린이집</a></li>
-                  <li><a class="dropdown-item hmenu" href="kinder-main.html">유치원</a></li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav2">아동관련시설</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="welfare-main.html" >아동복지시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="playground.html">놀이시설</a></li>
-                  <li><a class="dropdown-item hmenu" href="hospital-main.html">병원</a></li>
-
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" id="nav3" href="toy-main.html" >장난감대여</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav4" href="book.html">추천도서</a></li>
-              <li class="nav-item"><a class="nav-link" id="nav5" href="news.html">주요뉴스</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="nav6">커뮤니티</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item hmenu" href="notice.html" >공지사항</a></li>
-                  <li><a class="dropdown-item hmenu" href="community.html ">자유게시판</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <header th:fragment="header" th:replace="~{common :: header}"></header>
 
 
     <!-- 대문-->
-    <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
+    <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(/img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
       <div class="container position-relative zindex-5 mb-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
           <nav aria-label="breadcrumb">
@@ -264,7 +124,7 @@
               <tr>
                 <th class=" align-middle text-center">첨부파일</th>
                 <th class="col-5 text-center"><input class="form-control" type="file" name="upfile" id="file-input"></th>
-                <div if="${board.originalFileName != null}"><br>현재 업로드 파일 :<a>[[${board.originalFileName}]]</a></div>
+                
               </tr>
               <tr>
                 <th class=" align-middle text-center">내용</th>
@@ -276,7 +136,7 @@
           </table>
           <div class="container-sm text-center mb-4">
             <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="등 록">
-            <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" href="community.html" role="button">목록으로</a>
+            <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" href="/community" role="button">목록으로</a>
           </div>
         </form>
       </div>

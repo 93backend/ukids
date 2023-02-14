@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>유키즈 | 자유게시판</title>
+    <title>UKIDS | 자유게시판</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -97,13 +97,13 @@
   <table class="table" style="color: #FC6C93;">
     <thead>
       <tr>
-        <th class="col-1 text-center">번호</th>
-        <th class="col-1 text-center"></th>
-        <th class="col-6 text-center ">제목</th>
-        <th class="col-1 text-center">작성자</th>
-        <th class="text-center">작성일</th>
-        <th class="text-center">추천</th>
-        <th class="text-center">조회</th>
+        <th class="col-1" style="text-align: center">번호</th>
+        <th class="col-1"></th>
+        <th class="col-5">제목</th>
+        <th class="col-1" style="text-align: center">작성자</th>
+        <th class="col-2" style="text-align: center">작성일</th>
+        <th class="col-1" style="text-align: center">추천</th>
+        <th class="col-1" style="text-align: center">조회</th>
       </tr>
     </thead>
     <tbody th:if="${list == null}">
@@ -113,18 +113,18 @@
     </tbody>
     
     <tbody th:if="${list != null}">
-    	<tr th:each="board : ${list}" style="text-align: center;">
-    		<th th:text="${board.boardNo}"></th>
+    	<tr th:each="board : ${list}">
+    		<th th:text="${board.boardNo}" style="text-align: center"></th>
     		<th scope=""  class="text-center"></th>
     		<td>
-    			<a th:href="|/community/view-community?no=${board.boardNo}|">
+    			<a th:href="|/community/view-community?no=${board.boardNo}|" style="color: black;">
     				[[${board.title}]]		
     			</a>
     		</td>    		
-    		<td th:text="${board.id}"></td>
-    		<td th:text="${#dates.format(board.createDate, 'yyyy/MM/dd')}"/></td>
-    		<td>[[${board.good}]]</td>
-    		<td>[[${board.readcount}]]</td>
+    		<td style="text-align: center" th:text="${board.id}"></td>
+    		<td style="text-align: center" th:text="${#dates.format(board.createDate, 'yyyy/MM/dd')}"/></td>
+    		<td style="text-align: center">[[${board.good}]]</td>
+    		<td style="text-align: center">[[${board.readcount}]]</td>
     	</tr>
     </tbody>
   </table>
@@ -197,7 +197,7 @@ $( document ).ready(function() {
 
 	function movePage(pageUrl){
 		const pageTag = $("<input type='hidden' value=" + pageUrl + " name='page' readonly>");
-		$("#toyForm").append(pageTag);
-		$('#toyForm').submit();
+		$("#cummunity").append(pageTag);
+		$('#cummunity').submit();
 	}
 </script>

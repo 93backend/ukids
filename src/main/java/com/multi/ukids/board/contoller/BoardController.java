@@ -152,22 +152,22 @@ public class BoardController {
 		return "common/msg";
 	}
 //	
-//	@RequestMapping("/delete")
-//	public String deleteBoard(Model model,  HttpSession session,
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			int boardNo
-//			) {
-//
-//		int result = service.deleteBoard(boardNo, savePath);
-//		
-//		if(result > 0) {
-//			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
-//		}else {
-//			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
-//		}
-//		model.addAttribute("location", "/community");
-//		return "common/msg";
-//	}
+	@RequestMapping("/community/delete")
+	public String deleteBoard(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			int boardNo
+			) {
+
+		int result = service.deleteBoard(boardNo, savePath);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
+		}else {
+			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "community");
+		return "common/msg";
+	}
 //	
 //	@RequestMapping("/replyDel")
 //	public String deleteReply(Model model, 
@@ -187,85 +187,85 @@ public class BoardController {
 //	}
 //	
 //	// http://localhost/mvc/board/update?no=27
-//	@GetMapping("/community/update")
-//	public String updateView(Model model,
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			@RequestParam("no") int no
-//			) {
-//		Board board = service.findByNo(no);
-//		model.addAttribute("board",board);
-//		return "update";
-//	}
+	@GetMapping("/community/update")
+	public String updateView(Model model,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam("no") int no
+			) {
+		Board board = service.findByNo(no);
+		model.addAttribute("board",board);
+		return "update";
+	}
 //	
 //
-//	@PostMapping("/community/update")
-//	public String updateBoard(Model model, HttpSession session,
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			@ModelAttribute Board board,
-//			@RequestParam("reloadFile") MultipartFile reloadFile
-//			) {
-//		
-//		board.setMemberNo(loginMember.getMemberNo());
-//		
-//		// 파일 저장 로직
-//		if(reloadFile != null && reloadFile.isEmpty() == false) {
-//			// 기존 파일이 있는 경우 삭제
-//			if(board.getRenamedFileName() != null) {
-//				service.deleteFile(savePath + "/" +board.getRenamedFileName());
-//			}
-//			
-//			String renameFileName = service.saveFile(reloadFile, savePath); // 실제 파일 저장하는 로직
-//			
-//			if(renameFileName != null) {
-//				board.setOriginalFileName(reloadFile.getOriginalFilename());
-//				board.setRenamedFileName(renameFileName);
-//			}
-//		}
-//
-//		int result = service.saveBoard(board);
-//
-//		if(result > 0) {
-//			model.addAttribute("msg", "게시글이 수정 되었습니다.");
-//			model.addAttribute("location", "/community/freeboard");
-//		}else {
-//			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
-//			model.addAttribute("location", "/community/freeboard");
-//		}
-//		
-//		return "common/msg";
-//	}
+	@PostMapping("/community/update")
+	public String updateBoard(Model model, HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@ModelAttribute Board board,
+			@RequestParam("reloadFile") MultipartFile reloadFile
+			) {
+		
+		board.setMemberNo(loginMember.getMemberNo());
+		
+		// 파일 저장 로직
+		if(reloadFile != null && reloadFile.isEmpty() == false) {
+			// 기존 파일이 있는 경우 삭제
+			if(board.getRenamedFileName() != null) {
+				service.deleteFile(savePath + "/" +board.getRenamedFileName());
+			}
+			
+			String renameFileName = service.saveFile(reloadFile, savePath); // 실제 파일 저장하는 로직
+			
+			if(renameFileName != null) {
+				board.setOriginalFileName(reloadFile.getOriginalFilename());
+				board.setRenamedFileName(renameFileName);
+			}
+		}
+
+		int result = service.saveBoard(board);
+
+		if(result > 0) {
+			model.addAttribute("msg", "게시글이 수정 되었습니다.");
+			model.addAttribute("location", "/community/freeboard");
+		}else {
+			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
+			model.addAttribute("location", "/community/freeboard");
+		}
+		
+		return "common/msg";
+	}
 //	
-//	@GetMapping("/file/{fileName}")
-//	@ResponseBody
-//	public Resource downloadImage(@PathVariable("fileName") String fileName, Model model) throws IOException {
-//		return new UrlResource("file:" + savePath + fileName);
-//	}
+	@GetMapping("/file/{fileName}")
+	@ResponseBody
+	public Resource downloadImage(@PathVariable("fileName") String fileName, Model model) throws IOException {
+		return new UrlResource("file:" + savePath + fileName);
+	}
 //	
-//	@RequestMapping("/fileDown")
-//	public ResponseEntity<Resource> fileDown(@RequestParam("oriname") String oriname,
-//			@RequestParam("rename") String rename, @RequestHeader(name = "user-agent") String userAgent) {
-//		try {
-//			Resource resource = new UrlResource("file:" + savePath + rename + "");
-//			String downName = null;
-//
-//			// 인터넷 익스플로러 인 경우
-//			boolean isMSIE = userAgent.indexOf("MSIE") != -1 || userAgent.indexOf("Trident") != -1;
-//
-//			if (isMSIE) { // 익스플로러 처리하는 방법
-//				downName = URLEncoder.encode(oriname, "UTF-8").replaceAll("\\+", "%20");
-//			} else {
-//				downName = new String(oriname.getBytes("UTF-8"), "ISO-8859-1"); // 크롬
-//			}
-//			return ResponseEntity.ok()
-//					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + downName + "\"")
-//					.header(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()))
-//					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString()).body(resource);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
-//	}
+	@RequestMapping("/fileDown")
+	public ResponseEntity<Resource> fileDown(@RequestParam("oriname") String oriname,
+			@RequestParam("rename") String rename, @RequestHeader(name = "user-agent") String userAgent) {
+		try {
+			Resource resource = new UrlResource("file:" + savePath + rename + "");
+			String downName = null;
+
+			// 인터넷 익스플로러 인 경우
+			boolean isMSIE = userAgent.indexOf("MSIE") != -1 || userAgent.indexOf("Trident") != -1;
+
+			if (isMSIE) { // 익스플로러 처리하는 방법
+				downName = URLEncoder.encode(oriname, "UTF-8").replaceAll("\\+", "%20");
+			} else {
+				downName = new String(oriname.getBytes("UTF-8"), "ISO-8859-1"); // 크롬
+			}
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=\"" + downName + "\"")
+					.header(HttpHeaders.CONTENT_LENGTH, String.valueOf(resource.contentLength()))
+					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM.toString()).body(resource);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
+	}
 //
 
 }
