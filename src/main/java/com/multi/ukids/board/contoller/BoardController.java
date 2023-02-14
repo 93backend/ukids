@@ -228,6 +228,12 @@ public class BoardController {
 		String type = param.get("type");
 		Board board = service.findByNo(no);
 		
+		if(type.equals("freeboard")) {
+			model.addAttribute("location", "/community/freeboard?type=freeboard");
+		} else {
+			model.addAttribute("location", "/community/notice?type=notice");
+		}
+		
 		model.addAttribute("board",board);
 		return "update";
 	}
@@ -240,13 +246,8 @@ public class BoardController {
 			@RequestParam Map<String, String> param,
 			@RequestParam(value="reloadFile", required=false) MultipartFile reloadFile
 			) {
+		System.out.println(board);
 		String type = param.get("type");
-		
-		if(type.equals("freeboard")) {
-			model.addAttribute("location", "/community/freeboard?type=freeboard");
-		} else {
-			model.addAttribute("location", "/community/notice?type=notice");
-		}
 		
 		board.setMemberNo(loginMember.getMemberNo());
 		
@@ -268,9 +269,9 @@ public class BoardController {
 		int result = service.saveBoard(board);
 		
 		if(type.equals("freeboard")) {
-			model.addAttribute("location", "/community/freeboard?type=freeboard");
+			model.addAttribute("location", "/community/freeboard?no=" +board.getBoardNo()+"&type=freeboard");
 		} else {
-			model.addAttribute("location", "/community/notice?type=notice");
+			model.addAttribute("location", "/community/notice?no=" +board.getBoardNo()+"&type=notice");
 		}
 		
 		if(result > 0) {

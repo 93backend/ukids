@@ -75,7 +75,7 @@
         </div>
         <div class="row justify-content-center pt-4 pb-4">
           <div class="col-lg-8">
-            <h1 class="text-light text-center">자유게시판</h1>
+            <h1 class="text-light text-center">상세보기</h1>
           </div>
         </div>
       </div>
@@ -125,13 +125,27 @@
 					</th:block>
         		</div>
         		<div class="mt-2 box4">
-        			<span class="container-sm">[[${board.content}]]</span>
+        			<div>[[${board.content}]]</div>
         		</div>
-        		<div class="text-end mt-3" th:if="${session.loginMember != null}">
+        		<div class="text-end mt-3" th:if="${(session.loginMember.role == 'ROLE_ADMIN')}">
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
+        		<!--  <div class="text-end mt-3" th:if="${type='notice'}">
+        			<div th:if="${session.loginMember.role != null}">
+        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
+        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
+        				<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
+        			</div>
+        		</div>
+        		<div class="text-end mt-3" th:if="${type='freeboard'}">
+        			<div th:if="${session.loginMember != null}">
+        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
+        				<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
+        				<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
+        			</div>
+        		</div>-->
         		<br>
         		<div class="container-sm mt-3 mb-2">
         			<table>
@@ -156,8 +170,8 @@
               </table>
           	</form>
             <br>
-            <div style="text-align: center">
-            	<a class="bbtn2 btn-outline-ppink " href="notice.html">글목록</a>
+            <div style="text-align: center" >
+            	<a class="bbtn2 btn-outline-ppink " href="/community/freeboard">글목록</a>
             </div>
             <br>
     	</div>

@@ -118,7 +118,7 @@
 		UPDATE BOARD SET readcount=#{readcount} WHERE boardNo=#{boardNo}
 	</update>
 	
-	<update id="updateBoard" parameterType="Board">
+	<update id="updateBoard" parameterType="board">
 		UPDATE BOARD
 		SET
 			title=#{title},
