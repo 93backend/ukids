@@ -21,4 +21,5 @@ public class Toy {
     private String toyCategoryM;	 //중분류    	  
 	private String toyCategoryS;	 //소분류    	  
     private String toyType;          //대여여부
+    private String status;           //대여상태
 }

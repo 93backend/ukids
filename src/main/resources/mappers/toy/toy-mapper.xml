@@ -17,6 +17,7 @@
       <result property="toyCategoryM" column="TOYCATEGORYM"/>
       <result property="toyCategoryS" column="TOYCATEGORYS"/>
       <result property="toyType" column="TOYTYPE"/>
+      <result property="status"    column="STATUS"/>
    </resultMap>
     
     <resultMap type="T_Review" id="ToyReviewResultMap">
@@ -128,14 +129,14 @@
    <insert id="insertPay" parameterType="Pay" useGeneratedKeys="true"  keyProperty="payNo" keyColumn="PAYNO">
       INSERT INTO PAY (
          MEMBERNO, TOYNO, PRICE, NAME, PHONE, POSTCODE, 
-         ADDRESS, REQUEST, METHOD, STARTDATE, ENDDATE, ADDRESS2,STATUS) 
+         ADDRESS, REQUEST, METHOD, STARTDATE, ENDDATE, ADDRESS2) 
       VALUES(#{memberNo},#{toyNo},#{price},#{name},#{phone},
-      #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2},#{status})
+      #{postCode},#{address},#{request},#{method},#{startDate},#{endDate},#{address2})
       
    </insert>
    
    <update id="updateToyType" parameterType="int">
-   	   UPDATE TOY SET TOYTYPE = '대여중' WHERE TOYNO = #{toyNo}
+   	   UPDATE TOY SET TOYTYPE = '대여중', STATUS = 'A' WHERE TOYNO = #{toyNo}
    </update>
    
    
