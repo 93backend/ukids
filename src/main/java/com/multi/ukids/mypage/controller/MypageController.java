@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -169,6 +171,15 @@ public class MypageController {
 		model.addAttribute("tnlist", tnlist);
 		model.addAttribute("tnPageInfo", tnPageInfo);
 		
+		
+		int tkcount = service.getTKAdmissionCount(param);
+		PageInfo tkpageInfo = new PageInfo(tkPage, 5, tkcount, 8);
+		List<KAdmission> tklist = service.getTKAdmissionList(tkpageInfo, param);
+		
+		System.out.println("tklist(입소신청) : " + tklist);
+		model.addAttribute("tklist", tklist);
+		model.addAttribute("tkPageInfo", tkpageInfo);
+		
 		int admissionCount = ncount + kcount;
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
@@ -185,6 +196,19 @@ public class MypageController {
 
 		return "mypage-2";
 	}
+	
+//	@GetMapping("")
+//	public ResponseEntity<List<NAdmission>> getNAdmissionInfo(Model model, 
+//			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
+//			@RequestParam Map<String, String> param, int no) {
+//		if(param == null) {
+//			List<NAdmission> list = service.getNAdmissionList(null, param);
+//			return ResponseEntity.status(HttpStatus.OK).body(list);
+//		} else {
+//			List<NAdmission> list = service.getselectNurseryName(no);
+//			return ResponseEntity.status(HttpStatus.OK).body(list);
+//		}
+//	}
 	
 //	@PostMapping("/nAdmission/search")
 //	public String searchNAdmission(Model model,
@@ -266,6 +290,44 @@ public class MypageController {
 		int no = Integer.parseInt(param.get("no"));
 		
 		int result = service.updateTNurseryAdmissionN(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "입소거절처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소거절처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-2");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/updateTKinderAdmissionY")
+	public String updateTKinderAdmissionY(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int no = Integer.parseInt(param.get("no"));
+		
+		int result = service.updateTKinderAdmissionY(no);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "입소확정처리가 정상적으로 진행되었습니다.");
+		} else {
+			model.addAttribute("msg", "입소확정처리 진행에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/mypage-2");
+		
+		return "common/msg";
+	}
+	
+	@RequestMapping("/updateTKinderAdmissionN")
+	public String updateTKinderAdmissionN(Model model,  HttpSession session,
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+			@RequestParam Map<String, String> param
+	) {
+		int no = Integer.parseInt(param.get("no"));
+		
+		int result = service.updateTKinderAdmissionN(no);
 		
 		if(result > 0) {
 			model.addAttribute("msg", "입소거절처리가 정상적으로 진행되었습니다.");

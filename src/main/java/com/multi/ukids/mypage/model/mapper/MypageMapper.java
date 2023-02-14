@@ -20,9 +20,12 @@ public interface MypageMapper {
 	
 	// mypage2 - 입소 신청 조회
 	List<KAdmission> selectKAdmissionList(Map<String, String> map);
-	List<KAdmission> selectAllKAdmissionList(Map<String, String> map);
+	List<KAdmission> selectTKAdmissionList(Map<String, String> map);
 	int selectKAdmissionCount(Map<String, String> map);
+	int selectTKAdmissionCount(Map<String, String> map);
 	int deleteKAdmission(int no);
+	int updateTKinderAdmissionY(int no);
+	int updateTKinderAdmissionN(int no);
 	
 	List<NAdmission> selectNAdmissionList(Map<String, String> map);
 	List<NAdmission> selectTNAdmissionList(Map<String, String> map);

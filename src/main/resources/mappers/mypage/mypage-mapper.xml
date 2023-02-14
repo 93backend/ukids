@@ -67,15 +67,17 @@
 		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
 		LEFT OUTER JOIN MEMBER M ON (A.memberNo = M.memberNo)
 		where A.memberNo = #{memberNo}
-		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+		ORDER BY A.kinNo DESC LIMIT ${limit} OFFSET ${offset}	
 	</select>
 	
-	<select id="selectAllKAdmissionList" resultType="KAdmission" parameterType="map">
+	<select id="selectTKAdmissionList" resultType="KAdmission" parameterType="map">
 		SELECT
 			K.kinNo, K.kindername, A.no, A.hopeDate, A.enrollDate, A.status, A.memberNo 
 		FROM KINDER K
 		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
-		ORDER BY kinNo DESC LIMIT ${limit} OFFSET ${offset}	
+		LEFT OUTER JOIN MEMBER M ON (K.kinderCode = M.fieldCd)
+		WHERE K.kinderCode = M.fieldCd
+		ORDER BY A.kinNo DESC LIMIT ${limit} OFFSET ${offset}
 	</select>
 	
 	<select id="selectKAdmissionCount" resultType="int" parameterType="map">
@@ -87,6 +89,22 @@
 		WHERE 1=1
 		AND A.memberNo = #{memberNo}
 	</select> 
+	
+	<select id="selectTKAdmissionCount" resultType="int" parameterType="map">
+		SELECT
+			COUNT(*)
+		FROM KINDER K
+		LEFT OUTER JOIN K_ADMISSION A ON (K.kinNo = A.kinNo)
+		LEFT OUTER JOIN MEMBER M ON (K.kinderCode = M.fieldCd)
+		WHERE K.kinderCode = M.fieldCd
+	</select> 
+	
+	<update id="updateTKinderAdmissionY" parameterType="int">
+		UPDATE K_ADMISSION SET STATUS = 'Y' WHERE no = #{no}
+	</update>
+	<update id="updateTKinderAdmissionN" parameterType="int">
+		UPDATE K_ADMISSION SET STATUS = 'N' WHERE no = #{no}
+	</update>
 	
 	<delete id="deleteKAdmission" parameterType="int">
 		DELETE FROM K_ADMISSION WHERE no = #{no}

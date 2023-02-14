@@ -143,7 +143,7 @@
                       class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
-                      class="fs-sm text-muted ms-auto">]</span></a></li>
+                      class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0">
                   <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
                       class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i class="ci-sign-out me-2"></i>로그아웃</a>
@@ -230,7 +230,7 @@
 										</button>
 										</th:block>
 										<th:block th:if="${nadmission.status == 'Y'}">
-										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										<span class="badge-cgw2 bg-secondary m-0">입소변경불가</span>
 										</th:block>
 									</td>
 								</tr>
@@ -376,8 +376,9 @@
 
 
 
-
+					<!-- 어린이집 선생님 -->
 					<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+					<th:block th:if="${session.loginMember.field == '어린이집'}">
 					<div class="table-responsive fs-md mb-4">
 						<h5 class="v-line ps-2">입소 신청 목록</h5>
 						<br>
@@ -411,48 +412,132 @@
 										<span th:if="${nadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
 									</td>
 									<td class="py-3 cgw9">
-										<th:block th:if="${nadmission.status != 'Y'}">
-										<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteNAdmission([[${nadmission.no}]]);">
-											<span>입소신청취소</span>
-										</button>
+										<th:block th:if="${nadmission.status == 'W'}">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="updateTNurseryAdmissionY([[${nadmission.no}]]);">수락</button>&nbsp;
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="updateTNurseryAdmissionN([[${nadmission.no}]]);">거절</button>
 										</th:block>
-										<th:block th:if="${nadmission.status == 'Y'}">
+										<th:block th:if="${nadmission.status != 'W'}">
 										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
 										</th:block>
 									</td>
 								</tr>
-								 <th:block th:if="${tnlist.size != 0}">
+								 
+						          <br>
+						        </th:block>
+							</tbody>
+						</table>
+					
+					
+					<th:block th:if="${tklist.size != 0}">
 						         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
 						            <ul class="pagination" id="prev">
-						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
 						            </ul>
 						            <ul class="pagination">
 						              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
 						              
-						              <th:block th:each="num, status : ${#numbers.sequence(tnPageInfo.startPage, tnPageInfo.endPage)}">
-							                	<th:block th:if="${status.current == tnPageInfo.currentPage}">
+						              <th:block th:each="num, status : ${#numbers.sequence(tkPageInfo.startPage, tkPageInfo.endPage)}">
+							                	<th:block th:if="${status.current == tkPageInfo.currentPage}">
 									                <li class="page-item d-none d-sm-block page" aria-current="page">
 									                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
 									                </li>
 							                	</th:block>
-							                	<th:block th:if="${status.current != tnPageInfo.currentPage}">
-									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${status.current}');|">[[${status.current}]]</button></li>
+							                	<th:block th:if="${status.current != tkPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-4?tkPage=${status.current}');|">[[${status.current}]]</button></li>
 							                	</th:block>
 							                </th:block>
 						            </ul>
 						            <ul class="pagination">
-						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-4?tnPage=${tnPageInfo.nextPage}');|" aria-label="Next">Next<i
+						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.nextPage}');|" aria-label="Next">Next<i
 						                    class="ci-arrow-right ms-2"></i></button></li>
 						            </ul>
 						          </nav>  
-						          <br>
-						          </th:block>
-								</th:block>
-							</tbody>
-						</table>
+					</th:block>
 					</div>
 					</th:block>
-
+					</th:block>
+					
+					
+					
+					<!-- 유치원 선생님 -->
+					<th:block th:if="${session.loginMember.role == 'ROLE_T'}">
+					<th:block th:if="${session.loginMember.field == '유치원'}">
+					<div class="table-responsive fs-md mb-4">
+						<h5 class="v-line ps-2">입소 신청 목록</h5>
+						<br>
+						<table class="table table-hover mb-0" id="addNList">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9">신청일자</th>
+									<th class="cgw8 cgw9">입소희망 예정일</th>
+									<th class="cgw8 cgw9">신청 상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${tklist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${tklist.size != 0}">
+								<tr th:each="kadmission, stat : ${tklist}">
+									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
+									<td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw26"
+										th:href="@{|/kinder-detail?&no=${kadmission.kinNo}&i=${stat.count}|}">[[${kadmission.kinderName}]]</a></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.enrollDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.hopeDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${kadmission.status == 'Y'}" class="badge bg-success m-0">입소확정</span>
+										<span th:if="${kadmission.status == 'N'}" class="badge bg-danger m-0">신청실패</span>
+										<span th:if="${kadmission.status == 'W'}" class="badge bg-info m-0">대기중</span>
+									</td>
+									<td class="py-3 cgw9">
+										<th:block th:if="${kadmission.status == 'W'}">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="updateTKinderAdmissionY([[${kadmission.no}]]);">수락</button>&nbsp;
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="updateTKinderAdmissionN([[${kadmission.no}]]);">거절</button>
+										</th:block>
+										<th:block th:if="${kadmission.status != 'W'}">
+										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										</th:block>
+									</td>
+								</tr>
+								 
+						          <br>
+						        </th:block>
+							</tbody>
+						</table>
+					
+					
+					<th:block th:if="${tklist.size != 0}">
+						         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+						            <ul class="pagination" id="prev">
+						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+						            </ul>
+						            <ul class="pagination">
+						              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+						              
+						              <th:block th:each="num, status : ${#numbers.sequence(tkPageInfo.startPage, tkPageInfo.endPage)}">
+							                	<th:block th:if="${status.current == tkPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block page" aria-current="page">
+									                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+									                </li>
+							                	</th:block>
+							                	<th:block th:if="${status.current != tkPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-4?tkPage=${status.current}');|">[[${status.current}]]</button></li>
+							                	</th:block>
+							                </th:block>
+						            </ul>
+						            <ul class="pagination">
+						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.nextPage}');|" aria-label="Next">Next<i
+						                    class="ci-arrow-right ms-2"></i></button></li>
+						            </ul>
+						          </nav>  
+					</th:block>
+					</div>
+					</th:block>
+					</th:block>
 
 
 				</section>
@@ -510,9 +595,29 @@
 			}
     	}
 		
+		function updateTKinderAdmissionY(no) {
+    		var url = "/updateTKinderAdmissionY?no=" + no;
+			if(confirm("정말로 입소를 수락하시겠습니까?")) {
+				location.replace(url);
+			}
+    	}
+		
+		function updateTKinderAdmissionN(no) {
+    		var url = "/updateTKinderAdmissionN?no=" + no;
+			if(confirm("정말로 입소를 거절하시겠습니까?")) {
+				location.replace(url);
+			}
+    	}
+		
 		tnPage = '[[${tnPageInfo.currentPage}]]';
 		function movetNPage(pageUrl){
 			pageUrl += '&tnPage=' + tnPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		
+		tkPage = '[[${tkPageInfo.currentPage}]]';
+		function movetKPage(pageUrl){
+			pageUrl += '&tkPage=' + tkPage 
 			location.href = encodeURI(pageUrl);	
 		}
 	</script>

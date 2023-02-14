@@ -38,13 +38,33 @@ public class MypageService {
 		return mapper.selectKAdmissionList(map);
 	}
 	
+	public List<KAdmission> getTKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
+		map.put("limit", ""+pageInfo.getListLimit());
+		map.put("offset", ""+(pageInfo.getStartList() - 1));
+		return mapper.selectTKAdmissionList(map);
+	}
+	
 	public int getKAdmissionCount(Map<String, String> map) {
 		return mapper.selectKAdmissionCount(map);
+	}
+	
+	public int getTKAdmissionCount(Map<String, String> map) {
+		return mapper.selectTKAdmissionCount(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteKAdmission(int no) {
 		return mapper.deleteKAdmission(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTKinderAdmissionY(int no) {
+		return mapper.updateTKinderAdmissionY(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTKinderAdmissionN(int no) {
+		return mapper.updateTKinderAdmissionN(no);
 	}
 	
 	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
