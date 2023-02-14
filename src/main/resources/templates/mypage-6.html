@@ -104,7 +104,6 @@
 								<h3 class="fs-sm mb-0 text-muted">마이페이지</h3>
 							</div>
 							<ul class="list-unstyled mb-0">
-							<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
@@ -141,37 +140,6 @@
 											class="ci-sign-out me-2"></i>로그아웃</a>
 									</div>
 								</li>
-								</th:block>
-								 <th:block th:if="${session.loginMember.role != 'ROLE_USER'}">
-								 <li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보
-										수정</a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
-										신고 조회<span class="fs-sm text-muted ms-auto">[[${claimCount}]]</span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가
-										쓴 게시글<span class="fs-sm text-muted ms-auto">[[${boardCount}]]</span></a></li>
-								<li class="border-bottom mb-0">
-									<div class="cgw3 d-flex align-items-center px-4 py-3">
-										<i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
-											class="fs-sm text-muted ms-auto">[[${rentalCount}]]</span>
-									</div>
-								</li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
-										class="fs-sm text-muted ms-auto">[[${cartCount}]]</span></a></li>
-								<li class="border-bottom mb-0">
-									<div class="nav-link-style d-flex align-items-center px-4 py-2">
-										<a class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i
-											class="ci-sign-out me-2"></i>로그아웃</a>
-									</div>
-								</li>
-								</th:block>
 							</ul>
 						</div>
 					</div>
@@ -197,12 +165,11 @@
                 </tr>
               </thead>
               <tbody>
-				<th:block th:if="${paylist.size == 0}">
+				<th:block th:if="${paylist == null}">
 					<tr>
-						<td colspan="8" class="cgw9">조회된 대여내역이 없습니다.</td>
+						<td colspan="5">조회된 대여내역이 없습니다.</td>
 					</tr>
 				</th:block>
-				<th:block th:if="${paylist.size != 0}">
 				<th:block th:each="pay,payState:${paylist}" th:with="cnt=0">
 					<input type="hidden" th:value="${pay.toyList.size}" th:id="cntToyPay+${payState.index}">
 					<th:block th:each="toyEach,toyEachState:${pay.toyList}">
@@ -210,7 +177,7 @@
 	                	<input th:value="${pay.cntList[toyEachState.index]}" type="hidden">
 	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#"><img class="cgw21" th:src="${toyEach.toyImg}"></a>
 	                  </td>
-	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" th:href="@{|/toy-detail?no=${toyEach.toyNo}|}" style="display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
+	                  <td class="py-3 cgw9 cgw22"><a class="cgw4" href="#" style="display:inline-block;width:120px;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
 	                  [[${toyEach.toyNm1}]]</a></td>
 	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]</td>
 	                  <td class="py-3 cgw9 cgw22">[[${pay.startDateList[toyEachState.index]}]]<br>~[[${pay.endDateList[toyEachState.index]}]]</td>
@@ -218,21 +185,21 @@
 	                  <td class="py-3 cgw9 cgw22">[[${pay.price}]]</td>
 	                  <td class="py-3 cgw9 cgw22">
 		     		  
-		     		   <th:block th:if="${toyEach.status == 'Y'}">
+		     		   <th:block th:if="${pay.status == 'Y'}">
 	                    <div class="">대여중</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalUpdate([[${pay.payNo}]]);">반납하기</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">반납하기</button>
 	                  </th:block>
-	                  <th:block th:if="${toyEach.status == 'A'}">
+	                  <th:block th:if="${pay.status == 'A'}">
 	                    <div class="">주문완료</div>
-	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30" th:onclick="rentalDelete([[${pay.payNo}]], [[${toyEach.toyNo}]]);">대여취소</button>
+	                    <button type="button" class="badge-cgw1 bg-secondary-cgw1 m-0 cgw30">대여취소</button>
 	                  </th:block>
-	                  <th:block th:if="${toyEach.status == 'N'}">
+	                  <th:block th:if="${pay.status == 'N'}">
 	                    <div class="">반납완료</div>
 	                  </th:block>
-	                  <th:block th:if="${toyEach.status == 'R'}">
+	                  <th:block th:if="${pay.status == 'R'}">
 	                    <div class="">반납중</div>
 	                  </th:block>
-	                  <th:block th:if="${toyEach.status == 'T'}">
+	                  <th:block th:if="${pay.status == 'T'}">
 	                    <div class="">배송중</div>
 	                  </th:block>
 		     		  
@@ -240,13 +207,13 @@
 	                </tr>
 	                </th:block>
                 </th:block>
-                </th:block>
+                
               </tbody>
             </table>
           </div>
           
 
-		<th:block th:if="${paylist.size != 0}">
+
  			<!-- pagination -->
           <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
             <ul class="pagination">
@@ -262,7 +229,6 @@
                     class="ci-arrow-right ms-2"></i></a></li>
             </ul>
           </nav>
-          </th:block>
         </section>
       </div>
     </div>
