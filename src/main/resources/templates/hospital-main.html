@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <title>UKIDS | 병원</title>
-    <!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio">-->
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -53,11 +49,10 @@
     
     <main class="page-wrapper">
 
-      <!-- 헤더!!!!!! -->
+      <!-- 헤더 -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
       
-      <!-- Page Title (Shop Alt)-->
-      <!-- used for shop templates with filters on top-->
+      <!-- Page Title -->
       <section class="bg-position-top-center bg-repeat-0 bg-size-cover py-5" style="background-image: url('img/ukids/facility/hospital-main-header.jpg'); height: 300px;">
         <div class="pt-0 pb-5">
           <div class="container pt-0  pt-lg-0">
@@ -79,6 +74,7 @@
         </div>
       </section>
 
+			<!-- 병원 검색  -->
       <section class="container position-relative pt-3 pt-lg-0 mt-lg-n5" style="z-index: 10;">
         <form th:action="@{/hospital-main}" method="GET">
           <!-- Toolbar-->
@@ -127,9 +123,8 @@
         </form>
       </section>
 
+			<!-- 병원 목록  -->
       <div class="container pb-5">
-        <!-- ========================================================================= 병원 목록 ======================================================================================= -->
-        <!-- Products grid-->
         <div class="row pt-3 mx-n2">
         
 					<!-- 검색결과 X -->
@@ -189,38 +184,38 @@
           	</th:block>
           </th:block>
         
-        <hr class="mb-3">
+        	<hr class="mb-3">
         
-        <!-- Pagination-->
-        <th:block th:if="${count != 0}">
-	        <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
-	          <ul class="pagination" id="prev">
-	            <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.prevPage});|" aria-label="Prev"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-	          </ul>
-	          <ul class="pagination">
-	          	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-               	<th:block th:if="${status.current == pageInfo.currentPage}">
-	                <li class="page-item d-none d-sm-block page" aria-current="page">
-	                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
-	                </li>
-               	</th:block>
-               	<th:block th:if="${status.current != pageInfo.currentPage}">
-	                <li class="page-item d-none d-sm-block">
-	                	<a class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a>
-	                </li>
-               	</th:block>
-               </th:block>
-	          </ul>
-	          <ul class="pagination" id="next">
-	            <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.nextPage});|" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
-	          </ul>
-	        </nav>
-        </th:block>
+	        <!-- Pagination-->
+	        <th:block th:if="${count != 0}">
+		        <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+		          <ul class="pagination" id="prev">
+		            <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.prevPage});|" aria-label="Prev"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+		          </ul>
+		          <ul class="pagination">
+		          	<th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+	               	<th:block th:if="${status.current == pageInfo.currentPage}">
+		                <li class="page-item d-none d-sm-block page" aria-current="page">
+		                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+		                </li>
+	               	</th:block>
+	               	<th:block th:if="${status.current != pageInfo.currentPage}">
+		                <li class="page-item d-none d-sm-block">
+		                	<a class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a>
+		                </li>
+	               	</th:block>
+	               </th:block>
+		          </ul>
+		          <ul class="pagination" id="next">
+		            <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.nextPage});|" aria-label="Next">Next<i class="ci-arrow-right ms-2"></i></a></li>
+		          </ul>
+		        </nav>
+	        </th:block>
         
+      	</div>
       </div>
     </main>
     
-    <!-- ======================================= 푸터 =======================================-->
     <!-- Footer-->
     <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 

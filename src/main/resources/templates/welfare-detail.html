@@ -1,12 +1,8 @@
 <!DOCTYPE html> 
-<html lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <title>UKIDS | 아동복지시설</title>
-    <!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio"> -->
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -47,7 +43,6 @@
 
   </head>
 
-  <!-- Body-->
   <body class="handheld-toolbar-enabled">
 
     <!-- 로그인 모달 관련  -->
@@ -55,10 +50,9 @@
     
     <main class="page-wrapper">
 
-      <!-- 헤더!!!!!! -->
+      <!-- 헤더 -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
 
-      <!-- 아동복지시설 상세 시작!!!!!!! -->
       <!-- Page Title-->
       <section class="position-relative bg-dark bg-size-cover bg-position-center-x py-5 mb-4" id="mainImg">
         <div class="container position-relative zindex-5 mb-3">
@@ -77,17 +71,14 @@
         </div>
       </section>
 
-
-
-      <!-- Shadow box-->
       <section class="container mb-5 pb-5">
         <div class="bg-light shadow-lg rounded-3 overflow-hidden">
           <div class="row">
-            <!-- 상제정보!!!!!!-->
 
               <div class="pt-4 px-4 pe-lg-0 ps-xl-5">
-                <!-- Product gallery-->
                 <div class="gallery">
+                
+                	<!-- 이미지 -->
                   <h4 class="weltitle fw-bold"><img class="wfIcon" src="img/ukids/welfareIcon.png">[[${welfare.fcltNm}]]</h4>
                   <div class="welfarebox">
                     <a class="gallery-item rounded-3 mb-grid-gutter" th:href="|img/ukids/facility/welfare/wf${imgIdx}.jpg|">
@@ -95,7 +86,9 @@
                       <span class="gallery-item-caption">[[${welfare.fcltNm}]]</span>
                     </a>
                   </div>
+                  
                   <div class="row">
+                  	<!-- 지도 -->
                     <div class="col-sm-6 mx-1 underdiv">
                       <div style="display: flex;"><h4 class="location fw-bold">찾아오시는 곳</h4><img class="line"src="img/ukids/2.PNG"></div>
                       <div id="map"></div>
@@ -152,15 +145,10 @@
                         </script>
                     </div>
 
+										<!-- 상세 정보 -->
                     <div class="col-sm-6 underdiv" style="width:510px">
                       <div style="display: flex; margin-bottom: 2px;"><h4 class="location fw-bold">상세정보</h4><img class="line2"src="img/ukids/2.PNG"></div>
                       <div class="detailInfo">
-                      
-                      		<!-- 
-                      		성남시 다함께돌봄센터 22호점(더샵판교포레스트11단지 어린이식당)
-                      		경기도 평택시 비전2로 317, 주민공동시설동 2층 (죽백동, 평택소사벌 반도유보라 아이비파크 (2단지))
-                      		 -->
-                      
                       		<dl>
 	                          <div>
 	                            <dt><i class="ci-store"></i>시설명</dt>
@@ -196,11 +184,10 @@
 	                            <dd>[[${welfare.fcltAddr} + ' ' + ${welfare.fcltDtl_1Addr}]]</dd>
 	                          </div>
 	                        </dl>
-                          
                       </div>
                     </div>
-                    
                   </div>
+                  
                 </div>
               </div> 
 
@@ -249,11 +236,9 @@
           </div>
         </div>
       </section>
-      
 
     </main>
 
-    <!-- 푸터!!!!!!!!!!-->
     <!-- Footer-->
     <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
     

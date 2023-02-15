@@ -18,9 +18,7 @@ import com.multi.ukids.hospital.model.service.HospitalService;
 import com.multi.ukids.hospital.model.vo.Hospital;
 import com.multi.ukids.hospital.model.vo.NightCare;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class HospitalController {
 	@Autowired
@@ -92,9 +90,6 @@ public class HospitalController {
 		model.addAttribute("hpImgIdx", hpImgIdx);
 		model.addAttribute("ncImgIdx", ncImgIdx);
 		
-		log.info("hpList : " + hpList.size());
-		log.info("ncList : " + ncList.size());
-		
 		return "hospital-main";
 	}
 	
@@ -160,9 +155,6 @@ public class HospitalController {
 		model.addAttribute("nearNightCareList", nearNightCareList);
 		model.addAttribute("nearHpImgIdx", nearHpImgIdx);
 		model.addAttribute("nearNcImgIdx", nearNcImgIdx);
-		
-		log.info("nearHospitalList : " + nearHospitalList.size());
-		log.info("nearNightCareList : " + nearNightCareList.size());
 		
 		return "hospital-detail";
 	}

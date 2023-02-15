@@ -3,10 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>UKIDS | 아동복지시설</title>
-    <!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio">-->
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -54,11 +50,10 @@
     
     <main class="page-wrapper">
 
-      <!-- 헤더!!!!!! -->
+      <!-- 헤더 -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
       
-      <!-- Page Title (Shop Alt)-->
-      <!-- used for shop templates with filters on top-->
+      <!-- Page Title -->
       <section class="bg-position-top-center bg-repeat-0 bg-size-cover py-5" style="background-image: url('img/ukids/facility/welfare-main-header.jpg'); height: 300px;">
         <div class="pt-0 pb-5">
           <div class="container pt-0  pt-lg-0">
@@ -80,7 +75,7 @@
         </div>
       </section>
       
-      <!-- 검색 -->
+      <!-- 복지시설 검색 -->
       <section class="container position-relative pt-3 pt-lg-0 mt-lg-n5" style="z-index: 10;">
         <form th:action="@{/welfare-main}" method="GET">
           <!-- Toolbar-->
@@ -126,10 +121,9 @@
       </section>
 
 
-			<!-- ========================================================================= 복지시설 목록 ======================================================================================= -->
+			<!-- 복지시설 목록 -->
       <div class="container pb-5">
         
-        <!-- Products grid-->
         <div class="row pt-3 mx-n2">
         	<!-- 검색결과 X -->
         	<th:block th:if="${count == 0}">
@@ -196,7 +190,6 @@
       </div>
     </main>
 
-    <!-- ======================================= 푸터 =======================================-->
     <!-- Footer-->
     <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 

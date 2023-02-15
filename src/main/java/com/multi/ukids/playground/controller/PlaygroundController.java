@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.multi.ukids.playground.model.service.PlaygroundService;
 import com.multi.ukids.playground.model.vo.Playground;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class PlaygroundController {
 	
@@ -26,9 +24,6 @@ public class PlaygroundController {
 		List<Playground> list = playgroundService.getPlaygroundList(param);
 		
 		model.addAttribute("list", list);
-		
-		log.info(param.toString());
-		log.info("list : " + Integer.toString(list.size()));
 		
 		return "playground";
 	}

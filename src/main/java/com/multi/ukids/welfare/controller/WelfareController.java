@@ -1,6 +1,5 @@
 package com.multi.ukids.welfare.controller; 
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +15,7 @@ import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.welfare.model.service.WelfareService;
 import com.multi.ukids.welfare.model.vo.Welfare;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class WelfareController {
 	
@@ -64,10 +61,6 @@ public class WelfareController {
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("imgIdx", imgIdx);
-		
-		log.info("param : " + param.toString());
-		log.info("count : " + Integer.toString(count));
-		log.info(Arrays.toString(imgIdx));
 		
 		return "welfare-main";
 	}

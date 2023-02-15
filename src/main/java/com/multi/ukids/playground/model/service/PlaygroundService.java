@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.multi.ukids.playground.model.mapper.PlaygroundMapper;
 import com.multi.ukids.playground.model.vo.Playground;
-import com.multi.ukids.welfare.model.vo.Welfare;
 
 @Service
 public class PlaygroundService {
