@@ -536,7 +536,7 @@
             </div>
 
             <!-- 추천도서 -->
-            <div id="book" class="col-lg-4 col-sm-6 mb-grid-gutter">
+           <div id="book" class="col-lg-4 col-sm-6 mb-grid-gutter">
               <div class="card p-3 border shadow">
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-3">
                   <h2 class="h4 mb-0 fw-bold"></i>추천도서</h2>
@@ -544,9 +544,9 @@
                 </div>
                 <div class="book-slide tns-carousel tns-controls-static tns-nav-enabled tns-nav-inside mb-4 mx-n2">
                   <div class="tns-carousel-inner" data-carousel-options="{&quot;controls&quot;: true}">
-                    <div class="px-2"><a href="book.html"><img class="border rounded-3" src="img/ukids/index/도서1.JPG" alt="Book"></a></div>
-                    <div class="px-2"><a href="book.html"><img class="border rounded-3" src="img/ukids/index/도서1.JPG" alt="Book"></a></div>
-                    <div class="px-2"><a href="book.html"><img class="border rounded-3" src="img/ukids/index/도서1.JPG" alt="Book"></a></div>
+                    <div class="px-2"><a th:href="@{/book?searchType=bookname&searchValue=강아지똥&age=0}"><img class="border rounded-3" src="img/ukids/book/book1.JPG"></a></div>
+                    <div class="px-2"><a th:href="@{/book?searchType=bookname&searchValue=구름빵&age=0}"><img class="border rounded-3" src="img/ukids/book/book2.JPG"></a></div>
+                    <div class="px-2"><a th:href="@{/book?searchType=bookname&searchValue=100층짜리&age=0}"><img class="border rounded-3" src="img/ukids/book/book3.JPG"></a></div>
                   </div>
                 </div>
               </div>
