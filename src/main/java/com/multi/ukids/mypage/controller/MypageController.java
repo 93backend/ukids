@@ -47,6 +47,8 @@ public class MypageController {
 	@Autowired
 	private MypageService service;
 	
+	
+	// ============================= mypage1 =============================
 	@PostMapping("/member/update")
 	public String update(Model model, 
 			@ModelAttribute Member updateMember, // request에서 온 값
@@ -123,6 +125,8 @@ public class MypageController {
 		return "mypage";
 	}
 	
+	
+	// ============================= mypage2 =============================
 	@GetMapping("/mypage-2")
 	public String mypageView2( Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
@@ -360,6 +364,8 @@ public class MypageController {
 		return "common/msg";
 	}
 		
+	
+	// ============================= mypage3 =============================
 	@GetMapping("/mypage-3")
 	public String mypageView3(
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -496,7 +502,7 @@ public class MypageController {
 	
 	
 	
-	
+	// ============================= mypage4 =============================
 	@GetMapping("/mypage-4")
 	public String mypageView4(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -673,6 +679,9 @@ public class MypageController {
 		return "/common/msg";
 	}
 	
+	
+	
+	// ============================= mypage5 =============================
 	@GetMapping("/mypage-5")
 	public String mypageView5(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -731,6 +740,9 @@ public class MypageController {
 	}
 	
 	
+	
+	
+	// ============================= mypage6 =============================
 	@GetMapping("/mypage-6")
 	public String mypageView6(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 
@@ -750,33 +762,6 @@ public class MypageController {
 	    List<Pay> adminlist = service.getRentalList3();
 	    model.addAttribute("adminlist", adminlist);
 	    System.out.println(adminlist);
-	    
-//		int page = 1;
-//		try {
-//			page = Integer.parseInt(param.get("page"));
-//		} catch (Exception e) {}
-//		
-//		int count = service.getRentalCount(param);
-//		PageInfo pageInfo = new PageInfo(page, 5, count, 6);
-//		List<Rental> list = service.getRentalList(pageInfo, param);
-//		
-//		for (Rental r : list) {
-//			int p = (Integer.parseInt(r.getToyPay()) / 10);
-//			if (r.getStartDate() != null || r.getEndDate() != null) {
-//				long sec = (r.getEndDate().getTime() - r.getStartDate().getTime()) / 1000;
-//				int date = (int)(sec / (24*60*60));
-//				r.setDate(date);
-//				p *= date;
-//			}
-//			r.setRealPrice(p);
-//		}
-//		int num = list.size();
-//		
-//		System.out.println("list : " + list);
-//		model.addAttribute("list", list);
-//		model.addAttribute("pageInfo", pageInfo);
-//		model.addAttribute("num", num);
-//		model.addAttribute("param", param);	
 		
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
@@ -891,6 +876,10 @@ public class MypageController {
 		return "common/msg";
 	}
 	
+	
+	
+	
+	// ============================= mypage7 =============================
 	@GetMapping("/mypage-7")
 	public String mypageView7(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember, 

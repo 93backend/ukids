@@ -372,6 +372,11 @@
     	var obj_length = document.getElementsByName("toyCheck").length;
     	var checkedCartNo = [];
     	
+    	if ($("input:checkbox[name='toyCheck']").is(":checked")==false) {
+    		alert("적어도 하나는 선택하여 주십시오.");
+    		return;
+    	}
+    	
     	if(obj_length != 0) {
 	    	for (var i = 0; i < obj_length; i++) {
 		    	if (document.getElementsByName("toyCheck")[i].checked == true) {

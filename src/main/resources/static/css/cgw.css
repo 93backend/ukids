@@ -315,12 +315,12 @@
   }
 
   .cgw33 {
-    width: 250px;
+    width: 200px;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
     display: block;
-    padding-left: 3.3rem;
+    padding-left: 2rem;
   }
   
   .btn-primary-cgw1 {
