@@ -20,4 +20,5 @@ public class KAdmission {
 	private String newEnrollDate;
 	private String newHopeDate;
 	private String memberName;
+	private String hopeClass;
 }

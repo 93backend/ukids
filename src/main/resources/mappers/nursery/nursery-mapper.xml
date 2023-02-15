@@ -221,9 +221,9 @@
 	
 	<insert id="insertNurseryAdmission" parameterType="NAdmission">
 		INSERT INTO N_Admission (
-			no, nuNo, memberNo, enrollDate, hopeDate, status
+			no, nuNo, memberNo, enrollDate, hopeDate, status, hopeClass
 		) VALUES (
-			0, #{nuNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W'
+			0, #{nuNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W', #{hopeClass}
 		)
 	</insert>
 	

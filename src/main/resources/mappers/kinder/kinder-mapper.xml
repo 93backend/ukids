@@ -204,9 +204,9 @@
 	
 	<insert id="insertKinderAdmission" parameterType="KAdmission">
 		INSERT INTO K_ADMISSION (
-			no, kinNo, memberNo, enrollDate, hopeDate, status
+			no, kinNo, memberNo, enrollDate, hopeDate, status, hopeClass
 		) VALUES (
-			0, #{kinNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W'
+			0, #{kinNo}, #{memberNo}, DEFAULT, #{hopeDate}, 'W', #{hopeClass}
 		)
 	</insert>
 	
