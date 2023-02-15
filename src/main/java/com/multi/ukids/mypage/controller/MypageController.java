@@ -2,7 +2,6 @@ package com.multi.ukids.mypage.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,10 +196,28 @@ public class MypageController {
 		return "mypage-2";
 	}
 	
-	
+	@GetMapping("mypage-add-info-nu")
+	public ResponseEntity<List<NAdmission>> getNAdmissionInfo(Model model, 
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) throws ParseException {
+		Map<String, String> param = new HashMap<>();
+		SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		int ncount = service.getNAdmissionCount(param);
+		System.out.println(ncount);
+		PageInfo npageInfo = new PageInfo(1, 1000, ncount, 1000);
+		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
+		for (NAdmission n : nlist) {
+			String newEnrollDate = newDate.format(n.getEnrollDate());
+			n.setNewEnrollDate(newEnrollDate);
+			String newHopeDate = newDate.format(n.getHopeDate());
+			n.setNewHopeDate(newHopeDate);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(nlist);
+	}
 	
 	@GetMapping("mypage-add-info-kin")
-	public ResponseEntity<List<KAdmission>> getNAdmissionInfo(Model model, 
+	public ResponseEntity<List<KAdmission>> getKAdmissionInfo(Model model, 
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember) throws ParseException {
 		Map<String, String> param = new HashMap<>();
 		SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");

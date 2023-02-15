@@ -250,62 +250,42 @@
 							  console.log("startNum", startNum);
 
 							  $.ajax({
-							    url: "/mypage-add-info-kin",
+							    url: "/mypage-add-info-nu",
 							    contentType: "application/json; charset=utf-8",
 							    dataType:'json',
 							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
-							    success : function(data) {
-						            alert('ttt');
-
-							    	if(data.code==1){
-							            var nAdmission = data.nlist;
-							            var timehtml = $("#nListBody").html();
-										
-							            var max = nAdmission.length-startNum;
-							            var min = max-limit;
-							            if(min<=0){
-							              min= 0;
-							              $("#addBtn").hide();
+							    success : function(list) {
+							    	timehtml = "";
+						            for(var i=0; i < list.length; i++){
+						            	  timehtml+="<tr>"
+						                  timehtml+='<td class="py-3 cgw9">' + (i + 1) + '</td>';
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" href="/nursery-detail?&no=' + list[i].kinNo + '&i=' + i + '">' + list[i].crname + '</a>'
+						                  timehtml+='</td>'
+						                  timehtml+='<td class="py-3 cgw9">' + list[i].newEnrollDate + '</td>'
+						                  timehtml+='<td class="py-3 cgw9">' + list[i].newHopeDate + '</td>'
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  if (list[i].status == 'Y') {
+						                	  timehtml+='<span class="badge bg-success m-0">입소확정</span>'
+						                  } else if (list[i].status == 'N') {
+						                	  timehtml+='<span class="badge bg-danger m-0">신청실패</span>'
+						                  } else if (list[i].status == 'W') {
+						                	  timehtml+='<span class="badge bg-info m-0">대기중</span>'
+						                  }
+						                  timehtml+='</td>'
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  if (list[i].status != 'Y') {
+						                	  timehtml+='<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" onclick="deleteNAdmission(' + list[i].no + ');">'
+							                  timehtml+='<span>입소신청취소</span>'
+							                  timehtml+='</button>'
+						                  } else if (list[i].status == 'Y') {
+						                	  timehtml+='<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>'
+						                  }
+						                  timehtml+='</td>'
+						                  timehtml+='</tr>'
 							            }
-							            var i = 1;
-							            alert('ttt');
-					
-							            //alert("nAdmission.length: "+nAdmission.length+" /max :"+max+" /min: "+ min);
-
-							            for(var i=max-1; i>=min; i--){
-							                  timehtml+="<td class='py-3 cgw9' th:text='|" + i + "|''></td>";
-							                  timehtml+='<td class="py-3 cgw9">'
-							                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" th:href="@{|/nursery-detail?&no=' + nAdmission[i].nuNo + '&i=' + i + '|}">' + nAdmission[i].crName + '</a>'
-							                  timehtml+='</td>'
-							                  timehtml+='<td class="py-3 cgw9" th:text="' + nAdmission[i].enrollDate + '"></td>'
-							                  timehtml+='<td class="py-3 cgw9" th:text="' + nAdmission[i].hopeDate + '"></td>'
-							                  timehtml+='<td class="py-3 cgw9">'
-							                  if (nAdmission[i].status == 'Y') {
-							                	  timehtml+='<span class="badge bg-success m-0">입소확정</span>'
-							                  } else if (nAdmission[i].status == 'N') {
-							                	  timehtml+='<span class="badge bg-danger m-0">신청실패</span>'
-							                  } else if (nAdmission[i].status == 'W') {
-							                	  timehtml+='<span class="badge bg-info m-0">대기중</span>'
-							                  }
-							                  timehtml+='</td>'
-							                  timehtml+='<td class="py-3 cgw9">'
-							                  if (nAdmission[i].status != 'Y') {
-							                	  timehtml+='<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" th:onclick="deleteNAdmission(' + nAdmission[i].no + ');">'
-								                  timehtml+='<span>입소신청취소</span>'
-								                  timehtml+='</button>'
-							                  } else if (nAdmission[i].status == 'Y') {
-							                	  timehtml+='<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>'
-							                  }
-							                  timehtml+='</td>'
-							                  i++;
-							            }//for
-							            i = 0;
-							            alert("result : " + timehtml);
+						            	alert(''+timehtml);
 							            $("#nListBody").html(timehtml);
-							            
-							        }else{
-							          alert(data.code);
-							        }
 							    },error:function(e){
 							      alert(data.code);
 							      alert(data.message);
