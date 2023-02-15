@@ -1,5 +1,9 @@
 package com.multi.ukids.mypage.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +30,6 @@ import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.nursery.model.vo.NAdmission;
 import com.multi.ukids.toy.model.vo.Cart;
 import com.multi.ukids.toy.model.vo.Pay;
-import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.wish.model.vo.Wish;
 
 import jakarta.servlet.http.HttpSession;
@@ -111,9 +114,6 @@ public class MypageController {
 		model.addAttribute("rentalCount", rentalCount);
 		model.addAttribute("cartCount", cartCount);
 		
-		
-		
-		
 		return "mypage";
 	}
 	
@@ -197,18 +197,28 @@ public class MypageController {
 		return "mypage-2";
 	}
 	
-//	@GetMapping("")
-//	public ResponseEntity<List<NAdmission>> getNAdmissionInfo(Model model, 
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember, // 세션 값
-//			@RequestParam Map<String, String> param, int no) {
-//		if(param == null) {
-//			List<NAdmission> list = service.getNAdmissionList(null, param);
-//			return ResponseEntity.status(HttpStatus.OK).body(list);
-//		} else {
-//			List<NAdmission> list = service.getselectNurseryName(no);
-//			return ResponseEntity.status(HttpStatus.OK).body(list);
-//		}
-//	}
+	
+	
+	@GetMapping("mypage-add-info-kin")
+	public ResponseEntity<List<KAdmission>> getNAdmissionInfo(Model model, 
+			@SessionAttribute(name = "loginMember", required = false) Member loginMember) throws ParseException {
+		Map<String, String> param = new HashMap<>();
+		SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
+		param.put("memberNo", "" + loginMember.getMemberNo());
+		int kcount = service.getKAdmissionCount(param);
+		System.out.println(kcount);
+		PageInfo kpageInfo = new PageInfo(1, 1000, kcount, 1000);
+		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
+		for (KAdmission k : klist) {
+			String newEnrollDate = newDate.format(k.getEnrollDate());
+			k.setNewEnrollDate(newEnrollDate);
+			String newHopeDate = newDate.format(k.getHopeDate());
+			k.setNewHopeDate(newHopeDate);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(klist);
+	}
+	
 	
 //	@PostMapping("/nAdmission/search")
 //	public String searchNAdmission(Model model,

@@ -250,7 +250,7 @@
 							  console.log("startNum", startNum);
 
 							  $.ajax({
-							    url: "/mypage-2",
+							    url: "/mypage-add-info-kin",
 							    contentType: "application/json; charset=utf-8",
 							    dataType:'json',
 							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
@@ -333,7 +333,7 @@
 									
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="kListBody">
 								<th:block th:if="${klist.size == 0}">
 									<tr>
 										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
@@ -367,12 +367,65 @@
 						</table>
 					</div>
 					<div class="text-end">
-						<button class="btn btn-primary-cgw2" data-bs-toggle="modal"
+						<button class="btn btn-primary-cgw2" data-bs-toggle="modal" th:onclick="getKAdmissionList()"
 							data-bs-target="#open-ticket">더보기</button>
+							
+					
 					</div>
 					</th:block>
 
+					<script type="text/javascript">
+						
+						function getKAdmissionList(){
+							  var startNum = $("#kListBody tr").length
+							  var limit = 4;
+							  var addListHtml="";
+							  console.log("startNum", startNum);
 
+							  $.ajax({
+							    url: "/mypage-add-info-kin",
+							    contentType: "application/json; charset=utf-8",
+							    dataType:'json',
+							    processData: false, //데이터를 쿼리 문자열로 변환하는 jQuery 형식 방지
+							    success : function(list) {
+							    	timehtml = "";
+						            for(var i=0; i < list.length; i++){
+						            	  timehtml+="<tr>"
+						                  timehtml+='<td class="py-3 cgw9">' + (i + 1) + '</td>';
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" href="/kinder-detail?&no=' + list[i].kinNo + '&i=' + i + '">' + list[i].kinderName + '</a>'
+						                  timehtml+='</td>'
+						                  timehtml+='<td class="py-3 cgw9">' + list[i].newEnrollDate + '</td>'
+						                  timehtml+='<td class="py-3 cgw9">' + list[i].newHopeDate + '</td>'
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  if (list[i].status == 'Y') {
+						                	  timehtml+='<span class="badge bg-success m-0">입소확정</span>'
+						                  } else if (list[i].status == 'N') {
+						                	  timehtml+='<span class="badge bg-danger m-0">신청실패</span>'
+						                  } else if (list[i].status == 'W') {
+						                	  timehtml+='<span class="badge bg-info m-0">대기중</span>'
+						                  }
+						                  timehtml+='</td>'
+						                  timehtml+='<td class="py-3 cgw9">'
+						                  if (list[i].status != 'Y') {
+						                	  timehtml+='<button type="button" class="cgw30 badge-cgw1 bg-secondary-cgw1 m-0" onclick="deleteKAdmission(' + list[i].no + ');">'
+							                  timehtml+='<span>입소신청취소</span>'
+							                  timehtml+='</button>'
+						                  } else if (list[i].status == 'Y') {
+						                	  timehtml+='<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>'
+						                  }
+						                  timehtml+='</td>'
+						                  timehtml+='</tr>'
+							            }
+						            	alert(''+timehtml);
+							            $("#kListBody").html(timehtml);
+							    },error:function(e){
+							      alert(data.code);
+							      alert(data.message);
+							    }
+							  });
+							}
+						</script>
 
 
 
@@ -443,7 +496,7 @@
 									                </li>
 							                	</th:block>
 							                	<th:block th:if="${status.current != tkPageInfo.currentPage}">
-									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-4?tkPage=${status.current}');|">[[${status.current}]]</button></li>
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${status.current}');|">[[${status.current}]]</button></li>
 							                	</th:block>
 							                </th:block>
 						            </ul>
@@ -525,7 +578,7 @@
 									                </li>
 							                	</th:block>
 							                	<th:block th:if="${status.current != tkPageInfo.currentPage}">
-									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-4?tkPage=${status.current}');|">[[${status.current}]]</button></li>
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${status.current}');|">[[${status.current}]]</button></li>
 							                	</th:block>
 							                </th:block>
 						            </ul>

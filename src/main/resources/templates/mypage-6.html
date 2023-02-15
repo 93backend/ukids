@@ -159,11 +159,11 @@
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-5}"><i class="ci-document opacity-60 me-2"></i>내가
-										쓴 게시글<span class="fs-sm text-muted ms-auto"></span></a></li>
+										쓴 게시글<span class="fs-sm text-muted ms-auto">[[${boardCount}]]</span></a></li>
 								<li class="border-bottom mb-0">
 									<div class="cgw3 d-flex align-items-center px-4 py-3">
 										<i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
-											class="fs-sm text-muted ms-auto"></span>
+											class="fs-sm text-muted ms-auto">[[${rentalCount}]]</span>
 									</div>
 								</li>
 								<li class="border-bottom mb-0"><a
@@ -241,9 +241,9 @@
                 </tr>
               </thead>
               <tbody>
-				<th:block th:if="${paylist == null}">
+				<th:block th:if="${paylist.size == 0}">
 					<tr>
-						<td colspan="5">조회된 대여내역이 없습니다.</td>
+						<td colspan="8" class="cgw9">조회된 대여내역이 없습니다.</td>
 					</tr>
 				</th:block>
 				<th:block th:each="pay,payState:${paylist}" th:with="cnt=0">
@@ -326,9 +326,9 @@
                 </tr>
               </thead>
               <tbody>
-				<th:block th:if="${adminlist == null}">
+				<th:block th:if="${adminlist.size == 0}">
 					<tr>
-						<td colspan="5">조회된 대여내역이 없습니다.</td>
+						<td colspan="8" class="cgw9">조회된 대여내역이 없습니다.</td>
 					</tr>
 				</th:block>
 				<th:block th:each="pay,payState:${adminlist}" th:with="cnt=0">

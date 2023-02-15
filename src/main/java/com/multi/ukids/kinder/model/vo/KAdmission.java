@@ -17,4 +17,6 @@ public class KAdmission {
 	private String status;
 	private Date hopeDate;
 	private Date enrollDate;
+	private String newEnrollDate;
+	private String newHopeDate;
 }
