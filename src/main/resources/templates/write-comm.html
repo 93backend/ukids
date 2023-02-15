@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>유키즈 | 글쓰기</title>
+    <title>UKIDS | 커뮤니티</title>
     <!-- SEO Meta Tags
     <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
     <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
@@ -10,9 +10,9 @@
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/ukids/logo.jpg">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/ukids/logo.jpg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/ukids/logo.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/ukids/logo.jpg">
     <link rel="manifest" href="site.webmanifest">
     <link rel="mask-icon" color="#fe6a6a" href="safari-pinned-tab.svg">
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -28,10 +28,6 @@
     <link rel="stylesheet" media="screen" href="/css/header.css">
     <link rel="stylesheet" media="screen" href="/css/footer.css">
     <link rel="stylesheet" media="screen"href="/css/write-comm.css">
-
-    <!--해당 페이지 css-->
-
-    
 
     <!-- 폰트 -->
     <style>
@@ -60,23 +56,23 @@
       <!-- 헤더!!!!!! -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
 
-
     <!-- 대문-->
     <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(/img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
       <div class="container position-relative zindex-5 mb-3">
         <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-              <li class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">글쓰기</li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>유키즈</a></li>
+              <li class="breadcrumb-item text-nowrap text-white">커뮤니티</li>
+                <li th:if="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" th:href="|/community/${type}|" aria-current="page">자유게시판</li>
+                <li th:unless="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" th:href="|/community/${type}|" aria-current="page">공지사항</li>
             </ol>
           </nav>
         </div>
         <div class="row justify-content-center pt-4 pb-4">
           <div class="col-lg-8">
-            <h1 class="text-light text-center">글쓰기</h1>
-           
-            
+            <h1 class="text-light text-center" th:if="${type == 'freeboard'}">자유게시판</h1>
+            <h1 class="text-light text-center" th:unless="${type == 'freeboard'}">공지사항</h1>
           </div>
         </div>
       </div>
@@ -101,14 +97,9 @@
               <tr>
                 <th class="col2-1 align-middle text-center">구분</th>
                 <th class="col-5 text-center">
-                  <select name="type"  class="form-select" id="select-input" 
-                  th:if="${(session.loginMember.role =='ROLE_ADMIN')}">
-                    <option value="freeboard">자유게시판</option>
-                    <option value="notice">공지사항</option>
-                  </select>
-                  <select name="type"  class="form-select" id="select-input" 
-                  th:if="${(session.loginMember.role != 'ROLE_ADMIN')}">
-                    <option value="freeboard">자유게시판</option>
+                  <select name="type" class="form-select" id="select-input">
+                    <option th:selected="${#strings.equals(type, 'freeboard')}" value="freeboard">자유게시판</option>
+                    <option th:if="${(session.loginMember.role =='ROLE_ADMIN')}" th:selected="${#strings.equals(type, 'notice')}" value="notice">공지사항</option>
                   </select>
                 </th>
               </tr>
@@ -121,7 +112,7 @@
               <tr>
                 <th class="col2-1 align-middle text-center">제목</th>
                 <th class="col-5 text-center">
-                <input class="form-control" type="text" id="text-input" name="title" placeholder="제목을 입력해 주세요">
+                <input class="form-control" type="text" id="text-input" name="title" placeholder="제목을 입력해 주세요" spellcheck="false">
                 </th>
               </tr>
               <tr>
@@ -133,7 +124,7 @@
               <tr>
                 <th class=" align-middle text-center">내용</th>
                 <td class="col-5 text-center">
-                <textarea class="form-control hei" name="content" id="textarea-input" rows="5" placeholder="내용을 입력해 주세요."></textarea>
+                <textarea class="form-control hei" name="content" id="textarea-input" rows="5" placeholder="내용을 입력해 주세요." spellcheck="false"></textarea>
                 </td>
               </tr>
             </thead>
@@ -141,7 +132,7 @@
           </table>
           <div class="container-sm text-center mb-4">
             <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="등 록">
-            <input type="button" class="btn btn-outline-primary moc ms-2 ps-3 pe-3" value="목록으로" onClick="history.back();">
+            <input type="button" class="btn btn-outline-ppink moc ms-2 ps-3 pe-3" value="목록으로" onClick="history.back();">
           </div>
         </form>
       </div>
@@ -158,11 +149,6 @@
   <!-- 풋터 -->
 	<footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 	 
-    <!-- Toolbar for handheld devices (NFT Marketplace)-->
-    <div class="handheld-toolbar">
-      <div class="d-table table-layout-fixed w-100"><a class="d-none handheld-toolbar-item" href="#vendor-sidebar" data-bs-toggle="offcanvas"><span class="handheld-toolbar-icon"><i class="ci-sign-in"></i></span><span class="handheld-toolbar-label">Sidebar</span></a><a class="d-table-cell handheld-toolbar-item" href="#signin-modal" data-bs-toggle="modal"><span class="handheld-toolbar-icon"><i class="ci-user"></i></span><span class="handheld-toolbar-label">Account</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="nft-connect-wallet.html"><span class="handheld-toolbar-icon"><i class="ci-wallet"></i></span><span class="handheld-toolbar-label text-nowrap">Connect wallet</span></a>
-      </div>
-    </div>
     <!-- Back To Top Button-->
     <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
     

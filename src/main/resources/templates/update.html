@@ -2,11 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
-    <title>UKIDS | 글수정</title>
-    <!-- SEO Meta Tags
-    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
-    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
-    <meta name="author" content="Createx Studio"> -->
+    <title>UKIDS | 커뮤니티</title>
     <!-- Viewport-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon and Touch Icons-->
@@ -29,9 +25,6 @@
     <link rel="stylesheet" media="screen" href="/css/footer.css">
     <link rel="stylesheet" media="screen" href="/css/write-comm.css">
 
-    <!--해당 페이지 css-->
-
-    
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -69,16 +62,17 @@
         <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-              <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
-              <li class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">글수정</li>
+              <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>유키즈</a></li>
+              <li class="breadcrumb-item text-nowrap text-white">커뮤니티</li>
+                <li th:if="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">자유게시판</li>
+                <li th:unless="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">공지사항</li>
             </ol>
           </nav>
         </div>
         <div class="row justify-content-center pt-4 pb-4">
           <div class="col-lg-8">
-            <h1 class="text-light text-center">글수정</h1>
-           
-            
+            <h1 class="text-light text-center" th:if="${type == 'freeboard'}">자유게시판</h1>
+            <h1 class="text-light text-center" th:unless="${type == 'freeboard'}">공지사항</h1>
           </div>
         </div>
       </div>
@@ -105,9 +99,9 @@
               <tr>
                 <th class="col2-1 align-middle text-center">구분</th>
                 <th class="col-5 text-center">
-                  <select class="form-select" id="select-input">
-                    <option>자유게시판</option>
-                    <option>공지사항</option>
+                  <select class="form-select" id="select-input" name="type" disabled>
+                    <option th:selected="${#strings.equals(type, 'freeboard')}" value="freeboard">자유게시판</option>
+                    <option th:if="${(session.loginMember.role =='ROLE_ADMIN')}" th:selected="${#strings.equals(type, 'notice')}" value="notice">공지사항</option>
                   </select>
                 </th>
               </tr>
@@ -120,31 +114,28 @@
               <tr>
                 <th class="col2-1 align-middle text-center">제목</th>
                 <th class="col-5 text-center">
-                <input class="form-control" type="text" name="title" id="text-input" th:value="${board.title}">
+                <input class="form-control" type="text" name="title" id="text-input" th:value="${board.title}" spellcheck="false">
                 </th>
               </tr>
               <tr>
                 <th class=" align-middle text-center">첨부파일</th>
                 <th class="col-5 text-center"><input class="form-control" type="file" name="upfile" id="file-input"></th>
-                <th:block th:if="${board.originalFileName != null}"><br>
-							현재 업로드 파일 :
-							<a>
-								[[${board.originalFileName}]]
-							</a>
-						</th:block>
-                
+              </tr>
+              <tr th:if="${board.originalFileName != null}">
+              	<th></th>
+                <th class="p-0 fs-sm ps-3">현재 업로드 파일 : [[${board.originalFileName}]]</th>
               </tr>
               <tr>
                 <th class=" align-middle text-center">내용</th>
                 <td class="col-5 text-center">
-                <textarea  class="form-control hei" id="textarea-input" rows="5" name="content" placeholder="내용을 입력해 주세요.">[[${board.content}]]</textarea>
+                <textarea  class="form-control hei" id="textarea-input" rows="5" name="content" placeholder="내용을 입력해 주세요." spellcheck="false">[[${board.content}]]</textarea>
                 </td>
               </tr>
             </thead>
           </table>
           <div class="container-sm text-center mb-4">
             <input class="btn bbtn3 bbtn-primary me-2" type="submit" value="수 정">
-            <a class="btn btn-outline-primary moc ms-2 ps-3 pe-3" th:href="|/community/${type}|" role="button">목록으로</a>
+            <a class="btn btn-outline-ppink moc ms-2 ps-3 pe-3" th:href="|/community/${type}|" role="button">목록으로</a>
           </div>
         </form>
       </div>
@@ -160,11 +151,6 @@
   <!-- 푸터!!!!!!!!!!-->
   <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
 	 
-    <!-- Toolbar for handheld devices (NFT Marketplace)-->
-    <div class="handheld-toolbar">
-      <div class="d-table table-layout-fixed w-100"><a class="d-none handheld-toolbar-item" href="#vendor-sidebar" data-bs-toggle="offcanvas"><span class="handheld-toolbar-icon"><i class="ci-sign-in"></i></span><span class="handheld-toolbar-label">Sidebar</span></a><a class="d-table-cell handheld-toolbar-item" href="#signin-modal" data-bs-toggle="modal"><span class="handheld-toolbar-icon"><i class="ci-user"></i></span><span class="handheld-toolbar-label">Account</span></a><a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="nft-connect-wallet.html"><span class="handheld-toolbar-icon"><i class="ci-wallet"></i></span><span class="handheld-toolbar-label text-nowrap">Connect wallet</span></a>
-      </div>
-    </div>
     <!-- Back To Top Button-->
     <a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
     

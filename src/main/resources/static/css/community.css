@@ -18,6 +18,16 @@
     transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .2s ease-in-out;
 }
 
+.write {
+	color: #FC6C93;
+    line-height: 1.1;
+    cursor: pointer;
+    padding: 0.625rem 1rem;
+}
+.write:hover {
+    color: #FF3B6F;
+}
+
 .bbtn2 {
     display: inline-block;
     font-weight: normal;
@@ -37,6 +47,11 @@
     border-radius: 0.3125rem;
     transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .2s ease-in-out;
     width: 110px;
+}
+
+.search-btn {
+	background-color: transparent;
+	border: 0px;
 }
 
 .bbtn2:hover {
@@ -117,6 +132,10 @@
     color: white;
 }
 
+tbody>tr:last-child>th,
+tbody>tr:last-child>td {
+	border-bottom: 0px;
+}
 
 
 .box7{

@@ -1,7 +1,5 @@
 package com.multi.ukids.board.contoller;
 
-
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -31,18 +29,21 @@ import org.springframework.web.multipart.MultipartFile;
 import com.multi.ukids.board.model.service.BoardService;
 import com.multi.ukids.board.model.vo.B_Reply;
 import com.multi.ukids.board.model.vo.Board;
+import com.multi.ukids.board.model.vo.Good;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.member.model.vo.Member;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class BoardController {
 	
 	@Autowired
 	private BoardService service;
 	
-	final static private String savePath = "c:\\bbs\\";
+	final static private String savePath = "c:\\UKIDS\\";
 	
 	@GetMapping("/each")
 	public String each(Model model, String type, Map<String, String> paramMap) {
@@ -52,60 +53,60 @@ public class BoardController {
 	
 	@GetMapping("/community/{type}")
 	public String list(Model model,
-			@PathVariable("type") String type,
-			@RequestParam Map<String, String> paramMap) {
+		@PathVariable("type") String type,
+		@RequestParam Map<String, String> param) {
 		
 		int page = 1;
 
 		// 탐색할 맵을 선언
 		Map<String, String> searchMap = new HashMap<String, String>();
 		try {
-			String searchValue = paramMap.get("searchValue");
-			if(searchValue != null && searchValue.length() > 0) {
-				String searchType = paramMap.get("searchType");
-				searchMap.put(searchType, searchValue);
-			}else {
-				paramMap.put("searchType", "all");
+			String search = param.get("search");
+			if(search != null) {
+				searchMap.put("search", search);
 			}
 			searchMap.put("type", type);
-			page = Integer.parseInt(paramMap.get("page"));
+			page = Integer.parseInt(param.get("page"));
 		} catch (Exception e) {}
 		
 		int boardCount = service.getBoardCount(searchMap);
-		PageInfo pageInfo = new PageInfo(page, 10, boardCount, 10);
+		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 10);
 		List<Board> list = service.getBoardList(pageInfo, searchMap);
+		
+		log.info(type + " 목록 : " + list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("type", type);
-		model.addAttribute("paramMap", paramMap);
+		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		System.out.println(list);
 		return "community";
 	}
 	
-//	@RequestMapping("/board/view")
 	@GetMapping("/community/view-community")
-	public String view(Model model, @RequestParam("no") int no, @RequestParam("type") String type) {
+	public String view(Model model, @RequestParam("no") int no, @RequestParam("type") String type,
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember
+	) {
 		Board board = service.findByNo(no);
 		if(board == null) {
 			return "redirect:error";
 		}
-		System.out.println(board);
+		int good = 0;
+		if(loginMember != null) {
+			Good g = new Good(no, loginMember.getMemberNo());
+			good = service.getGood(g);
+		}
+		log.info("상세보기 : " + board);
 		model.addAttribute("type", type);
 		model.addAttribute("board", board);
+		model.addAttribute("good", good);
 		model.addAttribute("replyList", board.getReplies());
 		return "view-community";
 	}
-//	
-//	
-//	@GetMapping("/error")
-//	public String error() {
-//		return "common/error";
-//	}
-//	
+	
 	@GetMapping("/community/write")
-	public String writeView() {
+	public String writeView(Model model, @RequestParam("type")String type) {
+		model.addAttribute("type", type);
 		return "write-comm";
 	}
 	
@@ -134,47 +135,34 @@ public class BoardController {
 		int result = service.saveBoard(board);
 
 		if(result > 0) {
-			if(type.equals("freeboard")) {
-				model.addAttribute("msg", "게시글이 등록 되었습니다.");
-				model.addAttribute("location", "/community/freeboard");
-			} else if(type.equals("notice")) {
-				model.addAttribute("msg", "게시글이 등록 되었습니다.");
-				model.addAttribute("location", "/community/notice");
-			}
+			model.addAttribute("msg", "게시글이 등록 되었습니다.");
 		} else {
-			if(type.equals("freeboard")) {
-				model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
-				model.addAttribute("location", "/community/freeboard");
-			} else if(type.equals("notice")) {
-				model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
-				model.addAttribute("location", "/community/notice");
-			}
+			model.addAttribute("msg", "게시글 작성에 실패하였습니다.");
 		}
 		
+		model.addAttribute("location", "/community/" + type);
 		model.addAttribute("type", type);
 		
 		return "common/msg";
 	}
-//	
-//	
-	@RequestMapping("/reply")
+
+	@PostMapping("/reply")
 	public String writeReply(Model model, 
-			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-			@ModelAttribute B_Reply reply
-			) {
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		@ModelAttribute B_Reply reply
+	) {
 		reply.setMemberNo(loginMember.getMemberNo());
-		
 		int result = service.saveReply(reply);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "리플이 등록되었습니다.");
+			model.addAttribute("msg", "댓글이 등록되었습니다.");
 		}else {
-			model.addAttribute("msg", "리플 등록에 실패하였습니다.");
+			model.addAttribute("msg", "댓글 등록에 실패하였습니다.");
 		}
-		model.addAttribute("location", "/community/view-community?no="+reply.getBoardNo());
+		model.addAttribute("location", "/community/view-community?type=freeboard&no="+reply.getBoardNo());
 		return "common/msg";
 	}
-//	
+	
 	@RequestMapping("/community/delete")
 	public String deleteBoard(Model model,  HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -184,43 +172,34 @@ public class BoardController {
 		String type = param.get("type");
 		int result = service.deleteBoard(boardNo, savePath);
 	
-		
-		if(type.equals("freeboard")) {
-			model.addAttribute("location", "/community/freeboard?type=freeboard");
-		} else {
-			model.addAttribute("location", "/community/notice?type=notice");
-		}
-		
 		if(result > 0) {
-			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "게시글이 삭제되었습니다.");
 		}else {
 			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
 		}
-//		
-//		model.addAttribute("location", "/community/freeboard?type=freeboard");
-//		model.addAttribute("location", "/community/notice?type=notice");
+		model.addAttribute("location", "/community/" + type + "?type=" + type);
 		
 		return "common/msg";
 	}
-//	
-//	@RequestMapping("/replyDel")
-//	public String deleteReply(Model model, 
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			int replyNo, int boardNo
-//			){
-//
-//		int result = service.deleteReply(replyNo);
-//		
-//		if(result > 0) {
-//			model.addAttribute("msg", "리플 삭제가 정상적으로 완료되었습니다.");
-//		}else {
-//			model.addAttribute("msg", "리플 삭제에 실패하였습니다.");
-//		}
-//		model.addAttribute("location", "/community/view-community?no=" + boardNo);
-//		return "/common/msg";
-//	}
-//	
-//	// http://localhost/mvc/board/update?no=27
+	
+	@RequestMapping("/replyDel")
+	public String deleteReply(Model model, 
+		@SessionAttribute(name = "loginMember", required = false) Member loginMember,
+		int replyNo, int boardNo
+	){
+
+		int result = service.deleteReply(replyNo);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "댓글이 삭제되었습니다.");
+		}else {
+			model.addAttribute("msg", "댓글 삭제에 실패하였습니다.");
+		}
+		model.addAttribute("location", "/community/view-community?type=freeboard&no=" + boardNo);
+		return "/common/msg";
+	}
+	
+	
 	@GetMapping("/community/update")
 	public String updateView(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -229,18 +208,11 @@ public class BoardController {
 		String type = param.get("type");
 		Board board = service.findByNo(no);
 		
-		if(type.equals("freeboard")) {
-			model.addAttribute("location", "/community/freeboard?type=freeboard");
-		} else {
-			model.addAttribute("location", "/community/notice?type=notice");
-		}
-		
 		model.addAttribute("board",board);
 		model.addAttribute("type",type);
 		return "update";
 	}
-//	
-//
+
 	@PostMapping("/community/update")
 	public String updateBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -270,28 +242,23 @@ public class BoardController {
 
 		int result = service.saveBoard(board);
 		
-		if(type.equals("freeboard")) {
-			model.addAttribute("location", "/community/freeboard?no=" +board.getBoardNo()+"&type=freeboard");
-		} else {
-			model.addAttribute("location", "/community/notice?no=" +board.getBoardNo()+"&type=notice");
-		}
-		
 		if(result > 0) {
-			model.addAttribute("msg", "게시글 수정이 정상적으로 완료되었습니다.");
+			model.addAttribute("msg", "게시글 수정되었습니다.");
 		}else {
 			model.addAttribute("msg", "게시글 수정에 실패하였습니다.");
 		}
+		model.addAttribute("location", "/community/" + type + "?no=" +board.getBoardNo()+"&type=" + type);
 		
 		return "common/msg";
 	}
-//	
-	@GetMapping("/file/{fileName}")
+	
+	@GetMapping("/community/file/{fileName}")
 	@ResponseBody
 	public Resource downloadImage(@PathVariable("fileName") String fileName, Model model) throws IOException {
 		return new UrlResource("file:" + savePath + fileName);
 	}
-//	
-	@RequestMapping("/fileDown")
+	
+	@RequestMapping("/community/fileDown")
 	public ResponseEntity<Resource> fileDown(@RequestParam("oriname") String oriname,
 			@RequestParam("rename") String rename, @RequestHeader(name = "user-agent") String userAgent) {
 		try {
@@ -316,7 +283,52 @@ public class BoardController {
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 실패했을 경우
 	}
-//
+	
+	// 좋아요
+	@PostMapping("/community/addGood")
+	public ResponseEntity<Map<String, Object>> addGood(int no, int memberNo) {
+		log.info("좋아요 추가 : " + no + " " + memberNo);
+		
+		Good good = new Good(no, memberNo);
+		
+		int result = service.saveGood(good);
+		result += service.updateGoodPlus(no);
+		
+		boolean add;
+		if(result > 1) {
+			add = true;
+		} else {
+			add = false;
+		}
+		
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("add", add);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	// 좋아요 취소
+	@PostMapping("/community/deleteGood")
+	public ResponseEntity<Map<String, Object>> deleteGood(int no, int memberNo) {
+		log.info("좋아요 취소 : " + no + " " + memberNo);
+		
+		Good good = new Good(no, memberNo);
+		
+		int result = service.deleteGood(good);
+		result += service.updateGoodMinus(no);
+		
+		boolean remove;
+		if(result > 1) {
+			remove = true;
+		} else {
+			remove = false;
+		}
+		
+		Map<String,	Object> map = new HashMap<String, Object>();
+		map.put("remove", remove);
+		
+		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
 
 }
 

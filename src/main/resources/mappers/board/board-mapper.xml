@@ -48,9 +48,8 @@
 		FROM BOARD B
 		LEFT OUTER JOIN MEMBER M ON B.memberNo = M.memberNo
 		WHERE B.STATUS = 'Y'
-		AND B.type = '자유게시판'
-		<if test="title != null">
-			AND B.title LIKE '${title}'
+		<if test="search != null">
+			AND ( B.title LIKE '%${search}%' OR B.content LIKE '%${search}%')
 		</if>	
 		<if test="type != null">
 			AND B.type LIKE '%${type}%'
@@ -59,15 +58,16 @@
 	
 	<!-- 게시판 전체 리스트 조회 -->
 	<select id="selectBoardList" resultMap="boardListResultMap" parameterType="map">
-		SELECT B.boardNo, M1.id, B.memberNo, B.title, B.content, B.good, B.type, B.originalFileName, 
-			   B.renamedFileName, B.readcount, B.STATUS, B.createDate, B.modifyDate
+		SELECT 
+			DISTINCT B.boardNo, M1.id, B.memberNo, B.title, B.content, B.good, B.type, B.originalFileName, 
+			B.renamedFileName, B.readcount, B.STATUS, B.createDate, B.modifyDate
 		FROM BOARD B
 		LEFT OUTER JOIN MEMBER M1 ON B.memberNo = M1.memberNo
 		LEFT OUTER JOIN B_REPLY R ON R.boardNo = B.boardNo
 		LEFT OUTER JOIN MEMBER M2 ON R.memberNo = M2.memberNo
 		WHERE B.STATUS = 'Y'
-		<if test="title != null">
-			AND B.title LIKE '%${title}%'
+		<if test="search != null">
+			AND ( B.title LIKE '%${search}%' OR B.content LIKE '%${search}%')
 		</if>
 		<if test="type != null">
 			AND B.type LIKE '%${type}%'
@@ -96,23 +96,23 @@
 	<insert id="insertBoard" parameterType="board">
 		INSERT INTO BOARD(
 			boardNo, memberNo, title, content, originalFileName, renamedFileName,
-			readcount, STATUS, createDate, modifyDate, TYPE
+			readcount, STATUS, createDate, modifyDate, TYPE, good
 		) VALUES (
 			0, #{memberNo}, #{title}, #{content}, 
 			#{originalFileName}, #{renamedFileName},
-			DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{type}		
+			DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{type}, 0
 		)
 	</insert>
 	
-	<!--  <insert id="insertReply" parameterType="reply">
-		INSERT INTO REPLY(
-				replyNo, boardNo, memberNo, 
-				content, STATUS, createDate, modifyDate) 
-			VALUES(
-				0, #{boardNo}, #{memberNo}, #{content}, 
-				DEFAULT, DEFAULT, DEFAULT
-			)
-	</insert>-->
+	<insert id="insertReply" parameterType="B_Reply">
+		INSERT INTO B_REPLY(
+			bReplyNo, boardNo, memberNo, content, 
+			STATUS, createDate, modifyDate
+		) VALUES(
+			0, #{boardNo}, #{memberNo}, #{content}, 
+			DEFAULT, DEFAULT, DEFAULT
+		)
+	</insert>
 	
 	<update id="updateReadCount" parameterType="map">
 		UPDATE BOARD SET readcount=#{readcount} WHERE boardNo=#{boardNo}
@@ -134,11 +134,38 @@
 			boardNo=#{boardNo}
 	</update>
 	
+	<select id="selectGood" resultType="int" parameterType="Good">
+		SELECT   
+			COUNT(goodNo)
+		FROM GOOD
+		WHERE boardNo = #{boardNo} AND memberNo = #{memberNo}
+	</select>
+	
+	<insert id="insertGood" parameterType="Good">
+		INSERT INTO GOOD (
+			goodNo, boardNo, memberNo
+		) VALUES (
+			0, #{boardNo}, #{memberNo}
+		)
+	</insert>
+	
+	<update id="updateGoodPlus" parameterType="int">
+		UPDATE BOARD SET good = good + 1 WHERE boardNo = #{no};
+	</update>
+	
+	<update id="updateGoodMinus" parameterType="int">
+		UPDATE BOARD SET good = good - 1 WHERE boardNo = #{no}
+	</update>
+	
+	<delete id="deleteGood" parameterType="Good">
+		DELETE FROM GOOD WHERE boardNo = #{boardNo} AND memberNo = #{memberNo}
+	</delete>
+	
 	<update id="deleteBoard" parameterType="int">
 		UPDATE BOARD SET STATUS='N' WHERE boardNo=#{boardNo}
 	</update>
 	
-	<!--  <delete id="deleteReply" parameterType="int">
-		DELETE FROM REPLY WHERE replyNo=#{replyNo}
-	</delete>-->
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM B_REPLY WHERE bReplyNo=#{no}
+	</delete>
 </mapper>

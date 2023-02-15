@@ -42,16 +42,15 @@
       <!-- 헤더!!!!!! -->
 	  <header th:fragment="header" th:replace="~{common :: header}"></header>
 	  
-
-
       <section class="position-relative bg-dark bg-size-cover bg-position-center py-5 mb-4" style="background-image: url(/img/ukids/notice/bo1.jpg); height: 300px;"><span class="position-absolute top-0 start-0 w-100 h-100 bg-darker" style="opacity: .65;"></span>
         <div class="container position-relative zindex-5 mb-3">
           <div class="order-lg-2 mb-3 mb-lg-0 pt-0 pb-4">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
-                <li class="breadcrumb-item"><a class="text-nowrap" href="index.html"><i class="ci-home"></i>유키즈</a></li>
+                <li class="breadcrumb-item"><a class="text-nowrap" href="/"><i class="ci-home"></i>유키즈</a></li>
                 <li class="breadcrumb-item text-nowrap text-white">커뮤니티</li>
-                <li class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">자유게시판</li>
+                <li th:if="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">자유게시판</li>
+                <li th:unless="${type == 'freeboard'}" class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">공지사항</li>
               </ol>
             </nav>
           </div>
@@ -98,87 +97,96 @@
   <div class="container-sm shadow">
 <div class="table-responsive">
   <!-- 검색창-->
-  <form action="@{/community}" method="get">
+  <form th:action="|/community/${type}|" method="get">
   <div class="container col-7 mt-4 mb-3" >
     <div class="input-group">
-      <input class="form-control pe-5 rounded" id="searchValue" name="searchValue" type="text" th:value="${param.searchValue}" placeholder="검색어를 입력해 주세요">
-      <i class="ci-search position-absolute top-50 end-0 translate-middle-y zindex-5 me-3 " type="submit"></i>
+      <input class="form-control pe-5 rounded" id="searchValue" name="search" type="text" th:value="${param.search}" placeholder="검색어를 입력해 주세요">
+      <button class="search-btn position-absolute top-50 end-0 translate-middle-y zindex-5 me-3 " type="submit"><i class="ci-search text-muted fw-bold"></i></button>
     </div>
   </div>
   </form>
   <!-- 검색창 끝-->
-  <table class="table" style="color: #FC6C93;">
+  <table class="table mb-2" style="color: #FC6C93;">
     <thead>
       <tr>
-        <th class="col-1" style="text-align: center">번호</th>
-        <th class="col-1"></th>
+        <th class="col-1 text-center">번호</th>
+        <th class="col-1 text-center"></th>
         <th class="col-5">제목</th>
-        <th class="col-1" style="text-align: center">작성자</th>
-        <th class="col-2" style="text-align: center">작성일</th>
-        <th class="col-1" style="text-align: center">추천</th>
-        <th class="col-1" style="text-align: center">조회</th>
+        <th class="col-1 text-center">작성자</th>
+        <th class="col-2 text-center">작성일</th>
+        <th:block th:if="${type == 'freeboard'}">
+	        <th class="col-1 text-center">추천</th>
+	        <th class="col-1 text-center">조회수</th>
+        </th:block>
+        <th:block th:unless="${type == 'freeboard'}">
+	        <th class="col-1 text-center">조회수</th>
+        </th:block>
       </tr>
     </thead>
-    <tbody th:if="${list == null}">
+    <tbody th:if="${#lists.size(list) == 0}">
     	<tr>
-    		<td colspan="6">조회된 글이 없습니다.</td>
+    		<td class="text-center" colspan="7" th:if="${type == 'freeboard'}">조회된 글이 없습니다.</td>
+    		<td class="text-center" colspan="6" th:unless="${type == 'freeboard'}">조회된 글이 없습니다.</td>
     	</tr>
     </tbody>
     
     <tbody th:if="${list != null}">
-    	<tr th:each="board : ${list}">
-    		<th th:text="${board.boardNo}" style="text-align: center"></th>
-    		<th scope=""  class="text-center"></th>
+    	<tr th:each="board, status : ${list}">
+    		<th class="text-center" th:text="${pageInfo.currentPage + status.index}"></th>
+    		<th class="text-center"></th>
     		<td>
     			<a th:href="|/community/view-community?no=${board.boardNo}&type=${type}|" style="color: black;">
     				[[${board.title}]]		
     			</a>
     		</td>    		
-    		<td style="text-align: center" th:text="${board.id}"></td>
-    		<td style="text-align: center" th:text="${#dates.format(board.createDate, 'yyyy/MM/dd')}"/></td>
-    		<td style="text-align: center">[[${board.good}]]</td>
-    		<td style="text-align: center">[[${board.readcount}]]</td>
+    		<td class="text-center" th:text="${board.id}"></td>
+    		<td class="text-center" th:text="${#dates.format(board.createDate, 'yyyy/MM/dd')}"/></td>
+    		<td class="text-center" th:if="${type == 'freeboard'}">[[${board.good}]]</td>
+    		<td class="text-center">[[${board.readcount}]]</td>
     	</tr>
     </tbody>
   </table>
-  <div class="text-end" th:if="${session.loginMember != null}">
-    <a class="bbtn btn-outline-ppink  d-inline-block mb-3" href="/community/write" >글쓰기</a>
+  <div class="text-end" th:if="${session.loginMember != null && session.loginMember.role == 'ROLE_ADMIN' && type == 'notice'}">
+    <a class="write d-inline-block fs-lg fw-bold mb-2" href="/community/write?type=notice">글쓰기 <i class="ci-edit fw-bold"></i></a>
+  </div>
+  <div class="text-end" th:if="${session.loginMember != null && type == 'freeboard'}">
+    <a class="write d-inline-block fs-lg fw-bold mb-2" href="/community/write?type=freeboard">글쓰기 <i class="ci-edit fw-bold"></i></a>
   </div>
 </div>
 </div>
 
-
  <!-- 게시판 끝-->
 
-    <div class="container-sm">
+    <div class="container-sm mb-5">
       <!-- Pagination-->
-      <nav class="d-flex justify-content-between pt-2 mb-5" aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#" onclick="movePage(1);"><i class="ci-arrow-left me-2"></i>Prev</a></li>
-        </ul>
-        <ul class="pagination">
-          <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
-          <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
-			<th:block th:if="${status.current == pageInfo.currentPage}">
-	          <li class="page-item d-none d-sm-block page"><span class="page-link">[[${status.current}]]<span
-                class="visually-hidden">(current)</span></span></li>
-	        </th:block>
-	      <th:block th:if="${status.current != pageInfo.currentPage}">
-	          <li class="page-item d-none d-sm-block"><a class="page-link" href="#" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
-	      </th:block>
-        </ul>
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#" aria-label="Next" th:onclick="|movePage(${pageInfo.nextPage});|">Next<i
-                class="ci-arrow-right ms-2"></i></a></li>
-        </ul>
-      </nav>
+      <th:block th:if="${#lists.size(list) != 0}">
+	      <nav class="d-flex justify-content-between pt-2 mt-2" aria-label="Page navigation">
+	        <ul class="pagination">
+	          <li class="page-item"><a class="page-link" th:onclick="|movePage(${pageInfo.prevPage});|"><i class="ci-arrow-left me-2"></i>Prev</a></li>
+	        </ul>
+	        <ul class="pagination">
+	          <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+	          <th:block th:each="num, status : ${#numbers.sequence(pageInfo.startPage, pageInfo.endPage)}">
+				<th:block th:if="${status.current == pageInfo.currentPage}">
+		          <li class="page-item d-none d-sm-block page" aria-current="page">
+		          	<span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+		          </li>
+		        </th:block>
+		      	<th:block th:if="${status.current != pageInfo.currentPage}">
+		          <li class="page-item d-none d-sm-block"><a class="page-link" th:onclick="|movePage(${status.current});|">[[${status.current}]]</a></li>
+		      	</th:block>
+		      </th:block>
+	        </ul>
+	        <ul class="pagination">
+	          <li class="page-item"><a class="page-link" aria-label="Next" th:onclick="|movePage(${pageInfo.nextPage});|">Next<i class="ci-arrow-right ms-2"></i></a></li>
+	        </ul>
+	      </nav>
+	   </th:block>
     </div>
     </div>
     
   </main>
-  <!-- 풋터 -->
-	<!-- Footer-->
-  
+  <!-- 푸터 -->
   <footer th:fragment="footer" th:replace="~{common :: footer}"></footer>
   
   <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ci-arrow-up">   </i></a>
@@ -193,24 +201,11 @@
   
   <!-- Main theme script-->
   <script th:src="@{/js/theme.min.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		function movePage(page){
+			url.searchParams.set("page", page);
+			window.location.search = url.searchParams;
+		}
+	</script>
   </body>
   </html>
-<!--  <script type="text/javascript" th:inline="javascript">
-
-$( document ).ready(function() {
-
-	var searchlist = [[${type}]];
-    for(var i=0; i<searchlist.length; i++){
-    	var id = searchlist[i];
-    	var idd = id.replace('/', '');
-    	$('#'+idd).prop("checked", true);
-	}
-
-});
-
-	function movePage(pageUrl){
-		const pageTag = $("<input type='hidden' value=" + pageUrl + " name='page' readonly>");
-		$("#cummunity").append(pageTag);
-		$('#cummunity').submit();
-	}
-</script>-->

@@ -3,17 +3,11 @@
     height: 500px;
 }
 
-
-
-.reviewlist {
-    display: none;
-}
-
 .trashbtn {
     opacity: 0;
 }
 
-.reviewlist:hover .trashbtn {
+.reviewBox:hover .trashbtn {
     opacity: 1;
 }
 
@@ -33,15 +27,31 @@
     
 }
 .box4{
-    height: 1000px;
+    height: 500px;
 }
-.mamamoo{
-    margin-left: 850px;
-    
-}
-
 
 .bbtn2 {
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #4b566b;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.625rem 1rem;
+    font-size: 0.9375rem;
+    border-radius: 0.3125rem;
+    transition: color .25s ease-in-out, background-color .25s ease-in-out, border-color .25s ease-in-out, box-shadow .2s ease-in-out;
+    width: 80px;
+}
+
+.good-btn {
     display: inline-block;
     font-weight: normal;
     line-height: 1.5;
@@ -68,6 +78,17 @@
 }
 .btn-outline-ppink {
     color: #FC6C93;
+    border-color: #FC6C93;
+}
+
+.good-y {
+	color: #FFF;
+    border-color: #FC6C93;
+    background-color: #FC6C93;
+}
+.good-n {
+	color: #FC6C93;
+	background-color: #FFF;
     border-color: #FC6C93;
 }
 .bbtn3 {
@@ -98,6 +119,16 @@
 .btn-outline-ppink {
     color: #FC6C93;
     border-color: #FC6C93;
+}
+
+.btn-noline {
+    color: #FC6C93;
+    background-color: #FFF;
+    border: 0px;
+}
+
+.btn-noline:hover {
+    color: #FF3B6F;
 }
 
 .ta{

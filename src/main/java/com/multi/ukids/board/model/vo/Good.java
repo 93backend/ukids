@@ -15,6 +15,6 @@ public class Good {
 	public Good(int boardNo, int memberNo) {
 		super();
 		this.boardNo = boardNo;
-		memberNo = memberNo;
+		this.memberNo = memberNo;
 	}
 }

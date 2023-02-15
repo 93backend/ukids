@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.multi.ukids.board.model.vo.B_Reply;
 import com.multi.ukids.board.model.vo.Board;
+import com.multi.ukids.board.model.vo.Good;
 
 
 @Mapper
@@ -20,4 +21,10 @@ public interface BoardMapper {
 	int updateReadCount(Board board);
 	int deleteBoard(int no);
 	int deleteReply(int no);
+	
+	int selectGood(Good good);
+	int insertGood(Good good);
+	int updateGoodPlus(int no);
+	int updateGoodMinus(int no);
+	int deleteGood(Good good);
 }
