@@ -174,9 +174,15 @@
     <!-- Items grid-->
     <section class="container py-4 py-sm-1">
       <div class="row pt-3 pt-sm-0">
-        <th:block th:if="${list == null || toyCount == 0}">
-      	  <h5 style="text-align: center;">등록된 상품이 없습니다.</h5>   
+      
+        <th:block th:if="${toyCount == 0}">
+      	  <h3 style="text-align: center;">검색결과가 없습니다.</h3>   
         </th:block>
+        
+        <th:block th:if="${list == null}">
+      	  <h3 style="text-align: center;">등록된 상품이 없습니다.</h3>   
+        </th:block>
+        
         <th:block th:if="${list != null}" th:each="toy : ${list}">
 	        <div class="col-md-4 col-sm-6 mb-grid-gutter">
 	          <a class="card product-card h-100 border-0 shadow pb-2" th:href="@{|/toy-detail?no=${toy.toyNo}|}">
@@ -200,9 +206,8 @@
     </section>
 
 
-    
 
-    <div class="container-sm">
+    <div class="container-sm" th:if="${toyCount != 0}">
       <!-- Pagination-->
       <nav class="d-flex justify-content-between pt-2 mb-5" aria-label="Page navigation">
         <ul class="pagination">
