@@ -68,7 +68,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light fw-bold fs-md flex-lg-nowrap justify-content-center justify-content-lg-end">
               <li class="breadcrumb-item"><a class="text-nowrap" th:href="@{/}"><i class="ci-home"></i>유키즈</a></li>
-              <li class="breadcrumb-item"><a class="text-nowrap" href="notice.html">자유게시판</a></li>
+              <li class="breadcrumb-item"><a class="text-nowrap" th:href="|/community/${type}|">커뮤니티</a></li>
               <li class="breadcrumb-item text-nowrap text-pink" id="tc" aria-current="page">상세보기</li>
             </ol>
           </nav>
@@ -95,7 +95,7 @@
         			<div class="p-3">
         				<div class="mt-3 mb-3">
                   			<h3>[[${board.title}]]</h3>
-                  			<div th:text="${board.id}"></div>
+                  			
                 		</div>
                 		<span class="mamamoo">조회</span><span class="ms-1 me-1">[[${board.readcount}]]</span>
                 		<span class="ms-2">[[${#dates.format(board.createDate ,'yyyy/MM/dd')}]]</span>
@@ -128,12 +128,12 @@
         		<div class="mt-2 box4">
         			<div>[[${board.content}]]</div>
         		</div>
-        		<div class="text-end mt-3" th:if="${session.loginMember != null&&(session.loginMember.id == board.id)}">
+        		<div class="text-end mt-3" th:if="${session.loginMember != null && (session.loginMember.id == board.id)}">
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnUpdate">수 정</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" id="btnDelete">삭 제</button>
         			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
-        		<div class="text-end mt-3">
+        		<div class="text-end mt-3" th:if="${session.loginMember != null && (session.loginMember.id != board.id)}">
         			<button class="bbtn2 btn-outline-ppink" type="button" ><i class="ci-thumb-up-filled"></i></button>
         		</div>
         		<br>

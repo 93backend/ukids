@@ -91,6 +91,7 @@ public class BoardController {
 		if(board == null) {
 			return "redirect:error";
 		}
+		System.out.println(board);
 		model.addAttribute("type", type);
 		model.addAttribute("board", board);
 		model.addAttribute("replyList", board.getReplies());

@@ -78,7 +78,7 @@
 	
 	<select id="selectBoardByNo" parameterType="int" resultMap="boardDetailResultMap">
 		SELECT  
-			B.boardNo, B.memberNo, B.title, M1.id, B.readcount, B.type, B.originalFileName, B.renamedFileName, 
+			B.boardNo, B.memberNo, B.title, M.id, B.readcount, B.type, B.originalFileName, B.renamedFileName, 
 			B.content, B.createDate, B.modifyDate,
 			R.bReplyNo AS R_bReplyNo, 
 		    R.boardNo AS R_boardNo,
