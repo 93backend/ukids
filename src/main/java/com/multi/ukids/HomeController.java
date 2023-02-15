@@ -89,7 +89,6 @@ public class HomeController {
 		}
 		String address = (String) param.get("city") + " " + (String) param.get("town");
 		
-		
 		int nurseryCount = nurseryService.getNurseryCount(param);
 		PageInfo pageInfo = new PageInfo(1, 1, nurseryCount, nurseryCount);
 		List<Nursery> nursery =  nurseryService.getNurseryList(pageInfo, param);
@@ -103,7 +102,6 @@ public class HomeController {
 		List<Playground> playground = playgroundService.getMainPlaygroundList(param);
 		List<Welfare> welfare = welfareService.getMainWelfareList(param);
 		List<Hospital> hospital = hospitalService.getMainHospitalList(param);
-		
 		
 		// 국공립 / 사립
 		int[] publicCnt = new int[2];
