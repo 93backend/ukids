@@ -6,8 +6,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.multi.ukids.board.model.service.BoardService;
+import com.multi.ukids.board.model.vo.Board;
 import com.multi.ukids.common.util.PageInfo;
 import com.multi.ukids.hospital.model.service.HospitalService;
 import com.multi.ukids.hospital.model.vo.Hospital;
@@ -23,7 +25,6 @@ import com.multi.ukids.kinder.model.vo.Kinder;
 import com.multi.ukids.member.model.vo.Member;
 import com.multi.ukids.nursery.model.service.NurseryService;
 import com.multi.ukids.nursery.model.vo.Nursery;
-import com.multi.ukids.playground.controller.PlaygroundController;
 import com.multi.ukids.playground.model.service.PlaygroundService;
 import com.multi.ukids.playground.model.vo.Playground;
 import com.multi.ukids.toy.model.service.ToyService;
@@ -39,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class HomeController {
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+//	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private KinderService kinderService;
@@ -53,6 +54,8 @@ public class HomeController {
 	private WelfareService welfareService;
 	@Autowired
 	private HospitalService hospitalService;
+	@Autowired
+	private BoardService boardService;
 	
 	public int[] createRdImgIdx() {
 		Random rd = new Random();
@@ -148,9 +151,23 @@ public class HomeController {
 		model.addAttribute("hospital", hospital);
 		
 		//추천 장난감
-		
 		List<Toy> rcmToy = toyService.selectRcmToy();		
 		model.addAttribute("rcmToy", rcmToy);
+		
+		// 공지사항
+		Map<String, String> boardMap = new HashMap<>();
+		boardMap.put("type", "notice");
+		int noticeCount = boardService.getBoardCount(boardMap);
+		pageInfo = new PageInfo(1, 1, noticeCount, 5);
+		List<Board> notice = boardService.getBoardList(pageInfo, boardMap);
+		model.addAttribute("notice", notice);
+		
+		// 게시판
+		boardMap.put("type", "freeboard");
+		int boardCount = boardService.getBoardCount(boardMap);
+		pageInfo = new PageInfo(1, 1, boardCount, 8);
+		List<Board> board = boardService.getBoardList(pageInfo, boardMap);
+		model.addAttribute("board", board);
 		
 		return "index";
 	}

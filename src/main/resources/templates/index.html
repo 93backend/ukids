@@ -420,39 +420,22 @@
             <div class="col-sm-6 p-4 border rounded shadow-sm">
               <div class="d-flex align-items-center justify-content-between mb-sm-4 mb-4 border-bottom">
                 <h2 class="h4 fw-bold"><i class="ci-loudspeaker me-3"></i>공지사항</h2>
-                <a class="btn px-0" href="notice.html">더 보기<i class="ci-arrow-right ms-2"></i></a>
+                <a class="btn px-0" href="/community/notice">더 보기<i class="ci-arrow-right ms-2"></i></a>
               </div>
               <ul class="list-unstyled mb-0">
-                <li class="mb-0">
-                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-notice.html">
-                    <span class="text-truncate">How long will delivery take?</span>
-                    <span class="flex-shrink">2023-01-01</span>
-                  </a>
-                </li>
-                <li class="mb-0">
-                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-notice.html">
-                    <span class="text-truncate">What payment methods do you accept?</span>
-                    <span class="flex-shrink">2023-01-01</span>
-                  </a>
-                </li>
-                <li class="mb-0">
-                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-notice.html">
-                    <span class="text-truncate">Do you ship internationally?</span>
-                    <span class="flex-shrink">2023-01-01</span>
-                  </a>
-                </li>
-                <li class="mb-0">
-                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-notice.html">
-                    <span class="text-truncate">Do I need an account to place an order?</span>
-                    <span class="flex-shrink">2023-01-01</span>
-                  </a>
-                </li>
-                <li class="mb-0">
-                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-notice.html">
-                    <span class="text-truncate">How can I track my order?</span>
-                    <span class="flex-shrink">2023-01-01</span>
-                  </a>
-                </li>
+              	<th:block th:if="${#lists.size(notice) == 0}">
+              		<li class="mb-0 text-center">등록된 공지사항이 없습니다.</li>
+              	</th:block>
+              	<th:block th:if="${notice != null}">
+              		<th:block th:each="notice : ${notice}">
+		                <li class="mb-0">
+		                  <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" th:href="|/community/view-community?type=notice&no=${notice.boardNo}|">
+		                    <span class="text-truncate">[[${notice.title}]]</span>
+		                    <span class="flex-shrink">[[${#dates.format(notice.createDate, 'yyyy-MM-dd')}]]</span>
+		                  </a>
+		                </li>
+              		</th:block>
+              	</th:block>
               </ul>
             </div>
 
@@ -509,58 +492,23 @@
               <div class="card p-3 border shadow">
                 <div class="d-flex align-items-center justify-content-between border-bottom pb-2">
                   <h2 class="h4 mb-0 fw-bold"></i>자유게시판</h2>
-                  <a class="btn px-0" href="community.html">더 보기<i class="ci-arrow-right ms-2"></i></a>
+                  <a class="btn px-0" href="/community/freeboard">더 보기<i class="ci-arrow-right ms-2"></i></a>
                 </div>
                 <div class="card-body text-center px-1 pb-0">
                   <ul class="list-unstyled mb-0">
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">How long will delivery take?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">What payment methods do you accept?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">Do you ship internationally?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">Do I need an account to place an order?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">How can I track my order?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">How can I track my order?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">How can I track my order?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
-                    <li class="mb-0">
-                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" href="view-community.html">
-                        <span class="text-truncate">How can I track my order?</span>
-                        <span class="flex-shrink">01-01</span>
-                      </a>
-                    </li>
+                  	<th:block th:if="${#lists.size(board) == 0}">
+              			<li class="mb-0 text-center">등록된 게시글이 없습니다.</li>
+              		</th:block>
+              		<th:block th:if="${board != null}">
+              			<th:block th:each="board : ${board}">
+		                    <li class="mb-0">
+		                      <a class="nav-link-style d-flex justify-content-between align-items-center pb-2 mb-2" th:href="|/community/view-community?type=freeboard&no=${board.boardNo}|">
+		                        <span class="text-truncate">[[${board.title}]]</span>
+		                        <span class="flex-shrink">[[${#dates.format(board.createDate, 'MM-dd')}]]</span>
+		                      </a>
+		                    </li>
+              			</th:block>
+              		</th:block>
                   </ul>
                 </div>
               </div>
