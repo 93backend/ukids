@@ -109,7 +109,6 @@ public class BoardController {
 		return "write-comm";
 	}
 	
-	
 	@PostMapping("/community/write")
 	public String writeBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
