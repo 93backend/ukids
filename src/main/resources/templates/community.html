@@ -194,11 +194,11 @@
   <script th:src="@{/js/theme.min.js}"></script>
   </body>
   </html>
-<script type="text/javascript" th:inline="javascript">
+<!--  <script type="text/javascript" th:inline="javascript">
 
 $( document ).ready(function() {
 
-	var searchlist = /*[[${searchType}]]*/{};
+	var searchlist = [[${type}]];
     for(var i=0; i<searchlist.length; i++){
     	var id = searchlist[i];
     	var idd = id.replace('/', '');
@@ -212,4 +212,4 @@ $( document ).ready(function() {
 		$("#cummunity").append(pageTag);
 		$('#cummunity').submit();
 	}
-</script>
+</script>-->
