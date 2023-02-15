@@ -109,6 +109,7 @@ public class BoardController {
 		return "write-comm";
 	}
 	
+	
 	@PostMapping("/community/write")
 	public String writeBoard(Model model, HttpSession session,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -236,6 +237,7 @@ public class BoardController {
 		}
 		
 		model.addAttribute("board",board);
+		model.addAttribute("type",type);
 		return "update";
 	}
 //	
