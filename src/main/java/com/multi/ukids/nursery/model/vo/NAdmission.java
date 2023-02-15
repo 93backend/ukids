@@ -19,4 +19,5 @@ public class NAdmission {
 	private Date enrollDate;
 	private String newEnrollDate;
 	private String newHopeDate;
+	private String memberName;
 }
