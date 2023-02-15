@@ -18,7 +18,9 @@ import com.multi.ukids.hospital.model.service.HospitalService;
 import com.multi.ukids.hospital.model.vo.Hospital;
 import com.multi.ukids.hospital.model.vo.NightCare;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j 
 @Controller
 public class HospitalController {
 	@Autowired
@@ -66,11 +68,12 @@ public class HospitalController {
 		} catch (Exception e) {}
 		
 		//병원 목록
-		int count = hospitalService.getHospitalCount(param) + hospitalService.getNightCareCount(param);
-		PageInfo pageInfo1 = param.containsKey("nightcore") ? new PageInfo(page, 5, count, 0) : new PageInfo(page, 5, count, 9);
-		PageInfo pageInfo2 = param.containsKey("nightcore") ? new PageInfo(page, 5, count, 12) : new PageInfo(page, 5, count, 3);
-		List<Hospital> hpList = hospitalService.getHospitalList(pageInfo1, param);    //소아과진료
-		List<NightCare> ncList = hospitalService.getNightCareList(pageInfo2, param);  //야간진료
+		int count = param.containsKey("nightcore") ? hospitalService.getNightCareCount(param) : hospitalService.getHospitalCount(param) + hospitalService.getNightCareCount(param);
+		PageInfo hpPageInfo = param.containsKey("nightcore") ? new PageInfo(page, 5, count, 0) : new PageInfo(page, 5, count, 9);
+		PageInfo nsPageInfo = param.containsKey("nightcore") ? new PageInfo(page, 5, count, 12) : new PageInfo(page, 5, count, 3);
+		PageInfo pageInfo = param.containsKey("nightcore") ? nsPageInfo : hpPageInfo;
+		List<Hospital> hpList = hospitalService.getHospitalList(hpPageInfo, param);    //소아과진료
+		List<NightCare> ncList = hospitalService.getNightCareList(nsPageInfo, param);  //야간진료
 		
 		//병원 랜덤 이미지
 		int[] hpImgIdx = createRdImgIdx(9, 18, 0);
@@ -86,9 +89,13 @@ public class HospitalController {
 		model.addAttribute("hpList", hpList);
 		model.addAttribute("ncList", ncList);
 		model.addAttribute("param", param);
-		model.addAttribute("pageInfo", pageInfo1);
+		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("hpImgIdx", hpImgIdx);
 		model.addAttribute("ncImgIdx", ncImgIdx);
+		
+		log.info("count : " + count);
+		log.info("start page : " + nsPageInfo.getStartPage());
+		log.info("end page : " + nsPageInfo.getEndPage());
 		
 		return "hospital-main";
 	}
