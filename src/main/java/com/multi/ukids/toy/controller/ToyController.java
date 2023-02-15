@@ -79,6 +79,7 @@ public class ToyController {
          model.addAttribute("searchType", searchType);
          model.addAttribute("searchValue", searchValue);
          model.addAttribute("pageInfo", pageInfo);
+         model.addAttribute("toyCount",toyCount);
          return "toy-main";
          
       }

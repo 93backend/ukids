@@ -35,6 +35,11 @@
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
+<style>
+.sbm:hover{
+	cursor: pointer;
+}
+</style>
 
   </head>
 
@@ -48,11 +53,7 @@
       <!-- 헤더!!!!!! -->
       <header th:fragment="header" th:replace="~{common :: header}"></header>
 
-<style>
-.sbm:hover{
-	cursor: pointer;
-}
-</style>
+
 
     <section class="bg-darker bg-size-cover bg-position-center heyjude py-3"
       style="background-image: url(img/ukids/toy-main/toyma.png);">
@@ -71,15 +72,15 @@
             </nav>
           </div>
           <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
-
           </div>
         </div>
 
-
-
-        <h1 class="text-light text-center text-lg-start py-3 fw-bold">장난감 대여</h1>
+		<h1 class="text-light text-center text-lg-start py-3 fw-bold">장난감 대여</h1>
+		
       </div>
     </section>
+    
+    
     <div class="container-sm ">
       <!-- Toolbar-->
       <div class="bg-light shadow-lg rounded-3 p-4 mt-n5 mb-4 border border-3 border-danger">
@@ -155,52 +156,47 @@
                         <input class="form-check-input" type="checkbox" id="">
                         <label class="form-check-label fs-6" for=""></label>
                       </div>
-                      
-                    </div>
                    </div>
-                 </div>
-            </div>
-
-
-           </div>
-            </div>
-            
-            </form>
-       </div>
                    
-        
+                  </div>
+                </div>
+              </div>
 
-
+		    </div>
+          </div>
+            
+        </form>
       </div>
+                   
     </div>
 
 
     <!-- Items grid-->
     <section class="container py-4 py-sm-1">
       <div class="row pt-3 pt-sm-0">
-      <th:block th:if="${list != null}">
-      	<tr th:each="toy : ${list}">
-	        <div class="col-md-4 col-sm-6 mb-grid-gutter"><a class="card product-card h-100 border-0 shadow pb-2"
-	            th:href="@{|/toy-detail?no=${toy.toyNo}|}"><img class="card-img-top" th:src="${toy.toyImg}">
+        <th:block th:if="${list == null || toyCount == 0}">
+      	  <h5 style="text-align: center;">등록된 상품이 없습니다.</h5>   
+        </th:block>
+        <th:block th:if="${list != null}" th:each="toy : ${list}">
+	        <div class="col-md-4 col-sm-6 mb-grid-gutter">
+	          <a class="card product-card h-100 border-0 shadow pb-2" th:href="@{|/toy-detail?no=${toy.toyNo}|}">
+	            <img class="card-img-top" th:src="${toy.toyImg}">
 	            <div class="card-body  pt-3 pb-4">
 	              <div class="card-body p-0 h-75">
 	                <h3 class="h5 mb-2" th:text="${toy.toyNm1}"></h3>
 	              </div>
 	              <div class="d-flex flex-wrap justify-content-between align-items-center">
 	                <div class=" me-2">
-	                <span class="fs-5 ms-1 fw-bold geul2" th:if="${toy.toyType} == null">대여가능</span>
-	                <span class="fs-5 ms-1 fw-bold geul2" style="color:rgb(235, 72, 72);" th:unless="${toy.toyType}== null">대여중</span>
+	                  <span class="fs-5 ms-1 fw-bold geul2" th:if="${toy.toyType} == null">대여가능</span>
+	                  <span class="fs-5 ms-1 fw-bold geul2" style="color:rgb(235, 72, 72);" th:unless="${toy.toyType}== null">대여중</span>
 	                </div>
 	                <div class="t rounded-1 py-1 px-2 geul" th:text="${#strings.replace(toy.toyPay,'.0','원')}"></div>
 	              </div>
 	            </div>
 	          </a>
 	        </div>
-	    </tr>
-	  </th:block>
-       
+	    </th:block>       
       </div>
-
     </section>
 
 
@@ -228,7 +224,6 @@
                 class="ci-arrow-right ms-2"></i></a></li>
         </ul>
       </nav>
-    </div>
     </div>
     <br>
   </main>
@@ -270,5 +265,6 @@ $( document ).ready(function() {
 		const pageTag = $("<input type='hidden' value=" + pageUrl + " name='page' readonly>");
 		$("#toyForm").append(pageTag);
 		$('#toyForm').submit();
+		
 	}
 </script>

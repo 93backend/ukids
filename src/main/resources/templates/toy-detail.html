@@ -150,7 +150,7 @@
               [(${#strings.replace(toy.toyEx,'\','')})]
             </div>           
               <button type="button" class="btn btn-primary toydetailbtn" id="toybtn">상품정보 더 보기 ∨ </button>
-              <button type="button" class="btn btn-primary toydetailclose hide"  id="toybtn2">상품정보 간략히 &nbsp∧</button>
+              <button type="button" class="btn btn-primary toydetailclose hide"  id="toybtn2">상품정보 간략히 &nbsp;∧</button>
         </div>
       
       
@@ -238,11 +238,12 @@
                   <a class="card-img-top d-block overflow-hidden" th:href="@{|/toy-detail?no=${st.toyNo}|}"><img th:src="${st.toyImg}" alt="Product"></a>
                   <div class="card-body similar py-2">
                     <h3 class="product-title fs-sm toyname"><a th:href="@{|/toy-detail?no=${st.toyNo}|}">[[${st.toyNm1}]]</a></h3>
-                    <div class="d-flex justify-content-between">
-                      <div class="product-price"><span class="rentpri">대여료<p class="price">[[${#strings.replace(st.toyPay,'.0','원')}]]</p></span></div>
-                      <div style="color: rgb(132, 219, 0);" th:if="${st.toyType} == null">대여가능</div>
-                      <div style="color:rgb(235, 72, 72);" th:unless="${st.toyType} == null">대여중</div>
-                    </div>
+	                   <div class="d-flex justify-content-between">
+	                     <div class="product-price"><span class="rentpri">대여료</span></div>
+	                     <div style="color: rgb(132, 219, 0);" th:if="${st.toyType} == null">대여가능</div>
+	                     <div style="color:rgb(235, 72, 72);" th:unless="${st.toyType} == null">대여중</div>
+	                   </div>
+                    <div class="price">[[${#strings.replace(st.toyPay,'.0','원')}]]</div>
                   </div>
                 </div>
               </div>
