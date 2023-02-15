@@ -314,6 +314,15 @@
     -webkit-filter: blur(5px);
   }
 
+  .cgw33 {
+    width: 250px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    display: block;
+    padding-left: 3.3rem;
+  }
+  
   .btn-primary-cgw1 {
     color: rgb(255, 255, 255);
     background-color: #FC6C93;

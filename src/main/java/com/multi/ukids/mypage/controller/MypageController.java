@@ -100,6 +100,7 @@ public class MypageController {
 		
 		log.info("회원 정보 페이지 요청");
 		
+		// USER
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
@@ -112,6 +113,12 @@ public class MypageController {
 		model.addAttribute("boardCount", boardCount);
 		model.addAttribute("rentalCount", rentalCount);
 		model.addAttribute("cartCount", cartCount);
+		
+		
+		// ADMIN
+		int allClaimCount = service.getANurseryClaimCount() + service.getANurseryClaimCount();
+		
+		model.addAttribute("allClaimCount", allClaimCount);
 		
 		return "mypage";
 	}
@@ -236,19 +243,6 @@ public class MypageController {
 		return ResponseEntity.status(HttpStatus.OK).body(klist);
 	}
 	
-	
-//	@PostMapping("/nAdmission/search")
-//	public String searchNAdmission(Model model,
-//			@RequestParam Map<String, Object> param
-//			) {
-//		int count = service.getNAdmissionCount(param);
-//		PageInfo pageInfo = new PageInfo(1, 1, count, count);
-//		List<NAdmission> list = service.getNAdmissionList(pageInfo, param);
-//		
-//		model.addAttribute("list", list);
-//		
-//		return "nAdmission-list";
-//	}
 	@RequestMapping("/deleteNAdmission")
 	public String deleteNAdmission(Model model,
 			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
@@ -517,6 +511,8 @@ public class MypageController {
 		int kPage = 1;
 		int tnPage = 1;
 		int tkPage = 1;
+		int anPage = 1;
+		int akPage = 1;
 		
 		try {
 			nPage = Integer.parseInt(param.get("nPage"));
@@ -530,21 +526,28 @@ public class MypageController {
 		try {
 			tkPage = Integer.parseInt(param.get("tkPage"));
 		} catch (Exception e) {}
+		try {
+			anPage = Integer.parseInt(param.get("anPage"));
+		} catch (Exception e) {}
+		try {
+			akPage = Integer.parseInt(param.get("akPage"));
+		} catch (Exception e) {}
 		
 		// nursery
 		int ncount = service.getNurseryClaimCount(param);
 		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 4);
 		List<Claim> nlist = service.getNurseryClaimList(npageInfo, param);
 		
-//		System.out.println("nlist(불편사항) : " + nlist);
+		System.out.println("nlist(불편사항) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nPageInfo", npageInfo);
 		
+		// kinder
 		int kcount = service.getKinderClaimCount(param);
 		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 4);
 		List<Claim> klist = service.getKinderClaimList(kpageInfo, param);
 		
-//		System.out.println("klist(불편사항) : " + klist);
+		System.out.println("klist(불편사항) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
 		
@@ -566,6 +569,26 @@ public class MypageController {
 		model.addAttribute("tklist", tklist);
 		model.addAttribute("tkPageInfo", tkpageInfo);
 		
+		// nursery-admin
+		int ancount = service.getANurseryClaimCount();
+		PageInfo anpageInfo = new PageInfo(anPage, 5, ancount, 4);
+		List<Claim> anlist = service.getANurseryClaimList(anpageInfo, param);
+		
+		System.out.println("anlist(불편사항) : " + anlist);
+		model.addAttribute("anlist", anlist);
+		model.addAttribute("anPageInfo", anpageInfo);
+		
+		// kinder-admin
+		int akcount = service.getAKinderClaimCount();
+		PageInfo akpageInfo = new PageInfo(akPage, 5, akcount, 4);
+		List<Claim> aklist = service.getAKinderClaimList(akpageInfo, param);
+		
+		System.out.println("aklist(불편사항) : " + aklist);
+		model.addAttribute("aklist", aklist);
+		model.addAttribute("akPageInfo", akpageInfo);
+		
+		
+		
 		model.addAttribute("param", param);	
 		
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
@@ -580,6 +603,8 @@ public class MypageController {
 		model.addAttribute("boardCount", boardCount);
 		model.addAttribute("rentalCount", rentalCount);
 		model.addAttribute("cartCount", cartCount);
+		
+		
 		
 		return "mypage-4";
 	}
@@ -666,7 +691,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 8);
 		List<Board> list = service.getBoardList(pageInfo, param);
 
-//		System.out.println("list : " + list);
+		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
@@ -704,23 +729,6 @@ public class MypageController {
 		
 		return "common/msg";
 	}
-	
-//	@RequestMapping("/delete")
-//	public String deleteBoard(Model model,  HttpSession session,
-//			@SessionAttribute(name = "loginMember", required = false) Member loginMember,
-//			int boardNo
-//			) {
-//		log.info("게시글 삭제 요청 boardNo : " + boardNo);
-//		int result = service.deleteBoard(boardNo, savePath);
-//		
-//		if(result > 0) {
-//			model.addAttribute("msg", "게시글 삭제가 정상적으로 완료되었습니다.");
-//		}else {
-//			model.addAttribute("msg", "게시글 삭제에 실패하였습니다.");
-//		}
-//		model.addAttribute("location", "/mypage-5");
-//		return "common/msg";
-//	}
 	
 	
 	@GetMapping("/mypage-6")

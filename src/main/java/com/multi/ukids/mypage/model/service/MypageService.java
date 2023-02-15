@@ -31,25 +31,38 @@ public class MypageService {
 	private MypageMapper mapper;
 	@Autowired
 	private ToyMapper toyMapper;
-	// mypage2
+	
+	// ============================== mypage1 - 회원정보 수정 ==============================
+	// MemberService.java 참고
+	
+	// ============================== mypage2 - 입소 신청 조회 ==============================
+	
+	// 어린이집 - USER
+	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
+		map.put("limit", ""+pageInfo.getListLimit());
+		map.put("offset", ""+(pageInfo.getStartList() - 1));
+		return mapper.selectNAdmissionList(map);
+	}
+	
+	public int getNAdmissionCount(Map<String, String> map) {
+		return mapper.selectNAdmissionCount(map);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteNAdmission(int no) {
+		return mapper.deleteNAdmission(no);
+	}
+	
+	
+	// 유치원 - USER
 	public List<KAdmission> getKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectKAdmissionList(map);
 	}
 	
-	public List<KAdmission> getTKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
-		map.put("limit", ""+pageInfo.getListLimit());
-		map.put("offset", ""+(pageInfo.getStartList() - 1));
-		return mapper.selectTKAdmissionList(map);
-	}
-	
 	public int getKAdmissionCount(Map<String, String> map) {
 		return mapper.selectKAdmissionCount(map);
-	}
-	
-	public int getTKAdmissionCount(Map<String, String> map) {
-		return mapper.selectTKAdmissionCount(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -57,39 +70,16 @@ public class MypageService {
 		return mapper.deleteKAdmission(no);
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
-	public int updateTKinderAdmissionY(int no) {
-		return mapper.updateTKinderAdmissionY(no);
-	}
 	
-	@Transactional(rollbackFor = Exception.class)
-	public int updateTKinderAdmissionN(int no) {
-		return mapper.updateTKinderAdmissionN(no);
-	}
-	
-	public List<NAdmission> getNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
-		map.put("limit", ""+pageInfo.getListLimit());
-		map.put("offset", ""+(pageInfo.getStartList() - 1));
-		return mapper.selectNAdmissionList(map);
-	}
-	
+	// 어린이집 - TEACHER
 	public List<NAdmission> getTNAdmissionList(PageInfo pageInfo, Map<String, String> map) {
 		map.put("limit", ""+pageInfo.getListLimit());
 		map.put("offset", ""+(pageInfo.getStartList() - 1));
 		return mapper.selectTNAdmissionList(map);
 	}
 	
-	public int getNAdmissionCount(Map<String, String> map) {
-		return mapper.selectNAdmissionCount(map);
-	}
-	
 	public int getTNAdmissionCount(Map<String, String> map) {
 		return mapper.selectTNAdmissionCount(map);
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int deleteNAdmission(int no) {
-		return mapper.deleteNAdmission(no);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -103,10 +93,30 @@ public class MypageService {
 	}
 	
 	
+	// 유치원 - TEACHER
+	public List<KAdmission> getTKAdmissionList(PageInfo pageInfo, Map<String, String> map) {
+		map.put("limit", ""+pageInfo.getListLimit());
+		map.put("offset", ""+(pageInfo.getStartList() - 1));
+		return mapper.selectTKAdmissionList(map);
+	}
+	
+	public int getTKAdmissionCount(Map<String, String> map) {
+		return mapper.selectTKAdmissionCount(map);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTKinderAdmissionY(int no) {
+		return mapper.updateTKinderAdmissionY(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateTKinderAdmissionN(int no) {
+		return mapper.updateTKinderAdmissionN(no);
+	}
 	
 	
+	// ============================== mypage3 - 찜 ==============================
 	
-	// mypage3
 	public List<Wish> getNurseryWishList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
@@ -148,121 +158,17 @@ public class MypageService {
 	}
 	
 	
-	//mypage4
-	public String getselectNurseryName(int no) {
-		return mapper.selectNurseryName(no);
-	}
+	// ============================== mypage4 - 불편사항 신고 조회 ==============================
 	
-	public String getselectKinderName(int no) {
-		return mapper.selectKinderName(no);
-	}
-	
+	// 어린이집 - USER
 	public List<Claim> getNurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
 		return mapper.selectNurseryClaimList(param);
 	}
 	
-	public List<Claim> getKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
-		param.put("limit", "" + pageInfo.getListLimit());
-		param.put("offset", "" + (pageInfo.getStartList() - 1));
-		return mapper.selectKinderClaimList(param);
-	}
-	
-	public List<Claim> getTNurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
-		param.put("limit", "" + pageInfo.getListLimit());
-		param.put("offset", "" + (pageInfo.getStartList() - 1));
-		return mapper.selectTNurseryClaimList(param);
-	}
-	
-	public List<Claim> getTKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
-		param.put("limit", "" + pageInfo.getListLimit());
-		param.put("offset", "" + (pageInfo.getStartList() - 1));
-		return mapper.selectTKinderClaimList(param);
-	}
-	
 	public int getNurseryClaimCount(Map<String, String> map) {
 		return mapper.selectNurseryClaimCount(map);
-	}
-	public int getKinderClaimCount(Map<String, String> map) {
-		return mapper.selectKinderClaimCount(map);
-	}
-	public int getTNurseryClaimCount(Map<String, String> map) {
-		return mapper.selectTNurseryClaimCount(map);
-	}
-	public int getTKinderClaimCount(Map<String, String> map) {
-		return mapper.selectTKinderClaimCount(map);
-	}
-	
-	public String saveClaimFile(MultipartFile file, String savePath) {
-		File folder = new File(savePath);
-		
-		// 폴더 없으면 만드는 코드
-		if(folder.exists() == false) {
-			folder.mkdir();
-		}
-		
-		System.out.println("savePath : " + savePath);
-		
-		// 파일이름을 랜덤하게 바꾸는 코드, test.txt -> 20221213_1728291212.txt
-		String originalFileName = file.getOriginalFilename();
-		String reNameFileName = 
-					LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmssSSS"));
-		reNameFileName += originalFileName.substring(originalFileName.lastIndexOf("."));
-		String reNamePath = savePath + "/" + reNameFileName;
-		
-		try {
-			// 실제 파일이 저장되는 코드
-			file.transferTo(new File(reNamePath));
-		} catch (Exception e) {
-			return null;
-		}
-		return reNameFileName;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public Claim findByNoNursery(int no) {
-		Claim claim = mapper.selectNurseryClaimByNo(no);
-		claim.setReadCount(claim.getReadCount() + 1);
-		mapper.updateReadCountNursery(claim);
-		return claim;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public Claim findByNoKinder(int no) {
-		Claim claim = mapper.selectKinderClaimByNo(no);
-		claim.setReadCount(claim.getReadCount() + 1);
-		mapper.updateReadCountKinder(claim);
-		return claim;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int saveNurseryClaim(Claim claim) {
-		int result = 0;
-		if(claim.getNo() == 0) {
-			result = mapper.insertNurseryClaim(claim);
-		} else {
-			result = mapper.updateNurseryClaim(claim);
-		}
-		return result;
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int saveKinderClaim(Claim claim) {
-		int result = 0;
-		if(claim.getNo() == 0) {
-			result = mapper.insertKinderClaim(claim);
-		} else {
-			result = mapper.updateKinderClaim(claim);
-		}
-		return result;
-	}
-	
-	public void deleteClaimFile(String filePath) {
-		File file = new File(filePath);
-		if(file.exists()) {
-			file.delete();
-		}
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -272,6 +178,18 @@ public class MypageService {
 		return mapper.deleteNurseryClaim(no);
 	}
 	
+	
+	// 유치원 - USER
+	public List<Claim> getKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectKinderClaimList(param);
+	}
+	
+	public int getKinderClaimCount(Map<String, String> map) {
+		return mapper.selectKinderClaimCount(map);
+	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	public int deleteKinderClaim(int no, String rootPath) {
 		Claim claim = mapper.selectKinderClaimByNo(no);
@@ -279,18 +197,77 @@ public class MypageService {
 		return mapper.deleteKinderClaim(no);
 	}
 	
+	
+	// 어린이집 - TEACHER
+	public List<Claim> getTNurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectTNurseryClaimList(param);
+	}
+	
+	public int getTNurseryClaimCount(Map<String, String> map) {
+		return mapper.selectTNurseryClaimCount(map);
+	}
+	
 	@Transactional(rollbackFor = Exception.class)
 	public int updateTNurseryClaim(int no) {
 		return mapper.updateTNurseryClaim(no);
+	}
+
+	
+	// 유치원 - TEACHER
+	public List<Claim> getTKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectTKinderClaimList(param);
+	}
+	
+	public int getTKinderClaimCount(Map<String, String> map) {
+		return mapper.selectTKinderClaimCount(map);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int updateTKinderClaim(int no) {
 		return mapper.updateTKinderClaim(no);
 	}
+	
+	
+	// delete
+	public void deleteClaimFile(String filePath) {
+		File file = new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
+	
+	
+	// ADMIN
+	public List<Claim> getANurseryClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectANurseryClaimList(param);
+	}
+	
+	public List<Claim> getAKinderClaimList(PageInfo pageInfo, Map<String, String> param) {
+		param.put("limit", "" + pageInfo.getListLimit());
+		param.put("offset", "" + (pageInfo.getStartList() - 1));
+		return mapper.selectAKinderClaimList(param);
+	}
+	
+	public int getANurseryClaimCount() {
+		return mapper.selectANurseryClaimCount();
+	}
+	public int getAKinderClaimCount() {
+		return mapper.selectAKinderClaimCount();
+	}
+	
+	
+	
+	
 
 	
-	// mypage5
+	// ============================== mypage5 - 내가 쓴 게시글 ==============================
+	
 	public List<Board> getBoardList(PageInfo pageInfo, Map<String, String> param){
 		param.put("limit", "" + pageInfo.getListLimit());
 		param.put("offset", "" + (pageInfo.getStartList() - 1));
@@ -354,7 +331,8 @@ public class MypageService {
 	}
 	
 	
-	// mypage6
+	// ============================== mypage6 - 대여 내역 조회 ==============================
+	// USER
 	public List<Rental> getRentalList(PageInfo pageInfo,Map<String, String> paramMap){
 		paramMap.put("limit", "" + pageInfo.getListLimit());
 		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));
@@ -393,6 +371,36 @@ public class MypageService {
 		return payList;
 	}
 	
+	public int getRentalCount(Map<String, String> map) {
+		return mapper.selectRentalCount(map);
+	}
+	
+	public Rental findByRentalNo(int no) {
+		return mapper.selectRentalByNo(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyType(int no) {
+		return mapper.updateToyType(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateToyStatus(int no) {
+		return mapper.updateToyStatus(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int updateRental(int no) {
+		return mapper.updateRental(no);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public int deleteRental(int no) {
+		return mapper.deleteRental(no);
+	}
+	
+	
+	// ADMIN
 	public List<Pay> getRentalList3(){
 		List<Pay> payList = new ArrayList<Pay>();
 		payList = mapper.selectRentalList3();
@@ -424,23 +432,6 @@ public class MypageService {
 
 		return payList;
 	}
-	public int getRentalCount(Map<String, String> map) {
-		return mapper.selectRentalCount(map);
-	}
-	
-	public Rental findByRentalNo(int no) {
-		return mapper.selectRentalByNo(no);
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int updateToyType(int no) {
-		return mapper.updateToyType(no);
-	}
-	
-	@Transactional(rollbackFor = Exception.class)
-	public int updateToyStatus(int no) {
-		return mapper.updateToyStatus(no);
-	}
 	
 	@Transactional(rollbackFor = Exception.class)
 	public int updateToyStatusT(int no) {
@@ -457,23 +448,8 @@ public class MypageService {
 		return mapper.updateToyStatusN(no);
 	}
 	
-	@Transactional(rollbackFor = Exception.class)
-	public int updateRental(int no) {
-		return mapper.updateRental(no);
-	}
 	
-	@Transactional(rollbackFor = Exception.class)
-	public int deleteRental(int no) {
-		return mapper.deleteRental(no);
-	}
-	
-	
-	
-	
-
-	
-	
-	// mypage7
+	// ============================== mypage7 - 장바구니 ==============================
 	public List<Cart> getCartList(PageInfo pageInfo,Map<String, String> paramMap){
 		paramMap.put("limit", "" + pageInfo.getListLimit());
 		paramMap.put("offset", "" + (pageInfo.getStartList() - 1));

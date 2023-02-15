@@ -184,14 +184,6 @@
 										수정</a></li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소
-										신청 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
-										class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
 										신고 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
 								<li class="border-bottom mb-0"><a
@@ -202,12 +194,6 @@
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여
 										내역 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0">
-									<div class="cgw3 d-flex align-items-center px-4 py-3">
-										<i class="ci-cart opacity-60 me-2"></i>장바구니<span
-											class="fs-sm text-muted ms-auto"></span>
-									</div>
-								</li>
 								<li class="border-bottom mb-0">
 									<div class="nav-link-style d-flex align-items-center px-4 py-2">
 										<a class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i
@@ -387,20 +373,20 @@
     	var checkedCartNo = [];
     	
     	if(obj_length != 0) {
-    	for (var i = 0; i < obj_length; i++) {
-    		if (document.getElementsByName("toyCheck")[i].checked == true) {
-    			checkedCartNo.push(document.getElementsByName("toyCheck")[i].value);
-    		}
-    	}
-    	var noToString = ''
-    	for(var i=0; i<checkedCartNo.length; i++){
-    		if(i!=0){
-    			noToString += ','+checkedCartNo[i]
-    		}else{
-    			noToString += checkedCartNo[i]
-    		}
-    	}
-    	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
+	    	for (var i = 0; i < obj_length; i++) {
+		    	if (document.getElementsByName("toyCheck")[i].checked == true) {
+		    		checkedCartNo.push(document.getElementsByName("toyCheck")[i].value);
+		    	}
+		    }
+	    	var noToString = ''
+	    	for(var i=0; i<checkedCartNo.length; i++){
+	    		if(i!=0){
+	    			noToString += ','+checkedCartNo[i]
+	    		}else{
+	    			noToString += checkedCartNo[i]
+	    		}
+	    	}
+	    	location.href = "/pay?ListOrNot=false&CartNoList="+noToString;
     	} else {
     		alert('상품을 선택해주세요!!');
     	}

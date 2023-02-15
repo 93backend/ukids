@@ -153,13 +153,6 @@
                   <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
-                <li class="border-bottom mb-0">
-                  <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>입소 신청
-                    조회<span class="fs-sm text-muted ms-auto"></span></div>
-                </li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
-                      class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고 조회<span
                       class="fs-sm text-muted ms-auto"></span></a></li>
@@ -168,9 +161,6 @@
                       class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
-                      class="fs-sm text-muted ms-auto"></span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
                       class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0">
                   <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
@@ -190,7 +180,7 @@
 					</div>
 					<!-- 어린이집 입소 신청 목록-->
 					<!-- <form id="enroll-container" action="/member/update" method="post"> -->
-					<th:block th:if="${session.loginMember.role == 'ROLE_USER'}">
+					<th:block th:if="${session.loginMember.role != 'ROLE_T'}">
 					<div class="table-responsive fs-md mb-4">
 						<h5 class="v-line ps-2">어린이집 입소 신청 목록</h5>
 						<br>
@@ -239,8 +229,11 @@
 							</tbody>
 						</table>
 					</div>
+					
 					<div class="text-end">
+					<th:block th:if="${nlist.size > 3}">
 						<button class="btn btn-primary-cgw2" onclick="getNAdmissionList()" id="addBtn">더보기</button>
+					</th:block>
 						<script type="text/javascript">
 						
 						function getNAdmissionList(){
@@ -260,7 +253,7 @@
 						            	  timehtml+="<tr>"
 						                  timehtml+='<td class="py-3 cgw9">' + (i + 1) + '</td>';
 						                  timehtml+='<td class="py-3 cgw9">'
-						                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" href="/nursery-detail?&no=' + list[i].kinNo + '&i=' + i + '">' + list[i].crname + '</a>'
+						                  timehtml+='<a class="nav-link-style-cgw fw-medium cgw26" href="/nursery-detail?&no=' + list[i].nuNo + '&i=' + i + '">' + list[i].crname + '</a>'
 						                  timehtml+='</td>'
 						                  timehtml+='<td class="py-3 cgw9">' + list[i].newEnrollDate + '</td>'
 						                  timehtml+='<td class="py-3 cgw9">' + list[i].newHopeDate + '</td>'
@@ -284,8 +277,8 @@
 						                  timehtml+='</td>'
 						                  timehtml+='</tr>'
 							            }
-						            	alert(''+timehtml);
 							            $("#nListBody").html(timehtml);
+							            $("#addBtn").hide();
 							    },error:function(e){
 							      alert(data.code);
 							      alert(data.message);
@@ -347,9 +340,9 @@
 						</table>
 					</div>
 					<div class="text-end">
-						<button class="btn btn-primary-cgw2" data-bs-toggle="modal" th:onclick="getKAdmissionList()"
-							data-bs-target="#open-ticket">더보기</button>
-							
+					<th:block th:if="${klist.size > 3}">
+						<button class="btn btn-primary-cgw2" onclick="getKAdmissionList()" id="addBtn2">더보기</button>
+					</th:block>	
 					
 					</div>
 					</th:block>
@@ -397,8 +390,8 @@
 						                  timehtml+='</td>'
 						                  timehtml+='</tr>'
 							            }
-						            	alert(''+timehtml);
 							            $("#kListBody").html(timehtml);
+							            $("#addBtn2").hide();
 							    },error:function(e){
 							      alert(data.code);
 							      alert(data.message);
@@ -418,8 +411,9 @@
 						<table class="table table-hover mb-0" id="addNList">
 							<thead>
 								<tr>
-									<th class="cgw8 cgw9">번호</th>
-									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9 pe-3">번호</th>
+									<th class="cgw8 cgw9">신청자</th>
+									<th class="cgw8 cgw9">희망학급</th>
 									<th class="cgw8 cgw9">신청일자</th>
 									<th class="cgw8 cgw9">입소희망 예정일</th>
 									<th class="cgw8 cgw9">신청 상태</th>
@@ -434,9 +428,8 @@
 								<th:block th:if="${tnlist.size != 0}">
 								<tr th:each="nadmission, stat : ${tnlist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
-									<td class="py-3 cgw9"><a
-										class="nav-link-style-cgw fw-medium cgw26"
-										th:href="@{|/nursery-detail?&no=${nadmission.nuNo}&i=${stat.index}|}">[[${nadmission.crname}]]</a></td>
+									<td class="py-3 cgw9">[[${nadmission.memberName}]]</td>
+									<td class="py-3 cgw9">[[${nadmission.hopeClass}]]</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.enrollDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(nadmission.hopeDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -461,32 +454,32 @@
 						</table>
 					
 					
-					<th:block th:if="${tklist.size != 0}">
+					</div>
+					<th:block th:if="${tnlist.size != 0}">
 						         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
 						            <ul class="pagination" id="prev">
-						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-2?tnPage=${tnPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
 						            </ul>
 						            <ul class="pagination">
 						              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
 						              
-						              <th:block th:each="num, status : ${#numbers.sequence(tkPageInfo.startPage, tkPageInfo.endPage)}">
-							                	<th:block th:if="${status.current == tkPageInfo.currentPage}">
+						              <th:block th:each="num, status : ${#numbers.sequence(tnPageInfo.startPage, tnPageInfo.endPage)}">
+							                	<th:block th:if="${status.current == tnPageInfo.currentPage}">
 									                <li class="page-item d-none d-sm-block page" aria-current="page">
 									                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
 									                </li>
 							                	</th:block>
-							                	<th:block th:if="${status.current != tkPageInfo.currentPage}">
-									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${status.current}');|">[[${status.current}]]</button></li>
+							                	<th:block th:if="${status.current != tnPageInfo.currentPage}">
+									                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|movetNPage('/mypage-2?tnPage=${status.current}');|">[[${status.current}]]</button></li>
 							                	</th:block>
 							                </th:block>
 						            </ul>
 						            <ul class="pagination">
-						              <li class="page-item"><button class="page-link" th:onclick="|movetKPage('/mypage-2?tkPage=${tkPageInfo.nextPage}');|" aria-label="Next">Next<i
+						              <li class="page-item"><button class="page-link" th:onclick="|movetNPage('/mypage-2?tnPage=${tnPageInfo.nextPage}');|" aria-label="Next">Next<i
 						                    class="ci-arrow-right ms-2"></i></button></li>
 						            </ul>
 						          </nav>  
 					</th:block>
-					</div>
 					</th:block>
 					</th:block>
 					
@@ -501,8 +494,9 @@
 						<table class="table table-hover mb-0" id="addNList">
 							<thead>
 								<tr>
-									<th class="cgw8 cgw9">번호</th>
-									<th class="cgw8 cgw9">어린이집명</th>
+									<th class="cgw8 cgw9 pe-3">번호</th>
+									<th class="cgw8 cgw9">신청자</th>
+									<th class="cgw8 cgw9">희망학급</th>
 									<th class="cgw8 cgw9">신청일자</th>
 									<th class="cgw8 cgw9">입소희망 예정일</th>
 									<th class="cgw8 cgw9">신청 상태</th>
@@ -517,8 +511,8 @@
 								<th:block th:if="${tklist.size != 0}">
 								<tr th:each="kadmission, stat : ${tklist}">
 									<td class="py-3 cgw9" th:text="|${stat.count}|"></td>
-									<td class="py-3 cgw9"><a class="nav-link-style-cgw fw-medium cgw26"
-										th:href="@{|/kinder-detail?&no=${kadmission.kinNo}&i=${stat.count}|}">[[${kadmission.kinderName}]]</a></td>
+									<td class="py-3 cgw9">[[${kadmission.memberName}]]</td>
+									<td class="py-3 cgw9">[[${kadmission.hopeClass}]]</td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.enrollDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9" th:text="${#dates.format(kadmission.hopeDate, 'yyyy-MM-dd')}"></td>
 									<td class="py-3 cgw9">
@@ -532,7 +526,7 @@
 										<button class="badge bg-secondary m-0 cgw30" th:onclick="updateTKinderAdmissionN([[${kadmission.no}]]);">거절</button>
 										</th:block>
 										<th:block th:if="${kadmission.status != 'W'}">
-										<span class="badge-cgw2 bg-secondary m-0">입소취소불가</span>
+										<span class="badge-cgw2 bg-secondary m-0">입소정정불가</span>
 										</th:block>
 									</td>
 								</tr>

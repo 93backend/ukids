@@ -161,12 +161,6 @@
                 <th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage}"><i class="ci-user opacity-60 me-2"></i>회원정보 수정</a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소 신청 조회<span
-                      class="fs-sm text-muted ms-auto"></span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
-                      class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0">
                   <div class="cgw3 d-flex align-items-center px-4 py-3"><i class="ci-edit opacity-60 me-2"></i>불편사항 신고
                     조회<span class="fs-sm text-muted ms-auto"></span></div>
@@ -176,9 +170,6 @@
                       class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
                     th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여 내역 조회<span
-                      class="fs-sm text-muted ms-auto"></span></a></li>
-                <li class="border-bottom mb-0"><a class="nav-link-style d-flex align-items-center px-4 py-3"
-                    th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
                       class="fs-sm text-muted ms-auto"></span></a></li>
                 <li class="border-bottom mb-0">
                   <div class="nav-link-style d-flex align-items-center px-4 py-2"><a
@@ -523,6 +514,169 @@
 		          </th:block>
 		          </th:block>
 		          
+		          
+		          
+		          <!-- admin -->
+		          <!-- 어린이집 불편사항신고조회 목록-->
+					<th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">어린이집 불편사항 신고 조회 목록</h5> <br>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">제목</th>
+									<th class="cgw8 cgw9">작성자</th>
+									<th class="cgw8 cgw9">작성일</th>
+									<th class="cgw8 cgw9">신고접수상태</th>
+									<th class="cgw8 cgw9"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${anlist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${anlist.size != 0}">
+								<tr th:each="nclaim, stat : ${anlist}">
+									<td class="py-3 cgw9">[[${nclaim.no}]]</td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium cgw33" th:href="@{|/claim-view?type=어린이집&no=${nclaim.no}|}">[[${nclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9">[[${nclaim.memberName}]]</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${nclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${nclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="tnclaimUpdate([[${nclaim.no}]]);">확인</button>&nbsp;&nbsp;
+									</td>
+									</th:block>
+									<th:block th:if="${nclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+									</td>
+									</th:block>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					
+					<br>
+ 
+		          <!-- pagination -->
+		          <th:block th:if="${anlist.size != 0}">
+		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><button class="page-link" th:onclick="|moveaNPage('/mypage-4?anPage=${anPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              
+		              <th:block th:each="num, status : ${#numbers.sequence(anPageInfo.startPage, anPageInfo.endPage)}">
+			                	<th:block th:if="${status.current == anPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block page" aria-current="page">
+					                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					                </li>
+			                	</th:block>
+			                	<th:block th:if="${status.current != anPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveaNPage('/mypage-4?anPage=${status.current}');|">[[${status.current}]]</button></li>
+			                	</th:block>
+			                </th:block>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item"><button class="page-link" th:onclick="|moveaNPage('/mypage-4?anPage=${anPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></button></li>
+		            </ul>
+		          </nav>  
+		          </th:block>
+		          </th:block>
+		          <br><br>
+					
+					<!-- 유치원 불편사항신고조회 목록-->
+					<th:block th:if="${session.loginMember.role == 'ROLE_ADMIN'}">
+					<div class="table-responsive fs-md mb-4">
+					<h5 class="v-line ps-2">어린이집 불편사항 신고 조회 목록</h5> <br>
+						<table class="table table-hover mb-0">
+							<thead>
+								<tr>
+									<th class="cgw8 cgw9">번호</th>
+									<th class="cgw8 cgw9">제목</th>
+									<th class="cgw8 cgw9">작성자</th>
+									<th class="cgw8 cgw9">작성일</th>
+									<th class="cgw8 cgw9">신고접수상태</th>
+									<th class="cgw8 cgw9"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${aklist.size == 0}">
+									<tr>
+										<td colspan="5" class="cgw9">조회된 신청이 없습니다.</td>
+									</tr>
+								</th:block>
+								<th:block th:if="${aklist.size != 0}">
+								<tr th:each="nclaim, stat : ${aklist}">
+									<td class="py-3 cgw9">[[${nclaim.no}]]</td>
+									<td class="py-3 cgw9">
+										<a class="nav-link-style-cgw fw-medium cgw33" th:href="@{|/claim-view?type=어린이집&no=${nclaim.no}|}">[[${nclaim.title}]]</a>
+									</td>
+									<td class="py-3 cgw9">[[${nclaim.memberName}]]</td>
+									<td class="py-3 cgw9" th:text="${#dates.format(nclaim.createDate, 'yyyy-MM-dd')}"></td>
+									<td class="py-3 cgw9">
+										<span th:if="${nclaim.confirm == 'N'}" class="cgw3">신고확인중</span>
+										<span th:if="${nclaim.confirm == 'Y'}" class="cgw20">신고확인완료</span>
+									</td>
+									<th:block th:if="${nclaim.confirm == 'N'}">
+									<td class="py-3 cgw9">
+										<button class="badge-cgw3 bg-secondary-cgw1 m-0 cgw30" th:onclick="tkclaimUpdate([[${nclaim.no}]]);">확인</button>&nbsp;&nbsp;
+									</td>
+									</th:block>
+									<th:block th:if="${nclaim.confirm == 'Y'}">
+									<td class="py-3 cgw9">
+									</td>
+									</th:block>
+								</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+					
+					<br>
+ 
+		          <!-- pagination -->
+		          <th:block th:if="${aklist.size != 0}">
+		         <nav class="d-flex justify-content-between pt-2 cgw31" aria-label="Page navigation">
+		            <ul class="pagination" id="prev">
+		              <li class="page-item"><button class="page-link" th:onclick="|moveaKPage('/mypage-4?akPage=${akPageInfo.prevPage}');|"><i class="ci-arrow-left me-2"></i>Prev</button></li>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item d-sm-none"><span class="page-link page-link-static">1 / 5</span></li>
+		              
+		              <th:block th:each="num, status : ${#numbers.sequence(akPageInfo.startPage, akPageInfo.endPage)}">
+			                	<th:block th:if="${status.current == akPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block page" aria-current="page">
+					                  <span class="page-link">[[${status.current}]]<span class="visually-hidden">(current)</span></span>
+					                </li>
+			                	</th:block>
+			                	<th:block th:if="${status.current != akPageInfo.currentPage}">
+					                <li class="page-item d-none d-sm-block"><button class="page-link" th:onclick="|moveaKPage('/mypage-4?akPage=${status.current}');|">[[${status.current}]]</button></li>
+			                	</th:block>
+			                </th:block>
+		            </ul>
+		            <ul class="pagination">
+		              <li class="page-item"><button class="page-link" th:onclick="|moveaKPage('/mypage-4?akPage=${akPageInfo.nextPage}');|" aria-label="Next">Next<i
+		                    class="ci-arrow-right ms-2"></i></button></li>
+		            </ul>
+		          </nav>  
+		          </th:block>
+		          </th:block>
+		          <br><br>
+		          
+		          
+		          
 		        
 		          
 		          
@@ -556,6 +710,8 @@
 	    kPage = '[[${kPageInfo.currentPage}]]';
 		tnPage = '[[${tnPageInfo.currentPage}]]';
 	    tkPage = '[[${tkPageInfo.currentPage}]]';
+	    anPage = '[[${anPageInfo.currentPage}]]';
+	    akPage = '[[${akPageInfo.currentPage}]]';
 		function moveNPage(pageUrl){
 			pageUrl += '&nPage=' + nPage 
 			location.href = encodeURI(pageUrl);	
@@ -570,6 +726,14 @@
 		}
 		function movetKPage(pageUrl){
 			pageUrl += '&tkPage=' + tkPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		function moveaNPage(pageUrl){
+			pageUrl += '&anPage=' + anPage 
+			location.href = encodeURI(pageUrl);	
+		}
+		function moveaKPage(pageUrl){
+			pageUrl += '&akPage=' + akPage 
 			location.href = encodeURI(pageUrl);	
 		}
 		function nclaimUpdate(no) {

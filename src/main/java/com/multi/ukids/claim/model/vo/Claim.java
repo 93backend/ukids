@@ -24,4 +24,5 @@ public class Claim {
 	private String confirm;
 	private Date createDate;
 	private Date modifyDate;
+	private String memberName;
 }

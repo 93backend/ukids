@@ -175,14 +175,6 @@
 								</li>
 								<li class="border-bottom mb-0"><a
 									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-2}"><i class="ci-edit opacity-60 me-2"></i>입소
-										신청 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-3}"><i class="ci-heart opacity-60 me-2"></i>찜<span
-										class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-4}"><i class="ci-edit opacity-60 me-2"></i>불편사항
 										신고 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
 								<li class="border-bottom mb-0"><a
@@ -193,10 +185,6 @@
 									class="nav-link-style d-flex align-items-center px-4 py-3"
 									th:href="@{/mypage-6}"><i class="ci-bag opacity-60 me-2"></i>대여
 										내역 조회<span class="fs-sm text-muted ms-auto"></span></a></li>
-								<li class="border-bottom mb-0"><a
-									class="nav-link-style d-flex align-items-center px-4 py-3"
-									th:href="@{/mypage-7}"><i class="ci-cart opacity-60 me-2"></i>장바구니<span
-										class="fs-sm text-muted ms-auto"></span></a></li>
 								<li class="border-bottom mb-0">
 									<div class="nav-link-style d-flex align-items-center px-4 py-2">
 										<a class="fs-sm ms-auto btn btn-logout btn-sm" th:href="@{/logout}"><i
@@ -231,7 +219,7 @@
 							<div class="col-sm-6">
 								<label class="form-label" for="account-pass">비밀번호</label>
 								<div class="password-toggle">
-									<input class="form-control" type="password" name="password" id="account-pass">
+									<input class="form-control" type="password" name="password" id="pass1">
 									<label class="password-toggle-btn"
 										aria-label="Show/hide password"> <input
 										class="password-toggle-check" type="checkbox"><span
@@ -243,7 +231,7 @@
 								<label class="form-label" for="account-confirm-pass">비밀번호 확인</label>
 								<div class="password-toggle">
 									<input class="form-control" type="password"
-										id="account-confirm-pass"> <label
+										id="pass2"> <label
 										class="password-toggle-btn" aria-label="Show/hide password">
 										<input class="password-toggle-check" type="checkbox"><span
 										class="password-toggle-indicator"></span>
@@ -354,8 +342,8 @@
 									<div class="form-check"></div>
 									<input type="button" class="btn btn-primary-cgw1 mt-3 mt-sm-0" id="deleteMember"
 										value="회원 탈퇴" > &nbsp;&nbsp;&nbsp;
-									<input type="submit" class="btn btn-primary-cgw1 mt-3 mt-sm-0"
-										value="회원정보 수정" >
+									<input type="submit" class="btn btn-primary-cgw1 mt-3 mt-sm-0" id="updateSubmit"
+										onclick="return validate();" value="회원정보 수정" >
 								</div>
 							</div>
 						</div>
@@ -428,22 +416,44 @@
     }
   </script>
 	<script type="text/javascript">
-    function profileModify() {
-      var p1 = document.getElementById('account-pass').value;
-      var p2 = document.getElementById('account-confirm-pass').value;
-      if (p1 != p2) {
-        alert("비밀번호가 일치 하지 않습니다");
-        return false;
-      } else {
-        return true;
-      }
-    }
     
     $(function () {
 		$("#deleteMember").on("click", (e) => {
 			if(confirm("정말로 탈퇴하시겠습니까?!")) {
 				location.replace('/member/delete');
 			}
+		});
+	});
+    
+    $(document).ready(() => {
+		$("#updateSubmit").on("click", (e) => {
+			let pass1 = $("#pass1").val();			
+			let pass2 = $("#pass2").val();
+			
+			if (pass1 == "") {
+				alert("비밀번호를 입력해 주세요.");
+				
+				$("#pass1").val("");
+				$("#pass2").val("");
+				$("#pass1").focus();
+				
+				return false;
+			} else if(pass2 == "") {
+				alert("비밀번호 확인을 입력해 주세요.");
+				
+				$("#pass2").val("");
+				$("#pass2").focus();
+				
+				return false;
+			} else if(pass1.trim() != pass2.trim()) {
+				alert("비밀번호가 일치하지 않습니다.");
+				
+				$("#pass1").val("");
+				$("#pass2").val("");
+				$("#pass1").focus();
+				
+				return false;
+			} 
 		});
 	});
   </script>
