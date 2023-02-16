@@ -905,12 +905,18 @@ let customLegend2 = function (chart) {
 /* 
 세번째 막대 그래프(교사당/학급당 아동수)
 */
-var childTot = /*[[${kinder.ppcnt3}]]*/{} + /*[[${kinder.ppcnt4}]]*/{} + /*[[${kinder.ppcnt5}]]*/{} + /*[[${kinder.mixppcnt}]]*/{} + /*[[${kinder.shppcnt}]]*/{};
-var teacherTot = /*[[${kinder.hdst_thcnt}]]*/{} + /*[[${kinder.asps_thcnt}]]*/{} + /*[[${kinder.gnrl_thcnt}]]*/{} + /*[[${kinder.spcn_thcnt}]]*/{} + /*[[${kinder.shcnt_thcnt}]]*/{};
-var classTot = /*[[${kinder.clcnt3}]]*/{} + /*[[${kinder.clcnt4}]]*/{} + /*[[${kinder.clcnt5}]]*/{} + /*[[${kinder.mixclcnt}]]*/{} + /*[[${kinder.shclcnt}]]*/{};
+var childTot = /*[[${kinder.ppcnt3 + kinder.ppcnt4 + kinder.ppcnt5 + kinder.mixppcnt + kinder.shppcnt}]]*/{};
+var teacherTot = /*[[${kinder.hdst_thcnt + kinder.asps_thcnt + kinder.gnrl_thcnt + kinder.spcn_thcnt + kinder.shcnt_thcnt}]]*/{};
+var classTot = /*[[${kinder.clcnt3 + kinder.clcnt4 + kinder.clcnt5 + kinder.mixclcnt + kinder.shclcnt}]]*/{};
 
 var avg1 = Math.round(childTot / teacherTot);
 var avg2 = Math.round(childTot / classTot);
+
+console.log(childTot);
+console.log(teacherTot);
+console.log(classTot);
+console.log(avg1);
+console.log(avg2);
 
 let barChartData = {
   labels: ['교사당 아동수', '학급당 아동수'],
