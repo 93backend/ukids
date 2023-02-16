@@ -512,8 +512,9 @@
       
        	$(document).ready(function() {
        		const memberId = /*[[${session.loginMember.id}]]*/{};
+       		const memberRole = /*[[${session.loginMember.role}]]*/{};
        		var role = '';
-       		if(/*[[${session.loginMember.role}]]*/{} =='ROLE_USER') {
+       		if(memberRole =='ROLE_USER') {
        			role = '학부모';
        		} else {
        			role = '선생님';

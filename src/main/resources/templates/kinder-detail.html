@@ -578,8 +578,9 @@
        
 	    $(document).ready(function() {
 	   		const memberId = /*[[${session.loginMember.id}]]*/{};
+	   		const memberRole = /*[[${session.loginMember.role}]]*/{};
 	   		var role = '';
-	   		if(/*[[${session.loginMember.role}]]*/{} =='ROLE_USER') {
+	   		if(memberRole =='ROLE_USER') {
 	   			role = '학부모';
 	   		} else {
 	   			role = '선생님';
@@ -911,12 +912,6 @@ var classTot = /*[[${kinder.clcnt3 + kinder.clcnt4 + kinder.clcnt5 + kinder.mixc
 
 var avg1 = Math.round(childTot / teacherTot);
 var avg2 = Math.round(childTot / classTot);
-
-console.log(childTot);
-console.log(teacherTot);
-console.log(classTot);
-console.log(avg1);
-console.log(avg2);
 
 let barChartData = {
   labels: ['교사당 아동수', '학급당 아동수'],
