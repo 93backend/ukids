@@ -75,10 +75,17 @@ public class BoardController {
 		
 		log.info(type + " 목록 : " + list);
 		
+		int[] num = new int[10];
+		num[0] = (page-1) * 10 + 1;
+		for(int i = 1; i < num.length; i++) {
+			num[i] = num[i-1] + 1;
+		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("type", type);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("num", num);
 		
 		return "community";
 	}
@@ -131,7 +138,7 @@ public class BoardController {
 			}
 		}
 		
-		System.out.println("board: " + board);
+		log.info("board : " + board);
 		int result = service.saveBoard(board);
 
 		if(result > 0) {

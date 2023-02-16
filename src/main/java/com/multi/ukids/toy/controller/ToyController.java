@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -34,7 +32,6 @@ import com.multi.ukids.mypage.model.service.MypageService;
 import com.multi.ukids.toy.model.service.ToyService;
 import com.multi.ukids.toy.model.vo.Cart;
 import com.multi.ukids.toy.model.vo.Pay;
-import com.multi.ukids.toy.model.vo.Rental;
 import com.multi.ukids.toy.model.vo.T_Review;
 import com.multi.ukids.toy.model.vo.Toy;
 
@@ -91,10 +88,9 @@ public class ToyController {
      
       
       List<T_Review> reviewList = toyService.selectToyReviewByNo(no);
-      String tcm = toy.getToyCategoryM();
 
       List<Toy> smilarToy = toyService.selectSimilarToy(toy);
-      System.out.println(toy.getToyCategoryM());
+      log.info(toy.getToyCategoryM());
       
       List<Pay> dateToy = toyService.selectPayDate(no);
       
@@ -239,6 +235,7 @@ public class ToyController {
       log.info(":::::::::::::::"+pay);
       toyService.insertPay(pay);
       
+      @SuppressWarnings("unchecked")
       List<Integer> cartNoList = (List<Integer>) session.getAttribute("cartNoList");
       
       if(cartNoList != null) {

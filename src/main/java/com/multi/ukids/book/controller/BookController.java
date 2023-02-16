@@ -14,9 +14,6 @@ import com.multi.ukids.book.model.service.BookService;
 import com.multi.ukids.book.model.vo.Book;
 import com.multi.ukids.common.util.PageInfo;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class BookController {
 	

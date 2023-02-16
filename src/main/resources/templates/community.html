@@ -110,12 +110,11 @@
     <thead>
       <tr>
         <th class="col-1 text-center">번호</th>
-        <th class="col-1 text-center"></th>
-        <th class="col-5">제목</th>
+        <th class="col-7">제목</th>
         <th class="col-1 text-center">작성자</th>
-        <th class="col-2 text-center">작성일</th>
+        <th class="col-1 text-center">작성일</th>
         <th:block th:if="${type == 'freeboard'}">
-	        <th class="col-1 text-center">추천</th>
+	        <th class="col-1 text-center">좋아요</th>
 	        <th class="col-1 text-center">조회수</th>
         </th:block>
         <th:block th:unless="${type == 'freeboard'}">
@@ -125,15 +124,14 @@
     </thead>
     <tbody th:if="${#lists.size(list) == 0}">
     	<tr>
-    		<td class="text-center" colspan="7" th:if="${type == 'freeboard'}">조회된 글이 없습니다.</td>
-    		<td class="text-center" colspan="6" th:unless="${type == 'freeboard'}">조회된 글이 없습니다.</td>
+    		<td class="text-center" colspan="6" th:if="${type == 'freeboard'}">조회된 글이 없습니다.</td>
+    		<td class="text-center" colspan="5" th:unless="${type == 'freeboard'}">조회된 글이 없습니다.</td>
     	</tr>
     </tbody>
     
     <tbody th:if="${list != null}">
     	<tr th:each="board, status : ${list}">
-    		<th class="text-center" th:text="${pageInfo.currentPage + status.index}"></th>
-    		<th class="text-center"></th>
+    		<th class="text-center">[[${num[status.index]}]]</th>
     		<td>
     			<a th:href="|/community/view-community?no=${board.boardNo}&type=${type}|" style="color: black;">
     				[[${board.title}]]		
@@ -201,7 +199,9 @@
   
   <!-- Main theme script-->
   <script th:src="@{/js/theme.min.js}"></script>
-	<script type="text/javascript" th:inline="javascript">
+	<script type="text/javascript">
+		var url_href = window.location.href;
+		var url = new URL(url_href); // URL 객체 선언
 		function movePage(page){
 			url.searchParams.set("page", page);
 			window.location.search = url.searchParams;

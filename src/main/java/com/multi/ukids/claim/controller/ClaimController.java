@@ -70,7 +70,7 @@ public class ClaimController {
 		}
 		
 		int[] num = new int[10];
-		num[0] = page;
+		num[0] = (page-1) * 10 + 1;
 		for(int i = 1; i < num.length; i++) {
 			num[i] = num[i-1] + 1;
 		}
