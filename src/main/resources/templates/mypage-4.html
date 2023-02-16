@@ -558,6 +558,7 @@
 									</th:block>
 									<th:block th:if="${nclaim.confirm == 'Y'}">
 									<td class="py-3 cgw9">
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="nclaimDelete([[${nclaim.knNo}]], [[${nclaim.no}]]);">삭제</button>
 									</td>
 									</th:block>
 								</tr>
@@ -638,6 +639,7 @@
 									</th:block>
 									<th:block th:if="${nclaim.confirm == 'Y'}">
 									<td class="py-3 cgw9">
+										<button class="badge bg-secondary m-0 cgw30" th:onclick="kclaimDelete([[${nclaim.knNo}]], [[${nclaim.no}]]);">삭제</button>
 									</td>
 									</th:block>
 								</tr>
