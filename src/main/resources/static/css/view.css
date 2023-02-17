@@ -149,3 +149,12 @@
 #tc{
     color: #fc6c93;
 }
+.hei:focus {
+    border: 0px;
+    box-shadow: none;
+}
+
+#textarea-input {
+	border: 0px;
+    background-color: #FFF;
+}
