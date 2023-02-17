@@ -107,7 +107,7 @@ public class MypageController {
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -159,7 +159,7 @@ public class MypageController {
 		PageInfo npageInfo = new PageInfo(nPage, 1, ncount, 4);
 		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
 		
-		System.out.println("nlist(입소신청) : " + nlist);
+//		System.out.println("nlist(입소신청) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("npageInfo", npageInfo);
 		
@@ -168,7 +168,7 @@ public class MypageController {
 		PageInfo kpageInfo = new PageInfo(kPage, 1, kcount, 4);
 		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
 		
-		System.out.println("klist(입소신청) : " + klist);
+//		System.out.println("klist(입소신청) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kpageInfo", kpageInfo);
 		
@@ -177,7 +177,7 @@ public class MypageController {
 		PageInfo tnPageInfo = new PageInfo(tnPage, 5, tncount, 8);
 		List<NAdmission> tnlist = service.getTNAdmissionList(tnPageInfo, param);
 		
-		System.out.println("tnlist(입소신청) : " + tnlist);
+//		System.out.println("tnlist(입소신청) : " + tnlist);
 		model.addAttribute("tnlist", tnlist);
 		model.addAttribute("tnPageInfo", tnPageInfo);
 		
@@ -186,7 +186,7 @@ public class MypageController {
 		PageInfo tkpageInfo = new PageInfo(tkPage, 5, tkcount, 8);
 		List<KAdmission> tklist = service.getTKAdmissionList(tkpageInfo, param);
 		
-		System.out.println("tklist(입소신청) : " + tklist);
+//		System.out.println("tklist(입소신청) : " + tklist);
 		model.addAttribute("tklist", tklist);
 		model.addAttribute("tkPageInfo", tkpageInfo);
 		
@@ -194,7 +194,7 @@ public class MypageController {
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -214,7 +214,7 @@ public class MypageController {
 		SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		int ncount = service.getNAdmissionCount(param);
-		System.out.println(ncount);
+//		System.out.println(ncount);
 		PageInfo npageInfo = new PageInfo(1, 1000, ncount, 1000);
 		List<NAdmission> nlist = service.getNAdmissionList(npageInfo, param);
 		for (NAdmission n : nlist) {
@@ -234,7 +234,7 @@ public class MypageController {
 		SimpleDateFormat newDate = new SimpleDateFormat("yyyy-MM-dd");
 		param.put("memberNo", "" + loginMember.getMemberNo());
 		int kcount = service.getKAdmissionCount(param);
-		System.out.println(kcount);
+//		System.out.println(kcount);
 		PageInfo kpageInfo = new PageInfo(1, 1000, kcount, 1000);
 		List<KAdmission> klist = service.getKAdmissionList(kpageInfo, param);
 		for (KAdmission k : klist) {
@@ -391,7 +391,7 @@ public class MypageController {
 		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 3);
 		List<Wish>  nlist = service.getNurseryWishList(npageInfo, param);
 
-		System.out.println("nlist(찜) : " + nlist);
+//		System.out.println("nlist(찜) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nPageInfo", npageInfo);
 //		
@@ -400,7 +400,7 @@ public class MypageController {
 		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 3);
 		List<Wish> klist = service.getKinderWishList(kpageInfo, param);
 //		
-		System.out.println("klist(찜) : " + klist);
+//		System.out.println("klist(찜) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
 		
@@ -408,7 +408,7 @@ public class MypageController {
 		int wishCount = ncount + kcount;
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -544,7 +544,7 @@ public class MypageController {
 		PageInfo npageInfo = new PageInfo(nPage, 5, ncount, 4);
 		List<Claim> nlist = service.getNurseryClaimList(npageInfo, param);
 		
-		System.out.println("nlist(불편사항) : " + nlist);
+//		System.out.println("nlist(불편사항) : " + nlist);
 		model.addAttribute("nlist", nlist);
 		model.addAttribute("nPageInfo", npageInfo);
 		
@@ -553,7 +553,7 @@ public class MypageController {
 		PageInfo kpageInfo = new PageInfo(kPage, 5, kcount, 4);
 		List<Claim> klist = service.getKinderClaimList(kpageInfo, param);
 		
-		System.out.println("klist(불편사항) : " + klist);
+//		System.out.println("klist(불편사항) : " + klist);
 		model.addAttribute("klist", klist);
 		model.addAttribute("kPageInfo", kpageInfo);
 		
@@ -562,7 +562,7 @@ public class MypageController {
 		PageInfo tnpageInfo = new PageInfo(tnPage, 5, tncount, 8);
 		List<Claim> tnlist = service.getTNurseryClaimList(tnpageInfo, param);
 		
-		System.out.println("tnlist(불편사항) : " + tnlist);
+//		System.out.println("tnlist(불편사항) : " + tnlist);
 		model.addAttribute("tnlist", tnlist);
 		model.addAttribute("tnPageInfo", tnpageInfo);
 		
@@ -571,7 +571,7 @@ public class MypageController {
 		PageInfo tkpageInfo = new PageInfo(tkPage, 5, tkcount, 8);
 		List<Claim> tklist = service.getTKinderClaimList(tkpageInfo, param);
 		
-		System.out.println("tklist(불편사항) : " + tklist);
+//		System.out.println("tklist(불편사항) : " + tklist);
 		model.addAttribute("tklist", tklist);
 		model.addAttribute("tkPageInfo", tkpageInfo);
 		
@@ -580,7 +580,7 @@ public class MypageController {
 		PageInfo anpageInfo = new PageInfo(anPage, 5, ancount, 4);
 		List<Claim> anlist = service.getANurseryClaimList(anpageInfo, param);
 		
-		System.out.println("anlist(불편사항) : " + anlist);
+//		System.out.println("anlist(불편사항) : " + anlist);
 		model.addAttribute("anlist", anlist);
 		model.addAttribute("anPageInfo", anpageInfo);
 		
@@ -589,7 +589,7 @@ public class MypageController {
 		PageInfo akpageInfo = new PageInfo(akPage, 5, akcount, 4);
 		List<Claim> aklist = service.getAKinderClaimList(akpageInfo, param);
 		
-		System.out.println("aklist(불편사항) : " + aklist);
+//		System.out.println("aklist(불편사항) : " + aklist);
 		model.addAttribute("aklist", aklist);
 		model.addAttribute("akPageInfo", akpageInfo);
 		
@@ -601,7 +601,7 @@ public class MypageController {
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = ncount + kcount;
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -700,7 +700,7 @@ public class MypageController {
 		PageInfo pageInfo = new PageInfo(page, 5, boardCount, 8);
 		List<Board> list = service.getBoardList(pageInfo, param);
 
-		System.out.println("list : " + list);
+//		System.out.println("list : " + list);
 		model.addAttribute("list", list);
 		model.addAttribute("param", param);
 		model.addAttribute("pageInfo", pageInfo);
@@ -708,7 +708,7 @@ public class MypageController {
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -761,13 +761,13 @@ public class MypageController {
 	    
 	    List<Pay> adminlist = service.getRentalList3();
 	    model.addAttribute("adminlist", adminlist);
-	    System.out.println(adminlist);
+//	    System.out.println(adminlist);
 		
 		int admissionCount = service.getNAdmissionCount(param) + service.getKAdmissionCount(param);
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(mno);
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);
@@ -910,8 +910,8 @@ public class MypageController {
 		
 		int totalPay = pay + 1000;
 		
-		System.out.println(pay);
-		System.out.println("list" + list);
+//		System.out.println(pay);
+//		System.out.println("list" + list);
 		model.addAttribute("pay", pay);
 		model.addAttribute("totalPay", totalPay);
 		model.addAttribute("list", list);
@@ -923,7 +923,7 @@ public class MypageController {
 		int wishCount = service.getNurseryWishCount(param) + service.getKinderWishCount(param);
 		int claimCount = service.getNurseryClaimCount(param) + service.getKinderClaimCount(param);
 		int boardCount = service.getBoardCount(param);
-		int rentalCount = service.getRentalCount(param);
+		int rentalCount = service.getRentalCount(loginMember.getMemberNo());
 		int cartCount = service.getCartCount(param);
 		model.addAttribute("admissionCount", admissionCount);
 		model.addAttribute("wishCount", wishCount);

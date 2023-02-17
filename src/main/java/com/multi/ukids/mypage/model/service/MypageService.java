@@ -371,8 +371,35 @@ public class MypageService {
 		return payList;
 	}
 	
-	public int getRentalCount(Map<String, String> map) {
-		return mapper.selectRentalCount(map);
+	public int getRentalCount(int memberNo) {
+		List<Pay> payList = new ArrayList<Pay>();
+		payList = mapper.selectRentalList2(memberNo);
+		
+		int cnt = 1;
+		for (Pay pay : payList) {
+			String toyNoListSt = pay.getToyNo(); // ex) 1303,1302,1304
+			String startDateSt = pay.getStartDate(); // ex) 23-1-2,23-1-3,23-1-4
+			String endDateSt = pay.getEndDate(); // ex) 23-1-5,23-1-6,23-1-6
+			String[] toyNoEach = toyNoListSt.split(",");
+			String[] startDateEach = startDateSt.split(",");
+			String[] endDateEach = endDateSt.split(",");
+			List<Toy> toyList = new ArrayList<Toy>();
+			List<String> startDateList = new ArrayList<String>();
+			List<String> endDateList = new ArrayList<String>();
+			List<Integer> cntList = new ArrayList<Integer>();
+			for(int i=0; i<toyNoEach.length; i++){
+				toyList.add(toyMapper.selectToyByNo(Integer.parseInt(toyNoEach[i])));
+				startDateList.add(startDateEach[i]);
+				endDateList.add(endDateEach[i]);
+				cntList.add(cnt);
+				cnt++;
+			}
+			pay.setToyList(toyList);
+			pay.setStartDateList(startDateList);
+			pay.setEndDateList(endDateList);
+			pay.setCntList(cntList);
+		}
+		return cnt;
 	}
 	
 	public Rental findByRentalNo(int no) {
