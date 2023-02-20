@@ -621,6 +621,11 @@
 			window.location.search = url.searchParams;
 		};
 		
+		// 로그인 되어있지 않은 경우 기능 차단
+		function cantDo() {
+			alert('로그인 후 이용가능합니다.');
+		}
+		
 		function onClickCompare(id) {
 			var no = id;
 			id = '#compare' + id;

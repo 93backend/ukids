@@ -1124,7 +1124,7 @@ $('#compareButton').click(function() {
 
 // 리뷰 삭제
 function deleteReview(no) {
-	var url = "/nursery-deleteReview?no=" + no + "&nuNo=" + /*[[${nursery.no}]]*/{} + "&i=" + /*[[${i}]]*/{};
+	var url = "/nursery-deleteReview?no=" + no + "&nuNo=[[${nursery.no}]]&i=[[${i}]]";
 	if(confirm("댓글을 삭제 하시겠습니까?")) {
 		location.replace(url);
 	}
