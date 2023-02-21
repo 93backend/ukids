@@ -440,20 +440,20 @@
 				              <div class="box777">
 				                <div class="photo777">
 				                  <img class="photo" th:src="|img/어린이집/nursery${img[status.index]}.JPG|">
-				                  <th:block th:if="${compare == null}">
+				                  <th:block th:if="${session.nurseryCompare == null}">
 					                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare(${nursery.no})|">
 					                    <i class="ci-bookmark fw-bold mt-1"></i>
 					                    <b>&nbsp;비교&nbsp;</b>
 					                  </button>
 				                  </th:block>
-				                  <th:block th:unless="${compare == null}">
-					                  	<th:block th:if="${#strings.contains(compare, nursery.no)}">
+				                  <th:block th:unless="${session.nurseryCompare == null}">
+					                  	<th:block th:if="${compare[status.index] == true}">
 						                  <button class="button7-fill" th:id="'compare' + ${nursery.no}" value="true" th:onclick="|onClickCompare(${nursery.no})|">
 						                    <i class="ci-bookmark fw-bold mt-1"></i>
 						                    <b>&nbsp;비교&nbsp;</b>
 						                  </button>
 					                  	</th:block>
-					                  	<th:block th:unless="${#strings.contains(compare, nursery.no)}">
+					                  	<th:block th:unless="${compare[status.index] == true}">
 						                  <button class="button7" th:id="'compare' + ${nursery.no}" value="false" th:onclick="|onClickCompare(${nursery.no})|">
 						                    <i class="ci-bookmark fw-bold mt-1"></i>
 						                    <b>&nbsp;비교&nbsp;</b>
@@ -466,12 +466,12 @@
 				                    </button>
 				                  </th:block>
 				                  <th:block th:unless="${session.loginMember == null}">
-			                    	<th:block th:if="${#strings.contains(wish, nursery.no)}">
+			                    	<th:block th:if="${wish[status.index] == true}">
 					                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="true" th:onclick="|onClickHeart(${nursery.no})|">
 					                      <i id="heart" class="ci-heart-filled"></i>
 					                    </button>
 			                    	</th:block>
-			                    	<th:block th:unless="${#strings.contains(wish, nursery.no)}">
+			                    	<th:block th:unless="${wish[status.index] == true}">
 					                    <button class="btn-wishlist1 btn-sm" th:id="'heart' + ${nursery.no}" value="false" th:onclick="|onClickHeart(${nursery.no})|">
 					                      <i id="heart" class="ci-heart fw-bold text-danger"></i>
 					                    </button>

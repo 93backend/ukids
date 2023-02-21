@@ -288,30 +288,30 @@
 	                  </button>
                 	</th:block>
                 	<th:block th:unless="${session.loginMember == null}">
-	                  <th:block th:if="${wishCnt} == 0">
+	                  <th:block th:if="${wish} == 0">
 		                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton" value="false">
 		                    <i id="heart1" class="ci-heart"> 찜</i>
 		                  </button>
                 		</th:block>
-                		<th:block th:unless="${wishCnt} == 0">
+                		<th:block th:unless="${wish} == 0">
 		                  <button type="button" class="btn btn-secondary btn-shadow wishButton" name="wishButton" id="wishButton" value="true">
 		                    <i id="heart1" class="ci-heart-filled"> 찜</i>
 		                  </button>
                 		</th:block>
                 	</th:block>
                 	
-                	<th:block th:if="${compare == null}">
+                	<th:block th:if="${session.nurseryCompare == null}">
                 		<button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="false">
 		                    <i class="ci-compare"> 비교</i>
 		                  </button>
                 	</th:block>
-                	<th:block th:unless="${compare == null}">
-	                	<th:block th:if="${#strings.contains(compare, nursery.no)}">
+                	<th:block th:unless="${session.nurseryCompare == null}">
+	                	<th:block th:if="${compare == true}">
 		                  <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="true">
 		                    <i id="compareIcon2" class="ci-compare fw-bolder" style="color:#fc6c93;"> 비교</i>
 		                  </button>
 	                	</th:block>
-	                	<th:block th:unless="${#strings.contains(compare, nursery.no)}">
+	                	<th:block th:unless="${compare == true}">
 		                  <button type="button" class="btn btn-secondary btn-shadow" name="compareButton" id="compareButton" value="false">
 		                    <i class="ci-compare"> 비교</i>
 		                  </button>

@@ -3,7 +3,6 @@ package com.multi.ukids.nursery.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,22 +89,45 @@ public class NurseryController {
 		List<Nursery> list =  nurseryService.getNurseryList(pageInfo, param);
 		
 		int[] wishNo = {};
+		boolean[] wish = new boolean[list.size()];
 		if(loginMember != null) {
 			wishNo = nurseryService.getNurseryWishLsit(loginMember.getMemberNo());
+			for(int i = 0; i < list.size(); i++) {
+				int flag = 0;
+				for(int n : wishNo) {
+					if(list.get(i).getNo() == n) {
+						flag = 1;
+						break;
+					}
+				}
+				if(flag == 1) {
+					wish[i] = true;
+				}
+			}
 		}
-		String wish = Arrays.toString(wishNo);
-		log.info("찜 목록 : " + wish);
+		log.info("찜 목록 : " + wishNo);
 		
 		if(session.getAttribute("nurseryCompare") == null) {
 			List<Integer> initCompare = new ArrayList<>();
 			session.setAttribute("nurseryCompare", initCompare);
 		}
 		
-		String compare = null;
+		boolean[] compare = new boolean[list.size()];
 		if(nurseryCompare != null) {
-			compare = nurseryCompare.toString();
+			for(int i = 0; i < list.size(); i++) {
+				int flag = 0;
+				for(int n : nurseryCompare) {
+					if(list.get(i).getNo() == n) {
+						flag = 1;
+						break;
+					}
+				}
+				if(flag == 1) {
+					compare[i] = true;
+				}
+			}
 		}
-		log.info("비교 목록 : " + compare);
+		log.info("비교 목록 : " + nurseryCompare);
 		
 		int[] img = new int[12];
 		
@@ -146,26 +168,35 @@ public class NurseryController {
 		List<NReview> review = nurseryService.getReviewList(no);
 		int reviewCnt = nurseryService.getReviewCount(no);
 		
-		int wishCnt = 0;
+		int wish = 0;
 		if(loginMember != null) {
-			NWish wish = new NWish();
-			wish.setNuNo(no);
-			wish.setMemberNo(loginMember.getMemberNo());
-			wishCnt = nurseryService.getWish(wish);
+			NWish w = new NWish();
+			w.setNuNo(no);
+			w.setMemberNo(loginMember.getMemberNo());
+			wish = nurseryService.getWish(w);
 		}
 		
-		String compare = null;
+		boolean compare = false;
 		if(nurseryCompare != null) {
-			compare = nurseryCompare.toString();
+			int flag = 0;
+			for(int n : nurseryCompare) {
+				if(no == n) {
+					flag = 1;
+					break;
+				}
+			}
+			if(flag == 1) {
+				compare = true;
+			}
 		}
-		log.info("비교 목록 : " + compare);
+		log.info("비교 목록 : " + nurseryCompare);
 		
 		int classCnt = nursery.getClass_cnt_00() + nursery.getClass_cnt_01() + nursery.getClass_cnt_02() + nursery.getClass_cnt_03() + nursery.getClass_cnt_04() + nursery.getClass_cnt_05();
 		int childCnt = nursery.getChild_cnt_00() + nursery.getChild_cnt_01() + nursery.getChild_cnt_02() + nursery.getChild_cnt_03() + nursery.getChild_cnt_04() + nursery.getChild_cnt_05();
 		
 		model.addAttribute("nursery", nursery);
 		model.addAttribute("claim", claim);
-		model.addAttribute("wishCnt", wishCnt);
+		model.addAttribute("wish", wish);
 		model.addAttribute("compare", compare);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);

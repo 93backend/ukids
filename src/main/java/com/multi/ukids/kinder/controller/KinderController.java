@@ -93,22 +93,45 @@ public class KinderController {
 		List<Kinder> list = kinderService.getKinderList(pageInfo, param);
 		
 		int[] wishNo = {};
+		boolean[] wish = new boolean[list.size()];
 		if(loginMember != null) {
 			wishNo = kinderService.getKinderWishLsit(loginMember.getMemberNo());
+			for(int i = 0; i < list.size(); i++) {
+				int flag = 0;
+				for(int n : wishNo) {
+					if(list.get(i).getKinNo() == n) {
+						flag = 1;
+						break;
+					}
+				}
+				if(flag == 1) {
+					wish[i] = true;
+				}
+			}
 		}
-		String wish = Arrays.toString(wishNo);
-		log.info("찜 목록 : " + wish);
+		log.info("찜 목록 : " + wishNo);
 		
 		if(session.getAttribute("kinderCompare") == null) {
 			List<Integer> initCompare = new ArrayList<>();
 			session.setAttribute("kinderCompare", initCompare);
 		}
 		
-		String compare = null;
+		boolean[] compare = new boolean[list.size()];
 		if(kinderCompare != null) {
-			compare = kinderCompare.toString();
+			for(int i = 0; i < list.size(); i++) {
+				int flag = 0;
+				for(int n : kinderCompare) {
+					if(list.get(i).getKinNo() == n) {
+						flag = 1;
+						break;
+					}
+				}
+				if(flag == 1) {
+					compare[i] = true;
+				}
+			}
 		}
-		log.info("비교 목록 : " + compare);
+		log.info("비교 목록 : " + kinderCompare);
 		
 		int[] img = new int[12];
 		
@@ -147,19 +170,28 @@ public class KinderController {
 		List<KReview> review = kinderService.getReviewList(no);
 		int reviewCnt = kinderService.getReviewCount(no);
 		
-		int wishCnt = 0;
+		int wish = 0;
 		if(loginMember != null) {
-			KWish wish = new KWish();
-			wish.setKinNo(no);
-			wish.setMemberNo(loginMember.getMemberNo());
-			wishCnt = kinderService.getWish(wish);
+			KWish w = new KWish();
+			w.setKinNo(no);
+			w.setMemberNo(loginMember.getMemberNo());
+			wish = kinderService.getWish(w);
 		}
 		
-		String compare = null;
+		boolean compare = false;
 		if(kinderCompare != null) {
-			compare = kinderCompare.toString();
+			int flag = 0;
+			for(int n : kinderCompare) {
+				if(no == n) {
+					flag = 1;
+					break;
+				}
+			}
+			if(flag == 1) {
+				compare = true;
+			}
 		}
-		log.info("비교 목록 : " + compare);
+		log.info("비교 목록 : " + kinderCompare);
 		
 		int classCnt = kinder.getClcnt3() + kinder.getClcnt4() + kinder.getClcnt5() + kinder.getMixclcnt() + kinder.getShclcnt();
 		int childCnt = kinder.getPpcnt3() + kinder.getPpcnt4() + kinder.getPpcnt5() + kinder.getMixppcnt() + kinder.getShppcnt();
@@ -169,7 +201,7 @@ public class KinderController {
 		
 		model.addAttribute("kinder", kinder);
 		model.addAttribute("claim", claim);
-		model.addAttribute("wishCnt", wishCnt);
+		model.addAttribute("wish", wish);
 		model.addAttribute("compare", compare);
 		model.addAttribute("review", review);
 		model.addAttribute("reviewCnt", reviewCnt);
