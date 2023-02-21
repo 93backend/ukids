@@ -302,6 +302,7 @@ $( document ).ready( function() {//대여일 지정
 	  ranges.push({from: sdArr[i], to: edArr[i]});
 	}
 	console.log(ranges); */
+	
   var type = /*[[${toy.toyType}]]*/{};
   var today = new Date();
   var tmrw = new Date(today.setDate(today.getDate()+2));
@@ -401,7 +402,6 @@ if(type == null){
 
 }
 
-
 //로그인 alert
 	var lm =/*[[${session.loginMember}]]*/{};
 	if(lm == null){
@@ -444,29 +444,30 @@ function deleteReview(no, toyNo){
 	location.replace(requestURL);
 }
 function addCart(memberNo){
-	const param_password = $("<input type='hidden' value=" + memberNo + " name='memberNo' readonly>");
-	$("#payInfo").append(param_password);
-	var formArray = $("#payInfo").serializeArray();
-	
-	  var returnArray = {};	
-	
-	    for (var i = 0; i < formArray.length; i++){
-	        returnArray[formArray[i]['name']] = formArray[i]['value'];
-	    }
-	  console.log(formArray);
-	  console.log(returnArray);
-	$.ajax({
-		type : 'POST',
-		url : '/addCart',
-		dataType: 'text',
-		data : JSON.stringify(returnArray),
-		contentType:"application/json",
-		error: function(xhr, status, error){
-			alert("에러"+error);
-		},
-		success : function(aa){
+	if($('#start-date').val() != ''&& $('#end-date').val() != ''){
+		const param_password = $("<input type='hidden' value=" + memberNo + " name='memberNo' readonly>");
+		$("#payInfo").append(param_password);
+		var formArray = $("#payInfo").serializeArray();
+		
+		  var returnArray = {};	
+		
+		    for (var i = 0; i < formArray.length; i++){
+		        returnArray[formArray[i]['name']] = formArray[i]['value'];
+		    }
+		  console.log(formArray);
+		  console.log(returnArray);
+			$.ajax({
+				type : 'POST',
+				url : '/addCart',
+				dataType: 'text',
+				data : JSON.stringify(returnArray),
+				contentType:"application/json",
+				error: function(xhr, status, error){
+					alert("에러"+error);
+				},
+				success : function(aa){
+				}
+			});
 		}
-	});
-}
-
+	}
 </script>
