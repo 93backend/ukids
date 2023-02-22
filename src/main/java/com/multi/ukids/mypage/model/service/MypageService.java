@@ -399,7 +399,7 @@ public class MypageService {
 			pay.setEndDateList(endDateList);
 			pay.setCntList(cntList);
 		}
-		return cnt;
+		return cnt - 1;
 	}
 	
 	public Rental findByRentalNo(int no) {
