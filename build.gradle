@@ -44,6 +44,11 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+bootWar {
+	archiveBaseName = "demo"
+	archiveFileName = 'demo.war'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
