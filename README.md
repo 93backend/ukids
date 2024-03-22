@@ -21,7 +21,7 @@
 
 ## 📄 상세 내용
 
-![ukidsImg](img/ukidsImg.jpg)
+![ukidsImg](https://github.com/JinKyung08/ukids/raw/master/img/ukidsImg.jpg)
 
 
 
